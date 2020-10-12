@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:gravity="center">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </com.google.android.gms.common.SignInButton>
+        <EditText
+            android:id="@+id/edit_sdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="2"
+            android:drawableLeft="@drawable/iphone"
+            android:hint="SDT"
+            android:paddingEnd="50dp"
+            android:textColorHint="#B6ADAD" />
+        <EditText
+            android:id="@+id/edit_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="2"
+            android:inputType="textPassword"
+            android:drawableLeft="@drawable/padlock"
+            android:hint="Mật Khẩu"
+            android:paddingEnd="50dp"
+            android:textColorHint="#B6ADAD" />
+        <Button
+            android:id="@+id/btn_signIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Đăng nhập"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"/>
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/forgot_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="10dp"
+            android:text="Quên mật khẩu"
+            style="text-decoration: underline;"
+            android:background="#FFFFFF"/>
+        <TextView
+            android:layout_gravity="left"
+            android:id="@+id/signUp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đăng ký"/>
+    </LinearLayout>
+
+</RelativeLayout>
