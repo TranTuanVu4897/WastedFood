@@ -20,6 +20,7 @@ import java.security.NoSuchAlgorithmException;
 public class FragmentLoginPartner extends Fragment {
     Button btnSignIn, btnBuyerOption;
     EditText etSDT, etPass;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,12 +31,11 @@ public class FragmentLoginPartner extends Fragment {
         btnBuyerOption = view.findViewById(R.id.btn_buyer_option);
 
 
-
-
         return view;
     }
-    private String md5(String str){
-        String result ="";
+
+    private String md5(String str) {
+        String result = "";
         MessageDigest digest;
         try {
             digest = MessageDigest.getInstance("MD5");

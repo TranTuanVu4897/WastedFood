@@ -37,9 +37,10 @@ public class FragmentLoginBuyer extends Fragment {
     GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN;
     EditText etSDT, etPass;
-    Button btnSignIn,btnSignInGoogle, btnPartnerOption;
+    Button btnSignIn, btnSignInGoogle, btnPartnerOption;
     LoginButton btnSignInFacebook;
     CallbackManager callbackManager;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,7 +54,8 @@ public class FragmentLoginBuyer extends Fragment {
         //facebook option
 
         callbackManager = CallbackManager.Factory.create();
-        btnSignInFacebook.setPermissions(Arrays.asList("public_profile", "email"));;
+        btnSignInFacebook.setPermissions(Arrays.asList("public_profile", "email"));
+        ;
         btnSignInFacebook.setFragment(this);
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -82,15 +84,13 @@ public class FragmentLoginBuyer extends Fragment {
         });
 
 
-
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(etSDT.getText().equals("0385818813") && etPass.getText().equals("11011998")){
-                    Toast.makeText(getActivity(),"Dung",Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Toast.makeText(getActivity(),"Your SDT or Password wrong",Toast.LENGTH_LONG).show();
+                if (etSDT.getText().equals("0385818813") && etPass.getText().equals("11011998")) {
+                    Toast.makeText(getActivity(), "Dung", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(), "Your SDT or Password wrong", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -99,26 +99,29 @@ public class FragmentLoginBuyer extends Fragment {
 
 
     }
-    private void AddGoogleSignInOption(){
+
+    private void AddGoogleSignInOption() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
     }
+
     //Start Sign in Google flow
-    private void signInGoogle(){
+    private void signInGoogle() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            startActivity(new Intent(getActivity(),MainActivity.class));
+            startActivity(new Intent(getActivity(), MainActivity.class));
         } catch (ApiException e) {
             e.printStackTrace();
-            Log.w("TAG","Failed code" + e.getStatusCode());
-            Log.d("Tag",e.getMessage());
-            Toast.makeText(getActivity(),"Failed Connect " + e.getStatusCode(),Toast.LENGTH_LONG).show();
+            Log.w("TAG", "Failed code" + e.getStatusCode());
+            Log.d("Tag", e.getMessage());
+            Toast.makeText(getActivity(), "Failed Connect " + e.getStatusCode(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -127,25 +130,25 @@ public class FragmentLoginBuyer extends Fragment {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
         try {
-            if(requestCode == RC_SIGN_IN){
+            if (requestCode == RC_SIGN_IN) {
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
                 handleSignInResult(task);
             }
-        }catch (Exception e){
-            Log.w("SignIn","Code" + e.getStackTrace());
+        } catch (Exception e) {
+            Log.w("SignIn", "Code" + e.getStackTrace());
         }
     }
 
     @Override
     public void onStart() {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
-        if (account != null){
-            startActivity(new Intent(getActivity(),MainActivity.class));
+        if (account != null) {
+            startActivity(new Intent(getActivity(), MainActivity.class));
         }
         super.onStart();
     }
 
-    private void handleSignInFacebook(){
+    private void handleSignInFacebook() {
         //check loginFB
         if (AccessToken.getCurrentAccessToken() != null && com.facebook.Profile.getCurrentProfile() != null) {
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
