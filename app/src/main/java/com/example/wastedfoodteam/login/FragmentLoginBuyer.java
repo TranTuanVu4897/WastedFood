@@ -16,6 +16,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.wastedfoodteam.MainActivity;
 import com.example.wastedfoodteam.R;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -23,20 +30,50 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import java.util.Arrays;
+
 
 public class FragmentLoginBuyer extends Fragment {
     GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN;
     EditText etSDT, etPass;
-    Button btnSignIn,btnSignInGoogle,btnSignInFacebook;
+    Button btnSignIn,btnSignInGoogle, btnPartnerOption;
+    LoginButton btnSignInFacebook;
+    CallbackManager callbackManager;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login_buyer, container, false);
-        etSDT = view.findViewById(R.id.edit_sdt);
-        etPass = view.findViewById(R.id.edit_pass);
-        btnSignIn = view.findViewById(R.id.btn_signIn);
+        etSDT = view.findViewById(R.id.edit_sdt_buyer);
+        etPass = view.findViewById(R.id.edit_pass_buyer);
+        btnSignIn = view.findViewById(R.id.btn_signIn_buyer);
         btnSignInGoogle = view.findViewById(R.id.btn_google_signin);
+        btnSignInFacebook = view.findViewById(R.id.facebook);
+
+        //facebook option
+
+        callbackManager = CallbackManager.Factory.create();
+        btnSignInFacebook.setPermissions(Arrays.asList("public_profile", "email"));;
+        btnSignInFacebook.setFragment(this);
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });
+
+        //google option
+        AddGoogleSignInOption();
         btnSignInGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,7 +81,7 @@ public class FragmentLoginBuyer extends Fragment {
             }
         });
 
-        AddGoogleSignInOption();
+
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +124,7 @@ public class FragmentLoginBuyer extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
         try {
             if(requestCode == RC_SIGN_IN){
@@ -105,5 +143,13 @@ public class FragmentLoginBuyer extends Fragment {
             startActivity(new Intent(getActivity(),MainActivity.class));
         }
         super.onStart();
+    }
+
+    private void handleSignInFacebook(){
+        //check loginFB
+        if (AccessToken.getCurrentAccessToken() != null && com.facebook.Profile.getCurrentProfile() != null) {
+            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
+            //startActivity(new Intent(MainActivity.this,MainActivity2.class));
+        }
     }
 }
