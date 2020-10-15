@@ -9,7 +9,6 @@ import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -26,11 +25,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         String apikey = getString(R.string.maps_api_key);
-        LatLng here = new LatLng(21.013255,105.5248756);
-        LatLng end = new LatLng(21.0092414,105.528148);
-      double distanceA =  CalculationByDistance(here,end);
-      float[] distanceB = new float[1];
-      Location.distanceBetween(here.latitude,here.longitude,end.latitude,end.longitude,distanceB);
+        LatLng here = new LatLng(21.013255, 105.5248756);
+        LatLng end = new LatLng(21.0092414, 105.528148);
+        double distanceA = CalculationByDistance(here, end);
+        float[] distanceB = new float[1];
+        Location.distanceBetween(here.latitude, here.longitude, end.latitude, end.longitude, distanceB);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -42,7 +41,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * This callback is triggered when the map is ready to be used.
      * This is where we can add markers or lines, add listeners or move the camera. In this case,
      * we just add a marker near Sydney, Australia.
-     *
+     * <p>
      * If Google Play services is not installed on the device, the user will be prompted to install
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.

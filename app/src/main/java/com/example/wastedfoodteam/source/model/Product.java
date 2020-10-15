@@ -1,6 +1,6 @@
 package com.example.wastedfoodteam.source.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * Product class
@@ -40,6 +40,7 @@ public class Product {
         this.shippable = shippable;
         this.modified_date = modified_date;
     }
+
 
     public int getId() {
         return id;
