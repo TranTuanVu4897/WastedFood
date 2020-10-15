@@ -15,7 +15,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/edit_sdt"
+                android:id="@+id/edit_sdt_partner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -27,7 +27,7 @@
                 android:paddingEnd="50dp"
                 android:textColorHint="#B6ADAD" />
             <EditText
-                android:id="@+id/edit_pass"
+                android:id="@+id/edit_pass_partner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -40,15 +40,15 @@
                 android:paddingEnd="50dp"
                 android:textColorHint="#B6ADAD" />
             <Button
-                android:id="@+id/btn_signIn"
+                android:id="@+id/btn_signIn_partner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Đăng nhập"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"/>
             <TextView
+                android:id="@+id/tv_forgot_pass_partner"
                 android:layout_gravity="center"
-                android:id="@+id/tv_forgot_pass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
