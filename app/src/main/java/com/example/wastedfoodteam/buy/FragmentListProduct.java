@@ -9,7 +9,6 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 
 import com.android.volley.Request;
@@ -19,7 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.detailproduct.FragmentDetailProduct;
+import com.example.wastedfoodteam.buy.detailproduct.FragmentDetailProduct;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.source.model.Product;
 import com.example.wastedfoodteam.source.model.Seller;

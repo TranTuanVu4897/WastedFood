@@ -1,6 +1,5 @@
-package com.example.wastedfoodteam.detailproduct;
+package com.example.wastedfoodteam.buy.detailproduct;
 
-import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;

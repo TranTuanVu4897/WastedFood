@@ -4,8 +4,8 @@ import com.example.wastedfoodteam.source.model.Seller;
 import com.google.android.gms.maps.model.LatLng;
 
 public class Variable {
-//    public static final String ipAddress ="http://192.168.3.4/wastedfoodphp/";//Vutt ip
-    public static final String ipAddress ="http://10.22.178.239/wastedfoodphp/";//FPT University ip
+    public static final String ipAddress ="http://192.168.3.4/wastedfoodphp/";//Vutt ip
+//    public static final String ipAddress ="http://10.22.178.239/wastedfoodphp/";//FPT University ip
     //TODO
     //other php variable
     public static final String searchNormal = "search/getListProducts.php";
