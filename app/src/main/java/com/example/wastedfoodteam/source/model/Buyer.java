@@ -11,17 +11,15 @@ public class Buyer {
     Date date_of_birth;
     String image;
     boolean gender;
-    Date modified_date;
 
     public Buyer() {
     }
 
-    public Buyer(int account_id, Date date_of_birth, String image, boolean gender, Date modified_date) {
+    public Buyer(int account_id, Date date_of_birth, String image, boolean gender) {
         this.account_id = account_id;
         this.date_of_birth = date_of_birth;
         this.image = image;
         this.gender = gender;
-        this.modified_date = modified_date;
     }
 
     public int getAccount_id() {
@@ -56,11 +54,4 @@ public class Buyer {
         this.gender = gender;
     }
 
-    public Date getModified_date() {
-        return modified_date;
-    }
-
-    public void setModified_date(Date modified_date) {
-        this.modified_date = modified_date;
-    }
 }

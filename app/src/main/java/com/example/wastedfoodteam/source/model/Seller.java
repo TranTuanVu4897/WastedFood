@@ -14,7 +14,6 @@ public class Seller {
     double latitude;
     double longitude;
     String description;
-    Date modified_date;
 
     public int getAccount_id() {
         return account_id;
@@ -72,13 +71,6 @@ public class Seller {
         this.description = description;
     }
 
-    public Date getModified_date() {
-        return modified_date;
-    }
-
-    public void setModified_date(Date modified_date) {
-        this.modified_date = modified_date;
-    }
 
     public Seller() {
     }
@@ -91,6 +83,5 @@ public class Seller {
         this.latitude = latitude;
         this.longitude = longitude;
         this.description = description;
-        this.modified_date = modified_date;
     }
 }

@@ -15,7 +15,6 @@ public class Order {
     double total_cost;
     int buyer_rating;
     String buyer_comment;
-    Date modified_date;
 
     public int getId() {
         return id;
@@ -81,13 +80,6 @@ public class Order {
         this.buyer_comment = buyer_comment;
     }
 
-    public Date getModified_date() {
-        return modified_date;
-    }
-
-    public void setModified_date(Date modified_date) {
-        this.modified_date = modified_date;
-    }
 
     public Order() {
     }
@@ -101,6 +93,5 @@ public class Order {
         this.total_cost = total_cost;
         this.buyer_rating = buyer_rating;
         this.buyer_comment = buyer_comment;
-        this.modified_date = modified_date;
     }
 }

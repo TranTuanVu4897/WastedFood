@@ -21,9 +21,8 @@ public class Product {
     Date sell_date;
     String status;
     boolean shippable;
-    Date modified_date;
 
-    public Product(int id, int seller_id, String name, String image, Date start_time, Date end_time, double original_price, double sell_price, int original_quantity, int remain_quantity, String description, Date sell_date, String status, boolean shippable, Date modified_date) {
+    public Product(int id, int seller_id, String name, String image, Date start_time, Date end_time, double original_price, double sell_price, int original_quantity, int remain_quantity, String description, Date sell_date, String status, boolean shippable) {
         this.id = id;
         this.seller_id = seller_id;
         this.name = name;
@@ -38,7 +37,6 @@ public class Product {
         this.sell_date = sell_date;
         this.status = status;
         this.shippable = shippable;
-        this.modified_date = modified_date;
     }
 
 
@@ -154,13 +152,6 @@ public class Product {
         this.shippable = shippable;
     }
 
-    public Date getModified_date() {
-        return modified_date;
-    }
-
-    public void setModified_date(Date modified_date) {
-        this.modified_date = modified_date;
-    }
 
     public Product() {
     }
