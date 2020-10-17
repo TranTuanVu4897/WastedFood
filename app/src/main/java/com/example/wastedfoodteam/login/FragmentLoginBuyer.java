@@ -32,6 +32,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 
@@ -115,6 +118,7 @@ public class FragmentLoginBuyer extends Fragment {
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    //keep Sign In Google
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
@@ -127,6 +131,7 @@ public class FragmentLoginBuyer extends Fragment {
         }
     }
 
+    //Check account
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
@@ -150,6 +155,7 @@ public class FragmentLoginBuyer extends Fragment {
         super.onStart();
     }
 
+    //Keep Sign In Facebook
     private void handleSignInFacebook() {
         //check loginFB
         if (AccessToken.getCurrentAccessToken() != null && com.facebook.Profile.getCurrentProfile() != null) {
@@ -166,5 +172,18 @@ public class FragmentLoginBuyer extends Fragment {
         fragmentTransaction.commit();
     }
 
+    private String md5(String str) {
+        String result = "";
+        MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance("MD5");
+            digest.update(str.getBytes());
+            BigInteger bigInteger = new BigInteger(1, digest.digest());
+            result = bigInteger.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
 }
