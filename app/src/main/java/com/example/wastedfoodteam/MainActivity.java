@@ -56,10 +56,10 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         //fragment for login
-//        FragmentLoginBuyer fragment = new FragmentLoginBuyer();
+        FragmentLoginBuyer fragment = new FragmentLoginBuyer();
 
         //fragment for buyer buy product
-        FragmentHome fragment = new FragmentHome();
+//        FragmentHome fragment = new FragmentHome();
 
         fragmentTransaction.add(R.id.flFragmentLayoutAM, fragment);
         fragmentTransaction.commit();

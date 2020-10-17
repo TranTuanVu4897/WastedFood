@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.wastedfoodteam.MainActivity;
 import com.example.wastedfoodteam.R;
@@ -45,11 +47,11 @@ public class FragmentLoginBuyer extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login_buyer, container, false);
-        etSDT = view.findViewById(R.id.edit_sdt_buyer);
-        etPass = view.findViewById(R.id.edit_pass_buyer);
-        btnSignIn = view.findViewById(R.id.btn_signIn_buyer);
-        btnSignInGoogle = view.findViewById(R.id.btn_google_signin);
-        btnSignInFacebook = view.findViewById(R.id.facebook);
+        etSDT = view.findViewById(R.id.etSdtBuyerFLB);
+        etPass = view.findViewById(R.id.etPassBuyerFLB);
+        btnSignIn = view.findViewById(R.id.btnSignInBuyerFLB);
+        btnSignInGoogle = view.findViewById(R.id.btnGoogleSignInFLB);
+        btnSignInFacebook = view.findViewById(R.id.btnFacebookSignInFLB);
 
         //facebook option
 
@@ -155,4 +157,14 @@ public class FragmentLoginBuyer extends Fragment {
             //startActivity(new Intent(MainActivity.this,MainActivity2.class));
         }
     }
+    public void addFragmentLoginPartner(View view){
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentLoginPartner fragmentLoginPartner = new FragmentLoginPartner();
+        fragmentTransaction.add(R.id.fragmentPartner,fragmentLoginPartner);
+        fragmentTransaction.commit();
+    }
+
+
 }
