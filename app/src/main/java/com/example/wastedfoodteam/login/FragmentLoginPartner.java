@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.global.Variable;
 
 import org.json.JSONArray;
 
@@ -43,7 +44,7 @@ public class FragmentLoginPartner extends Fragment {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                urlGetData = "http://192.168.1.46/wastedfoodphp/login/sellerLogin.php?username="+etSDT.getText().toString()+"&password="+md5(etPass.getText().toString());
+                urlGetData = Variable.ipAddress + "login/sellerLogin.php?username=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
                 getData(urlGetData);
             }
         });
@@ -51,6 +52,11 @@ public class FragmentLoginPartner extends Fragment {
         return view;
     }
 
+    /**
+     * encode md5
+     * @param str
+     * @return
+     */
     private String md5(String str) {
         String result = "";
         MessageDigest digest;
@@ -64,17 +70,23 @@ public class FragmentLoginPartner extends Fragment {
         }
         return result;
     }
-    private void getData(String url){
+
+    /**
+     * get data from mySql
+     * @param url
+     */
+    private void getData(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                Toast.makeText(getActivity(),"OK",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();
+                //TODO get data
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(),"lỗi",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "lỗi", Toast.LENGTH_LONG).show();//TODO get data
             }
         }
         );

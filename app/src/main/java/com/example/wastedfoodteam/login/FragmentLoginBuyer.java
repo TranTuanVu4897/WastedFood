@@ -71,7 +71,7 @@ public class FragmentLoginBuyer extends Fragment {
 
         callbackManager = CallbackManager.Factory.create();
         btnSignInFacebook.setPermissions(Arrays.asList("public_profile", "email"));
-        ;
+
         btnSignInFacebook.setFragment(this);
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -229,12 +229,12 @@ public class FragmentLoginBuyer extends Fragment {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                Toast.makeText(getActivity(),"OK",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"OK",Toast.LENGTH_LONG).show();//TODO get data
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(),"lỗi " + urlGetData,Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"lỗi " + urlGetData,Toast.LENGTH_LONG).show();//TODO get data
                 Log.d("MK ", md5(etPass.getText().toString()));
             }
         }
