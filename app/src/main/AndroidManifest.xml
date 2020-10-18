@@ -15,7 +15,6 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity android:name=".buy.BuyHomeActivity"></activity>
-        <activity android:name=".buy.BuyHomeActivityTest" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
