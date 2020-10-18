@@ -20,12 +20,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.MainActivity;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buy.BuyHomeActivity;
+import com.example.wastedfoodteam.buy.BuyHomeActivityTest;
 import com.example.wastedfoodteam.global.Variable;
+import com.example.wastedfoodteam.source.model.Buyer;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -39,6 +41,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 
@@ -105,7 +109,7 @@ public class FragmentLoginBuyer extends Fragment {
             @Override
             public void onClick(View v) {
                 //urlGetData ="http://localhost/wastedfoodphp/login/buyerLogin.php?username=tungpt36&password=tung1998";
-                urlGetData = Variable.ipAddress +"login/buyerLogin.php?username="+etSDT.getText().toString()+"&password="+md5(etPass.getText().toString());
+                urlGetData = Variable.ipAddress + "login/buyerLogin.php?username=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
                 getData(urlGetData);
             }
         });
@@ -142,6 +146,7 @@ public class FragmentLoginBuyer extends Fragment {
 
     /**
      * keep Sign In Google
+     *
      * @param completedTask
      */
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
@@ -158,6 +163,7 @@ public class FragmentLoginBuyer extends Fragment {
 
     /**
      * Check account
+     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -199,16 +205,17 @@ public class FragmentLoginBuyer extends Fragment {
     /**
      * add fragment login for seller
      */
-    public void addFragmentLoginPartner(){
+    public void addFragmentLoginPartner() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         FragmentLoginPartner fragmentLoginPartner = new FragmentLoginPartner();
-        fragmentTransaction.replace(R.id.flFragmentLayoutAM,fragmentLoginPartner);
+        fragmentTransaction.replace(R.id.flFragmentLayoutAM, fragmentLoginPartner);
         fragmentTransaction.commit();
     }
 
     /**
      * encode md5
+     *
      * @param str
      * @return
      */
@@ -228,27 +235,50 @@ public class FragmentLoginBuyer extends Fragment {
 
     /**
      * get data from mySql
+     *
      * @param url
      */
-    private void getData(String url){
+    private void getData(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONArray response) {
-                Toast.makeText(getActivity(),"OK",Toast.LENGTH_LONG).show();//TODO get data
-                Intent intent  = new Intent(getActivity(), BuyHomeActivity.class);
-                //TODO pass data through intent
-                startActivity(intent);
+            public void onResponse(String response) {
+                switch (response) {
+                    case "not exist account":
+                        Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO fix for suitable error
+                        break;
+                    case "not match role":
+                        Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO fix for suitable error
+                        break;
+                    default:
+                        Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();//TODO get data
+                        try {
+                            JSONArray object = new JSONArray(response);
+
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+
+                            Buyer buyer = gson.fromJson(object.getString(0), Buyer.class);
+
+                            Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+                            //TODO pass data through intent
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+
+                }
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(),"lỗi " + urlGetData,Toast.LENGTH_LONG).show();//TODO get data
+                Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO get data
                 Log.d("MK ", md5(etPass.getText().toString()));
             }
-        }
-        );
-        requestQueue.add(jsonArrayRequest);
+        });
+
+        requestQueue.add(stringRequest);
     }
 
 }

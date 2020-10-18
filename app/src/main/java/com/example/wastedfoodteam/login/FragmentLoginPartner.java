@@ -1,6 +1,8 @@
 package com.example.wastedfoodteam.login;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +21,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.buy.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
+import com.example.wastedfoodteam.source.model.Buyer;
+import com.example.wastedfoodteam.source.model.Seller;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 
@@ -85,21 +93,44 @@ public class FragmentLoginPartner extends Fragment {
      */
     private void getData(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONArray response) {
-                Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();
-                //TODO get data
-                //TODO return to an activity
+            public void onResponse(String response) {
+                switch (response) {
+                    case "not exist account":
+                        Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO fix for suitable error
+                        break;
+                    case "not match role":
+                        Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO fix for suitable error
+                        break;
+                    default:
+                        Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();//TODO get data
+                        try {
+                            JSONArray object = new JSONArray(response);
+
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+
+                            Seller seller = gson.fromJson(object.getString(0), Seller.class);
+
+                            Intent intent = new Intent(getActivity(), BuyHomeActivity.class);//TODO change to seller activity
+                            //TODO pass data through intent
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+
+                }
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "lỗi", Toast.LENGTH_LONG).show();//TODO get data
+                Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO get data
+                Log.d("MK ", md5(etPass.getText().toString()));
             }
-        }
-        );
-        requestQueue.add(jsonArrayRequest);
+        });
+        requestQueue.add(stringRequest);
     }
 
     /**
