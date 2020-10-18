@@ -126,7 +126,6 @@
             android:text="Buyer" />
 
         <Button
-            android:onClick="addFragmentLoginPartner"
             android:id="@+id/btnPartnerOptionFLB"
             android:layout_width="0dp"
             android:layout_height="match_parent"

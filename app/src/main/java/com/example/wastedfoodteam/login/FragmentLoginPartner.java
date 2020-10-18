@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -49,6 +51,12 @@ public class FragmentLoginPartner extends Fragment {
             }
         });
 
+        btnBuyerOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addFragmentLoginPartner();
+            }
+        });
         return view;
     }
 
@@ -82,6 +90,7 @@ public class FragmentLoginPartner extends Fragment {
             public void onResponse(JSONArray response) {
                 Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();
                 //TODO get data
+                //TODO return to an activity
             }
         }, new Response.ErrorListener() {
             @Override
@@ -91,5 +100,16 @@ public class FragmentLoginPartner extends Fragment {
         }
         );
         requestQueue.add(jsonArrayRequest);
+    }
+
+    /**
+     * move to fragment buyer
+     */
+    public void addFragmentLoginPartner(){
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentLoginBuyer fragmentLoginBuyer = new FragmentLoginBuyer();
+        fragmentTransaction.replace(R.id.flFragmentLayoutAM,fragmentLoginBuyer);
+        fragmentTransaction.commit();
     }
 }
