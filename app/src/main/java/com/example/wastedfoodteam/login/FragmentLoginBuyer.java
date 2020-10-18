@@ -102,8 +102,8 @@ public class FragmentLoginBuyer extends Fragment {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //urlGetData ="http://192.168.1.46/wastedfoodphp/login/buyerLogin.php?username=tungpt36&password=tung1998";
-                //urlGetData = "http://192.168.1.46/wastedfoodphp/login/buyerLogin.php?username="+etSDT.getText().toString()+"&password="+etPass.getText().toString();
+                //urlGetData ="http://localhost/wastedfoodphp/login/buyerLogin.php?username=tungpt36&password=tung1998";
+                urlGetData = "http://192.168.1.46/wastedfoodphp/login/buyerLogin.php?username="+etSDT.getText().toString()+"&password="+md5(etPass.getText().toString());
                 getData(urlGetData);
             }
         });
@@ -203,7 +203,8 @@ public class FragmentLoginBuyer extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(),"lỗi",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),"lỗi " + urlGetData,Toast.LENGTH_LONG).show();
+                Log.d("MK ", md5(etPass.getText().toString()));
             }
         }
         );

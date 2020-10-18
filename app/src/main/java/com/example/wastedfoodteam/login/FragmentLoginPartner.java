@@ -43,7 +43,7 @@ public class FragmentLoginPartner extends Fragment {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                urlGetData = "http://192.168.1.46/wastedfoodphp/login/sellerLogin.php?username="+etSDT.getText().toString()+"&password="+etPass.getText().toString();
+                urlGetData = "http://192.168.1.46/wastedfoodphp/login/sellerLogin.php?username="+etSDT.getText().toString()+"&password="+md5(etPass.getText().toString());
                 getData(urlGetData);
             }
         });
