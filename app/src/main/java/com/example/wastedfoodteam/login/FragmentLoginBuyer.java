@@ -16,6 +16,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.MainActivity;
 import com.example.wastedfoodteam.R;
 import com.facebook.AccessToken;
@@ -32,6 +38,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONArray;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -45,6 +53,7 @@ public class FragmentLoginBuyer extends Fragment {
     Button btnSignIn, btnSignInGoogle, btnPartnerOption;
     LoginButton btnSignInFacebook;
     CallbackManager callbackManager;
+    String urlGetData = "";
 
     @Nullable
     @Override
@@ -55,6 +64,7 @@ public class FragmentLoginBuyer extends Fragment {
         btnSignIn = view.findViewById(R.id.btnSignInBuyerFLB);
         btnSignInGoogle = view.findViewById(R.id.btnGoogleSignInFLB);
         btnSignInFacebook = view.findViewById(R.id.btnFacebookSignInFLB);
+
 
         //facebook option
 
@@ -92,11 +102,9 @@ public class FragmentLoginBuyer extends Fragment {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (etSDT.getText().equals("0385818813") && etPass.getText().equals("11011998")) {
-                    Toast.makeText(getActivity(), "Dung", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getActivity(), "Your SDT or Password wrong", Toast.LENGTH_LONG).show();
-                }
+                //urlGetData ="http://localhost/wastedfoodphp/login/buyerLogin.php?username=tungpt36&password=tung1998";
+                urlGetData = "http://192.168.1.46/wastedfoodphp/login/buyerLogin.php?username="+etSDT.getText().toString()+"&password="+md5(etPass.getText().toString());
+                getData(urlGetData);
             }
         });
 
@@ -184,6 +192,23 @@ public class FragmentLoginBuyer extends Fragment {
             e.printStackTrace();
         }
         return result;
+    }
+    private void getData(String url){
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Toast.makeText(getActivity(),"OK",Toast.LENGTH_LONG).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(),"lỗi " + urlGetData,Toast.LENGTH_LONG).show();
+                Log.d("MK ", md5(etPass.getText().toString()));
+            }
+        }
+        );
+        requestQueue.add(jsonArrayRequest);
     }
 
 }
