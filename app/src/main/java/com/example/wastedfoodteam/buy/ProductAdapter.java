@@ -49,11 +49,12 @@ public class ProductAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
+
         if (convertView == null) {
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(layout, null);
-            holder.tvTitle = (TextView) convertView.findViewById(R.id.tvTitleLPI);
+            holder.tvTitle = convertView.findViewById(R.id.tvTitleLPI);
             holder.ivProduct = convertView.findViewById(R.id.ivProductLPI);
             convertView.setTag(holder);
         } else {
@@ -63,7 +64,7 @@ public class ProductAdapter extends BaseAdapter {
         Product product = productList.get(position);
 
         holder.tvTitle.setText(product.getName() + "");
-        Picasso.get().load(product.getImage().isEmpty()? Variable.noImageUrl : product.getImage()).into(holder.ivProduct);
+        Picasso.get().load(product.getImage().isEmpty() ? Variable.noImageUrl : product.getImage()).into(holder.ivProduct);//TODO replace with other type
         return convertView;
 
     }

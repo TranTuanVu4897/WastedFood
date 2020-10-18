@@ -36,17 +36,18 @@ public class FragmentListProduct extends ListFragment {
     ArrayList<Product> arrProduct;
     ProductAdapter adapter;
     ListView lvProduction;
-    Seller seller;
-    Button btn;
     FragmentDetailProduct detailProduct;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_product, container, false);
+        //set up url volley
         urlGetData = Variable.ipAddress + Variable.searchNormal;
 
-
+//mapping view
         lvProduction = view.findViewById(android.R.id.list);
+
         arrProduct = new ArrayList<>();
         adapter = new ProductAdapter(getActivity().getApplicationContext(), R.layout.list_product_item, arrProduct);
         lvProduction.setAdapter(adapter);
@@ -56,8 +57,12 @@ public class FragmentListProduct extends ListFragment {
 
 
     public void getData() {
+
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        //TODO
+        //require edit latitude
         urlGetData = urlGetData + "?lat=" + Variable.gps.latitude + "&lng=" + Variable.gps.longitude;
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlGetData, null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -79,7 +84,7 @@ public class FragmentListProduct extends ListFragment {
                                         object.getString("Description"),
                                         dateFormat.parse(object.getString("SellDate")),
                                         object.getString("Status"),
-                                        false, null));
+                                        false));
                             } catch (JSONException | ParseException e) {
                                 e.printStackTrace();
                             }
@@ -89,8 +94,6 @@ public class FragmentListProduct extends ListFragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT);
-
                     }
                 });
         requestQueue.add(jsonArrayRequest);
@@ -98,17 +101,19 @@ public class FragmentListProduct extends ListFragment {
 
     @Override
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
-        Product product = (Product)l.getAdapter().getItem(position);
+        Product product = (Product) l.getAdapter().getItem(position);
         getSeller(product.getSeller_id());
         detailProduct = new FragmentDetailProduct(product);
+
+        //open detail product fragment
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flSearchResultAH, detailProduct, "")
+                .add(R.id.flSearchResultAH, detailProduct, "")//TODO check if this work
                 .addToBackStack(null)
                 .commit();
     }
 
     private void getSeller(int id) {
-        urlGetData = Variable.ipAddress +"getSellerById.php?id=" +  id;
+        urlGetData = Variable.ipAddress + "getSellerById.php?id=" + id;
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlGetData, null,
                 new Response.Listener<JSONArray>() {
@@ -123,18 +128,17 @@ public class FragmentListProduct extends ListFragment {
                                         object.getString("Address"),
                                         object.getDouble("Latitude"),
                                         object.getDouble("Longitude"),
-                                        object.getString("Description"),null);
-                            } catch (JSONException  e) {
+                                        object.getString("Description"), null);
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
-                        adapter.notifyDataSetChanged();
+                        adapter.notifyDataSetChanged();//TODO for what????
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-//                        Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT);
 
                     }
                 });

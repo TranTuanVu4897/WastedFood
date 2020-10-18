@@ -24,6 +24,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.MainActivity;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.global.Variable;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -103,7 +104,7 @@ public class FragmentLoginBuyer extends Fragment {
             @Override
             public void onClick(View v) {
                 //urlGetData ="http://localhost/wastedfoodphp/login/buyerLogin.php?username=tungpt36&password=tung1998";
-                urlGetData = "http://192.168.1.46/wastedfoodphp/login/buyerLogin.php?username="+etSDT.getText().toString()+"&password="+md5(etPass.getText().toString());
+                urlGetData = Variable.ipAddress +"login/buyerLogin.php?username="+etSDT.getText().toString()+"&password="+md5(etPass.getText().toString());
                 getData(urlGetData);
             }
         });
@@ -113,6 +114,9 @@ public class FragmentLoginBuyer extends Fragment {
 
     }
 
+    /**
+     * google sign in option
+     */
     private void AddGoogleSignInOption() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -120,13 +124,18 @@ public class FragmentLoginBuyer extends Fragment {
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
     }
 
-    //Start Sign in Google flow
+    /**
+     * Start Sign in Google flow
+     */
     private void signInGoogle() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    //keep Sign In Google
+    /**
+     * keep Sign In Google
+     * @param completedTask
+     */
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
@@ -139,7 +148,12 @@ public class FragmentLoginBuyer extends Fragment {
         }
     }
 
-    //Check account
+    /**
+     * Check account
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
@@ -163,7 +177,9 @@ public class FragmentLoginBuyer extends Fragment {
         super.onStart();
     }
 
-    //Keep Sign In Facebook
+    /**
+     * Keep Sign In Facebook
+     */
     private void handleSignInFacebook() {
         //check loginFB
         if (AccessToken.getCurrentAccessToken() != null && com.facebook.Profile.getCurrentProfile() != null) {
@@ -171,6 +187,11 @@ public class FragmentLoginBuyer extends Fragment {
             //startActivity(new Intent(MainActivity.this,MainActivity2.class));
         }
     }
+
+    /**
+     * add fragment login for seller
+     * @param view
+     */
     public void addFragmentLoginPartner(View view){
 
         FragmentManager fragmentManager = getFragmentManager();
@@ -180,6 +201,11 @@ public class FragmentLoginBuyer extends Fragment {
         fragmentTransaction.commit();
     }
 
+    /**
+     * encode md5
+     * @param str
+     * @return
+     */
     private String md5(String str) {
         String result = "";
         MessageDigest digest;
@@ -193,6 +219,11 @@ public class FragmentLoginBuyer extends Fragment {
         }
         return result;
     }
+
+    /**
+     * get data from mySql
+     * @param url
+     */
     private void getData(String url){
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
