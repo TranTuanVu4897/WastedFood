@@ -51,6 +51,7 @@
                 android:id="@+id/etSdtBuyerFLB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginBottom="10dp"
@@ -123,7 +124,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Buyer" />
+            android:text="Buyer"
+            android:background="#72DC4B"/>
 
         <Button
             android:onClick="addFragmentLoginPartner"
@@ -131,7 +133,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Partner" />
+            android:text="Partner"
+            android:background="#4CAF50"/>
 
     </LinearLayout>
 

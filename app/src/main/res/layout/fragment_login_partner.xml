@@ -88,14 +88,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Buyer" />
+            android:text="Buyer"
+            android:background="#4CAF50"/>
 
         <Button
             android:id="@+id/btnPartnerOptionFLP"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Partner" />
+            android:text="Partner"
+            android:background="#72DC4B"/>
 
     </LinearLayout>
 

@@ -92,6 +92,14 @@ public class FragmentLoginBuyer extends Fragment {
 
         //google option
         AddGoogleSignInOption();
+        etSDT.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(etSDT.getText().toString().length()!=10){
+                    Toast.makeText(getActivity(),"SDT phải là 10 số",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         btnSignInGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +111,10 @@ public class FragmentLoginBuyer extends Fragment {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //urlGetData ="http://localhost/wastedfoodphp/login/buyerLogin.php?username=tungpt36&password=tung1998";
+                if(etSDT.getText().toString().length()!=10){
+                    Toast.makeText(getActivity(),"SDT phải là 10 số",Toast.LENGTH_LONG).show();
+                    return;
+                }
                 urlGetData = Variable.ipAddress +"login/buyerLogin.php?username="+etSDT.getText().toString()+"&password="+md5(etPass.getText().toString());
                 getData(urlGetData);
             }
