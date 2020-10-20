@@ -21,13 +21,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.MainActivity;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.buy.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.source.model.Buyer;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -41,8 +38,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 
@@ -100,8 +95,8 @@ public class FragmentLoginBuyer extends Fragment {
         etSDT.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (etSDT.getText().toString().length() != 10) {
-                    Toast.makeText(getActivity(), "SDT phải là 10 số", Toast.LENGTH_LONG).show();
+                if(etSDT.getText().toString().length()!=10){
+                    Toast.makeText(getActivity(),"SDT phải là 10 số",Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -116,11 +111,11 @@ public class FragmentLoginBuyer extends Fragment {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (etSDT.getText().toString().length() != 10) {
-                    Toast.makeText(getActivity(), "SDT phải là 10 số", Toast.LENGTH_LONG).show();
+                if(etSDT.getText().toString().length()!=10){
+                    Toast.makeText(getActivity(),"SDT phải là 10 số",Toast.LENGTH_LONG).show();
                     return;
                 }
-                urlGetData = Variable.ipAddress + "login/buyerLogin.php?username=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
+                urlGetData = Variable.ipAddress +"login/buyerLogin.php?username="+etSDT.getText().toString()+"&password="+md5(etPass.getText().toString());
                 getData(urlGetData);
             }
         });
@@ -150,7 +145,6 @@ public class FragmentLoginBuyer extends Fragment {
 
     /**
      * keep Sign In Google
-     *
      * @param completedTask
      */
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
@@ -167,7 +161,6 @@ public class FragmentLoginBuyer extends Fragment {
 
     /**
      * Check account
-     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -208,21 +201,19 @@ public class FragmentLoginBuyer extends Fragment {
 
     /**
      * add fragment login for seller
-     *
      * @param view
      */
-    public void addFragmentLoginPartner(View view) {
+    public void addFragmentLoginPartner(View view){
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         FragmentLoginPartner fragmentLoginPartner = new FragmentLoginPartner();
-        fragmentTransaction.add(R.id.fragmentPartner, fragmentLoginPartner);
+        fragmentTransaction.add(R.id.fragmentPartner,fragmentLoginPartner);
         fragmentTransaction.commit();
     }
 
     /**
      * encode md5
-     *
      * @param str
      * @return
      */
@@ -242,51 +233,24 @@ public class FragmentLoginBuyer extends Fragment {
 
     /**
      * get data from mySql
-     *
      * @param url
      */
-    private void getData(String url) {
+    private void getData(String url){
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
-            public void onResponse(String response) {
-                switch (response) {
-                    case "not exist account":
-                        Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO fix for suitable error
-                        break;
-                    case "not match role":
-                        Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO fix for suitable error
-                        break;
-                    default:
-                        Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();//TODO get data
-                        try {
-                            JSONArray object = new JSONArray(response);
-
-                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-
-                            Buyer buyer = gson.fromJson(object.getString(0), Buyer.class);
-
-                            Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
-                            //TODO pass data through intent
-                            startActivity(intent);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break;
-
-                }
-
+            public void onResponse(JSONArray response) {
+                Toast.makeText(getActivity(),"OK",Toast.LENGTH_LONG).show();//TODO get data
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO get data
-                Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO get data
+                Toast.makeText(getActivity(),"lỗi " + urlGetData,Toast.LENGTH_LONG).show();//TODO get data
                 Log.d("MK ", md5(etPass.getText().toString()));
             }
         }
         );
-        requestQueue.add(stringRequest);
+        requestQueue.add(jsonArrayRequest);
     }
 
 }
