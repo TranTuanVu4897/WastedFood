@@ -23,20 +23,21 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
 
-
-        <activity android:name=".seller.PostActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".seller.PostActivity">
+
         </activity>
 
         <activity android:name=".seller.AddProductActivity">
 
         </activity>
 
-        
+
         <!--        <activity android:name=".MapsActivity">-->
         <!--            <intent-filter>-->
         <!--                <action android:name="android.intent.action.MAIN" />-->
