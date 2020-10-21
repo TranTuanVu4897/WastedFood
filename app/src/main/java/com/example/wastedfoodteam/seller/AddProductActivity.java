@@ -30,7 +30,6 @@ import androidx.core.content.ContextCompat;
 import com.example.wastedfoodteam.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -75,7 +74,7 @@ public class AddProductActivity extends AppCompatActivity {
     private Uri image_uri;
 
     //firebase connect
-    private FirebaseAuth firebaseAuth;
+    //private FirebaseAuth firebaseAuth;
 
     //progress dialog
     private ProgressDialog progressDialog;
@@ -143,7 +142,7 @@ public class AddProductActivity extends AppCompatActivity {
         });
 
         //firebase
-        firebaseAuth = FirebaseAuth.getInstance();
+        //firebaseAuth = FirebaseAuth.getInstance();
 
         //set Progress dialog
         progressDialog = new ProgressDialog(this);
