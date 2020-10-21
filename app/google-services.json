@@ -1,82 +1,36 @@
 {
   "project_info": {
-    "project_number": "433390127048",
-    "firebase_url": "https://fir-demo-24196.firebaseio.com",
-    "project_id": "fir-demo-24196",
-    "storage_bucket": "fir-demo-24196.appspot.com"
+    "project_number": "89673767638",
+    "firebase_url": "https://wasted-food-1602432760230.firebaseio.com",
+    "project_id": "wasted-food-1602432760230",
+    "storage_bucket": "wasted-food-1602432760230.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:433390127048:android:182aa3afdb6c26bed522fd",
-        "android_client_info": {
-          "package_name": "com.example.firebasepostdemo"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "433390127048-45bq16lot4e4g0t4p310e4vkvvi4785e.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.firebasepostdemo",
-            "certificate_hash": "0544fa846baad082019020d63b116507ddd74001"
-          }
-        },
-        {
-          "client_id": "433390127048-v8emcv7i55fsea4vhamoh78l1rei9ccv.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDSQDeB92JSxz2xO6fDTHSB72zt5fNNc3Q"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "433390127048-v8emcv7i55fsea4vhamoh78l1rei9ccv.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:433390127048:android:d61829b899d14510d522fd",
+        "mobilesdk_app_id": "1:89673767638:android:ef38e428bd029664d2c777",
         "android_client_info": {
           "package_name": "com.example.wastedfoodteam"
         }
       },
       "oauth_client": [
         {
-          "client_id": "433390127048-2juln4poejj61eajdge08er8ujcsiquo.apps.googleusercontent.com",
+          "client_id": "89673767638-v310l3s9uv8ejo5rdir00plb5q5q0bvv.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.wastedfoodteam",
-            "certificate_hash": "0544fa846baad082019020d63b116507ddd74001"
+            "certificate_hash": "153489de5518ca10bed401334e7b0625623bc9ba"
           }
-        },
-        {
-          "client_id": "433390127048-v8emcv7i55fsea4vhamoh78l1rei9ccv.apps.googleusercontent.com",
-          "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDSQDeB92JSxz2xO6fDTHSB72zt5fNNc3Q"
+          "current_key": "AIzaSyBhBfKnr77GOrOyrgiU16qLrqbaGzqlFNs"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "433390127048-v8emcv7i55fsea4vhamoh78l1rei9ccv.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
