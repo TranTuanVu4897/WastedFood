@@ -1,6 +1,7 @@
 package com.example.wastedfoodteam.login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,10 +52,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class FragmentLoginBuyer extends Fragment {
     GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN;
+    String checkOption = "";
     EditText etSDT, etPass, etWarning;
     Button btnSignIn, btnSignInGoogle, btnPartnerOption;
     LoginButton btnSignInFacebook;
@@ -83,7 +87,7 @@ public class FragmentLoginBuyer extends Fragment {
             public void onSuccess(LoginResult loginResult) {
 //                urlGetData = Variable.ipAddress + "login/buyerLogin.php?third_party_id=" + etSDT.getText().toString();
 //                getData(urlGetData);
-                startActivity(new Intent(getActivity(),BuyHomeActivity.class));
+                startActivity(new Intent(getActivity(), BuyHomeActivity.class));
 
 
             }
@@ -95,7 +99,7 @@ public class FragmentLoginBuyer extends Fragment {
 
             @Override
             public void onError(FacebookException error) {
-                Toast.makeText(getActivity(),"Kiểm tra lại kết nối Internet", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Kiểm tra lại kết nối Internet", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -106,8 +110,7 @@ public class FragmentLoginBuyer extends Fragment {
             public void onClick(View v) {
                 etWarning.setText("");
 //To Do Check Phone
-                    signInGoogle();
-
+                signInGoogle();
 
             }
         });
@@ -119,7 +122,7 @@ public class FragmentLoginBuyer extends Fragment {
                 if (etSDT.getText().toString().length() != 10) {
                     etWarning.setText("SDT không hợp lệ");
 
-                }else {
+                } else {
                     urlGetData = Variable.ipAddress + "login/buyerLogin.php?phone=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
                     getData(urlGetData);
                 }
@@ -200,8 +203,14 @@ public class FragmentLoginBuyer extends Fragment {
     private void handleSignInFacebook() {
         //check loginFB
         if (AccessToken.getCurrentAccessToken() != null && com.facebook.Profile.getCurrentProfile() != null) {
+
+
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
-            startActivity(new Intent(getActivity(),BuyHomeActivity.class));
+            Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+            checkOption = "2";
+            intent.putExtra("Check_option", checkOption);
+            startActivity(intent);
+
         }
     }
 
@@ -252,7 +261,7 @@ public class FragmentLoginBuyer extends Fragment {
                 switch (response) {
                     case "not exist account":
                     case "account is locked":
-                        Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO fix for suitable error
+                        Toast.makeText(getActivity(), "Mật khẩu sai", Toast.LENGTH_LONG).show();//TODO fix for suitable error
                         break;
                     case "not match role":
                         Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO fix for suitable error
@@ -269,7 +278,10 @@ public class FragmentLoginBuyer extends Fragment {
 
                             Buyer buyer = gson.fromJson(object.getString(0), Buyer.class);
 
+                            sharePreferences();
                             Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+                            checkOption = "1";
+                            intent.putExtra("Check_option", checkOption);
                             //TODO pass data through intent
                             startActivity(intent);
                         } catch (Exception e) {
@@ -290,5 +302,14 @@ public class FragmentLoginBuyer extends Fragment {
         );
         requestQueue.add(stringRequest);
     }
+
+    private void sharePreferences() {
+        SharedPreferences pre = getActivity().getSharedPreferences("my_data", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pre.edit();
+        editor.putString("name", "Tung");
+        editor.putBoolean("check", true);
+        editor.commit();
+    }
+
 
 }
