@@ -75,6 +75,7 @@ public class FragmentLoginBuyer extends Fragment {
         btnSignIn = view.findViewById(R.id.btnSignInBuyerFLB);
         btnSignInGoogle = view.findViewById(R.id.btnGoogleSignInFLB);
         btnSignInFacebook = view.findViewById(R.id.btnFacebookSignInFLB);
+        btnPartnerOption = view.findViewById(R.id.btnPartnerOptionFLB);
         handleSignInFacebook();
 
         //facebook option
@@ -126,6 +127,12 @@ public class FragmentLoginBuyer extends Fragment {
                     urlGetData = Variable.ipAddress + "login/buyerLogin.php?phone=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
                     getData(urlGetData);
                 }
+            }
+        });
+        btnPartnerOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addFragmentLoginPartner();
             }
         });
 
@@ -217,9 +224,8 @@ public class FragmentLoginBuyer extends Fragment {
     /**
      * add fragment login for seller
      *
-     * @param view
      */
-    public void addFragmentLoginPartner(View view) {
+    public void addFragmentLoginPartner() {
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
