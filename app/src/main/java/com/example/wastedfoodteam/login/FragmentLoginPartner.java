@@ -49,7 +49,7 @@ public class FragmentLoginPartner extends Fragment {
         etSDT = view.findViewById(R.id.etSdtPartnerFLP);
         etPass = view.findViewById(R.id.etPassPartnerFLP);
         btnSignIn = view.findViewById(R.id.btnSignInPartnerFLP);
-        btnBuyerOption = view.findViewById(R.id.btnBuyerOptionFLB);
+        btnBuyerOption = view.findViewById(R.id.btnBuyerOptionFLP);
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override

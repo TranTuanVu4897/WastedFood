@@ -230,7 +230,7 @@ public class FragmentLoginBuyer extends Fragment {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         FragmentLoginPartner fragmentLoginPartner = new FragmentLoginPartner();
-        fragmentTransaction.add(R.id.fragmentPartner, fragmentLoginPartner);
+        fragmentTransaction.replace(R.id.flFragmentLayoutAM, fragmentLoginPartner);
         fragmentTransaction.commit();
     }
 
