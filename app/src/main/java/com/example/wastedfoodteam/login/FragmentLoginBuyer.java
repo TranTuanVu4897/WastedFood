@@ -22,10 +22,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.wastedfoodteam.MainActivity;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buy.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
@@ -73,7 +71,7 @@ public class FragmentLoginBuyer extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login_buyer, container, false);
         etSDT = view.findViewById(R.id.etSdtBuyerFLB);
         etPass = view.findViewById(R.id.etPassBuyerFLB);
-        tvWarning = view.findViewById(R.id.etWarningFLB);
+        tvWarning = view.findViewById(R.id.tvWarningFLB);
         btnSignIn = view.findViewById(R.id.btnSignInBuyerFLB);
         btnSignInGoogle = view.findViewById(R.id.btnGoogleSignInFLB);
         btnSignInFacebook = view.findViewById(R.id.btnFacebookSignInFLB);
@@ -261,6 +259,7 @@ public class FragmentLoginBuyer extends Fragment {
             @Override
             public void onResponse(String response) {
                 switch (response) {
+                    case "not exist account":
                     case "account is locked":
                         Toast.makeText(getActivity(), "Mật khẩu sai", Toast.LENGTH_LONG).show();//TODO fix for suitable error
                         break;
