@@ -39,7 +39,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         etSearch = findViewById(R.id.etSearchBHA);
         SharedPreferences pre = getSharedPreferences("my_data",MODE_PRIVATE);
         String name = pre.getString("name","khong thay");
-        etSearch.setText(name);
+
 
         bundle = getIntent().getExtras();
         if(bundle != null){
@@ -90,7 +90,7 @@ public class BuyHomeActivity extends AppCompatActivity {
 //                    txtName.setText("Name:" + object.getString("name"));
 //                    txtId.setText("id:" + object.getString("id"));
                     String idF = object.getString("id");
-
+                    etSearch.setText("id:" + object.getString("id"));
                     String imageF = "https://graph.facebook.com/" + idF + "/picture?type=large";
                     Glide.with(BuyHomeActivity.this).load(imageF).into(imageView);
                 } catch (JSONException e) {

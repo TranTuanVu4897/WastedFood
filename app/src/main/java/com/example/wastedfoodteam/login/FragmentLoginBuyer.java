@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -59,7 +60,8 @@ public class FragmentLoginBuyer extends Fragment {
     GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN;
     String checkOption = "";
-    EditText etSDT, etPass, etWarning;
+    EditText etSDT, etPass;
+    TextView tvWarning;
     Button btnSignIn, btnSignInGoogle, btnPartnerOption;
     LoginButton btnSignInFacebook;
     CallbackManager callbackManager;
@@ -71,7 +73,7 @@ public class FragmentLoginBuyer extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login_buyer, container, false);
         etSDT = view.findViewById(R.id.etSdtBuyerFLB);
         etPass = view.findViewById(R.id.etPassBuyerFLB);
-        etWarning = view.findViewById(R.id.etWarningFLB);
+        tvWarning = view.findViewById(R.id.etWarningFLB);
         btnSignIn = view.findViewById(R.id.btnSignInBuyerFLB);
         btnSignInGoogle = view.findViewById(R.id.btnGoogleSignInFLB);
         btnSignInFacebook = view.findViewById(R.id.btnFacebookSignInFLB);
@@ -108,7 +110,7 @@ public class FragmentLoginBuyer extends Fragment {
         btnSignInGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                etWarning.setText("");
+                tvWarning.setText("");
 //To Do Check Phone
                 signInGoogle();
 
@@ -120,7 +122,7 @@ public class FragmentLoginBuyer extends Fragment {
             @Override
             public void onClick(View v) {
                 if (etSDT.getText().toString().length() != 10) {
-                    etWarning.setText("SDT không hợp lệ");
+                    tvWarning.setText("SDT không hợp lệ");
 
                 } else {
                     urlGetData = Variable.ipAddress + "login/buyerLogin.php?phone=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
@@ -259,7 +261,6 @@ public class FragmentLoginBuyer extends Fragment {
             @Override
             public void onResponse(String response) {
                 switch (response) {
-                    case "not exist account":
                     case "account is locked":
                         Toast.makeText(getActivity(), "Mật khẩu sai", Toast.LENGTH_LONG).show();//TODO fix for suitable error
                         break;
