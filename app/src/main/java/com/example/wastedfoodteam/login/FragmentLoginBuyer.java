@@ -110,7 +110,7 @@ public class FragmentLoginBuyer extends Fragment {
             @Override
             public void onClick(View v) {
                 tvWarning.setText("");
-//To Do Check Phone
+                //To Do Check Phone
                 signInGoogle();
 
             }
