@@ -28,11 +28,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.seller.sellerFragment.AddProductFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
@@ -42,6 +44,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class AddProductActivity extends AppCompatActivity {
 
@@ -68,7 +71,7 @@ public class AddProductActivity extends AppCompatActivity {
 
     //permission array
     private String[] cameraPermission;
-    private  String[] storagePermission;
+    private String[] storagePermission;
 
     //image pick uri
     private Uri image_uri;
@@ -80,8 +83,10 @@ public class AddProductActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
 
-    //connect storage firebase
-    private StorageReference mStorageReference;
+    // instance for firebase storage and StorageReference
+    FirebaseStorage storage;
+    StorageReference storageReference;
+    StorageReference mStorageReference;
 
     //
     private StorageTask uploadTask;
@@ -93,7 +98,9 @@ public class AddProductActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_product);
 
 
-        mStorageReference = FirebaseStorage.getInstance().getReference();
+        // get the Firebase  storage reference
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
 
         //init ui view
         productIconIv = findViewById(R.id.productIconIv);
@@ -121,7 +128,7 @@ public class AddProductActivity extends AppCompatActivity {
                         String date = dayOfMonth + "/" + month + "/" + year;
                         editTextOpenDate.setText(date);
                     }
-                },year,month,day);
+                }, year, month, day);
                 datePickerDialog.show();
             }
         });
@@ -136,7 +143,7 @@ public class AddProductActivity extends AppCompatActivity {
                         String date = dayOfMonth + "/" + month + "/" + year;
                         editTextCloseDate.setText(date);
                     }
-                },year,month,day);
+                }, year, month, day);
                 datePickerDialog.show();
             }
         });
@@ -150,7 +157,7 @@ public class AddProductActivity extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
 
         //init permission arrays
-        cameraPermission = new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         productIconIv.setOnClickListener(new View.OnClickListener() {
@@ -175,22 +182,18 @@ public class AddProductActivity extends AppCompatActivity {
         });
 
 
-
-
     }
 
     private String productName;
     private double productPrice;
-    private int productQuantity,productDiscount;
-    private Date productOpenDate,productCloseDate;
-
-
+    private int productQuantity, productDiscount;
+    private Date productOpenDate, productCloseDate;
 
 
     private void inputData() throws ParseException {
         //Input Data
         productName = editTextName.getText().toString().trim();
-        productPrice = Double.parseDouble(editTextPrice.getText().toString().trim()) ;
+        productPrice = Double.parseDouble(editTextPrice.getText().toString().trim());
         productDiscount = Integer.parseInt(editTextDiscount.getText().toString().trim());
         productQuantity = Integer.parseInt(editTextQuantity.getText().toString().trim());
         //productOpenDate = Calendar.getInstance().getTime();
@@ -201,7 +204,6 @@ public class AddProductActivity extends AppCompatActivity {
         //productCloseDate = new SimpleDateFormat("hh:mm:ss a").parse(editTextCloseDate.getText().toString().trim());
 
 
-
         //Validate
         //Do it later WARNING
 
@@ -210,18 +212,16 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
 
-
-
-    private void addProduct(){
+    private void addProduct() {
         progressDialog.setMessage("Adding Product");
         progressDialog.show();
 
         String timestamp = "" + System.currentTimeMillis();
-        if(image_uri == null){
+        if (image_uri == null) {
             //upload without image
 
             //set up data to upload
-            HashMap<String,Object> hashMap = new HashMap<>();
+            HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("productId", "" + timestamp);
             hashMap.put("productName", "" + productName);
             hashMap.put("productPrice", "" + productPrice);
@@ -238,23 +238,23 @@ public class AddProductActivity extends AppCompatActivity {
             //reference.child(firebaseAuth.getUid()).child("Products").child("timestamp").setValue(hashMap)
             reference.child("2").child("Products").child(timestamp).setValue(hashMap)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    //added to db
-                    progressDialog.dismiss();
-                    Intent intent = new Intent(AddProductActivity.this, PostActivity.class);
-                    startActivity(intent);
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    //failed to db
-                    progressDialog.dismiss();
-                }
-            });
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            //added to db
+                            progressDialog.dismiss();
+                            Intent intent = new Intent(AddProductActivity.this, PostActivity.class);
+                            startActivity(intent);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            //failed to db
+                            progressDialog.dismiss();
+                        }
+                    });
 
-        }else {
+        } else {
             //upload with image
 
             //first upload image to storage
@@ -262,42 +262,45 @@ public class AddProductActivity extends AppCompatActivity {
             //name and path of image to upload
 
 
-
-            if(uploadTask != null && uploadTask.isInProgress()){
-                Toast.makeText(AddProductActivity.this,"Upload in progress" , Toast.LENGTH_LONG).show();
-            }else{
+            if (uploadTask != null && uploadTask.isInProgress()) {
+                Toast.makeText(AddProductActivity.this, "Upload in progress", Toast.LENGTH_LONG).show();
+            } else {
                 fileUpload();
             }
-
-
-
 
 
         }
     }
 
-    private String getExtension(Uri uri){
+    private String getExtension(Uri uri) {
         //url image handle
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    private void fileUpload(){
-        StorageReference ref = mStorageReference.child(System.currentTimeMillis() + "." + getExtension(image_uri));
+    private void fileUpload() {
 
+        StorageReference ref = mStorageReference.child(System.currentTimeMillis() + "." + getExtension(image_uri));
         uploadTask = ref.putFile(image_uri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // Get a URL to the uploaded content
                         String downloadUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
-                        Toast.makeText(AddProductActivity.this,"Image upload successful" + downloadUrl , Toast.LENGTH_LONG).show();
+                        taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                //do your stuff- uri.toString() will give you download URL\\
+                                uri.toString();
+                            }
+                        });
+                        Toast.makeText(AddProductActivity.this, "Image upload successful" + downloadUrl, Toast.LENGTH_LONG).show();
 
                         String timestamp = "" + System.currentTimeMillis();
                         //url of image received upload to db
                         //set up data to upload
-                        HashMap<String,Object> hashMap = new HashMap<>();
+                        HashMap<String, Object> hashMap = new HashMap<>();
                         hashMap.put("productId", "" + timestamp);
                         hashMap.put("productName", "" + productName);
                         hashMap.put("productPrice", "" + productPrice);
@@ -339,37 +342,37 @@ public class AddProductActivity extends AppCompatActivity {
 
     }
 
-    private void pickFromGallery(){
+    private void pickFromGallery() {
         //intent to pick image from gallery
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        startActivityForResult(intent,IMAGE_PICK_GALLERY_CODE);
+        startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE);
     }
 
-    private void showImagePickDialog(){
+    private void showImagePickDialog() {
         //display in dialog
-        String[] options = {"Camera","Gallery"};
+        String[] options = {"Camera", "Gallery"};
         //dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Pick Image").setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //handle item clicks
-                if(which==0){
+                if (which == 0) {
                     //camera clicked
-                    if(checkCameraPermission()){
+                    if (checkCameraPermission()) {
                         //permission granted
                         pickFromCamera();
-                    }else{
+                    } else {
                         //permission not granted, request
                         requestCameraPermission();
                     }
-                }else{
+                } else {
                     //gallery clicked
-                    if(checkStoragePermission()){
+                    if (checkStoragePermission()) {
                         //permission granted
                         pickFromGallery();
-                    }else{
+                    } else {
                         //permission not granted, request
                         requestStoragePermission();
                     }
@@ -378,32 +381,32 @@ public class AddProductActivity extends AppCompatActivity {
         }).show();
     }
 
-    private void pickFromCamera(){
+    private void pickFromCamera() {
         //intent to pick image from camera
 
         //use media store to pick high/ori quality image
         ContentValues contentValues = new ContentValues();
-        contentValues.put(MediaStore.Images.Media.TITLE,"Temp_Image_Title");
-        contentValues.put(MediaStore.Images.Media.DESCRIPTION,"Temp_Image_Description");
+        contentValues.put(MediaStore.Images.Media.TITLE, "Temp_Image_Title");
+        contentValues.put(MediaStore.Images.Media.DESCRIPTION, "Temp_Image_Description");
 
-        image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues);
+        image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT,image_uri);
-        startActivityForResult(intent,IMAGE_PICK_CAMERA_CODE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
+        startActivityForResult(intent, IMAGE_PICK_CAMERA_CODE);
     }
 
-    private boolean checkStoragePermission(){
-        boolean result = ContextCompat.checkSelfPermission(this , Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+    private boolean checkStoragePermission() {
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
 
-        return  result; //return true/false
+        return result; //return true/false
     }
 
-    private void requestStoragePermission(){
-        ActivityCompat.requestPermissions(this,storagePermission,STORAGE_REQUEST_CODE);
+    private void requestStoragePermission() {
+        ActivityCompat.requestPermissions(this, storagePermission, STORAGE_REQUEST_CODE);
     }
 
-    private boolean checkCameraPermission(){
+    private boolean checkCameraPermission() {
         boolean resultCamera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
 
         boolean resultExternalStorage = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
@@ -411,36 +414,34 @@ public class AddProductActivity extends AppCompatActivity {
         return resultCamera && resultExternalStorage;
     }
 
-    private void requestCameraPermission(){
-        ActivityCompat.requestPermissions(this,cameraPermission,CAMERA_REQUEST_CODE);
+    private void requestCameraPermission() {
+        ActivityCompat.requestPermissions(this, cameraPermission, CAMERA_REQUEST_CODE);
     }
 
     //handle permission result
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case CAMERA_REQUEST_CODE:{
-                if(grantResults.length>0){
+        switch (requestCode) {
+            case CAMERA_REQUEST_CODE: {
+                if (grantResults.length > 0) {
                     boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                     boolean storageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-                    if(cameraAccepted && storageAccepted){
+                    if (cameraAccepted && storageAccepted) {
                         //both accept
                         pickFromCamera();
-                    }
-                    else{
+                    } else {
                         //both of one denied
                         Toast.makeText(this, "Camera&StoragePermission required", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
-            case STORAGE_REQUEST_CODE:{
-                if(grantResults.length>0){
+            case STORAGE_REQUEST_CODE: {
+                if (grantResults.length > 0) {
                     boolean storageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    if(storageAccepted){
+                    if (storageAccepted) {
                         //accept
                         pickFromGallery();
-                    }
-                    else{
+                    } else {
                         //denied
                         Toast.makeText(this, "StoragePermission required", Toast.LENGTH_SHORT).show();
                     }
@@ -453,8 +454,8 @@ public class AddProductActivity extends AppCompatActivity {
     //handle image pick result
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if(resultCode == RESULT_OK){
-            if(requestCode == IMAGE_PICK_GALLERY_CODE){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == IMAGE_PICK_GALLERY_CODE) {
                 //image pick from gallery
 
                 //save picked image uri
@@ -462,7 +463,7 @@ public class AddProductActivity extends AppCompatActivity {
 
                 //image picked from camera
                 productIconIv.setImageURI(image_uri);
-            }else if(requestCode == IMAGE_PICK_CAMERA_CODE){
+            } else if (requestCode == IMAGE_PICK_CAMERA_CODE) {
                 //image pick from camera
                 productIconIv.setImageURI(image_uri);
             }
@@ -470,4 +471,8 @@ public class AddProductActivity extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
-}
+
+
+
+    }
+

@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -48,7 +49,8 @@ import java.util.Map;
 public class EditSellerFragment extends Fragment {
 
     public static final int RESULT_OK = -1;
-    private String id = "1";
+    private int id ;
+
 
     //ui view
     EditText editText_editSeller_name;
@@ -110,7 +112,7 @@ public class EditSellerFragment extends Fragment {
     private void inputData() throws ParseException {
         //Get Data In Edit Text
         name = editText_editSeller_name.getText().toString().trim();
-        address = editText_editSeller_address.getText().toString().trim();
+        address = editText_editSeller_address.getText().toString();
         description = editText_editSeller_description.getText().toString();
 
 
@@ -119,6 +121,7 @@ public class EditSellerFragment extends Fragment {
         //TODO Do it later WARNING
 
         //TODO Modify in DB
+        updateSeller("http://192.168.1.10/wastedfoodphp/seller/sellerEdit.php");
 
     }
 
@@ -240,21 +243,27 @@ public class EditSellerFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_seller, container, false);
 
-        //TODO get id from SellerHomeActivity
-
-
         //init ui view
         editText_editSeller_name = view.findViewById(R.id.editText_editSeller_name);
         editText_editSeller_address = view.findViewById(R.id.editText_editSeller_address);
         editText_editSeller_description = view.findViewById(R.id.editText_editSeller_description);
-        btn_editSeller_edit = view.findViewById(R.id.btn_editSeller_edit);
+        btn_editSeller_edit = view.findViewById(R.id.btn_editSeller_edit1);
         iv_editSeller_avatar = view.findViewById(R.id.iv_editSeller_avatar);
+
+        //TODO get seller from SellerHomeActivity
+        Bundle bundle = getArguments();
+        if(bundle!= null){
+            editText_editSeller_name.setText(bundle.getString("name"));
+            editText_editSeller_address.setText(bundle.getString("address"));
+            editText_editSeller_description.setText(bundle.getString("description"));
+            id = bundle.getInt("id");
+        }
 
         //string get from edit text
         string_editSeller_name = editText_editSeller_name.getText().toString().trim();
         string_editSeller_address = editText_editSeller_address.getText().toString().trim();
         string_editSeller_description = editText_editSeller_description.getText().toString().trim();
-        string_editSeller_email = editText_editSeller_email.getText().toString().trim();
+        //string_editSeller_email = editText_editSeller_email.getText().toString().trim();
 
         //for multiline EditText
         //scroll for EditText
@@ -319,11 +328,11 @@ public class EditSellerFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("id",id);
+                params.put("id", String.valueOf(id));
                 params.put("username",string_editSeller_name);
                 params.put("address",string_editSeller_address);
                 params.put("description",string_editSeller_description);
-                params.put("email",string_editSeller_email);
+                params.put("email","1234@gmail.com");
                 return params;
             }
         };
