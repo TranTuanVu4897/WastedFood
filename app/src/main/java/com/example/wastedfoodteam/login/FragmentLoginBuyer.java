@@ -1,6 +1,7 @@
 package com.example.wastedfoodteam.login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,11 +22,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.wastedfoodteam.MainActivity;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.buy.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
+import com.example.wastedfoodteam.source.model.Buyer;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -38,6 +41,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 
@@ -46,11 +51,15 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class FragmentLoginBuyer extends Fragment {
     GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN;
+    String checkOption = "";
     EditText etSDT, etPass;
+    TextView tvWarning;
     Button btnSignIn, btnSignInGoogle, btnPartnerOption;
     LoginButton btnSignInFacebook;
     CallbackManager callbackManager;
@@ -62,20 +71,25 @@ public class FragmentLoginBuyer extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login_buyer, container, false);
         etSDT = view.findViewById(R.id.etSdtBuyerFLB);
         etPass = view.findViewById(R.id.etPassBuyerFLB);
+        tvWarning = view.findViewById(R.id.tvWarningFLB);
         btnSignIn = view.findViewById(R.id.btnSignInBuyerFLB);
         btnSignInGoogle = view.findViewById(R.id.btnGoogleSignInFLB);
         btnSignInFacebook = view.findViewById(R.id.btnFacebookSignInFLB);
-
+        btnPartnerOption = view.findViewById(R.id.btnPartnerOptionFLB);
+        handleSignInFacebook();
 
         //facebook option
 
         callbackManager = CallbackManager.Factory.create();
         btnSignInFacebook.setPermissions(Arrays.asList("public_profile", "email"));
-
         btnSignInFacebook.setFragment(this);
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+//                urlGetData = Variable.ipAddress + "login/buyerLogin.php?third_party_id=" + etSDT.getText().toString();
+//                getData(urlGetData);
+                startActivity(new Intent(getActivity(), BuyHomeActivity.class));
+
 
             }
 
@@ -86,24 +100,19 @@ public class FragmentLoginBuyer extends Fragment {
 
             @Override
             public void onError(FacebookException error) {
-
+                Toast.makeText(getActivity(), "Kiểm tra lại kết nối Internet", Toast.LENGTH_LONG).show();
             }
         });
 
         //google option
         AddGoogleSignInOption();
-        etSDT.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(etSDT.getText().toString().length()!=10){
-                    Toast.makeText(getActivity(),"SDT phải là 10 số",Toast.LENGTH_LONG).show();
-                }
-            }
-        });
         btnSignInGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tvWarning.setText("");
+//To Do Check Phone
                 signInGoogle();
+
             }
         });
 
@@ -111,18 +120,23 @@ public class FragmentLoginBuyer extends Fragment {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(etSDT.getText().toString().length()!=10){
-                    Toast.makeText(getActivity(),"SDT phải là 10 số",Toast.LENGTH_LONG).show();
-                    return;
+                if (etSDT.getText().toString().length() != 10) {
+                    tvWarning.setText("SDT không hợp lệ");
+
+                } else {
+                    urlGetData = Variable.ipAddress + "login/buyerLogin.php?phone=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
+                    getData(urlGetData);
                 }
-                urlGetData = Variable.ipAddress +"login/buyerLogin.php?username="+etSDT.getText().toString()+"&password="+md5(etPass.getText().toString());
-                getData(urlGetData);
+            }
+        });
+        btnPartnerOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addFragmentLoginPartner();
             }
         });
 
         return view;
-
-
     }
 
     /**
@@ -145,12 +159,13 @@ public class FragmentLoginBuyer extends Fragment {
 
     /**
      * keep Sign In Google
+     *
      * @param completedTask
      */
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            startActivity(new Intent(getActivity(), MainActivity.class));
+            startActivity(new Intent(getActivity(), BuyHomeActivity.class));
         } catch (ApiException e) {
             e.printStackTrace();
             Log.w("TAG", "Failed code" + e.getStatusCode());
@@ -161,6 +176,7 @@ public class FragmentLoginBuyer extends Fragment {
 
     /**
      * Check account
+     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -183,7 +199,7 @@ public class FragmentLoginBuyer extends Fragment {
     public void onStart() {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
         if (account != null) {
-            startActivity(new Intent(getActivity(), MainActivity.class));
+            startActivity(new Intent(getActivity(), BuyHomeActivity.class));
         }
         super.onStart();
     }
@@ -194,26 +210,33 @@ public class FragmentLoginBuyer extends Fragment {
     private void handleSignInFacebook() {
         //check loginFB
         if (AccessToken.getCurrentAccessToken() != null && com.facebook.Profile.getCurrentProfile() != null) {
+
+
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
-            //startActivity(new Intent(MainActivity.this,MainActivity2.class));
+            Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+            checkOption = "2";
+            intent.putExtra("Check_option", checkOption);
+            startActivity(intent);
+
         }
     }
 
     /**
      * add fragment login for seller
-     * @param view
+     *
      */
-    public void addFragmentLoginPartner(View view){
+    public void addFragmentLoginPartner() {
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         FragmentLoginPartner fragmentLoginPartner = new FragmentLoginPartner();
-        fragmentTransaction.add(R.id.fragmentPartner,fragmentLoginPartner);
+        fragmentTransaction.replace(R.id.flFragmentLayoutAM, fragmentLoginPartner);
         fragmentTransaction.commit();
     }
 
     /**
      * encode md5
+     *
      * @param str
      * @return
      */
@@ -233,24 +256,66 @@ public class FragmentLoginBuyer extends Fragment {
 
     /**
      * get data from mySql
+     *
      * @param url
      */
-    private void getData(String url){
+    private void getData(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONArray response) {
-                Toast.makeText(getActivity(),"OK",Toast.LENGTH_LONG).show();//TODO get data
+            public void onResponse(String response) {
+                switch (response) {
+                    case "not exist account":
+                    case "account is locked":
+                        Toast.makeText(getActivity(), "Mật khẩu sai", Toast.LENGTH_LONG).show();//TODO fix for suitable error
+                        break;
+                    case "not match role":
+                        Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO fix for suitable error
+                        break;
+                    case "PHONE_IS_NULL":
+
+                        //startActivity(new Intent(getActivity(),BuyHomeActivity.class));
+                    default:
+                        Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();//TODO get data
+                        try {
+                            JSONArray object = new JSONArray(response);
+
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+
+                            Buyer buyer = gson.fromJson(object.getString(0), Buyer.class);
+
+                            sharePreferences();
+                            Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+                            checkOption = "1";
+                            intent.putExtra("Check_option", checkOption);
+                            //TODO pass data through intent
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+
+                }
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(),"lỗi " + urlGetData,Toast.LENGTH_LONG).show();//TODO get data
+                Toast.makeText(getActivity(), "lỗi kết nỗi" + urlGetData, Toast.LENGTH_LONG).show();//TODO get data
                 Log.d("MK ", md5(etPass.getText().toString()));
             }
         }
         );
-        requestQueue.add(jsonArrayRequest);
+        requestQueue.add(stringRequest);
     }
+
+    private void sharePreferences() {
+        SharedPreferences pre = getActivity().getSharedPreferences("my_data", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pre.edit();
+        editor.putString("name", "Tung");
+        editor.putBoolean("check", true);
+        editor.commit();
+    }
+
 
 }
