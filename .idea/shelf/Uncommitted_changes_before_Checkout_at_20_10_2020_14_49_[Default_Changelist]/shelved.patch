@@ -1,0 +1,234 @@
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    package=\"com.example.wastedfoodteam\">\r\n\r\n    <uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\" />\r\n    <uses-permission android:name=\"android.permission.INTERNET\" />\r\n    <uses-permission android:name=\"android.permission. ACCESS_COARSE_LOCATION\" />\r\n\r\n    <!-->\r\n        DucHC 18/10\r\n    </!-->\r\n    <uses-permission android:name=\"android.permission.CAMERA\" />\r\n    <uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />\r\n    <uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />\r\n    <uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.AppCompat.Light.NoActionBar\"\r\n        android:usesCleartextTraffic=\"true\">\r\n\r\n\r\n        <activity android:name=\".seller.PostActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n\r\n        <activity android:name=\".seller.AddProductActivity\">\r\n\r\n        </activity>\r\n\r\n        \r\n        <!--        <activity android:name=\".MapsActivity\">-->\r\n        <!--            <intent-filter>-->\r\n        <!--                <action android:name=\"android.intent.action.MAIN\" />-->\r\n\r\n        <!--                <category android:name=\"android.intent.category.LAUNCHER\" />-->\r\n        <!--            </intent-filter>-->\r\n        <!--        </activity>-->\r\n        <meta-data\r\n            android:name=\"com.google.android.geo.API_KEY\"\r\n            android:value=\"@string/maps_api_key\" />\r\n        <meta-data\r\n            android:name=\"com.facebook.sdk.ApplicationId\"\r\n            android:value=\"@string/facebook_app_id\" />\r\n\r\n        <activity\r\n            android:name=\"com.facebook.FacebookActivity\"\r\n            android:configChanges=\"keyboard|keyboardHidden|screenLayout|screenSize|orientation\"\r\n            android:label=\"@string/app_name\" />\r\n        <activity\r\n            android:name=\"com.facebook.CustomTabActivity\"\r\n            android:exported=\"true\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.VIEW\" />\r\n\r\n                <category android:name=\"android.intent.category.DEFAULT\" />\r\n                <category android:name=\"android.intent.category.BROWSABLE\" />\r\n\r\n                <data android:scheme=\"@string/fb_login_protocol_scheme\" />\r\n            </intent-filter>\r\n        </activity>\r\n\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision f3a3076b2235ac1fc4986e180abbe0fd1695316d)
++++ app/src/main/AndroidManifest.xml	(date 1603178804967)
+@@ -5,10 +5,11 @@
+     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+     <uses-permission android:name="android.permission.INTERNET" />
+     <uses-permission android:name="android.permission. ACCESS_COARSE_LOCATION" />
+-
+-    <!-->
++    <!--
++>
+         DucHC 18/10
+-    </!-->
++    </!
++    -->
+     <uses-permission android:name="android.permission.CAMERA" />
+     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+@@ -22,28 +23,20 @@
+         android:supportsRtl="true"
+         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+         android:usesCleartextTraffic="true">
+-
+-
+-        <activity android:name=".seller.PostActivity">
++        <activity android:name=".seller.editSeller.EditSellerActivity"></activity>
++        <activity android:name=".MainActivity">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+ 
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+         </activity>
+-
+-        <activity android:name=".seller.AddProductActivity">
+-
+-        </activity>
+-
+-        
+-        <!--        <activity android:name=".MapsActivity">-->
+-        <!--            <intent-filter>-->
+-        <!--                <action android:name="android.intent.action.MAIN" />-->
+-
+-        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+-        <!--            </intent-filter>-->
+-        <!--        </activity>-->
++        <activity android:name=".seller.post.AddProductActivity"></activity> <!-- <activity android:name=".MapsActivity"> -->
++        <!-- <intent-filter> -->
++        <!-- <action android:name="android.intent.action.MAIN" /> -->
++        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
++        <!-- </intent-filter> -->
++        <!-- </activity> -->
+         <meta-data
+             android:name="com.google.android.geo.API_KEY"
+             android:value="@string/maps_api_key" />
+@@ -67,7 +60,6 @@
+                 <data android:scheme="@string/fb_login_protocol_scheme" />
+             </intent-filter>
+         </activity>
+-
+     </application>
+ 
+ </manifest>
+\ No newline at end of file
+Index: app/src/main/java/com/example/wastedfoodteam/seller/PostActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.wastedfoodteam.seller;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.ArrayAdapter;\r\nimport android.widget.Button;\r\nimport android.widget.ListView;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport com.example.wastedfoodteam.R;\r\nimport com.google.firebase.database.ChildEventListener;\r\nimport com.google.firebase.database.DataSnapshot;\r\nimport com.google.firebase.database.DatabaseError;\r\nimport com.google.firebase.database.DatabaseReference;\r\nimport com.google.firebase.database.FirebaseDatabase;\r\n\r\nimport java.util.ArrayList;\r\n\r\npublic class PostActivity extends AppCompatActivity {\r\n    private  DatabaseReference databaseReference;\r\n    ListView lvProduct;\r\n    ArrayList<Product> arrayList = new ArrayList<>();\r\n    ArrayAdapter<Product> arrayAdapter;\r\n    Product product;\r\n    private Button btnAdd;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_post);\r\n        //init\r\n        btnAdd = findViewById(R.id.btnAdd);\r\n        lvProduct = findViewById(R.id.lvProduct);\r\n\r\n        product = new Product();\r\n        databaseReference = FirebaseDatabase.getInstance().getReference(\"Users\").child(\"2\").child(\"Products\");\r\n\r\n        arrayAdapter = new ArrayAdapter<Product>(this, android.R.layout.simple_list_item_1,arrayList);\r\n        lvProduct.setAdapter(arrayAdapter);\r\n        databaseReference.addChildEventListener(new ChildEventListener() {\r\n            @Override\r\n            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {\r\n                Product value = snapshot.getValue(Product.class);\r\n                //String value = snapshot.getValue(String.class);\r\n                arrayList.add(value);\r\n                arrayAdapter.notifyDataSetChanged();\r\n            }\r\n\r\n            @Override\r\n            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {\r\n\r\n            }\r\n\r\n            @Override\r\n            public void onChildRemoved(@NonNull DataSnapshot snapshot) {\r\n\r\n            }\r\n\r\n            @Override\r\n            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {\r\n\r\n            }\r\n\r\n            @Override\r\n            public void onCancelled(@NonNull DatabaseError error) {\r\n\r\n            }\r\n        });\r\n\r\n        //btnAdd handle\r\n        btnAdd.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                Intent intent = new Intent(PostActivity.this, AddProductActivity.class);\r\n                startActivity(intent);\r\n            }\r\n        });\r\n\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/wastedfoodteam/seller/PostActivity.java	(revision f3a3076b2235ac1fc4986e180abbe0fd1695316d)
++++ app/src/main/java/com/example/wastedfoodteam/seller/post/PostActivity.java	(date 1603178210843)
+@@ -1,4 +1,4 @@
+-package com.example.wastedfoodteam.seller;
++package com.example.wastedfoodteam.seller.post;
+ 
+ import android.content.Intent;
+ import android.os.Bundle;
+@@ -12,6 +12,7 @@
+ import androidx.appcompat.app.AppCompatActivity;
+ 
+ import com.example.wastedfoodteam.R;
++import com.example.wastedfoodteam.seller.Product;
+ import com.google.firebase.database.ChildEventListener;
+ import com.google.firebase.database.DataSnapshot;
+ import com.google.firebase.database.DatabaseError;
+Index: app/src/main/res/layout/activity_add_product.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".seller.AddProductActivity\">\r\n\r\n    <!--Toolbar-->\r\n\r\n\r\n    <!--FromToInputData-->\r\n    <RelativeLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\">\r\n        <ImageView\r\n            android:id=\"@+id/productIconIv\"\r\n            android:layout_width=\"100dp\"\r\n            android:layout_height=\"100dp\"\r\n            android:layout_centerHorizontal=\"true\"\r\n            android:layout_marginTop=\"20dp\"\r\n            android:src=\"@drawable/ic_launcher_background\"/>\r\n        <EditText\r\n            android:id=\"@+id/editTextName\"\r\n            android:hint=\"Name\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/productIconIv\"\r\n            android:inputType=\"textPersonName\"\r\n            android:padding=\"10dp\"\r\n            android:text=\"Name\" />\r\n        <EditText\r\n        android:id=\"@+id/editTextPrice\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_below=\"@id/editTextName\"\r\n        android:inputType=\"numberDecimal\"\r\n        android:padding=\"10dp\"\r\n        android:text=\"1\" />\r\n        <EditText\r\n            android:id=\"@+id/editTextDiscount\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/editTextPrice\"\r\n            android:inputType=\"number\"\r\n            android:padding=\"10dp\"\r\n            android:text=\"1\" />\r\n        <EditText\r\n            android:id=\"@+id/editTextQuantity\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/editTextDiscount\"\r\n            android:inputType=\"number\"\r\n            android:padding=\"10dp\"\r\n            android:text=\"1\" />\r\n        <EditText\r\n            android:id=\"@+id/editTextOpenDate\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/editTextQuantity\"\r\n            android:inputType=\"datetime\"\r\n            android:padding=\"10dp\"\r\n            android:text=\"Open date\" />\r\n        <EditText\r\n            android:id=\"@+id/editTextCloseDate\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_below=\"@id/editTextOpenDate\"\r\n            android:inputType=\"date\"\r\n            android:padding=\"10dp\"\r\n            android:text=\"Close date\" />\r\n\r\n        <Button\r\n            android:id=\"@+id/btnAddProduct\"\r\n            android:layout_centerInParent=\"true\"\r\n            android:textAllCaps=\"false\"\r\n            android:background=\"@color/colorPrimary\"\r\n            android:textColor=\"#fff\"\r\n            android:layout_width=\"200dp\"\r\n            android:layout_height=\"45dp\"\r\n            android:textSize=\"18sp\"\r\n            android:layout_below=\"@id/editTextCloseDate\"\r\n            android:text=\"Add Product\" />\r\n\r\n    </RelativeLayout>\r\n\r\n\r\n\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_add_product.xml	(revision f3a3076b2235ac1fc4986e180abbe0fd1695316d)
++++ app/src/main/res/layout/activity_add_product.xml	(date 1603178210611)
+@@ -4,7 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".seller.AddProductActivity">
++    tools:context=".seller.post.AddProductActivity">
+ 
+     <!--Toolbar-->
+ 
+Index: app/src/main/java/com/example/wastedfoodteam/seller/AddProductActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.wastedfoodteam.seller;\r\n\r\nimport android.Manifest;\r\nimport android.app.DatePickerDialog;\r\nimport android.app.ProgressDialog;\r\nimport android.content.ContentResolver;\r\nimport android.content.ContentValues;\r\nimport android.content.DialogInterface;\r\nimport android.content.Intent;\r\nimport android.content.pm.PackageManager;\r\nimport android.net.Uri;\r\nimport android.os.Bundle;\r\nimport android.provider.MediaStore;\r\nimport android.view.View;\r\nimport android.webkit.MimeTypeMap;\r\nimport android.widget.Button;\r\nimport android.widget.DatePicker;\r\nimport android.widget.EditText;\r\nimport android.widget.ImageButton;\r\nimport android.widget.ImageView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.annotation.Nullable;\r\nimport androidx.appcompat.app.AlertDialog;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.core.app.ActivityCompat;\r\nimport androidx.core.content.ContextCompat;\r\n\r\nimport com.example.wastedfoodteam.R;\r\nimport com.google.android.gms.tasks.OnFailureListener;\r\nimport com.google.android.gms.tasks.OnSuccessListener;\r\nimport com.google.firebase.auth.FirebaseAuth;\r\nimport com.google.firebase.database.DatabaseReference;\r\nimport com.google.firebase.database.FirebaseDatabase;\r\nimport com.google.firebase.storage.FirebaseStorage;\r\nimport com.google.firebase.storage.StorageReference;\r\nimport com.google.firebase.storage.StorageTask;\r\nimport com.google.firebase.storage.UploadTask;\r\n\r\nimport java.text.ParseException;\r\nimport java.text.SimpleDateFormat;\r\nimport java.util.Calendar;\r\nimport java.util.Date;\r\nimport java.util.HashMap;\r\n\r\npublic class AddProductActivity extends AppCompatActivity {\r\n\r\n    //set up firebase\r\n    //tool -> firebase -> authentication\r\n\r\n    //ui view\r\n    private ImageView productIconIv;\r\n    private EditText editTextName;\r\n    private EditText editTextPrice;\r\n    private EditText editTextDiscount;\r\n    private EditText editTextQuantity;\r\n    private EditText editTextOpenDate;\r\n    private EditText editTextCloseDate;\r\n    private Button btnAddProduct;\r\n\r\n    //permission constants\r\n    private static final int CAMERA_REQUEST_CODE = 200;\r\n    private static final int STORAGE_REQUEST_CODE = 300;\r\n\r\n    //image pick constants\r\n    private static final int IMAGE_PICK_GALLERY_CODE = 400;\r\n    private static final int IMAGE_PICK_CAMERA_CODE = 500;\r\n\r\n    //permission array\r\n    private String[] cameraPermission;\r\n    private  String[] storagePermission;\r\n\r\n    //image pick uri\r\n    private Uri image_uri;\r\n\r\n    //firebase connect\r\n    private FirebaseAuth firebaseAuth;\r\n\r\n    //progress dialog\r\n    private ProgressDialog progressDialog;\r\n\r\n\r\n    //connect storage firebase\r\n    private StorageReference mStorageReference;\r\n\r\n    //\r\n    private StorageTask uploadTask;\r\n\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_add_product);\r\n\r\n\r\n        mStorageReference = FirebaseStorage.getInstance().getReference();\r\n\r\n        //init ui view\r\n        productIconIv = findViewById(R.id.productIconIv);\r\n        editTextName = findViewById(R.id.editTextName);\r\n        editTextPrice = findViewById(R.id.editTextPrice);\r\n        editTextDiscount = findViewById(R.id.editTextDiscount);\r\n        editTextQuantity = findViewById(R.id.editTextQuantity);\r\n        editTextOpenDate = findViewById(R.id.editTextOpenDate);\r\n        editTextCloseDate = findViewById(R.id.editTextCloseDate);\r\n        btnAddProduct = findViewById(R.id.btnAddProduct);\r\n\r\n        //Date picker handle\r\n        Calendar calendar = Calendar.getInstance();\r\n        final int year = calendar.get(Calendar.YEAR);\r\n        final int month = calendar.get(Calendar.MONTH);\r\n        final int day = calendar.get(Calendar.DAY_OF_MONTH);\r\n\r\n        editTextOpenDate.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                DatePickerDialog datePickerDialog = new DatePickerDialog(AddProductActivity.this, new DatePickerDialog.OnDateSetListener() {\r\n                    @Override\r\n                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {\r\n                        month = month + 1;\r\n                        String date = dayOfMonth + \"/\" + month + \"/\" + year;\r\n                        editTextOpenDate.setText(date);\r\n                    }\r\n                },year,month,day);\r\n                datePickerDialog.show();\r\n            }\r\n        });\r\n\r\n        editTextCloseDate.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                DatePickerDialog datePickerDialog = new DatePickerDialog(AddProductActivity.this, new DatePickerDialog.OnDateSetListener() {\r\n                    @Override\r\n                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {\r\n                        month = month + 1;\r\n                        String date = dayOfMonth + \"/\" + month + \"/\" + year;\r\n                        editTextCloseDate.setText(date);\r\n                    }\r\n                },year,month,day);\r\n                datePickerDialog.show();\r\n            }\r\n        });\r\n\r\n        //firebase\r\n        firebaseAuth = FirebaseAuth.getInstance();\r\n\r\n        //set Progress dialog\r\n        progressDialog = new ProgressDialog(this);\r\n        progressDialog.setTitle(\"Please wait\");\r\n        progressDialog.setCanceledOnTouchOutside(false);\r\n\r\n        //init permission arrays\r\n        cameraPermission = new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};\r\n        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};\r\n\r\n        productIconIv.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                //show dialog to pick image\r\n                showImagePickDialog();\r\n            }\r\n        });\r\n\r\n        btnAddProduct.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View v) {\r\n                //Flow\r\n                //input data -> validate -> add to db\r\n                try {\r\n                    inputData();\r\n                } catch (ParseException e) {\r\n                    e.printStackTrace();\r\n                }\r\n            }\r\n        });\r\n\r\n\r\n\r\n\r\n    }\r\n\r\n    private String productName;\r\n    private double productPrice;\r\n    private int productQuantity,productDiscount;\r\n    private Date productOpenDate,productCloseDate;\r\n\r\n\r\n\r\n\r\n    private void inputData() throws ParseException {\r\n        //Input Data\r\n        productName = editTextName.getText().toString().trim();\r\n        productPrice = Double.parseDouble(editTextPrice.getText().toString().trim()) ;\r\n        productDiscount = Integer.parseInt(editTextDiscount.getText().toString().trim());\r\n        productQuantity = Integer.parseInt(editTextQuantity.getText().toString().trim());\r\n        //productOpenDate = Calendar.getInstance().getTime();\r\n        //productCloseDate = Calendar.getInstance().getTime();\r\n\r\n        productOpenDate = new SimpleDateFormat(\"dd/MM/yyyy\").parse(editTextOpenDate.getText().toString().trim());\r\n        productCloseDate = new SimpleDateFormat(\"dd/MM/yyyy\").parse(editTextCloseDate.getText().toString().trim());\r\n        //productCloseDate = new SimpleDateFormat(\"hh:mm:ss a\").parse(editTextCloseDate.getText().toString().trim());\r\n\r\n\r\n\r\n        //Validate\r\n        //Do it later WARNING\r\n\r\n        //Add to DB\r\n        addProduct();\r\n    }\r\n\r\n\r\n\r\n\r\n    private void addProduct(){\r\n        progressDialog.setMessage(\"Adding Product\");\r\n        progressDialog.show();\r\n\r\n        String timestamp = \"\" + System.currentTimeMillis();\r\n        if(image_uri == null){\r\n            //upload without image\r\n\r\n            //set up data to upload\r\n            HashMap<String,Object> hashMap = new HashMap<>();\r\n            hashMap.put(\"productId\", \"\" + timestamp);\r\n            hashMap.put(\"productName\", \"\" + productName);\r\n            hashMap.put(\"productPrice\", \"\" + productPrice);\r\n            hashMap.put(\"productDiscount\", \"\" + productDiscount);\r\n            hashMap.put(\"productQuantity\", \"\" + productQuantity);\r\n            hashMap.put(\"productOpenDate\", \"\" + productOpenDate);\r\n            hashMap.put(\"productCloseDate\", \"\" + productCloseDate);\r\n            hashMap.put(\"timestamp\", \"\" + timestamp);\r\n            //hashMap.put(\"uid\", \"\" + firebaseAuth.getUid());\r\n            //need to make user id in future\r\n\r\n            //add to db\r\n            DatabaseReference reference = FirebaseDatabase.getInstance().getReference(\"Users\");\r\n            //reference.child(firebaseAuth.getUid()).child(\"Products\").child(\"timestamp\").setValue(hashMap)\r\n            reference.child(\"2\").child(\"Products\").child(timestamp).setValue(hashMap)\r\n                    .addOnSuccessListener(new OnSuccessListener<Void>() {\r\n                @Override\r\n                public void onSuccess(Void aVoid) {\r\n                    //added to db\r\n                    progressDialog.dismiss();\r\n                    Intent intent = new Intent(AddProductActivity.this, PostActivity.class);\r\n                    startActivity(intent);\r\n                }\r\n            })\r\n            .addOnFailureListener(new OnFailureListener() {\r\n                @Override\r\n                public void onFailure(@NonNull Exception e) {\r\n                    //failed to db\r\n                    progressDialog.dismiss();\r\n                }\r\n            });\r\n\r\n        }else {\r\n            //upload with image\r\n\r\n            //first upload image to storage\r\n\r\n            //name and path of image to upload\r\n\r\n\r\n\r\n            if(uploadTask != null && uploadTask.isInProgress()){\r\n                Toast.makeText(AddProductActivity.this,\"Upload in progress\" , Toast.LENGTH_LONG).show();\r\n            }else{\r\n                fileUpload();\r\n            }\r\n\r\n\r\n\r\n\r\n\r\n        }\r\n    }\r\n\r\n    private String getExtension(Uri uri){\r\n        //url image handle\r\n        ContentResolver contentResolver = getContentResolver();\r\n        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();\r\n        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));\r\n    }\r\n\r\n    private void fileUpload(){\r\n        StorageReference ref = mStorageReference.child(System.currentTimeMillis() + \".\" + getExtension(image_uri));\r\n\r\n        uploadTask = ref.putFile(image_uri)\r\n                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {\r\n                    @Override\r\n                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {\r\n                        // Get a URL to the uploaded content\r\n                        String downloadUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();\r\n                        Toast.makeText(AddProductActivity.this,\"Image upload successful\" + downloadUrl , Toast.LENGTH_LONG).show();\r\n\r\n                        String timestamp = \"\" + System.currentTimeMillis();\r\n                        //url of image received upload to db\r\n                        //set up data to upload\r\n                        HashMap<String,Object> hashMap = new HashMap<>();\r\n                        hashMap.put(\"productId\", \"\" + timestamp);\r\n                        hashMap.put(\"productName\", \"\" + productName);\r\n                        hashMap.put(\"productPrice\", \"\" + productPrice);\r\n                        hashMap.put(\"productDiscount\", \"\" + productDiscount);\r\n                        hashMap.put(\"productQuantity\", \"\" + productQuantity);\r\n                        hashMap.put(\"productOpenDate\", \"\" + productOpenDate);\r\n                        hashMap.put(\"productCloseDate\", \"\" + productCloseDate);\r\n                        hashMap.put(\"imageURL\", \"\" + downloadUrl);\r\n\r\n                        //add to db\r\n                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference(\"Users\");\r\n                        //reference.child(firebaseAuth.getUid()).child(\"Products\").child(\"timestamp\").setValue(hashMap)\r\n                        //need to make user id in future\r\n                        reference.child(\"2\").child(\"Products\").child(timestamp).setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {\r\n                            @Override\r\n                            public void onSuccess(Void aVoid) {\r\n                                //added to db\r\n                                progressDialog.dismiss();\r\n                                Intent intent = new Intent(AddProductActivity.this, PostActivity.class);\r\n                                startActivity(intent);\r\n                            }\r\n                        })\r\n                                .addOnFailureListener(new OnFailureListener() {\r\n                                    @Override\r\n                                    public void onFailure(@NonNull Exception e) {\r\n                                        //failed to db\r\n                                        progressDialog.dismiss();\r\n                                    }\r\n                                });\r\n                    }\r\n                })\r\n                .addOnFailureListener(new OnFailureListener() {\r\n                    @Override\r\n                    public void onFailure(@NonNull Exception exception) {\r\n                        // Handle unsuccessful uploads\r\n                        // ...\r\n                    }\r\n                });\r\n\r\n    }\r\n\r\n    private void pickFromGallery(){\r\n        //intent to pick image from gallery\r\n        Intent intent = new Intent(Intent.ACTION_PICK);\r\n        intent.setType(\"image/*\");\r\n        startActivityForResult(intent,IMAGE_PICK_GALLERY_CODE);\r\n    }\r\n\r\n    private void showImagePickDialog(){\r\n        //display in dialog\r\n        String[] options = {\"Camera\",\"Gallery\"};\r\n        //dialog\r\n        AlertDialog.Builder builder = new AlertDialog.Builder(this);\r\n        builder.setTitle(\"Pick Image\").setItems(options, new DialogInterface.OnClickListener() {\r\n            @Override\r\n            public void onClick(DialogInterface dialog, int which) {\r\n                //handle item clicks\r\n                if(which==0){\r\n                    //camera clicked\r\n                    if(checkCameraPermission()){\r\n                        //permission granted\r\n                        pickFromCamera();\r\n                    }else{\r\n                        //permission not granted, request\r\n                        requestCameraPermission();\r\n                    }\r\n                }else{\r\n                    //gallery clicked\r\n                    if(checkStoragePermission()){\r\n                        //permission granted\r\n                        pickFromGallery();\r\n                    }else{\r\n                        //permission not granted, request\r\n                        requestStoragePermission();\r\n                    }\r\n                }\r\n            }\r\n        }).show();\r\n    }\r\n\r\n    private void pickFromCamera(){\r\n        //intent to pick image from camera\r\n\r\n        //use media store to pick high/ori quality image\r\n        ContentValues contentValues = new ContentValues();\r\n        contentValues.put(MediaStore.Images.Media.TITLE,\"Temp_Image_Title\");\r\n        contentValues.put(MediaStore.Images.Media.DESCRIPTION,\"Temp_Image_Description\");\r\n\r\n        image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues);\r\n\r\n        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);\r\n        intent.putExtra(MediaStore.EXTRA_OUTPUT,image_uri);\r\n        startActivityForResult(intent,IMAGE_PICK_CAMERA_CODE);\r\n    }\r\n\r\n    private boolean checkStoragePermission(){\r\n        boolean result = ContextCompat.checkSelfPermission(this , Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);\r\n\r\n        return  result; //return true/false\r\n    }\r\n\r\n    private void requestStoragePermission(){\r\n        ActivityCompat.requestPermissions(this,storagePermission,STORAGE_REQUEST_CODE);\r\n    }\r\n\r\n    private boolean checkCameraPermission(){\r\n        boolean resultCamera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);\r\n\r\n        boolean resultExternalStorage = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);\r\n\r\n        return resultCamera && resultExternalStorage;\r\n    }\r\n\r\n    private void requestCameraPermission(){\r\n        ActivityCompat.requestPermissions(this,cameraPermission,CAMERA_REQUEST_CODE);\r\n    }\r\n\r\n    //handle permission result\r\n    @Override\r\n    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {\r\n        switch (requestCode){\r\n            case CAMERA_REQUEST_CODE:{\r\n                if(grantResults.length>0){\r\n                    boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;\r\n                    boolean storageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;\r\n                    if(cameraAccepted && storageAccepted){\r\n                        //both accept\r\n                        pickFromCamera();\r\n                    }\r\n                    else{\r\n                        //both of one denied\r\n                        Toast.makeText(this, \"Camera&StoragePermission required\", Toast.LENGTH_SHORT).show();\r\n                    }\r\n                }\r\n            }\r\n            case STORAGE_REQUEST_CODE:{\r\n                if(grantResults.length>0){\r\n                    boolean storageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;\r\n                    if(storageAccepted){\r\n                        //accept\r\n                        pickFromGallery();\r\n                    }\r\n                    else{\r\n                        //denied\r\n                        Toast.makeText(this, \"StoragePermission required\", Toast.LENGTH_SHORT).show();\r\n                    }\r\n                }\r\n            }\r\n        }\r\n        super.onRequestPermissionsResult(requestCode, permissions, grantResults);\r\n    }\r\n\r\n    //handle image pick result\r\n    @Override\r\n    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {\r\n        if(resultCode == RESULT_OK){\r\n            if(requestCode == IMAGE_PICK_GALLERY_CODE){\r\n                //image pick from gallery\r\n\r\n                //save picked image uri\r\n                image_uri = data.getData();\r\n\r\n                //image picked from camera\r\n                productIconIv.setImageURI(image_uri);\r\n            }else if(requestCode == IMAGE_PICK_CAMERA_CODE){\r\n                //image pick from camera\r\n                productIconIv.setImageURI(image_uri);\r\n            }\r\n        }\r\n\r\n        super.onActivityResult(requestCode, resultCode, data);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/wastedfoodteam/seller/AddProductActivity.java	(revision f3a3076b2235ac1fc4986e180abbe0fd1695316d)
++++ app/src/main/java/com/example/wastedfoodteam/seller/post/AddProductActivity.java	(date 1603178210920)
+@@ -1,4 +1,4 @@
+-package com.example.wastedfoodteam.seller;
++package com.example.wastedfoodteam.seller.post;
+ 
+ import android.Manifest;
+ import android.app.DatePickerDialog;
+@@ -16,7 +16,6 @@
+ import android.widget.Button;
+ import android.widget.DatePicker;
+ import android.widget.EditText;
+-import android.widget.ImageButton;
+ import android.widget.ImageView;
+ import android.widget.Toast;
+ 
+Index: app/src/main/java/com/example/wastedfoodteam/seller/editSeller/EditSellerActivity.java
+===================================================================
+--- app/src/main/java/com/example/wastedfoodteam/seller/editSeller/EditSellerActivity.java	(date 1603178902940)
++++ app/src/main/java/com/example/wastedfoodteam/seller/editSeller/EditSellerActivity.java	(date 1603178902940)
+@@ -0,0 +1,16 @@
++package com.example.wastedfoodteam.seller.editSeller;
++
++import androidx.appcompat.app.AppCompatActivity;
++
++import android.os.Bundle;
++
++import com.example.wastedfoodteam.R;
++
++public class EditSellerActivity extends AppCompatActivity {
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_add_product);
++    }
++}
+Index: .idea/compiler.xml
+===================================================================
+--- .idea/compiler.xml	(date 1603179846711)
++++ .idea/compiler.xml	(date 1603179846711)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <bytecodeTargetLevel target="1.8" />
++  </component>
++</project>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_post.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".seller.PostActivity\">\r\n\r\n    <RelativeLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\">\r\n        <Button\r\n            android:id=\"@+id/btnAdd\"\r\n            android:layout_alignParentRight = \"true\"\r\n            android:textAllCaps=\"false\"\r\n            android:background=\"@color/colorPrimary\"\r\n            android:textColor=\"#fff\"\r\n            android:layout_width=\"200dp\"\r\n            android:layout_height=\"45dp\"\r\n            android:text=\"Add\" />\r\n        <ListView\r\n            android:id=\"@+id/lvProduct\"\r\n            android:layout_below=\"@id/btnAdd\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"match_parent\" />\r\n    </RelativeLayout>\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_post.xml	(revision f3a3076b2235ac1fc4986e180abbe0fd1695316d)
++++ app/src/main/res/layout/activity_post.xml	(date 1603178210977)
+@@ -4,7 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".seller.PostActivity">
++    tools:context=".seller.post.PostActivity">
+ 
+     <RelativeLayout
+         android:layout_width="match_parent"
+Index: app/src/main/res/layout/activity_editseller.xml
+===================================================================
+--- app/src/main/res/layout/activity_editseller.xml	(date 1603178804950)
++++ app/src/main/res/layout/activity_editseller.xml	(date 1603178804950)
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".seller.editSeller.EditSellerActivity">
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"testRunner\" value=\"PLATFORM\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"gradleHome\" value=\"$USER_HOME$/.gradle/wrapper/dists/gradle-5.6.4-all/ankdp27end7byghfw1q2sw75f/gradle-5.6.4\" />\r\n        <option name=\"gradleJvm\" value=\"1.8\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision f3a3076b2235ac1fc4986e180abbe0fd1695316d)
++++ .idea/gradle.xml	(date 1603179788891)
+@@ -16,6 +16,7 @@
+           </set>
+         </option>
+         <option name="resolveModulePerSourceSet" value="false" />
++        <option name="useQualifiedModuleNames" value="true" />
+       </GradleProjectSettings>
+     </option>
+   </component>
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_7\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision f3a3076b2235ac1fc4986e180abbe0fd1695316d)
++++ .idea/misc.xml	(date 1603179846667)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
