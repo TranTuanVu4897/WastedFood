@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.buy;
+package com.example.wastedfoodteam.buyer.buy;
 
 import android.content.Context;
 import android.view.LayoutInflater;

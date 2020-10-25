@@ -25,7 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.buy.BuyHomeActivity;
+import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.source.model.Buyer;
 import com.facebook.AccessToken;

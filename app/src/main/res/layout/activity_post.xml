@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <Button
-            android:id="@+id/btnAdd"
+            android:id="@+id/btnIncreate"
             android:layout_alignParentRight = "true"
             android:textAllCaps="false"
             android:background="@color/colorPrimary"
@@ -20,7 +20,7 @@
             android:text="Add" />
         <ListView
             android:id="@+id/lvProduct"
-            android:layout_below="@id/btnAdd"
+            android:layout_below="@id/btnIncreate"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.buy.detailproduct;
+package com.example.wastedfoodteam.buyer.order;
 
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -9,8 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,8 +20,6 @@ import androidx.fragment.app.Fragment;
 import com.example.wastedfoodteam.DirectionParser;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.source.model.Product;
-import com.example.wastedfoodteam.source.model.Seller;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,7 +27,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,46 +41,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class FragmentDetailProduct extends Fragment implements OnMapReadyCallback {
+public class Map extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
-    private Product product;
-    private Seller seller;
-    ImageView ivProduct;
-    TextView tvName, tvQuantity;
     private final static int MY_PERMISSIONS_REQUEST = 32;
-
-    public FragmentDetailProduct() {
-    }
-
-    public FragmentDetailProduct(Product product) {
-        this.product = product;
-
-    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         String apikey = getString(R.string.maps_api_key);
-        View view = inflater.inflate(R.layout.fragment_product_detail, container, false);
-        ivProduct = view.findViewById(R.id.ivProductFPD);
-        tvName = view.findViewById(R.id.tvProductNameFPD);
-        tvQuantity = view.findViewById(R.id.tvQuantityFPD);
-
-
-        tvName.setText(product.getName());
-        tvQuantity.setText("Quantity: " + product.getRemain_quantity() + "/" + product.getOriginal_quantity());
-        Picasso.get().load(product.getImage().isEmpty() ? Variable.noImageUrl : product.getImage()).into(ivProduct);
-
         LatLng here = new LatLng(21.013255, 105.5248756);
         LatLng end = new LatLng(21.0092414, 105.528148);
         float[] distanceB = new float[1];
         Location.distanceBetween(here.latitude, here.longitude, end.latitude, end.longitude, distanceB);
+
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        return view;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override

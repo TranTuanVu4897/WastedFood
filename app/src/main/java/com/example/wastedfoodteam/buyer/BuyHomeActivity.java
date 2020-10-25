@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.buy;
+package com.example.wastedfoodteam.buyer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.MainActivity;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.buyer.buy.FragmentListProduct;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;

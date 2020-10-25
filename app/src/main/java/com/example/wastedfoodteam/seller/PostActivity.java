@@ -33,7 +33,7 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
         //init
-        btnAdd = findViewById(R.id.btnAdd);
+        btnAdd = findViewById(R.id.btnIncreate);
         lvProduct = findViewById(R.id.lvProduct);
 
         product = new Product();

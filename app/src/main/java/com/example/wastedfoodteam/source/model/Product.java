@@ -1,12 +1,13 @@
 package com.example.wastedfoodteam.source.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Product class
  * author Vutt
  */
-public class Product {
+public class Product implements Serializable {
     int id;
     int seller_id;
     String name;
