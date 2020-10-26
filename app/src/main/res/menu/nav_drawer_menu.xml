@@ -25,5 +25,8 @@
     <item
         android:id="@+id/item_nav_drawer_menu_alert"
         android:title="Thông báo" />
+    <item
+        android:id="@+id/item_nav_drawer_menu_feedback"
+        android:title="Phản hồi với chúng tôi" />
 
 </menu>

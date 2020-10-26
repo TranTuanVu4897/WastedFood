@@ -90,16 +90,16 @@ public class AddProductFragment extends Fragment {
     private StorageTask uploadTask;
 
     //for time picker
-    private int mHour, mMinute,mSecond , day, month , year;
+    private int mHour, mMinute, mSecond, day, month, year;
 
     // instance for firebase storage and StorageReference
     FirebaseStorage storage;
     StorageReference storageReference;
 
-    String name,image,description,status;
-    double original_price,sell_price;
-    int original_quantity , remain_quantity;
-    String start_time,end_time,sell_date;
+    String name, image, description, status;
+    double original_price, sell_price;
+    int original_quantity, remain_quantity;
+    String start_time, end_time, sell_date;
 
     final Calendar calendar = Calendar.getInstance();
 
@@ -144,9 +144,6 @@ public class AddProductFragment extends Fragment {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        //calendar.set(year,month,dayOfMonth);
-                        //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                        //String dateString = String.format("%02d-%02d-%d", month + 1, dayOfMonth, year);
                         String dateString = String.format("%d-%02d-%02d", year, month + 1, dayOfMonth);
                         editText_add_product_saleDate.setText(dateString);
                     }
@@ -209,7 +206,6 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 addProduct("http://192.168.1.10/wastedfoodphp/seller/SellerCreateProduct.php");
-                //uploadImage();
             }
         });
 
@@ -219,53 +215,52 @@ public class AddProductFragment extends Fragment {
 
 
     //
-    private void addProduct(String url){
+    private void addProduct(String url) {
         String timestamp = "" + System.currentTimeMillis();
 
-            RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            if(response.trim().equals("Succesfully update")){
-                                Toast.makeText(getActivity(),"Cập nhật thành công",Toast.LENGTH_SHORT);
-                                //TODO move back to home
-                            }else{
-                                Toast.makeText(getActivity(),"Lỗi cập nhật",Toast.LENGTH_SHORT);
-                            }
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getActivity(),"Xảy ra lỗi, vui lòng thử lại",Toast.LENGTH_SHORT);
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.trim().equals("Succesfully update")) {
+                            Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_SHORT);
+                            //TODO move back to home
+                        } else {
+                            Toast.makeText(getActivity(), "Lỗi cập nhật", Toast.LENGTH_SHORT);
                         }
                     }
-            ){
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String,String> params = new HashMap<>();
-                    params.put("seller_id", String.valueOf(seller_id) );
-                    params.put("name", editText_add_product_name.getText().toString() );
-                    //TODO
-                    if(image_uri != null){
-                        uploadImage();
-                        params.put("image",storage_location);
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(), "Xảy ra lỗi, vui lòng thử lại", Toast.LENGTH_SHORT);
                     }
-                    params.put("start_time" , editText_add_product_saleDate.getText().toString() + " " + editText_add_product_openTime.getText().toString()  );
-                    params.put("end_time", editText_add_product_saleDate.getText().toString() + " " +  editText_add_product_closeTime.getText().toString());
-                    params.put("original_price",editText_add_product_originalPrice.getText().toString());
-                    params.put("sell_price",editText_add_product_sellPrice.getText().toString());
-                    //TODO
-                    params.put("original_quantity", "1");
-                    params.put("remain_quantity", "1");
-                    params.put("description", "1");
-                    params.put("status","selling");
-                    params.put("sell_date",editText_add_product_saleDate.getText().toString() + " " + editText_add_product_openTime.getText().toString());
-                    return params;
                 }
-            };
-            requestQueue.add(stringRequest);
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("seller_id", String.valueOf(seller_id));
+                params.put("name", editText_add_product_name.getText().toString());
+                if (image_uri != null) {
+                    uploadImage();
+                    params.put("image", storage_location);
+                }
+                params.put("start_time", editText_add_product_saleDate.getText().toString() + " " + editText_add_product_openTime.getText().toString());
+                params.put("end_time", editText_add_product_saleDate.getText().toString() + " " + editText_add_product_closeTime.getText().toString());
+                params.put("original_price", editText_add_product_originalPrice.getText().toString());
+                params.put("sell_price", editText_add_product_sellPrice.getText().toString());
+                //TODO
+                params.put("original_quantity", "1");
+                params.put("remain_quantity", "1");
+                params.put("description", "1");
+                params.put("status", "selling");
+                params.put("sell_date", editText_add_product_saleDate.getText().toString() + " " + editText_add_product_openTime.getText().toString());
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
 
     }
 
@@ -372,74 +367,70 @@ public class AddProductFragment extends Fragment {
 
     // UploadImage method
     private void uploadImage() {
-        if (image_uri != null) {
+        // Defining the child of storageReference
+        StorageReference ref
+                = storageReference
+                .child(
+                        "images/"
+                                + UUID.randomUUID().toString());
 
-            // Defining the child of storageReference
-            StorageReference ref
-                    = storageReference
-                    .child(
-                            "images/"
-                                    + UUID.randomUUID().toString());
+        // adding listeners on upload
+        // or failure of image
+        ref.putFile(image_uri)
+                .addOnSuccessListener(
+                        new OnSuccessListener<UploadTask.TaskSnapshot>() {
 
-            // adding listeners on upload
-            // or failure of image
-            ref.putFile(image_uri)
-                    .addOnSuccessListener(
-                            new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(
+                                    UploadTask.TaskSnapshot taskSnapshot) {
 
-                                @Override
-                                public void onSuccess(
-                                        UploadTask.TaskSnapshot taskSnapshot) {
+                                // Image uploaded successfully
+                                Toast
+                                        .makeText(getActivity(),
+                                                "Image Uploaded!!",
+                                                Toast.LENGTH_SHORT)
+                                        .show();
+                                taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        storage_location = uri.toString();
+                                        Toast
+                                                .makeText(getActivity(),
+                                                        uri.toString(),
+                                                        Toast.LENGTH_LONG)
+                                                .show();
+                                    }
+                                });
+                            }
+                        })
 
-                                    // Image uploaded successfully
-                                    Toast
-                                            .makeText(getActivity(),
-                                                    "Image Uploaded!!",
-                                                    Toast.LENGTH_SHORT)
-                                            .show();
-                                    taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-                                            storage_location = uri.toString();
-                                            Toast
-                                                    .makeText(getActivity(),
-                                                            uri.toString(),
-                                                            Toast.LENGTH_LONG)
-                                                    .show();
-                                        }
-                                    });
-                                }
-                            })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
 
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
+                        // Error, Image not uploaded
+                        Toast
+                                .makeText(getActivity(),
+                                        "Failed " + e.getMessage(),
+                                        Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                })
+                .addOnProgressListener(
+                        new OnProgressListener<UploadTask.TaskSnapshot>() {
 
-                            // Error, Image not uploaded
-                            Toast
-                                    .makeText(getActivity(),
-                                            "Failed " + e.getMessage(),
-                                            Toast.LENGTH_SHORT)
-                                    .show();
-                        }
-                    })
-                    .addOnProgressListener(
-                            new OnProgressListener<UploadTask.TaskSnapshot>() {
-
-                                // Progress Listener for loading
-                                // percentage on the dialog box
-                                @Override
-                                public void onProgress(
-                                        UploadTask.TaskSnapshot taskSnapshot) {
-                                    double progress
-                                            = (100.0
-                                            * taskSnapshot.getBytesTransferred()
-                                            / taskSnapshot.getTotalByteCount());
-                                }
-                            });
-        }
-
-
+                            // Progress Listener for loading
+                            // percentage on the dialog box
+                            @Override
+                            public void onProgress(
+                                    UploadTask.TaskSnapshot taskSnapshot) {
+                                double progress
+                                        = (100.0
+                                        * taskSnapshot.getBytesTransferred()
+                                        / taskSnapshot.getTotalByteCount());
+                            }
+                        });
     }
+
 
 }

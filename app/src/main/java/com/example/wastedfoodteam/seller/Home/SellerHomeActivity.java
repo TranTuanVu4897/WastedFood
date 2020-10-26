@@ -33,6 +33,7 @@ import com.example.wastedfoodteam.seller.sellerFragment.AddProductFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.ChangePasswordSellerFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.EditSellerFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.SellerHomeFragment;
+import com.example.wastedfoodteam.seller.sellerFragment.SendFeedbackSellerFragment;
 import com.example.wastedfoodteam.source.model.Seller;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -147,6 +148,14 @@ public class SellerHomeActivity extends AppCompatActivity {
                     changePasswordSellerFragment.setArguments(bundle);
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_main,changePasswordSellerFragment,changePasswordSellerFragment.getTag()).commit();
+                }else if (id == R.id.item_nav_drawer_menu_feedback){
+                    //pass data to feedback seller fragment
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("id",seller.getAccount_id());
+                    SendFeedbackSellerFragment sendFeedbackSellerFragment = new SendFeedbackSellerFragment();
+                    sendFeedbackSellerFragment.setArguments(bundle);
+                    FragmentManager manager = getSupportFragmentManager();
+                    manager.beginTransaction().replace(R.id.content_main,sendFeedbackSellerFragment,sendFeedbackSellerFragment.getTag()).commit();
                 }
                 DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
