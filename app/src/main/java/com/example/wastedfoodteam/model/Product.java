@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.source.model;
+package com.example.wastedfoodteam.model;
 
 import java.io.Serializable;
 import java.util.Date;

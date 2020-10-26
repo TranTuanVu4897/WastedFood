@@ -1,6 +1,6 @@
 package com.example.wastedfoodteam.global;
 
-import com.example.wastedfoodteam.source.model.Seller;
+import com.example.wastedfoodteam.model.Seller;
 import com.google.android.gms.maps.model.LatLng;
 
 public class Variable {

@@ -22,9 +22,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.source.model.Buyer;
-import com.example.wastedfoodteam.source.model.Product;
-import com.example.wastedfoodteam.source.model.Seller;
+import com.example.wastedfoodteam.model.Buyer;
+import com.example.wastedfoodteam.model.Product;
+import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.utils.DownloadImageTask;
 import com.google.android.gms.maps.GoogleMap;
 

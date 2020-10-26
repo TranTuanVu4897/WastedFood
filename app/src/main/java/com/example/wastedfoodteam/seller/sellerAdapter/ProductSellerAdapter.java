@@ -10,14 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.Resource;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.seller.Product1;
-import com.example.wastedfoodteam.source.model.Product;
+import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.utils.DownloadImageTask;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 

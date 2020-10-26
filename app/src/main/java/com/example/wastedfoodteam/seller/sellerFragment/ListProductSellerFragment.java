@@ -17,16 +17,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.buyer.buy.ProductAdapter;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.sellerAdapter.ProductSellerAdapter;
-import com.example.wastedfoodteam.source.model.Product;
+import com.example.wastedfoodteam.model.Product;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
