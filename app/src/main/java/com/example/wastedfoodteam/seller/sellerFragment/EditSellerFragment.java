@@ -89,6 +89,8 @@ public class EditSellerFragment extends Fragment {
     String string_editSeller_address ;
     String string_editSeller_description ;
 
+
+
     String string_editSeller_email ;
 
 
@@ -329,10 +331,9 @@ public class EditSellerFragment extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
                 params.put("id", String.valueOf(id));
-                params.put("username",string_editSeller_name);
-                params.put("address",string_editSeller_address);
-                params.put("description",string_editSeller_description);
-                params.put("email","1234@gmail.com");
+                params.put("username",editText_editSeller_name.getText().toString().trim());
+                params.put("address",editText_editSeller_address.getText().toString().trim());
+                params.put("description",editText_editSeller_description.getText().toString().trim());
                 return params;
             }
         };

@@ -65,15 +65,18 @@ public class SellerHomeActivity extends AppCompatActivity {
     Seller seller;
 
 
+
+
     // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
     private ActionBarDrawerToggle drawerToggle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seller_home);
+        seller = new Seller();
+        Intent intent = new Intent();
 
-        //TODO get seller from login
-        seller = new Seller(1,"Tran Tuan Vu" , "12345678" , "gs://fir-demo-24196.appspot.com/1602521123529.jpg" , "123 Hoa Lac" , 21.0 , 13.0 , "123"  );
+        seller = (Seller) getIntent().getExtras().getSerializable("SELLER");
 
         //get the header view
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -95,7 +98,11 @@ public class SellerHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(SellerHomeActivity.this,"Make a Post",Toast.LENGTH_LONG).show();
+                //pass data to create product seller fragment
+                Bundle bundle = new Bundle();
+                bundle.putInt("seller_id" , seller.getAccount_id());
                 AddProductFragment addProductFragment = new AddProductFragment();
+                addProductFragment.setArguments(bundle);
                 FragmentManager manager = getSupportFragmentManager();
                 manager.beginTransaction().replace(R.id.content_main, addProductFragment, addProductFragment.getTag()).commit();
             }
@@ -136,7 +143,6 @@ public class SellerHomeActivity extends AppCompatActivity {
                 } else if(id == R.id.item_nav_drawer_menu_change_password){
                     //pass data to edit seller fragment
                     Bundle bundle = new Bundle();
-                    bundle.putString("password",seller.getPassword());
                     ChangePasswordSellerFragment changePasswordSellerFragment = new ChangePasswordSellerFragment();
                     changePasswordSellerFragment.setArguments(bundle);
                     FragmentManager manager = getSupportFragmentManager();

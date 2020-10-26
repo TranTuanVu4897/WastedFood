@@ -10,7 +10,6 @@ import java.sql.Date;
 public class Seller implements Serializable {
     int account_id;
     String name;
-    String password;
     String image;
     String address;
     double latitude;
@@ -73,14 +72,6 @@ public class Seller implements Serializable {
         this.description = description;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public Seller() {
     }
 
@@ -94,15 +85,4 @@ public class Seller implements Serializable {
         this.description = description;
     }
 
-    //TODO temporary
-    public Seller(int account_id, String name, String password , String image, String address, double latitude, double longitude, String description  ) {
-        this.account_id = account_id;
-        this.name = name;
-        this.image = image;
-        this.address = address;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.description = description;
-        this.password = password;
-    }
 }
