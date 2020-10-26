@@ -72,7 +72,6 @@ public class Seller implements Serializable {
         this.description = description;
     }
 
-
     public Seller() {
     }
 
@@ -85,4 +84,5 @@ public class Seller implements Serializable {
         this.longitude = longitude;
         this.description = description;
     }
+
 }
