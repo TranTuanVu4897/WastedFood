@@ -31,7 +31,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
-import com.google.android.material.navigation.NavigationView;
+//import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 

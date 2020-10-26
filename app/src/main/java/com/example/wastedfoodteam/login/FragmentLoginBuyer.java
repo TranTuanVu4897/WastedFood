@@ -24,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buy.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
@@ -32,6 +33,8 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -45,6 +48,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -88,6 +93,7 @@ public class FragmentLoginBuyer extends Fragment {
             public void onSuccess(LoginResult loginResult) {
 //                urlGetData = Variable.ipAddress + "login/buyerLogin.php?third_party_id=" + etSDT.getText().toString();
 //                getData(urlGetData);
+                resultFacebook();
                 Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
                 checkOption = "2";
                 startActivity(intent);
@@ -319,6 +325,32 @@ public class FragmentLoginBuyer extends Fragment {
         editor.putBoolean("check", true);
         editor.commit();
         //TODO
+    }
+    private void resultFacebook() {
+        GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+            @Override
+            public void onCompleted(JSONObject object, GraphResponse response) {
+                Log.d("Json", response.getJSONObject().toString());
+                try {
+                    String email = object.getString("email");
+                    String name = object.getString("name");
+                    String id = object.getString("id");
+                    String dob = object.getString("birthday");
+                    String imageF = "https://graph.facebook.com/" + id + "/picture?type=large";
+                    RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+//TODO
+//                    StringRequest stringRequest = new StringRequest();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        Bundle parameter = new Bundle();
+        parameter.putString("fields", "id,name,email,gender,birthday");
+        graphRequest.setParameters(parameter);
+        graphRequest.executeAsync();
+        Log.d("Tag: ", "failed");
     }
 
 
