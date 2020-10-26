@@ -23,9 +23,9 @@ import java.util.ArrayList;
 public class PostActivity extends AppCompatActivity {
     private  DatabaseReference databaseReference;
     ListView lvProduct;
-    ArrayList<Product> arrayList = new ArrayList<>();
-    ArrayAdapter<Product> arrayAdapter;
-    Product product;
+    ArrayList<Product1> arrayList = new ArrayList<>();
+    ArrayAdapter<Product1> arrayAdapter;
+    Product1 product;
     private Button btnAdd;
 
     @Override
@@ -36,15 +36,15 @@ public class PostActivity extends AppCompatActivity {
         btnAdd = findViewById(R.id.btnIncreate);
         lvProduct = findViewById(R.id.lvProduct);
 
-        product = new Product();
+        product = new Product1();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users").child("2").child("Products");
 
-        arrayAdapter = new ArrayAdapter<Product>(this, android.R.layout.simple_list_item_1,arrayList);
+        arrayAdapter = new ArrayAdapter<Product1>(this, android.R.layout.simple_list_item_1,arrayList);
         lvProduct.setAdapter(arrayAdapter);
         databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Product value = snapshot.getValue(Product.class);
+                Product1 value = snapshot.getValue(Product1.class);
                 //String value = snapshot.getValue(String.class);
                 arrayList.add(value);
                 arrayAdapter.notifyDataSetChanged();
