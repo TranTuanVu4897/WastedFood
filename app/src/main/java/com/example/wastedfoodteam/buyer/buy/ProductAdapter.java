@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.source.model.Product;
+import com.example.wastedfoodteam.utils.DownloadImageTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -64,7 +65,10 @@ public class ProductAdapter extends BaseAdapter {
         Product product = productList.get(position);
 
         holder.tvTitle.setText(product.getName() + "");
-        Picasso.get().load(product.getImage().isEmpty() ? Variable.noImageUrl : product.getImage()).into(holder.ivProduct);//TODO replace with other type
+
+        //get image from url
+        new DownloadImageTask(holder.ivProduct).execute(product.getImage());
+
         return convertView;
 
     }

@@ -21,7 +21,7 @@
             android:layout_width="117dp"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@drawable/no_image" />
 
         <TextView
             android:id="@+id/tvTitleLPI"

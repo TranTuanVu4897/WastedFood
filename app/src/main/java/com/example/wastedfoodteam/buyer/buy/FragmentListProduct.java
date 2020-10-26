@@ -72,31 +72,34 @@ public class FragmentListProduct extends ListFragment {
         //require edit latitude
         urlGetData = urlGetData + "?lat=" + Variable.gps.latitude + "&lng=" + Variable.gps.longitude;
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, urlGetData, null,
-                new Response.Listener<JSONArray>() {
+        StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(String response) {
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                JSONObject object = response.getJSONObject(i);
-                                arrProduct.add(new Product(object.getInt("Id"),
-                                        object.getInt("SellerId"),
-                                        object.getString("Name"),
-                                        object.getString("Image"),
-                                        dateFormat.parse(object.getString("StartTime")),
-                                        dateFormat.parse(object.getString("EndTime")),
-                                        object.getDouble("OriginalPrice"),
-                                        object.getDouble("SellPrice"),
-                                        object.getInt("OriginalQuantity"),
-                                        object.getInt("RemainQuantity"),
-                                        object.getString("Description"),
-                                        dateFormat.parse(object.getString("SellDate")),
-                                        object.getString("Status"),
-                                        false));
-                            } catch (JSONException | ParseException e) {
-                                e.printStackTrace();
+                        try {
+                            JSONArray jsonProducts = new JSONArray(response);
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                            for (int i = 0; i < jsonProducts.length(); i++) {
+//                                arrProduct.add(new Product(object.getInt("Id"),
+//                                        object.getInt("SellerId"),
+//                                        object.getString("Name"),
+//                                        object.getString("Image"),
+//                                        dateFormat.parse(object.getString("StartTime")),
+//                                        dateFormat.parse(object.getString("EndTime")),
+//                                        object.getDouble("OriginalPrice"),
+//                                        object.getDouble("SellPrice"),
+//                                        object.getInt("OriginalQuantity"),
+//                                        object.getInt("RemainQuantity"),
+//                                        object.getString("Description"),
+//                                        dateFormat.parse(object.getString("SellDate")),
+//                                        object.getString("Status"),
+//                                        false));
+                                arrProduct.add((Product) gson.fromJson(jsonProducts.getString(i),Product.class));
+                                adapter.notifyDataSetChanged();
                             }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     }
                 },
@@ -105,7 +108,7 @@ public class FragmentListProduct extends ListFragment {
                     public void onErrorResponse(VolleyError error) {
                     }
                 });
-        requestQueue.add(jsonArrayRequest);
+        requestQueue.add(getProductAround);
     }
 
     @Override
@@ -114,7 +117,7 @@ public class FragmentListProduct extends ListFragment {
         getSeller(product.getSeller_id());
 
         //put bundle
-        bundleDetail.putSerializable("PRODUCT",product);
+        bundleDetail.putSerializable("PRODUCT", product);
         detailProduct = new FragmentDetailProduct();
         detailProduct.setArguments(bundleDetail);
 
@@ -140,18 +143,18 @@ public class FragmentListProduct extends ListFragment {
                     public void onResponse(String response) {
 
                         try {
-                            JSONArray object = new JSONArray(response);
+                            JSONArray jsonSellers = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
-//                                Seller seller = new Seller(object.getInt("AccountId"),
-//                                        object.getString("Name"),
-//                                        object.getString("Image"),
-//                                        object.getString("Address"),
-//                                        object.getDouble("Latitude"),
-//                                        object.getDouble("Longitude"),
-//                                        object.getString("Description"), null);
+//                                Seller seller = new Seller(jsonSellers.getInt("AccountId"),
+//                                        jsonSellers.getString("Name"),
+//                                        jsonSellers.getString("Image"),
+//                                        jsonSellers.getString("Address"),
+//                                        jsonSellers.getDouble("Latitude"),
+//                                        jsonSellers.getDouble("Longitude"),
+//                                        jsonSellers.getString("Description"), null);
                             //TODO check if done
-                            Seller seller = gson.fromJson(object.getString(0), Seller.class);
+                            Seller seller = gson.fromJson(jsonSellers.getString(0), Seller.class);
                             Variable.seller = seller;
                             bundleDetail.putSerializable("SELLER", seller);
                         } catch (JSONException e) {
