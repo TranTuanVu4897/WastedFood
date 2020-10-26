@@ -1,12 +1,13 @@
 package com.example.wastedfoodteam.source.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
  * Seller class
  * author Vutt
  */
-public class Seller {
+public class Seller implements Serializable {
     int account_id;
     String name;
     String image;
@@ -71,7 +72,6 @@ public class Seller {
         this.description = description;
     }
 
-
     public Seller() {
     }
 
@@ -84,4 +84,5 @@ public class Seller {
         this.longitude = longitude;
         this.description = description;
     }
+
 }

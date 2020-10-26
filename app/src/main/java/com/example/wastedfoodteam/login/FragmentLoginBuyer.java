@@ -75,6 +75,7 @@ public class FragmentLoginBuyer extends Fragment {
         btnSignIn = view.findViewById(R.id.btnSignInBuyerFLB);
         btnSignInGoogle = view.findViewById(R.id.btnGoogleSignInFLB);
         btnSignInFacebook = view.findViewById(R.id.btnFacebookSignInFLB);
+        btnPartnerOption = view.findViewById(R.id.btnPartnerOptionFLB);
         handleSignInFacebook();
 
         //facebook option
@@ -109,7 +110,7 @@ public class FragmentLoginBuyer extends Fragment {
             @Override
             public void onClick(View v) {
                 tvWarning.setText("");
-//To Do Check Phone
+                //To Do Check Phone
                 signInGoogle();
 
             }
@@ -126,6 +127,12 @@ public class FragmentLoginBuyer extends Fragment {
                     urlGetData = Variable.ipAddress + "login/buyerLogin.php?phone=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
                     getData(urlGetData);
                 }
+            }
+        });
+        btnPartnerOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addFragmentLoginPartner();
             }
         });
 
@@ -217,14 +224,13 @@ public class FragmentLoginBuyer extends Fragment {
     /**
      * add fragment login for seller
      *
-     * @param view
      */
-    public void addFragmentLoginPartner(View view) {
+    public void addFragmentLoginPartner() {
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         FragmentLoginPartner fragmentLoginPartner = new FragmentLoginPartner();
-        fragmentTransaction.add(R.id.fragmentPartner, fragmentLoginPartner);
+        fragmentTransaction.replace(R.id.flFragmentLayoutAM, fragmentLoginPartner);
         fragmentTransaction.commit();
     }
 
@@ -259,6 +265,7 @@ public class FragmentLoginBuyer extends Fragment {
             @Override
             public void onResponse(String response) {
                 switch (response) {
+                    case "not exist account":
                     case "account is locked":
                         Toast.makeText(getActivity(), "Mật khẩu sai", Toast.LENGTH_LONG).show();//TODO fix for suitable error
                         break;

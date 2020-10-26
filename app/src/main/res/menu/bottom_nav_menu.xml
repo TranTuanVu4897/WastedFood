@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <item
+            android:id="@+id/starFragment"
+
+            android:title="bottom_nav_title_star"/>
+
+        <item
+            android:id="@+id/statsFragment"
+
+            android:title="bottom_nav_title_stats"/>
+
+        <item
+            android:id="@+id/userFragment"
+
+            android:title="bottom_nav_title_user"/>
+
+</menu>
