@@ -17,14 +17,14 @@
         app:layout_constraintVertical_bias="0.0">
 
         <ImageView
-            android:id="@+id/ivProductLPI"
+            android:id="@+id/iv_list_seller_image"
             android:layout_width="117dp"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            tools:srcCompat="@drawable/no_image" />
+            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/tvTitleLPI"
+            android:id="@+id/tv_list_seller_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"

@@ -1,14 +1,14 @@
 package com.example.wastedfoodteam.seller;
 
-public class Product {
+public class Product1 {
     private String productName;
     private String productPrice;
     private String productDiscount;
 
-    public Product() {
+    public Product1() {
     }
 
-    public Product(String productName, String productPrice, String productDiscount) {
+    public Product1(String productName, String productPrice, String productDiscount) {
         this.productName = productName;
         this.productPrice = productPrice;
         this.productDiscount = productDiscount;

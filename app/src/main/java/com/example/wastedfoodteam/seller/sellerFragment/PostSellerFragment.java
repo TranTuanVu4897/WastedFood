@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.seller.Product;
+import com.example.wastedfoodteam.seller.Product1;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
@@ -22,9 +22,9 @@ public class PostSellerFragment extends Fragment {
 
     private DatabaseReference databaseReference;
     ListView lvProduct;
-    ArrayList<Product> arrayList = new ArrayList<>();
-    ArrayAdapter<Product> arrayAdapter;
-    Product product;
+    ArrayList<Product1> arrayList = new ArrayList<>();
+    ArrayAdapter<Product1> arrayAdapter;
+    Product1 product;
     private Button btn_post_add_product;
     @Override
     public void onCreate(Bundle savedInstanceState) {

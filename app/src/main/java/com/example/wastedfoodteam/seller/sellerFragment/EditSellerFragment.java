@@ -51,7 +51,6 @@ public class EditSellerFragment extends Fragment {
     public static final int RESULT_OK = -1;
     private int id ;
 
-
     //ui view
     EditText editText_editSeller_name;
     EditText editText_editSeller_address;
@@ -59,8 +58,6 @@ public class EditSellerFragment extends Fragment {
     EditText editText_editSeller_email;
     Button btn_editSeller_edit;
     ImageView iv_editSeller_avatar;
-
-
 
     //permission constants
     private static final int CAMERA_REQUEST_CODE = 200;
@@ -85,26 +82,8 @@ public class EditSellerFragment extends Fragment {
 
     //string get from edit text
     String string_editSeller_name ;
-
     String string_editSeller_address ;
     String string_editSeller_description ;
-
-
-
-    String string_editSeller_email ;
-
-
-    //update user
-    private void UpdateUser() {
-
-
-
-
-
-    }
-
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -126,17 +105,6 @@ public class EditSellerFragment extends Fragment {
         updateSeller("http://192.168.1.10/wastedfoodphp/seller/sellerEdit.php");
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
     //start of for camera handle
     private void pickFromGallery(){

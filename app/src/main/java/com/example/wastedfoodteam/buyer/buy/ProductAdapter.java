@@ -1,6 +1,7 @@
-package com.example.wastedfoodteam.buy;
+package com.example.wastedfoodteam.buyer.buy;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.source.model.Product;
-import com.squareup.picasso.Picasso;
+import com.example.wastedfoodteam.model.Product;
+import com.example.wastedfoodteam.utils.DownloadImageTask;
 
 import java.util.List;
 
@@ -19,11 +19,12 @@ public class ProductAdapter extends BaseAdapter {
     private Context context;
     private int layout;
     private List<Product> productList;
-
-    public ProductAdapter(Context context, int layout, List<Product> productList) {
+    Resources resources;
+    public ProductAdapter(Context context, int layout, List<Product> productList, Resources resources) {
         this.context = context;
         this.layout = layout;
         this.productList = productList;
+        this.resources = resources;
     }
 
     private class ViewHolder {
@@ -64,7 +65,10 @@ public class ProductAdapter extends BaseAdapter {
         Product product = productList.get(position);
 
         holder.tvTitle.setText(product.getName() + "");
-        Picasso.get().load(product.getImage().isEmpty() ? Variable.noImageUrl : product.getImage()).into(holder.ivProduct);//TODO replace with other type
+
+        //get image from url
+        new DownloadImageTask(holder.ivProduct,resources).execute(product.getImage());
+
         return convertView;
 
     }

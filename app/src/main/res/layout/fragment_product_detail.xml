@@ -3,84 +3,124 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="#FFFFFF">
 
     <ImageView
-        android:id="@+id/ivProductFPD"
-        android:layout_width="85dp"
-        android:layout_height="78dp"
-        android:layout_margin="20dp"
+        android:id="@+id/ivProduct"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@drawable/no_image" />
 
-    <Button
-        android:id="@+id/btnRemoveFPD"
-        android:layout_width="80dp"
-        android:layout_height="46dp"
-        android:text="Remove"
-        app:layout_constraintBottom_toBottomOf="@+id/btnAddFPD"
-        app:layout_constraintEnd_toStartOf="@+id/btnAddFPD"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/ivProductFPD"
-        app:layout_constraintTop_toTopOf="@+id/btnAddFPD"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/btnAddFPD"
-        android:layout_width="63dp"
-        android:layout_height="46dp"
-        android:text="Add"
-        app:layout_constraintBottom_toBottomOf="@+id/ivProductFPD"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.909"
-        app:layout_constraintStart_toEndOf="@+id/ivProductFPD"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.942" />
-
-    <fragment
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="369dp"
-        android:layout_height="410dp"
-        android:layout_margin="20dp"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.023"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivProductFPD"
-        app:layout_constraintVertical_bias="0.175"
-        tools:context=".MapsActivity" />
+        app:layout_constraintTop_toBottomOf="@+id/ivProduct"
+        app:layout_constraintVertical_bias="0.0">
 
-    <TextView
-        android:id="@+id/tvQuantityFPD"
+        <TextView
+            android:id="@+id/tvPriceDiscount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="TextView"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/tvPriceOriginal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="TextView"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/tvQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="direct"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/tvOpenTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Time"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/tvDirect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="direct"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="description"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnIncreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/ivProductFPD"
+        android:text="+"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ivProductFPD"
-        app:layout_constraintTop_toBottomOf="@+id/tvProductNameFPD"
+        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.063" />
+
+    <Button
+        android:id="@+id/btnDecreate"
+        android:layout_width="82dp"
+        android:layout_height="49dp"
+        android:text="-"
+        app:layout_constraintBottom_toBottomOf="@+id/btnIncreate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.031"
+        app:layout_constraintStart_toEndOf="@+id/btnIncreate"
+        app:layout_constraintTop_toTopOf="@+id/btnIncreate"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/tvProductNameFPD"
+        android:id="@+id/tvBuyQuantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/ivProductFPD"
+        app:layout_constraintBottom_toBottomOf="@+id/btnDecreate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ivProductFPD"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.012" />
+        app:layout_constraintStart_toEndOf="@+id/btnDecreate"
+        app:layout_constraintTop_toTopOf="@+id/btnDecreate" />
 
+    <Button
+        android:id="@+id/btnBuy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="308dp"
+        android:text="@string/order"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

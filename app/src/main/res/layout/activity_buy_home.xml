@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusableInTouchMode="false">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="409dp"
@@ -29,14 +28,14 @@
                 android:layout_marginTop="14dp"
                 android:layout_weight="1"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/list" />
+                app:srcCompat="@drawable/user" />
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="97dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@drawable/home" />
 
             <ImageButton
                 android:id="@+id/imageButton2"
@@ -44,7 +43,7 @@
                 android:layout_height="63dp"
                 android:layout_marginTop="14dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/setting" />
+                app:srcCompat="@drawable/list" />
         </LinearLayout>
 
         <LinearLayout

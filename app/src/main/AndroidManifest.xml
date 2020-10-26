@@ -54,7 +54,7 @@
         <!-- </activity> -->
 
         </activity>
-<activity android:name=".buy.BuyHomeActivity"/>
+<activity android:name=".buyer.BuyHomeActivity"/>
 
 
         
