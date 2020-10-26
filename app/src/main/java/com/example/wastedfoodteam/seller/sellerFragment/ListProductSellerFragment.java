@@ -17,7 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.buy.ProductAdapter;
+import com.example.wastedfoodteam.buyer.buy.ProductAdapter;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.sellerAdapter.ProductSellerAdapter;
 import com.example.wastedfoodteam.source.model.Product;
@@ -51,7 +51,7 @@ public class ListProductSellerFragment extends Fragment {
         arrProduct = new ArrayList<Product>();
         seller_id = bundle.getInt("id");
         String urlGetData = Variable.ipAddress + "seller/getListProductSeller.php?seller_id=" + seller_id;
-        adapter = new ProductSellerAdapter(getActivity().getApplicationContext(), R.layout.list_seller_product , arrProduct);
+        adapter = new ProductSellerAdapter(getActivity().getApplicationContext(), R.layout.list_seller_product , arrProduct,getResources());
         lvProduct.setAdapter(adapter);
         getData(urlGetData);
         return view;

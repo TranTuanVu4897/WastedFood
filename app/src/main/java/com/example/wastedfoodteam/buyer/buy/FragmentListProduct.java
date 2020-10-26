@@ -58,7 +58,7 @@ public class FragmentListProduct extends ListFragment {
 
         //set up list display
         arrProduct = new ArrayList<>();
-        adapter = new ProductAdapter(getActivity().getApplicationContext(), R.layout.list_product_item, arrProduct);
+        adapter = new ProductAdapter(getActivity().getApplicationContext(), R.layout.list_product_item, arrProduct,getResources());
         lvProduction.setAdapter(adapter);
         getData();
         return view;
@@ -76,7 +76,7 @@ public class FragmentListProduct extends ListFragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                       // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         try {
                             JSONArray jsonProducts = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();

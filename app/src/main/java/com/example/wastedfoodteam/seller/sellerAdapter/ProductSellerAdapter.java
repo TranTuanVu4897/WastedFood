@@ -1,6 +1,7 @@
 package com.example.wastedfoodteam.seller.sellerAdapter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,12 @@ import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.Resource;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.Product1;
 import com.example.wastedfoodteam.source.model.Product;
+import com.example.wastedfoodteam.utils.DownloadImageTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -22,16 +25,18 @@ public class ProductSellerAdapter extends BaseAdapter {
     Context myContext;
     int myLayout;
     List<Product> arrayProduct;
+    Resources resources;
 
     private class ViewHolder {
         TextView tvName;
         ImageView ivImage;
     }
 
-    public ProductSellerAdapter(Context context, int layout, List<Product> productList){
+    public ProductSellerAdapter(Context context, int layout, List<Product> productList,Resources resources){
         myContext = context;
         myLayout = layout;
         arrayProduct = productList;
+        this.resources = resources;
     }
 
     @Override
@@ -66,7 +71,9 @@ public class ProductSellerAdapter extends BaseAdapter {
 
         Product product = arrayProduct.get(position);
         holder.tvName.setText(product.getName());
-        Picasso.get().load(product.getImage().isEmpty() ? Variable.noImageUrl : product.getImage()).into(holder.ivImage);//TODO replace with other type
+        //remove piccaso
+        new DownloadImageTask(holder.ivImage, resources).execute(product.getImage());
+
         return convertView;
     }
 }

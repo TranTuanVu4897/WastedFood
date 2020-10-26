@@ -81,7 +81,7 @@ public class FragmentDetailProduct extends Fragment {
 
 
         //set image from url
-        new DownloadImageTask(ivProduct).execute(product.getImage());
+        new DownloadImageTask(ivProduct,getResources()).execute(product.getImage());
 
         //set event
         btnDecreate.setOnClickListener(new View.OnClickListener() {

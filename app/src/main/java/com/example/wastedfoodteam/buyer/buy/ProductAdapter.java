@@ -1,6 +1,7 @@
 package com.example.wastedfoodteam.buyer.buy;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.engine.Resource;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.source.model.Product;
@@ -20,11 +22,12 @@ public class ProductAdapter extends BaseAdapter {
     private Context context;
     private int layout;
     private List<Product> productList;
-
-    public ProductAdapter(Context context, int layout, List<Product> productList) {
+    Resources resources;
+    public ProductAdapter(Context context, int layout, List<Product> productList, Resources resources) {
         this.context = context;
         this.layout = layout;
         this.productList = productList;
+        this.resources = resources;
     }
 
     private class ViewHolder {
@@ -67,7 +70,7 @@ public class ProductAdapter extends BaseAdapter {
         holder.tvTitle.setText(product.getName() + "");
 
         //get image from url
-        new DownloadImageTask(holder.ivProduct).execute(product.getImage());
+        new DownloadImageTask(holder.ivProduct,resources).execute(product.getImage());
 
         return convertView;
 
