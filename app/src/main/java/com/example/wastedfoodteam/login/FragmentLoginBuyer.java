@@ -88,9 +88,9 @@ public class FragmentLoginBuyer extends Fragment {
             public void onSuccess(LoginResult loginResult) {
 //                urlGetData = Variable.ipAddress + "login/buyerLogin.php?third_party_id=" + etSDT.getText().toString();
 //                getData(urlGetData);
-                startActivity(new Intent(getActivity(), BuyHomeActivity.class));
-
-
+                Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+                checkOption = "2";
+                startActivity(intent);
             }
 
             @Override
@@ -309,12 +309,16 @@ public class FragmentLoginBuyer extends Fragment {
         requestQueue.add(stringRequest);
     }
 
+    /**
+     * handle status login
+     */
     private void sharePreferences() {
         SharedPreferences pre = getActivity().getSharedPreferences("my_data", MODE_PRIVATE);
         SharedPreferences.Editor editor = pre.edit();
         editor.putString("name", "Tung");
         editor.putBoolean("check", true);
         editor.commit();
+        //TODO
     }
 
 
