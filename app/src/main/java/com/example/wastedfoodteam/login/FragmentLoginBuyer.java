@@ -22,10 +22,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.wastedfoodteam.MainActivity;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buy.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
@@ -73,7 +71,7 @@ public class FragmentLoginBuyer extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login_buyer, container, false);
         etSDT = view.findViewById(R.id.etSdtBuyerFLB);
         etPass = view.findViewById(R.id.etPassBuyerFLB);
-        tvWarning = view.findViewById(R.id.etWarningFLB);
+        tvWarning = view.findViewById(R.id.tvWarningFLB);
         btnSignIn = view.findViewById(R.id.btnSignInBuyerFLB);
         btnSignInGoogle = view.findViewById(R.id.btnGoogleSignInFLB);
         btnSignInFacebook = view.findViewById(R.id.btnFacebookSignInFLB);
@@ -89,9 +87,9 @@ public class FragmentLoginBuyer extends Fragment {
             public void onSuccess(LoginResult loginResult) {
 //                urlGetData = Variable.ipAddress + "login/buyerLogin.php?third_party_id=" + etSDT.getText().toString();
 //                getData(urlGetData);
-                startActivity(new Intent(getActivity(), BuyHomeActivity.class));
-
-
+                Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+                checkOption = "2";
+                startActivity(intent);
             }
 
             @Override
@@ -304,12 +302,16 @@ public class FragmentLoginBuyer extends Fragment {
         requestQueue.add(stringRequest);
     }
 
+    /**
+     * handle status login
+     */
     private void sharePreferences() {
         SharedPreferences pre = getActivity().getSharedPreferences("my_data", MODE_PRIVATE);
         SharedPreferences.Editor editor = pre.edit();
         editor.putString("name", "Tung");
         editor.putBoolean("check", true);
         editor.commit();
+        //TODO
     }
 
 

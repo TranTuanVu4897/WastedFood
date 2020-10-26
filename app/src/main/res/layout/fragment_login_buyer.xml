@@ -109,11 +109,12 @@
                 android:gravity="center"
                 android:text="Quên mật khẩu" />
         </LinearLayout>
-        <EditText
-            android:id="@+id/etWarningFLB"
+        <TextView
+            android:id="@+id/tvWarningFLB"
             android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:textColor="#FF0000"/>
     </LinearLayout>
 
     <LinearLayout
