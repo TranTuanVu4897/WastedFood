@@ -40,7 +40,7 @@ public class FragmentListProduct extends ListFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list_product, container, false);
+        View view = inflater.inflate(R.layout.fragment_list_product_buyer, container, false);
         //set up url volley
         urlGetData = Variable.ipAddress + Variable.SEARCH_PRODUCT;
 
@@ -52,7 +52,7 @@ public class FragmentListProduct extends ListFragment {
 
         //set up list display
         arrProduct = new ArrayList<>();
-        adapter = new ProductAdapter(getActivity().getApplicationContext(), R.layout.list_product_item, arrProduct,getResources());
+        adapter = new ProductAdapter(getActivity().getApplicationContext(), R.layout.list_buyer_product_item, arrProduct,getResources());
         lvProduction.setAdapter(adapter);
         getData();
         return view;
