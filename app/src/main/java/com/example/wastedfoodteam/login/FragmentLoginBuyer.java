@@ -342,7 +342,7 @@ public class FragmentLoginBuyer extends Fragment {
                     String thirdPartyId = object.getString("id");
                     String dob = object.getString("birthday");
 //                    String gender = object.getString("gender");
-                    String gender = "Nam";
+                    String gender = "1";
                     String urlImage = "https://graph.facebook.com/" + thirdPartyId + "/picture?type=large";
                     String urlInsert = Variable.ipAddress + "login/register3rdParty.php";
                     getUrlDataAndInsert(urlInsert,email,thirdPartyId,name, urlImage, dob, gender);

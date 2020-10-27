@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.buy;
+package com.example.wastedfoodteam.buyer;
 
 import android.os.Bundle;
 import android.util.Log;

@@ -56,13 +56,13 @@
                 android:layout_weight="2"
                 android:layout_marginBottom="10dp">
                 <RadioButton
-                    android:id="@+id/radio_a"
+                    android:id="@+id/rbBoy"
                     android:text="Nam"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="50dp"/>
                 <RadioButton
-                    android:id="@+id/radio_b"
+                    android:id="@+id/rbGirl"
                     android:text="Nữ"
                     android:checked="true"
                     android:layout_width="wrap_content"
@@ -84,6 +84,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:hint="Ngày sinh:"
+                android:inputType=""
+                android:paddingEnd="50dp"
+                android:textColorHint="#B6ADAD"
+                android:layout_marginBottom="30dp"/>
+            <TextView
+                android:id="@+id/tvMailFEB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="Email: "
+                android:textSize="18dp"
                 android:inputType=""
                 android:paddingEnd="50dp"
                 android:textColorHint="#B6ADAD"
