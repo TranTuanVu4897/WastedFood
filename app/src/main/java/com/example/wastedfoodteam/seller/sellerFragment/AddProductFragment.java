@@ -38,6 +38,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.AddProductActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -205,7 +206,9 @@ public class AddProductFragment extends Fragment {
         btn_add_product_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addProduct("http://192.168.1.10/wastedfoodphp/seller/SellerCreateProduct.php");
+                String urlGetData = Variable.ipAddress + Variable.ADD_PRODUCT_SELLER;
+                //addProduct("http://192.168.1.10/wastedfoodphp/seller/SellerCreateProduct.php");
+                addProduct(urlGetData);
             }
         });
 
@@ -415,21 +418,7 @@ public class AddProductFragment extends Fragment {
                                         Toast.LENGTH_SHORT)
                                 .show();
                     }
-                })
-                .addOnProgressListener(
-                        new OnProgressListener<UploadTask.TaskSnapshot>() {
-
-                            // Progress Listener for loading
-                            // percentage on the dialog box
-                            @Override
-                            public void onProgress(
-                                    UploadTask.TaskSnapshot taskSnapshot) {
-                                double progress
-                                        = (100.0
-                                        * taskSnapshot.getBytesTransferred()
-                                        / taskSnapshot.getTotalByteCount());
-                            }
-                        });
+                });
     }
 
 
