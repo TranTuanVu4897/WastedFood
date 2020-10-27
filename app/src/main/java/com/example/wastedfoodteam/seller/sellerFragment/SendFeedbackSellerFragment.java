@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.global.Variable;
 
 import java.text.ParseException;
 import java.util.HashMap;
@@ -92,7 +93,8 @@ public class SendFeedbackSellerFragment extends Fragment {
         //TODO
 
         //add to db
-        addFeedback("http://192.168.1.10/wastedfoodphp/seller/sellerFeedback.php");
+        String urlGetData = Variable.ipAddress + "seller/sellerFeedback.php";
+        addFeedback(urlGetData);
 
     }
 

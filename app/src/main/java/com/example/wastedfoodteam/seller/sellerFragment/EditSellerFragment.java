@@ -37,11 +37,20 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.global.Variable;
+import com.example.wastedfoodteam.model.Product;
+import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.seller.editSeller.EditSellerActivity;
+import com.example.wastedfoodteam.utils.DownloadImageTask;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,6 +59,7 @@ public class EditSellerFragment extends Fragment {
 
     public static final int RESULT_OK = -1;
     private int id ;
+    private Seller sellerInfomation;
 
     //ui view
     EditText editText_editSeller_name;
@@ -90,6 +100,103 @@ public class EditSellerFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_edit_seller, container, false);
+
+        //init ui view
+        editText_editSeller_name = view.findViewById(R.id.editText_editSeller_name);
+        editText_editSeller_address = view.findViewById(R.id.editText_editSeller_address);
+        editText_editSeller_description = view.findViewById(R.id.editText_editSeller_description);
+        btn_editSeller_edit = view.findViewById(R.id.btn_editSeller_edit1);
+        iv_editSeller_avatar = view.findViewById(R.id.iv_editSeller_avatar);
+
+
+        Bundle bundle = getArguments();
+        if(bundle!= null){
+            id = bundle.getInt("id");
+        }
+
+        getSeller(id);
+
+
+        //string get from edit text
+        string_editSeller_name = editText_editSeller_name.getText().toString().trim();
+        string_editSeller_address = editText_editSeller_address.getText().toString().trim();
+        string_editSeller_description = editText_editSeller_description.getText().toString().trim();
+        //string_editSeller_email = editText_editSeller_email.getText().toString().trim();
+
+        //for multiline EditText
+        //scroll for EditText
+        editText_editSeller_description.setScroller(new Scroller( getActivity().getApplicationContext()));
+        editText_editSeller_description.setVerticalScrollBarEnabled(true);
+
+        //Edit Text Line
+        editText_editSeller_description.setMinLines(2);
+        editText_editSeller_description.setMaxLines(5);
+
+        //init permission arrays
+        cameraPermission = new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+        //click avatar handle
+        iv_editSeller_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showImagePickDialog();
+            }
+        });
+
+        //click edit button handle
+        btn_editSeller_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Flow
+                //input data -> validate -> add to db
+                try {
+                    inputData();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        return view;
+    }
+
+    private void getSeller(int id) {
+        urlGetData = Variable.ipAddress + "getSellerById.php?id=" + id;
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        StringRequest getSellerRequestString = new StringRequest(Request.Method.GET, urlGetData,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONArray jsonSellers = new JSONArray(response);
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                            Seller seller = gson.fromJson(jsonSellers.getString(0), Seller.class);
+                            editText_editSeller_name.setText(seller.getName());
+                            editText_editSeller_address.setText(seller.getAddress());
+                            editText_editSeller_description.setText(seller.getDescription());
+                            new DownloadImageTask(iv_editSeller_avatar,getResources()).execute(seller.getImage());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        requestQueue.add(getSellerRequestString);
+    }
+
     private void inputData() throws ParseException {
         //Get Data In Edit Text
         name = editText_editSeller_name.getText().toString().trim();
@@ -99,10 +206,12 @@ public class EditSellerFragment extends Fragment {
 
 
         //Validate
-        //TODO Do it later WARNING
+        //TODO Do it later
 
-        //TODO Modify in DB
-        updateSeller("http://192.168.1.10/wastedfoodphp/seller/sellerEdit.php");
+        //Modify in DB
+        String urlGetData = Variable.ipAddress + "seller/sellerEdit.php";
+        //updateSeller("http://192.168.1.10/wastedfoodphp/seller/sellerEdit.php");
+        updateSeller(urlGetData);
 
     }
 
@@ -207,70 +316,7 @@ public class EditSellerFragment extends Fragment {
     }
 
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_edit_seller, container, false);
 
-        //init ui view
-        editText_editSeller_name = view.findViewById(R.id.editText_editSeller_name);
-        editText_editSeller_address = view.findViewById(R.id.editText_editSeller_address);
-        editText_editSeller_description = view.findViewById(R.id.editText_editSeller_description);
-        btn_editSeller_edit = view.findViewById(R.id.btn_editSeller_edit1);
-        iv_editSeller_avatar = view.findViewById(R.id.iv_editSeller_avatar);
-
-        //TODO get seller from SellerHomeActivity
-        Bundle bundle = getArguments();
-        if(bundle!= null){
-            editText_editSeller_name.setText(bundle.getString("name"));
-            editText_editSeller_address.setText(bundle.getString("address"));
-            editText_editSeller_description.setText(bundle.getString("description"));
-            id = bundle.getInt("id");
-        }
-
-        //string get from edit text
-        string_editSeller_name = editText_editSeller_name.getText().toString().trim();
-        string_editSeller_address = editText_editSeller_address.getText().toString().trim();
-        string_editSeller_description = editText_editSeller_description.getText().toString().trim();
-        //string_editSeller_email = editText_editSeller_email.getText().toString().trim();
-
-        //for multiline EditText
-        //scroll for EditText
-        editText_editSeller_description.setScroller(new Scroller( getActivity().getApplicationContext()));
-        editText_editSeller_description.setVerticalScrollBarEnabled(true);
-
-        //Edit Text Line
-        editText_editSeller_description.setMinLines(2);
-        editText_editSeller_description.setMaxLines(5);
-
-        //init permission arrays
-        cameraPermission = new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
-        //click avatar handle
-        iv_editSeller_avatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showImagePickDialog();
-            }
-        });
-
-        //click edit button handle
-        btn_editSeller_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Flow
-                //input data -> validate -> add to db
-                try {
-                    inputData();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        return view;
-    }
 
 
     //update seller data
@@ -281,17 +327,17 @@ public class EditSellerFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         if(response.trim().equals("Succesfully update")){
-                            Toast.makeText(getActivity(),"Cập nhật thành công",Toast.LENGTH_SHORT);
+                            Toast.makeText(getActivity(),"Cập nhật thành công",Toast.LENGTH_SHORT).show();
                             //TODO move back to home
                         }else{
-                            Toast.makeText(getActivity(),"Lỗi cập nhật",Toast.LENGTH_SHORT);
+                            Toast.makeText(getActivity(),"Lỗi cập nhật",Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(),"Xảy ra lỗi, vui lòng thử lại",Toast.LENGTH_SHORT);
+                        Toast.makeText(getActivity(),"Xảy ra lỗi, vui lòng thử lại",Toast.LENGTH_SHORT).show();
                     }
                 }
         ){

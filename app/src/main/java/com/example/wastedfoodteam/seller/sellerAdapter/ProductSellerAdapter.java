@@ -1,6 +1,7 @@
 package com.example.wastedfoodteam.seller.sellerAdapter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.seller.Product1;
+import com.example.wastedfoodteam.utils.DownloadImageTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -34,6 +36,7 @@ public class ProductSellerAdapter extends BaseAdapter {
     int myLayout;
     List<Product> arrayProduct;
     Product product;
+    Resources resources;
 
     private class ViewHolder {
         TextView tvName;
@@ -41,10 +44,11 @@ public class ProductSellerAdapter extends BaseAdapter {
         Switch swOnOff;
     }
 
-    public ProductSellerAdapter(Context context, int layout, List<Product> productList){
+    public ProductSellerAdapter(Context context, int layout, List<Product> productList , Resources resources){
         myContext = context;
         myLayout = layout;
         arrayProduct = productList;
+        this.resources = resources;
     }
 
     @Override
@@ -78,6 +82,7 @@ public class ProductSellerAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        final String urlGetData = Variable.ipAddress + "seller/setActiveForProduct.php";
         product = arrayProduct.get(position);
         if(product.getStatus().equals("selling")){
             holder.swOnOff.setChecked(true);
@@ -86,7 +91,10 @@ public class ProductSellerAdapter extends BaseAdapter {
         }
         holder.swOnOff.setTag(position);
         holder.tvName.setText(product.getName());
-        Picasso.get().load(product.getImage().isEmpty() ? Variable.noImageUrl : product.getImage()).into(holder.ivImage);//TODO replace with other type
+        //get image from url
+        new DownloadImageTask(holder.ivImage,resources).execute(product.getImage());
+        //Picasso.get().load(product.getImage().isEmpty() ? Variable.noImageUrl : product.getImage()).into(holder.ivImage);
+        // TODO replace with other type
         holder.swOnOff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,13 +103,13 @@ public class ProductSellerAdapter extends BaseAdapter {
                     int position=(Integer)v.getTag();
                     product = arrayProduct.get(position);
                     Toast.makeText( v.getContext() , "Switch is on", Toast.LENGTH_LONG).show();
-                    updateProductStatus("http://192.168.1.10/wastedfoodphp/seller/setActiveForProduct.php","selling",product.getId());
+                    updateProductStatus(urlGetData,"selling",product.getId());
                 }
                 else {
                     int position=(Integer)v.getTag();
                     product = arrayProduct.get(position);
                     Toast.makeText( v.getContext(), "Switch is Off", Toast.LENGTH_LONG).show();
-                    updateProductStatus("http://192.168.1.10/wastedfoodphp/seller/setActiveForProduct.php" , "stop",product.getId());
+                    updateProductStatus(urlGetData, "stop",product.getId());
                 }
             }
         });
