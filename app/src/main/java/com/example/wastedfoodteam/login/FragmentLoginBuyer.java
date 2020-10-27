@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -55,6 +56,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -86,7 +89,7 @@ public class FragmentLoginBuyer extends Fragment {
         //facebook option
 
         callbackManager = CallbackManager.Factory.create();
-        btnSignInFacebook.setPermissions(Arrays.asList("public_profile", "email"));
+        btnSignInFacebook.setPermissions(Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
         btnSignInFacebook.setFragment(this);
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -218,7 +221,7 @@ public class FragmentLoginBuyer extends Fragment {
         if (AccessToken.getCurrentAccessToken() != null && com.facebook.Profile.getCurrentProfile() != null) {
 
 
-            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
+            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile","email", "user_birthday", "user_friends"));
             Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
             checkOption = "2";
             intent.putExtra("Check_option", checkOption);
@@ -229,7 +232,6 @@ public class FragmentLoginBuyer extends Fragment {
 
     /**
      * add fragment login for seller
-     *
      */
     public void addFragmentLoginPartner() {
 
@@ -319,6 +321,7 @@ public class FragmentLoginBuyer extends Fragment {
      * handle status login
      */
     private void sharePreferences() {
+        //TODO
         SharedPreferences pre = getActivity().getSharedPreferences("my_data", MODE_PRIVATE);
         SharedPreferences.Editor editor = pre.edit();
         editor.putString("name", "Tung");
@@ -326,7 +329,9 @@ public class FragmentLoginBuyer extends Fragment {
         editor.commit();
         //TODO
     }
+
     private void resultFacebook() {
+
         GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
@@ -334,12 +339,14 @@ public class FragmentLoginBuyer extends Fragment {
                 try {
                     String email = object.getString("email");
                     String name = object.getString("name");
-                    String id = object.getString("id");
+                    String thirdPartyId = object.getString("id");
                     String dob = object.getString("birthday");
-                    String imageF = "https://graph.facebook.com/" + id + "/picture?type=large";
-                    RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-//TODO
-//                    StringRequest stringRequest = new StringRequest();
+//                    String gender = object.getString("gender");
+                    String gender = "Nam";
+                    String urlImage = "https://graph.facebook.com/" + thirdPartyId + "/picture?type=large";
+                    String urlInsert = Variable.ipAddress + "login/register3rdParty.php";
+                    getUrlDataAndInsert(urlInsert,email,thirdPartyId,name, urlImage, dob, gender);
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -351,6 +358,60 @@ public class FragmentLoginBuyer extends Fragment {
         graphRequest.setParameters(parameter);
         graphRequest.executeAsync();
         Log.d("Tag: ", "failed");
+    }
+// checking register 3rdparty
+    private void getUrlDataAndInsert(String url, final String emailFB, final String thirdPartyIdFB, final String nameFB, final String urlImageFB, final String dobFB, final String genderFB) {
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+                switch (response) {
+                    case "OK":
+                        Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();
+                        checkOption = "2";
+                        intent.putExtra("Check_option", checkOption);
+                        startActivity(intent);
+                        break;
+                    default:
+                        Toast.makeText(getActivity(), "OK Insert data", Toast.LENGTH_LONG).show();
+                        try {
+
+                            sharePreferences();
+                            checkOption = "2";
+                            intent.putExtra("Check_option", checkOption);
+                            //TODO pass data through intent
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), "lỗi kết nỗi" + urlGetData, Toast.LENGTH_LONG).show();//TODO get data
+                Log.d("MK ", md5(etPass.getText().toString()));
+            }
+        }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("thirdPartyId", thirdPartyIdFB);
+                params.put("name",nameFB);
+                params.put("urlImage", urlImageFB);
+                params.put("dob", dobFB);
+                params.put("gender",genderFB);
+                params.put("email",emailFB);
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
 
