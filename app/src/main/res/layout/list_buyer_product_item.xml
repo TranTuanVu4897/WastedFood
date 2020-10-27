@@ -33,17 +33,17 @@
 
         <TextView
             android:id="@+id/tvQuantity"
-            android:layout_width="132dp"
-            android:layout_height="19dp"
+            android:layout_width="131dp"
+            android:layout_height="wrap_content"
             android:background="#6BF271"
             android:text="Còn: 10/10"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@+id/ivProductLPI"
             app:layout_constraintEnd_toEndOf="@+id/ivProductLPI"
-            app:layout_constraintHorizontal_bias="0.486"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/ivProductLPI"
             app:layout_constraintTop_toTopOf="@+id/ivProductLPI"
-            app:layout_constraintVertical_bias="0.991" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/tvDiscount"
@@ -114,8 +114,8 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:layout_width="46dp"
-                android:layout_height="41dp"
+                android:layout_width="53dp"
+                android:layout_height="46dp"
                 android:background="@drawable/star_shape"
                 android:gravity="center_horizontal|center_vertical"
                 android:orientation="vertical"
