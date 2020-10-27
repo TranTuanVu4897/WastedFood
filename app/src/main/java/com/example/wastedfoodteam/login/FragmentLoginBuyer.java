@@ -84,12 +84,12 @@ public class FragmentLoginBuyer extends Fragment {
         btnSignInGoogle = view.findViewById(R.id.btnGoogleSignInFLB);
         btnSignInFacebook = view.findViewById(R.id.btnFacebookSignInFLB);
         btnPartnerOption = view.findViewById(R.id.btnPartnerOptionFLB);
-//        handleSignInFacebook();
+        handleSignInFacebook();
 
         //facebook option
 
         callbackManager = CallbackManager.Factory.create();
-        btnSignInFacebook.setPermissions(Arrays.asList("public_profile", "email"));
+        btnSignInFacebook.setPermissions(Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
         btnSignInFacebook.setFragment(this);
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -216,19 +216,19 @@ public class FragmentLoginBuyer extends Fragment {
     /**
      * Keep Sign In Facebook
      */
-//    private void handleSignInFacebook() {
-//        //check loginFB
-//        if (AccessToken.getCurrentAccessToken() != null && com.facebook.Profile.getCurrentProfile() != null) {
-//
-//
-//            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
-//            Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
-//            checkOption = "2";
-//            intent.putExtra("Check_option", checkOption);
-//            startActivity(intent);
-//
-//        }
-//    }
+    private void handleSignInFacebook() {
+        //check loginFB
+        if (AccessToken.getCurrentAccessToken() != null && com.facebook.Profile.getCurrentProfile() != null) {
+
+
+            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile","email", "user_birthday", "user_friends"));
+            Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+            checkOption = "2";
+            intent.putExtra("Check_option", checkOption);
+            startActivity(intent);
+
+        }
+    }
 
     /**
      * add fragment login for seller
@@ -331,7 +331,7 @@ public class FragmentLoginBuyer extends Fragment {
     }
 
     private void resultFacebook() {
-        final String url = "asdasdasdas";
+
         GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
@@ -341,8 +341,11 @@ public class FragmentLoginBuyer extends Fragment {
                     String name = object.getString("name");
                     String thirdPartyId = object.getString("id");
                     String dob = object.getString("birthday");
-                    String gender = object.getString("gender");
+//                    String gender = object.getString("gender");
+                    String gender = "Nam";
                     String urlImage = "https://graph.facebook.com/" + thirdPartyId + "/picture?type=large";
+                    String urlInsert = Variable.ipAddress + "login/register3rdParty.php";
+                    getUrlDataAndInsert(urlInsert,email,thirdPartyId,name, urlImage, dob, gender);
 
 
                 } catch (JSONException e) {
@@ -356,7 +359,7 @@ public class FragmentLoginBuyer extends Fragment {
         graphRequest.executeAsync();
         Log.d("Tag: ", "failed");
     }
-
+// checking register 3rdparty
     private void getUrlDataAndInsert(String url, final String emailFB, final String thirdPartyIdFB, final String nameFB, final String urlImageFB, final String dobFB, final String genderFB) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
