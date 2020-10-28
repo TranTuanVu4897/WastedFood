@@ -15,10 +15,9 @@ public class Variable {
 
     public static final String INSERT_NEW_ORDER = "order/order.php";
 
+    public static final String ADD_PRODUCT_SELLER = "seller/SellerCreateProduct.php";
     //Order status constraint
     public static final String ORDER_STATUS_ORDERING = "ORDERING";
-    
-    public static final String noImageUrl ="https://vanhoadoanhnghiepvn.vn/wp-content/uploads/2020/08/112815953-stock-vector-no-image-available-icon-flat-vector.jpg";
  public static final String GET_SELLER_BY_ID = "getSellerById";
 
  public static LatLng gps;

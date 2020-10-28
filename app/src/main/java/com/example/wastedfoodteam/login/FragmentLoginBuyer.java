@@ -294,7 +294,7 @@ public class FragmentLoginBuyer extends Fragment {
                             sharePreferences();
                             Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
                             checkOption = "1";
-                            Variable.ACCOUNT_ID = buyer.getAccount_id();
+                            //Variable.ACCOUNT_ID = buyer.getAccount_id();
                             intent.putExtra("Check_option", checkOption);
                             //TODO pass data through intent
                             startActivity(intent);

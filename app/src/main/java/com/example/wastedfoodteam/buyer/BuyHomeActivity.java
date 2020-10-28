@@ -63,6 +63,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view_buyer);
         View headerView = navigationView.getHeaderView(0);
 
+
         // Find our drawer view
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_buyer);
 
@@ -80,16 +81,11 @@ public class BuyHomeActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if(id == R.id.item_nav_drawer_menu_information){
-                    FragmentEditInformationBuyer fragmentEditInformationBuyer = new FragmentEditInformationBuyer();
+                if(id == R.id.item_nav_drawer_menu_buyer_information){
+                    //nhớ này muốn sửa đoạn header của drawer navigation thì vào nav_header_buyer và sửa và xem menu thì vào nav_header_buyer
+                    FragmentEditInformationBuyer fragment = new FragmentEditInformationBuyer();
                     FragmentManager manager = getSupportFragmentManager();
-
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.flSearchResultAH, fragmentEditInformationBuyer, "")
-                            .addToBackStack(null)
-                            .commit();
-                }
+                    manager.beginTransaction().replace(R.id.flSearchResultAH, fragment, fragment.getTag()).commit();}
                 DrawerLayout drawer = findViewById(R.id.drawer_layout_buyer);
                 drawer.closeDrawer(GravityCompat.START);
                 return true;

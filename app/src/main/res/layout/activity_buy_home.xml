@@ -9,16 +9,14 @@
     tools:openDrawer="start"
     >
 
-    <!-- Container for contents of drawer - use NavigationView to make configuration easier -->
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view_buyer"
-        android:layout_width="wrap_content"
+    <!-- This LinearLayout represents the contents of the screen  -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/nav_drawer_menu"
-        />
+        android:orientation="vertical">
+    </LinearLayout>
+
+
 
     <!-- This LinearLayout represents the contents of the screen  -->
     <LinearLayout
@@ -31,5 +29,16 @@
         layout="@layout/app_bar_main_buyer"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <!-- Container for contents of drawer - use NavigationView to make configuration easier -->
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view_buyer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_buyer"
+        app:menu="@menu/nav_drawer_menu_buyer"
+        />
 
 </androidx.drawerlayout.widget.DrawerLayout>

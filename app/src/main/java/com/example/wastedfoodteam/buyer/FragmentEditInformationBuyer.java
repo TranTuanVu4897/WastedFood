@@ -59,7 +59,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         resultFacebook();
 
         //get account it
-        accountId = Variable.ACCOUNT_ID + "";
+        //accountId = Variable.ACCOUNT_ID + "";
         urlGetData = Variable.ipAddress + "information/informationBuyer.php?id=" + accountId;
         getData(urlGetData);
 //        etDob.setText(buyer.getDate_of_birth().toString());
