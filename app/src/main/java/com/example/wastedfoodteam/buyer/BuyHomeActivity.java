@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.MainActivity;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.buy.FragmentListProduct;
+import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.sellerFragment.ChangePasswordSellerFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.EditSellerFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.ListProductSellerFragment;
@@ -39,7 +40,6 @@ import org.json.JSONObject;
 public class BuyHomeActivity extends AppCompatActivity {
     Button btnLogout;
     ImageView imageView,imageButton;
-    String checkOption = "";
     Bundle bundle;
     EditText etSearch;
 
@@ -92,22 +92,20 @@ public class BuyHomeActivity extends AppCompatActivity {
             }
         });
 
-        bundle = getIntent().getExtras();
-        if(bundle != null){
-            checkOption = bundle.getString("Check_option");
+
+        if(Variable.CHECK_LOGIN == 2){
+                //resultFacebook();
         }
-        if(checkOption.equals("2")){
-                resultFacebook();
-        }
+
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (checkOption){
-                    case "2":
+                switch (Variable.CHECK_LOGIN){
+                    case 2:
                         signOutFacebook();
                         break;
-                    case "1":
+                    case 0:
                         startActivity(new Intent(BuyHomeActivity.this,MainActivity.class));
                         break;
                 }
@@ -143,30 +141,30 @@ public class BuyHomeActivity extends AppCompatActivity {
         startActivity(new Intent(BuyHomeActivity.this, MainActivity.class));
     }
 
-    private void resultFacebook() {
-        GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
-                Log.d("Json", response.getJSONObject().toString());
-                try {
-
-//                    txtEmail.setText("Email:" + object.getString("email"));
-//                    txtName.setText("Name:" + object.getString("name"));
-//                    txtId.setText("id:" + object.getString("id"));
-                    String idF = object.getString("id");
-                    etSearch.setText("id:" + object.getString("id"));
-                    String imageF = "https://graph.facebook.com/" + idF + "/picture?type=large";
-                    Glide.with(BuyHomeActivity.this).load(imageF).into(imageView);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        Bundle parameter = new Bundle();
-        parameter.putString("fields", "id,name,email,gender,birthday");
-        graphRequest.setParameters(parameter);
-        graphRequest.executeAsync();
-        Log.d("Tag: ", "failed");
-    }
+//    private void resultFacebook() {
+//        GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+//            @Override
+//            public void onCompleted(JSONObject object, GraphResponse response) {
+//                Log.d("Json", response.getJSONObject().toString());
+//                try {
+//
+////                    txtEmail.setText("Email:" + object.getString("email"));
+////                    txtName.setText("Name:" + object.getString("name"));
+////                    txtId.setText("id:" + object.getString("id"));
+//                    String idF = object.getString("id");
+//                    etSearch.setText("id:" + object.getString("id"));
+//                    String imageF = "https://graph.facebook.com/" + idF + "/picture?type=large";
+//                    Glide.with(BuyHomeActivity.this).load(imageF).into(imageView);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        Bundle parameter = new Bundle();
+//        parameter.putString("fields", "id,name,email,gender,birthday");
+//        graphRequest.setParameters(parameter);
+//        graphRequest.executeAsync();
+//        Log.d("Tag: ", "failed");
+//    }
 
 }
