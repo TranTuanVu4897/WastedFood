@@ -56,12 +56,16 @@ public class FragmentEditInformationBuyer extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_buyer, container, false);
         mapping(view);
-        resultFacebook();
-
-        //get account it
-        //accountId = Variable.ACCOUNT_ID + "";
-        urlGetData = Variable.ipAddress + "information/informationBuyer.php?id=" + accountId;
-        getData(urlGetData);
+        btUpdate.setVisibility(View.VISIBLE);
+        btCancel.setVisibility(View.VISIBLE);
+        if(Variable.CHECK_LOGIN == 2){
+            btUpdate.setVisibility(View.INVISIBLE);
+            btCancel.setVisibility(View.INVISIBLE);
+            resultFacebook();
+        } else if(Variable.CHECK_LOGIN == 0){
+            accountId = Variable.ACCOUNT_ID + "";
+            urlGetData = Variable.ipAddress + "information/informationBuyer.php?id=" + accountId;
+            getData(urlGetData);
 //        etDob.setText(buyer.getDate_of_birth().toString());
 //        if (buyer.isGender()) {
 //            rbBoy.setChecked(true);
@@ -69,32 +73,38 @@ public class FragmentEditInformationBuyer extends Fragment {
 //            rbGirl.setChecked(true);
 //        }
 
-        btUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String urlUpdate = Variable.ipAddress + "information/changeInfoBuyer.php";
-                String name = etName.getText().toString();
-                if (name.trim().isEmpty()) {
-                    Toast.makeText(getActivity(), "lỗi kết nỗi" + urlGetData, Toast.LENGTH_LONG).show();
-                    return;
-                }
+            btUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String urlUpdate = Variable.ipAddress + "information/changeInfoBuyer.php";
+                    String name = etName.getText().toString();
+                    if (name.trim().isEmpty()) {
+                        Toast.makeText(getActivity(), "lỗi kết nỗi" + urlGetData, Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
-                String phone = etPhone.getText().toString();
-                String urlImage = "";
-                String dob = buyer.getDate_of_birth().toString();
-                //check information change
-                if(!buyer.getDate_of_birth().toString().equals(etDob.getText().toString()))
-                    dob = etDob.getText().toString();
-                String gender = "";
-                if (rbBoy.isChecked()) {
-                    gender = "0";
-                } else {
-                    gender = "1";
-                }
+                    String phone = etPhone.getText().toString();
+                    String urlImage = "";
+                    String dob = buyer.getDate_of_birth().toString();
+                    //check information change
+                    if(!buyer.getDate_of_birth().toString().equals(etDob.getText().toString()))
+                        dob = etDob.getText().toString();
+                    String gender = "";
+                    if (rbBoy.isChecked()) {
+                        gender = "0";
+                    } else {
+                        gender = "1";
+                    }
 
-                updateData(urlUpdate, accountId, name, phone, urlImage, dob, gender);
-            }
-        });
+                    updateData(urlUpdate, accountId, name, phone, urlImage, dob, gender);
+                }
+            });
+        }
+
+
+        //get account it
+
+
 
         return view;
     }

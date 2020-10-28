@@ -97,7 +97,7 @@ public class FragmentLoginBuyer extends Fragment {
 //                getData(urlGetData);
                 resultFacebook();
                 Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
-                checkOption = "2";
+                Variable.CHECK_LOGIN = 2;
                 startActivity(intent);
             }
 
@@ -132,6 +132,7 @@ public class FragmentLoginBuyer extends Fragment {
                     tvWarning.setText("SDT không hợp lệ");
 
                 } else {
+                    Variable.CHECK_LOGIN = 0;
                     urlGetData = Variable.ipAddress + "login/buyerLogin.php?phone=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
                     getData(urlGetData);
                 }
@@ -220,7 +221,7 @@ public class FragmentLoginBuyer extends Fragment {
         if (AccessToken.getCurrentAccessToken() != null && com.facebook.Profile.getCurrentProfile() != null) {
 
 
-            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile","email", "user_birthday", "user_friends"));
+            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
             Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
             checkOption = "2";
             intent.putExtra("Check_option", checkOption);
@@ -345,7 +346,7 @@ public class FragmentLoginBuyer extends Fragment {
                     String gender = "1";
                     String urlImage = "https://graph.facebook.com/" + thirdPartyId + "/picture?type=large";
                     String urlInsert = Variable.ipAddress + "login/register3rdParty.php";
-                    checkDataAndInsert(urlInsert,email,thirdPartyId,name, urlImage, dob, gender);
+                    checkDataAndInsert(urlInsert, email, thirdPartyId, name, urlImage, dob, gender);
 
 
                 } catch (JSONException e) {
@@ -359,7 +360,8 @@ public class FragmentLoginBuyer extends Fragment {
         graphRequest.executeAsync();
         Log.d("Tag: ", "failed");
     }
-// checking register 3rdparty
+
+    // checking register 3rdparty
     private void checkDataAndInsert(String url, final String emailFB, final String thirdPartyIdFB, final String nameFB, final String urlImageFB, final String dobFB, final String genderFB) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
@@ -397,16 +399,16 @@ public class FragmentLoginBuyer extends Fragment {
                 Toast.makeText(getActivity(), "lỗi kết nỗi" + urlGetData, Toast.LENGTH_LONG).show();//TODO get data
             }
         }
-        ){
+        ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("thirdPartyId", thirdPartyIdFB);
-                params.put("name",nameFB);
+                params.put("name", nameFB);
                 params.put("urlImage", urlImageFB);
                 params.put("dob", dobFB);
-                params.put("gender",genderFB);
-                params.put("email",emailFB);
+                params.put("gender", genderFB);
+                params.put("email", emailFB);
                 return params;
             }
         };

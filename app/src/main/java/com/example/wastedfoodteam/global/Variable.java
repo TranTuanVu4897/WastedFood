@@ -26,4 +26,6 @@ public class Variable {
     public static LatLng gps;
     public static Seller seller;
     public static int ACCOUNT_ID;
+
+    public static int CHECK_LOGIN;
 }
