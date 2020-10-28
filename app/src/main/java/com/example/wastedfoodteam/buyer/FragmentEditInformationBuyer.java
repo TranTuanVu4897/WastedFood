@@ -57,28 +57,34 @@ public class FragmentEditInformationBuyer extends Fragment {
         View view = inflater.inflate(R.layout.fragment_edit_buyer, container, false);
         mapping(view);
         resultFacebook();
-        accountId = "305";
+
+        //get account it
+        accountId = Variable.ACCOUNT_ID + "";
         urlGetData = Variable.ipAddress + "information/informationBuyer.php?id=" + accountId;
-        buyer = getData(urlGetData);
-        etDob.setText(buyer.getDate_of_birth().toString());
-        if (buyer.isGender()) {
-            rbBoy.setChecked(true);
-        } else {
-            rbGirl.setChecked(true);
-        }
+        getData(urlGetData);
+//        etDob.setText(buyer.getDate_of_birth().toString());
+//        if (buyer.isGender()) {
+//            rbBoy.setChecked(true);
+//        } else {
+//            rbGirl.setChecked(true);
+//        }
 
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String urlUpdate = Variable.ipAddress + "information/changeInfoBuyer.php";
                 String name = etName.getText().toString();
-                if(name.trim().isEmpty()){
+                if (name.trim().isEmpty()) {
                     Toast.makeText(getActivity(), "lỗi kết nỗi" + urlGetData, Toast.LENGTH_LONG).show();
                     return;
                 }
+
                 String phone = etPhone.getText().toString();
                 String urlImage = "";
-                String dob = etDob.getText().toString();
+                String dob = buyer.getDate_of_birth().toString();
+                //check information change
+                if(!buyer.getDate_of_birth().toString().equals(etDob.getText().toString()))
+                    dob = etDob.getText().toString();
                 String gender = "";
                 if (rbBoy.isChecked()) {
                     gender = "0";
@@ -86,7 +92,7 @@ public class FragmentEditInformationBuyer extends Fragment {
                     gender = "1";
                 }
 
-                updateData(urlUpdate,accountId,name,phone,urlImage,dob,gender);
+                updateData(urlUpdate, accountId, name, phone, urlImage, dob, gender);
             }
         });
 
@@ -105,7 +111,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         btCancel = view.findViewById(R.id.btCancelFEB);
     }
 
-    private Buyer getData(String url) {
+    private void getData(final String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -114,7 +120,10 @@ public class FragmentEditInformationBuyer extends Fragment {
                 try {
                     JSONArray object = new JSONArray(response);
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                    buyer = gson.fromJson(object.getString(0), Buyer.class);
+                   buyer = gson.fromJson(object.getString(0), Buyer.class);
+
+                    //set edit text here
+                    etDob.setText(buyer.getDate_of_birth() + "");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -122,13 +131,12 @@ public class FragmentEditInformationBuyer extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "lỗi kết nỗi" + urlGetData, Toast.LENGTH_LONG).show();//TODO get data
+                Toast.makeText(getActivity(), "lỗi kết nỗi" + url, Toast.LENGTH_LONG).show();//TODO get data
 
             }
         }
         );
         requestQueue.add(stringRequest);
-        return buyer;
     }
 
     private void updateData(String url, final String accountId, final String name, final String phone, final String urlImage, final String dob, final String gender) {
