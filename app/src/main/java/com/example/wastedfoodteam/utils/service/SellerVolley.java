@@ -1,6 +1,7 @@
 package com.example.wastedfoodteam.utils.service;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -28,13 +29,14 @@ public class SellerVolley {
     public SellerVolley(Context context, String url) {
         this.context = context;
         this.url = url;
-        this.requestQueue = Volley.newRequestQueue(context);
+        this.requestQueue = Volley.newRequestQueue(context);//TODO add to only one request
     }
 
     /**
      * get seller information
      */
     public void setRequestGetSeller(final SellerResponseCallback callback, final String id) {
+        url = url + "?id=" + id;
         StringRequest getBuyerRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -53,7 +55,7 @@ public class SellerVolley {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(context, "Error", Toast.LENGTH_LONG);
             }
         }) {
             @Override

@@ -105,7 +105,7 @@ public class FragmentListProduct extends ListFragment {
 
         //open detail product fragment
         getActivity().getSupportFragmentManager().beginTransaction()
-                .add(R.id.flSearchResultAH, detailProduct, "")//TODO check if this work
+                .replace(R.id.flSearchResultAH, detailProduct, "")//TODO check if this work
                 .addToBackStack(null)
                 .commit();
     }
