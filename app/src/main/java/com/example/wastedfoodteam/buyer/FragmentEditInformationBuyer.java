@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -36,6 +38,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class FragmentEditInformationBuyer extends Fragment {
     EditText etName, etPhone, etDob;
     RadioButton rbBoy, rbGirl;
@@ -43,6 +48,8 @@ public class FragmentEditInformationBuyer extends Fragment {
     Buyer buyer;
     TextView tvMail;
     ImageView ivAvatar;
+    Button btUpdate, btCancel;
+    String accountId;
 
     @Nullable
     @Override
@@ -50,14 +57,38 @@ public class FragmentEditInformationBuyer extends Fragment {
         View view = inflater.inflate(R.layout.fragment_edit_buyer, container, false);
         mapping(view);
         resultFacebook();
-        urlGetData = Variable.ipAddress + "information/information.php?id=305";
+        accountId = "305";
+        urlGetData = Variable.ipAddress + "information/informationBuyer.php?id=" + accountId;
         buyer = getData(urlGetData);
         etDob.setText(buyer.getDate_of_birth().toString());
-        if(buyer.isGender()){
+        if (buyer.isGender()) {
             rbBoy.setChecked(true);
         } else {
             rbGirl.setChecked(true);
         }
+
+        btUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String urlUpdate = Variable.ipAddress + "information/changeInfoBuyer.php";
+                String name = etName.getText().toString();
+                if(name.trim().isEmpty()){
+                    Toast.makeText(getActivity(), "lỗi kết nỗi" + urlGetData, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                String phone = etPhone.getText().toString();
+                String urlImage = "";
+                String dob = etDob.getText().toString();
+                String gender = "";
+                if (rbBoy.isChecked()) {
+                    gender = "0";
+                } else {
+                    gender = "1";
+                }
+
+                updateData(urlUpdate,accountId,name,phone,urlImage,dob,gender);
+            }
+        });
 
         return view;
     }
@@ -70,6 +101,8 @@ public class FragmentEditInformationBuyer extends Fragment {
         rbGirl = view.findViewById(R.id.rbGirl);
         tvMail = view.findViewById(R.id.tvMailFEB);
         ivAvatar = view.findViewById(R.id.ivBuyerAvatarFEB);
+        btUpdate = view.findViewById(R.id.btUpdateBuyerFEB);
+        btCancel = view.findViewById(R.id.btCancelFEB);
     }
 
     private Buyer getData(String url) {
@@ -97,6 +130,54 @@ public class FragmentEditInformationBuyer extends Fragment {
         requestQueue.add(stringRequest);
         return buyer;
     }
+
+    private void updateData(String url, final String accountId, final String name, final String phone, final String urlImage, final String dob, final String gender) {
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+                switch (response) {
+                    case "failed":
+                        Toast.makeText(getActivity(), "failed", Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        Toast.makeText(getActivity(), "OK Insert data", Toast.LENGTH_LONG).show();
+                        try {
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), "lỗi kết nỗi" + urlGetData, Toast.LENGTH_LONG).show();//TODO get data
+
+            }
+        }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("account_id", accountId);
+                params.put("name", name);
+                params.put("phone", phone);
+                params.put("urlImage", urlImage);
+                params.put("gender", gender);
+                params.put("dob", dob);
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+
     private void resultFacebook() {
         GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
             @Override

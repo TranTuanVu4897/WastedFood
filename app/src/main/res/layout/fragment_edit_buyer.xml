@@ -95,17 +95,30 @@
                 android:layout_weight="2"
                 android:text="Email: "
                 android:textSize="18dp"
-                android:inputType=""
                 android:paddingEnd="50dp"
                 android:textColorHint="#B6ADAD"
                 android:layout_marginBottom="30dp"/>
 
 
-            <Button
-                android:id="@+id/btn_editSeller_edit1"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Thay đổi" />
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btUpdateBuyerFEB"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="72dp"
+                    android:text="Cập nhật" />
+
+                <Button
+                    android:id="@+id/btCancelFEB"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:text="Hủy" />
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 

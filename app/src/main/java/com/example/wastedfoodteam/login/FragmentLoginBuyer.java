@@ -25,7 +25,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
@@ -345,7 +344,7 @@ public class FragmentLoginBuyer extends Fragment {
                     String gender = "1";
                     String urlImage = "https://graph.facebook.com/" + thirdPartyId + "/picture?type=large";
                     String urlInsert = Variable.ipAddress + "login/register3rdParty.php";
-                    getUrlDataAndInsert(urlInsert,email,thirdPartyId,name, urlImage, dob, gender);
+                    checkDataAndInsert(urlInsert,email,thirdPartyId,name, urlImage, dob, gender);
 
 
                 } catch (JSONException e) {
@@ -360,7 +359,7 @@ public class FragmentLoginBuyer extends Fragment {
         Log.d("Tag: ", "failed");
     }
 // checking register 3rdparty
-    private void getUrlDataAndInsert(String url, final String emailFB, final String thirdPartyIdFB, final String nameFB, final String urlImageFB, final String dobFB, final String genderFB) {
+    private void checkDataAndInsert(String url, final String emailFB, final String thirdPartyIdFB, final String nameFB, final String urlImageFB, final String dobFB, final String genderFB) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -395,7 +394,6 @@ public class FragmentLoginBuyer extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getActivity(), "lỗi kết nỗi" + urlGetData, Toast.LENGTH_LONG).show();//TODO get data
-                Log.d("MK ", md5(etPass.getText().toString()));
             }
         }
         ){
