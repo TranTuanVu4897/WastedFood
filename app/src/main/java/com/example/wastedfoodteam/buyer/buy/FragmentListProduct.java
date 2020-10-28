@@ -20,6 +20,7 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.model.Seller;
+import com.example.wastedfoodteam.utils.service.SellerVolley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -35,7 +36,7 @@ public class FragmentListProduct extends ListFragment {
     ListView lvProduction;
     FragmentDetailProduct detailProduct;
     Bundle bundleDetail;
-
+    Seller seller;
 
     @Nullable
     @Override
@@ -52,7 +53,7 @@ public class FragmentListProduct extends ListFragment {
 
         //set up list display
         arrProduct = new ArrayList<>();
-        adapter = new ProductAdapter(getActivity().getApplicationContext(), R.layout.list_buyer_product_item, arrProduct,getResources());
+        adapter = new ProductAdapter(getActivity().getApplicationContext(), R.layout.list_buyer_product_item, arrProduct, getResources());
         lvProduction.setAdapter(adapter);
         getData();
         return view;
@@ -70,26 +71,12 @@ public class FragmentListProduct extends ListFragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                       // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         try {
                             JSONArray jsonProducts = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             for (int i = 0; i < jsonProducts.length(); i++) {
-//                                arrProduct.add(new Product(object.getInt("Id"),
-//                                        object.getInt("SellerId"),
-//                                        object.getString("Name"),
-//                                        object.getString("Image"),
-//                                        dateFormat.parse(object.getString("StartTime")),
-//                                        dateFormat.parse(object.getString("EndTime")),
-//                                        object.getDouble("OriginalPrice"),
-//                                        object.getDouble("SellPrice"),
-//                                        object.getInt("OriginalQuantity"),
-//                                        object.getInt("RemainQuantity"),
-//                                        object.getString("Description"),
-//                                        dateFormat.parse(object.getString("SellDate")),
-//                                        object.getString("Status"),
-//                                        false));
-                                arrProduct.add((Product) gson.fromJson(jsonProducts.getString(i),Product.class));
+                                arrProduct.add((Product) gson.fromJson(jsonProducts.getString(i), Product.class));
                                 adapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {
@@ -108,7 +95,7 @@ public class FragmentListProduct extends ListFragment {
     @Override
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
         Product product = (Product) l.getAdapter().getItem(position);
-        getSeller(product.getSeller_id());
+
 
         //put bundle
         bundleDetail.putSerializable("PRODUCT", product);
@@ -123,47 +110,7 @@ public class FragmentListProduct extends ListFragment {
                 .commit();
     }
 
-    /**
-     * get a seller by Id
-     *
-     * @param id
-     */
-    private void getSeller(int id) {
-        urlGetData = Variable.ipAddress + "getSellerById.php?id=" + id;
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        StringRequest getSellerRequestString = new StringRequest(Request.Method.GET, urlGetData,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        try {
-                            JSONArray jsonSellers = new JSONArray(response);
-                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-
-//                                Seller seller = new Seller(jsonSellers.getInt("AccountId"),
-//                                        jsonSellers.getString("Name"),
-//                                        jsonSellers.getString("Image"),
-//                                        jsonSellers.getString("Address"),
-//                                        jsonSellers.getDouble("Latitude"),
-//                                        jsonSellers.getDouble("Longitude"),
-//                                        jsonSellers.getString("Description"), null);
-                            //TODO check if done
-                            Seller seller = gson.fromJson(jsonSellers.getString(0), Seller.class);
-                            Variable.seller = seller;
-                            bundleDetail.putSerializable("SELLER", seller);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
 
 
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
 
-                    }
-                });
-        requestQueue.add(getSellerRequestString);
-    }
 }

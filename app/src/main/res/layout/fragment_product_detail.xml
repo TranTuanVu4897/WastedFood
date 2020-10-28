@@ -6,22 +6,47 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
+    <ImageButton
+        android:id="@+id/iBtnFollow"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/not_followed"
+        app:layout_constraintBottom_toBottomOf="@+id/ivProduct"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ivProduct"
+        app:layout_constraintVertical_bias="0.0" />
+
     <ImageView
         android:id="@+id/ivProduct"
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_width="410dp"
+        android:layout_height="124dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:srcCompat="@drawable/no_image" />
+        app:srcCompat="@drawable/no_image" />
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civSeller"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/user"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="@+id/iBtnFollow"
+        app:layout_constraintHorizontal_bias="0.93"
+        app:layout_constraintStart_toStartOf="@+id/iBtnFollow"
+        app:layout_constraintTop_toBottomOf="@+id/iBtnFollow"
+        app:layout_constraintVertical_bias="1.0" />
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="TextView"
+            android:text="20,000 VND"
             android:textAlignment="center" />
 
         <TextView
@@ -43,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="TextView"
+            android:text="40,000 VND"
             android:textAlignment="center" />
 
         <TextView
@@ -51,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="direct"
+            android:text="Còn 100 / 100"
             android:textAlignment="center" />
 
         <TextView
@@ -117,10 +142,11 @@
         android:id="@+id/btnBuy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="308dp"
         android:text="@string/order"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.378" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

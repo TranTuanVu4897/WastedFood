@@ -20,25 +20,32 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Buyer;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.utils.DownloadImageTask;
+import com.example.wastedfoodteam.utils.service.SellerResponseCallback;
+import com.example.wastedfoodteam.utils.service.SellerVolley;
 import com.google.android.gms.maps.GoogleMap;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FragmentDetailProduct extends Fragment {
     private GoogleMap mMap;
     private Product product;
     private Seller seller;
     private Buyer buyer;
-    private String url;
+    private String updateOrderUrl;
+    private String getSellerUrl;
     private int orderQuantity;
     ImageView ivProduct;
+    CircleImageView civSeller;
     TextView tvPriceDiscount, tvOpenTime, tvPriceOriginal, tvDirect, tvDescription, tvBuyQuantity, tvQuantity;
     Button btnIncreate, btnDecreate, btnBuy;
     private final static int MY_PERMISSIONS_REQUEST = 32;
@@ -60,23 +67,31 @@ public class FragmentDetailProduct extends Fragment {
         //mapping view
         mappingViewWithVariable(view);
 
-        //set url
-        url = Variable.ipAddress + Variable.INSERT_NEW_ORDER;
 
+        //set url
+        updateOrderUrl = Variable.ipAddress + Variable.INSERT_NEW_ORDER;
+        getSellerUrl = Variable.ipAddress + Variable.GET_SELLER_BY_ID ;
         //get bundle values
         Bundle bundle = getActivity().getIntent().getExtras();
-        buyer = (Buyer) bundle.get("BUYER");
-        seller = (Seller) bundle.get("SELLER");
-        product = (Product) bundle.get("PRODUCT");
+        buyer = (Buyer) getArguments().get("BUYER");
+        product = (Product) getArguments().get("PRODUCT");
 
+        //set content for views about seller
+        SellerVolley sellerVolley = new SellerVolley(getActivity().getApplicationContext(),getSellerUrl);
+        sellerVolley.setRequestGetSeller(new SellerResponseCallback() {
+            @Override
+            public void onSuccess(Seller seller) {
+                Glide.with(getActivity().getApplicationContext()).load(seller.getImage()).into(civSeller);
+            }
+        },
+                product.getSeller_id() +"");
 
-        //set content for views
+        //set content for views about product
         tvQuantity.setText("Còn: " + product.getRemain_quantity() + "/" + product.getOriginal_quantity());
         tvPriceDiscount.setText(product.getSell_price() + "");
         tvPriceOriginal.setText(product.getOriginal_price() + "");
         tvOpenTime.setText("Mở cửa từ: " + product.getStart_time() + " - " + product.getEnd_time());//TODO edit format date
         tvDescription.setText(product.getDescription());
-        tvDirect.setText(seller.getAddress());
         tvBuyQuantity.setText(orderQuantity + "");
 
 
@@ -118,7 +133,7 @@ public class FragmentDetailProduct extends Fragment {
      */
     private void btnBuyOnClick() {
         RequestQueue requestInsertOrder = Volley.newRequestQueue(getActivity().getApplicationContext());
-        StringRequest stringRequestInsert = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest stringRequestInsert = new StringRequest(Request.Method.POST, updateOrderUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if(response.equalsIgnoreCase("SUCCESS")){
@@ -156,6 +171,8 @@ public class FragmentDetailProduct extends Fragment {
      */
     private void mappingViewWithVariable(View view) {
         ivProduct = view.findViewById(R.id.ivProduct);
+
+        civSeller = view.findViewById(R.id.civSeller);
 
         tvQuantity = view.findViewById(R.id.tvQuantity);
         tvPriceDiscount = view.findViewById(R.id.tvPriceDiscount);
