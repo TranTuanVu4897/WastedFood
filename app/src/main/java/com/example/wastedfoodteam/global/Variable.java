@@ -6,8 +6,8 @@ import com.google.android.gms.maps.model.LatLng;
 public class Variable {
     //public static final String ipAddress ="http://192.168.3.4//wastedfoodphp/";//Vutt ip
    //public static final String ipAddress ="http://10.22.178.239/wastedfoodphp/";//FPT University ip
-    //public static final String ipAddress ="http://192.168.1.253/wastedfoodphp/";//TungPT ip
-    public static final String ipAddress ="http://192.168.1.10/wastedfoodphp/";//DucHC ip
+    public static final String ipAddress ="http://192.168.1.46/wastedfoodphp/";//TungPT ip
+//    public static final String ipAddress ="http://192.168.1.10/wastedfoodphp/";//DucHC ip
 
     //TODO
     //other php variable
@@ -21,4 +21,6 @@ public class Variable {
 
     public static LatLng gps;
     public static Seller seller;
+    public static int ACCOUNT_ID;
+    public static int CHECK_LOGIN;
 }
