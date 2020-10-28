@@ -206,9 +206,9 @@ public class AddProductFragment extends Fragment {
         btn_add_product_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //String urlGetData = Variable.ipAddress + Variable.ADD_PRODUCT_SELLER;
+                String urlGetData = Variable.ipAddress + Variable.ADD_PRODUCT_SELLER;
                 //addProduct("http://192.168.1.10/wastedfoodphp/seller/SellerCreateProduct.php");
-                //addProduct(urlGetData);
+                addProduct(urlGetData);
             }
         });
 
