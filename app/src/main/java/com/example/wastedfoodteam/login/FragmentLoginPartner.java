@@ -39,6 +39,7 @@ public class FragmentLoginPartner extends Fragment {
     Button btnSignIn, btnBuyerOption;
     EditText etSDT, etPass;
     String urlGetData = "";
+    String password = "";
 
     @Nullable
     @Override
@@ -52,6 +53,7 @@ public class FragmentLoginPartner extends Fragment {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                password = md5(etPass.getText().toString());
                 urlGetData = Variable.ipAddress + "login/sellerLogin.php?username=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
                 getData(urlGetData);
             }
@@ -112,6 +114,7 @@ public class FragmentLoginPartner extends Fragment {
 
                             Intent intent = new Intent(getActivity(), SellerHomeActivity.class);//TODO change to seller activity
                             intent.putExtra("SELLER",seller);
+                            intent.putExtra("PASSWORD", password);
                             //TODO pass data through intent
                             startActivity(intent);
                         } catch (Exception e) {

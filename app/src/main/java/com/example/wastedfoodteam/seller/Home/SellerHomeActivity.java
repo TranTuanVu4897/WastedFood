@@ -35,8 +35,6 @@ public class SellerHomeActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
 
-    private NavigationView navigationView;
-
     private FloatingActionButton btn_seller_home_fragment;
 
     private CircleImageView iv_nav_header_profile_image;
@@ -44,6 +42,8 @@ public class SellerHomeActivity extends AppCompatActivity {
     private TextView tv_nav_header_user_name;
 
     Seller seller;
+
+    String password;
 
 
 
@@ -58,6 +58,7 @@ public class SellerHomeActivity extends AppCompatActivity {
         Intent intent = new Intent();
 
         seller = (Seller) getIntent().getExtras().getSerializable("SELLER");
+        password = getIntent().getExtras().getString("PASSWORD");
 
         //get the header view
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -113,9 +114,6 @@ public class SellerHomeActivity extends AppCompatActivity {
                 } else if(id == R.id.item_nav_drawer_menu_information){
                     //pass data to edit seller fragment
                     Bundle editSellerBundler = new Bundle();
-                    editSellerBundler.putString("name",seller.getName());
-                    editSellerBundler.putString("address",seller.getAddress());
-                    editSellerBundler.putString("description",seller.getDescription());
                     editSellerBundler.putInt("id" , seller.getAccount_id());
                     EditSellerFragment editSellerFragment = new EditSellerFragment();
                     editSellerFragment.setArguments(editSellerBundler);
@@ -124,6 +122,8 @@ public class SellerHomeActivity extends AppCompatActivity {
                 } else if(id == R.id.item_nav_drawer_menu_change_password){
                     //pass data to edit seller fragment
                     Bundle bundle = new Bundle();
+                    bundle.putInt("id" , seller.getAccount_id());
+                    bundle.putString("password", password);
                     ChangePasswordSellerFragment changePasswordSellerFragment = new ChangePasswordSellerFragment();
                     changePasswordSellerFragment.setArguments(bundle);
                     FragmentManager manager = getSupportFragmentManager();
