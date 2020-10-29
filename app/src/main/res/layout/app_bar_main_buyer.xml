@@ -8,8 +8,7 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -18,45 +17,34 @@
 
             <ImageButton
                 android:id="@+id/imageButton"
-                android:layout_width="31dp"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="14dp"
                 android:layout_weight="1"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/user" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageView"
                 android:layout_width="97dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                tools:srcCompat="@drawable/home" />
+                android:src="@drawable/home" />
 
             <ImageButton
                 android:id="@+id/imageButton2"
-                android:layout_width="29dp"
-                android:layout_height="63dp"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="14dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/list" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/etSearchBHA"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp" />
-        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/flSearchResultAH"
             android:layout_width="match_parent"
-            android:layout_height="496dp"
+            android:layout_height="583dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -65,7 +53,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -73,7 +61,7 @@
             <Button
                 android:id="@+id/btnHome"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="0dp"
                 android:layout_weight="1"
                 android:text="Home"
@@ -82,21 +70,21 @@
             <Button
                 android:id="@+id/btnSearch"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Search" />
 
             <Button
                 android:id="@+id/btnFollow"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Follow" />
 
             <Button
                 android:id="@+id/btnLogout"
                 android:layout_width="100dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Logout" />
         </LinearLayout>
@@ -104,13 +92,9 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
+        android:layout_height="match_parent"></androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
