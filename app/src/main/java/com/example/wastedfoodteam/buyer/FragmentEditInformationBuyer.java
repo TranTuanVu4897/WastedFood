@@ -44,7 +44,7 @@ import java.util.Map;
 public class FragmentEditInformationBuyer extends Fragment {
     EditText etName, etPhone, etDob;
     RadioButton rbBoy, rbGirl;
-    String urlGetData = "";
+    String url = "";
     Buyer buyer;
     TextView tvMail;
     ImageView ivAvatar;
@@ -64,8 +64,8 @@ public class FragmentEditInformationBuyer extends Fragment {
             resultFacebook();
         } else if(Variable.CHECK_LOGIN == 0){
             accountId = Variable.ACCOUNT_ID + "";
-            urlGetData = Variable.ipAddress + "information/informationBuyer.php?id=" + accountId;
-            getData(urlGetData);
+            url = Variable.ipAddress + "information/informationBuyer.php?account_id=" + accountId;
+            getData(url);
 //        etDob.setText(buyer.getDate_of_birth().toString());
 //        if (buyer.isGender()) {
 //            rbBoy.setChecked(true);
@@ -76,10 +76,10 @@ public class FragmentEditInformationBuyer extends Fragment {
             btUpdate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String urlUpdate = Variable.ipAddress + "information/changeInfoBuyer.php";
+                    url = Variable.ipAddress + "information/changeInfoBuyer.php";
                     String name = etName.getText().toString();
                     if (name.trim().isEmpty()) {
-                        Toast.makeText(getActivity(), "lỗi kết nỗi" + urlGetData, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Vui lòng điền tên", Toast.LENGTH_LONG).show();
                         return;
                     }
 
@@ -96,7 +96,7 @@ public class FragmentEditInformationBuyer extends Fragment {
                         gender = "1";
                     }
 
-                    updateData(urlUpdate, accountId, name, phone, urlImage, dob, gender);
+                    updateData(url, accountId, name, phone, urlImage, dob, gender);
                 }
             });
         }
@@ -134,6 +134,12 @@ public class FragmentEditInformationBuyer extends Fragment {
 
                     //set edit text here
                     etDob.setText(buyer.getDate_of_birth() + "");
+                    if(buyer.isGender()){
+                        rbGirl.setChecked(true);
+                    }else {
+                        rbBoy.setChecked(true);
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -176,7 +182,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "lỗi kết nỗi" + urlGetData, Toast.LENGTH_LONG).show();//TODO get data
+                Toast.makeText(getActivity(), "lỗi kết nỗi" + FragmentEditInformationBuyer.this.url, Toast.LENGTH_LONG).show();//TODO get data
 
             }
         }
