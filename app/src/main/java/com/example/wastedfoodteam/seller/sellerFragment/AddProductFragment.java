@@ -157,6 +157,10 @@ public class AddProductFragment extends Fragment {
         mMinute = calendar1.get(Calendar.MINUTE);
         mSecond = calendar1.get(Calendar.SECOND);
 
+        //init permission arrays
+        cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
         editText_add_product_openTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

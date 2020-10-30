@@ -1,12 +1,13 @@
 package com.example.wastedfoodteam.global;
 
+import com.example.wastedfoodteam.model.Account;
 import com.example.wastedfoodteam.model.Seller;
 import com.google.android.gms.maps.model.LatLng;
 
 public class Variable {
-    public static final String ipAddress = "http://192.168.3.4/wastedfoodphp/";//Vutt ip
+ //   public static final String ipAddress = "http://192.168.3.4/wastedfoodphp/";//Vutt ip
 //    public static final String ipAddress ="http://10.22.178.239/wastedfoodphp/";//FPT University ip
-//   public static final String ipAddress ="http://192.168.1.46/wastedfoodphp/";//TungPT ip
+   public static final String ipAddress ="http://192.168.1.46/wastedfoodphp/";//TungPT ip
     //public static final String ipAddress ="http://192.168.1.10/wastedfoodphp/";//DucHC ip
 
     //TODO
@@ -24,6 +25,8 @@ public class Variable {
     public static final String UPDATE_FOLLOW = "follow/updateFollow.php";
 
     public static LatLng gps;
+    public static Account ACCOUNT;
+
     public static Seller seller;
     public static int ACCOUNT_ID;
 

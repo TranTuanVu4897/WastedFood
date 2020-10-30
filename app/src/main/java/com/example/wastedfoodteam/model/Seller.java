@@ -7,7 +7,7 @@ import java.sql.Date;
  * Seller class
  * author Vutt
  */
-public class Seller implements Serializable {
+public class Seller extends Account implements Serializable {
     int account_id;
     String name;
     String image;
@@ -84,5 +84,6 @@ public class Seller implements Serializable {
         this.longitude = longitude;
         this.description = description;
     }
+
 
 }

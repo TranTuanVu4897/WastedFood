@@ -8,6 +8,7 @@ import java.sql.Date;
  */
 public class Buyer {
     int account_id;
+    String name;
     Date date_of_birth;
     String image;
     boolean gender;
@@ -15,8 +16,9 @@ public class Buyer {
     public Buyer() {
     }
 
-    public Buyer(int account_id, Date date_of_birth, String image, boolean gender) {
+    public Buyer(int account_id,String name, Date date_of_birth, String image, boolean gender) {
         this.account_id = account_id;
+        this.name = name;
         this.date_of_birth = date_of_birth;
         this.image = image;
         this.gender = gender;
@@ -32,6 +34,14 @@ public class Buyer {
 
     public Date getDate_of_birth() {
         return date_of_birth;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setDate_of_birth(Date date_of_birth) {
