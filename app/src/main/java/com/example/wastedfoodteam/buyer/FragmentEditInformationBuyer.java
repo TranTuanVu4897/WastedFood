@@ -208,7 +208,7 @@ public class FragmentEditInformationBuyer extends Fragment {
             public void onCompleted(JSONObject object, GraphResponse response) {
                 Log.d("Json", response.getJSONObject().toString());
                 try {
-
+                    etName.setText("Tên: " + object.getString("name"));
                     tvMail.setText("Email: " + object.getString("email"));
                     etDob.setText("Birthday: " + object.getString("birthday"));
                     String idF = object.getString("id");
