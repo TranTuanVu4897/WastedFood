@@ -8,21 +8,13 @@ import java.sql.Date;
  * author Vutt
  */
 public class Seller extends Account implements Serializable {
-    int account_id;
+
     String name;
     String image;
     String address;
     double latitude;
     double longitude;
     String description;
-
-    public int getAccount_id() {
-        return account_id;
-    }
-
-    public void setAccount_id(int account_id) {
-        this.account_id = account_id;
-    }
 
     public String getName() {
         return name;
@@ -75,8 +67,8 @@ public class Seller extends Account implements Serializable {
     public Seller() {
     }
 
-    public Seller(int account_id, String name, String image, String address, double latitude, double longitude, String description, Date modified_date) {
-        this.account_id = account_id;
+    public Seller(int id, int role_id, String username, String password, String phone, String third_party_id, String email, Date create_date, boolean is_active, String name, String image, String address, double latitude, double longitude, String description) {
+        super(id, role_id, username, password, phone, third_party_id, email, create_date, is_active);
         this.name = name;
         this.image = image;
         this.address = address;
@@ -84,6 +76,4 @@ public class Seller extends Account implements Serializable {
         this.longitude = longitude;
         this.description = description;
     }
-
-
 }
