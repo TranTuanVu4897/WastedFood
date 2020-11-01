@@ -64,7 +64,6 @@ import static android.content.Context.MODE_PRIVATE;
 public class FragmentLoginBuyer extends Fragment {
     GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN;
-    String checkOption = "";
     EditText etSDT, etPass;
     TextView tvWarning;
     Button btnSignIn, btnSignInGoogle, btnPartnerOption;
@@ -223,8 +222,7 @@ public class FragmentLoginBuyer extends Fragment {
 
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
             Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
-            checkOption = "2";
-            intent.putExtra("Check_option", checkOption);
+            Variable.CHECK_LOGIN = 2;
             startActivity(intent);
 
         }
@@ -292,11 +290,11 @@ public class FragmentLoginBuyer extends Fragment {
 
                             Buyer buyer = gson.fromJson(object.getString(0), Buyer.class);
 
-                            sharePreferences();
+
                             Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
-                            checkOption = "1";
+                            Variable.CHECK_LOGIN = 1;
+
                             Variable.ACCOUNT_ID = buyer.getAccount_id();
-                            intent.putExtra("Check_option", checkOption);
                             //TODO pass data through intent
                             startActivity(intent);
                         } catch (Exception e) {
@@ -318,18 +316,6 @@ public class FragmentLoginBuyer extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    /**
-     * handle status login
-     */
-    private void sharePreferences() {
-        //TODO
-        SharedPreferences pre = getActivity().getSharedPreferences("my_data", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pre.edit();
-        editor.putString("name", "Tung");
-        editor.putBoolean("check", true);
-        editor.commit();
-        //TODO
-    }
 
     private void resultFacebook() {
 
@@ -346,7 +332,7 @@ public class FragmentLoginBuyer extends Fragment {
                     String gender = "1";
                     String urlImage = "https://graph.facebook.com/" + thirdPartyId + "/picture?type=large";
                     String urlInsert = Variable.ipAddress + "login/register3rdParty.php";
-                    checkDataAndInsert(urlInsert, email, thirdPartyId, name, urlImage, dob, gender);
+                    checkDataAndInsert3rdParty(urlInsert, email, thirdPartyId, name, urlImage, dob, gender);
 
 
                 } catch (JSONException e) {
@@ -362,7 +348,7 @@ public class FragmentLoginBuyer extends Fragment {
     }
 
     // checking register 3rdparty
-    private void checkDataAndInsert(String url, final String emailFB, final String thirdPartyIdFB, final String nameFB, final String urlImageFB, final String dobFB, final String genderFB) {
+    private void checkDataAndInsert3rdParty(String url, final String emailFB, final String thirdPartyIdFB, final String nameFB, final String urlImageFB, final String dobFB, final String genderFB) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -372,17 +358,14 @@ public class FragmentLoginBuyer extends Fragment {
                 switch (response) {
                     case "OK":
                         Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();
-                        checkOption = "2";
-                        intent.putExtra("Check_option", checkOption);
+                        Variable.CHECK_LOGIN = 2;
                         startActivity(intent);
                         break;
                     default:
                         Toast.makeText(getActivity(), "OK Insert data", Toast.LENGTH_LONG).show();
                         try {
 
-                            sharePreferences();
-                            checkOption = "2";
-                            intent.putExtra("Check_option", checkOption);
+                            Variable.CHECK_LOGIN = 2;
                             //TODO pass data through intent
                             startActivity(intent);
                         } catch (Exception e) {

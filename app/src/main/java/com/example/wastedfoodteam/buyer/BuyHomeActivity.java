@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -18,27 +17,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.MainActivity;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.buy.FragmentListProduct;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.seller.sellerFragment.ChangePasswordSellerFragment;
-import com.example.wastedfoodteam.seller.sellerFragment.EditSellerFragment;
-import com.example.wastedfoodteam.seller.sellerFragment.ListProductSellerFragment;
-import com.example.wastedfoodteam.seller.sellerFragment.SellerHomeFragment;
-import com.example.wastedfoodteam.seller.sellerFragment.SendFeedbackSellerFragment;
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.google.android.material.navigation.NavigationView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class BuyHomeActivity extends AppCompatActivity {
-    Button btnLogout;
+    Button btnLogout,btnFollow;
     ImageView imageView,imageButton;
     Bundle bundle;
     EditText etSearch;
@@ -53,6 +40,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_home);
         btnLogout = findViewById(R.id.btnLogout);
+        btnFollow = findViewById(R.id.btnFollow);
         imageView = findViewById(R.id.imageView);
         etSearch = findViewById(R.id.etSearchBHA);
         imageButton = findViewById(R.id.imageButton);
@@ -85,7 +73,8 @@ public class BuyHomeActivity extends AppCompatActivity {
                     //nhớ này muốn sửa đoạn header của drawer navigation thì vào nav_header_buyer và sửa và xem menu thì vào nav_header_buyer
                     FragmentEditInformationBuyer fragment = new FragmentEditInformationBuyer();
                     FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.flSearchResultAH, fragment, fragment.getTag()).commit();}
+                    manager.beginTransaction().replace(R.id.flSearchResultAH, fragment, fragment.getTag()).commit();
+                }
                 DrawerLayout drawer = findViewById(R.id.drawer_layout_buyer);
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
@@ -93,9 +82,9 @@ public class BuyHomeActivity extends AppCompatActivity {
         });
 
 
-        if(Variable.CHECK_LOGIN == 2){
-                //resultFacebook();
-        }
+//        if(Variable.CHECK_LOGIN == 2){
+//                //resultFacebook();
+//        }
 
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +101,7 @@ public class BuyHomeActivity extends AppCompatActivity {
             }
         });
 
+
         FragmentListProduct fragmentListProduct = new FragmentListProduct();
 
         //add fragment search result
@@ -120,6 +110,18 @@ public class BuyHomeActivity extends AppCompatActivity {
                 .add(R.id.flSearchResultAH, fragmentListProduct, "")
                 .addToBackStack(null)
                 .commit();
+        btnFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addFragmentSellerFollow();
+            }
+        });
+    }
+    public void addFragmentSellerFollow() {
+
+        FragmentListSellerFollow fragment = new FragmentListSellerFollow();
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.flSearchResultAH, fragment, fragment.getTag()).commit();
     }
 
     @Override
