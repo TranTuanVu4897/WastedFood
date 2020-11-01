@@ -23,6 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.buyer.order.FragmentOrderDetail;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Buyer;
 import com.example.wastedfoodteam.model.Product;
@@ -93,7 +94,8 @@ public class FragmentDetailProduct extends Fragment {
         sellerVolley.setRequestGetSeller(new SellerResponseCallback() {
                                              @Override
                                              public void onSuccess(Seller seller) {
-                                                 CommonFunction.setImageViewSrc(getActivity().getApplicationContext(),seller.getImage(),civSeller);
+                                                 CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), seller.getImage(), civSeller);
+                                                 Variable.seller = seller;
                                              }
                                          },
                 product.getSeller_id() + "");
@@ -121,7 +123,7 @@ public class FragmentDetailProduct extends Fragment {
                 }
 
             }
-        },getFollowUrl, Variable.ACCOUNT_ID, product.getSeller_id());
+        }, getFollowUrl, Variable.ACCOUNT_ID, product.getSeller_id());
 
         //set image from url
         Glide.with(getActivity().getApplicationContext()).load(product.getImage()).into(ivProduct);
@@ -211,8 +213,21 @@ public class FragmentDetailProduct extends Fragment {
         requestInsertOrder.add(stringRequestInsert);
     }
 
+    /**
+     * Open after buy
+     */
     private void moveToFragmentOrderDetail() {
+        FragmentOrderDetail fragmentOrderDetail = new FragmentOrderDetail(orderQuantity);
 
+        //put product to next screen
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("PRODUCT", product);
+        fragmentOrderDetail.setArguments(bundle);
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.flSearchResultAH, fragmentOrderDetail, "")//TODO check if this work
+                .addToBackStack(null)
+                .commit();
 
     }
 
@@ -244,13 +259,13 @@ public class FragmentDetailProduct extends Fragment {
     @Override
     public void onPause() {
         boolean isFollow = false;
-        if(ibFollow.getTag().equals(R.drawable.followed) )isFollow = true;
+        if (ibFollow.getTag().equals(R.drawable.followed)) isFollow = true;
         followVolley.setRequestUpdateFollow(new FollowResponseCallback() {
             @Override
             public void onSuccess(String result) {
 
             }
-        },updateFollowUrl, Variable.ACCOUNT_ID, product.getSeller_id(),isFollow);
+        }, updateFollowUrl, Variable.ACCOUNT_ID, product.getSeller_id(), isFollow);
         super.onPause();
     }
 }

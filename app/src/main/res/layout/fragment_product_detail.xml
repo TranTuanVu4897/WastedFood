@@ -36,12 +36,12 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/user"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="@+id/iBtnFollow"
         app:layout_constraintHorizontal_bias="0.93"
         app:layout_constraintStart_toStartOf="@+id/iBtnFollow"
         app:layout_constraintTop_toBottomOf="@+id/iBtnFollow"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.23000002" />
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
