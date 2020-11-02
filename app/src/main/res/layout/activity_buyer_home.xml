@@ -26,7 +26,7 @@
     </LinearLayout>
 
     <include
-        layout="@layout/app_bar_main_buyer"
+        layout="@layout/app_bar_buyer_main_buyer"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
