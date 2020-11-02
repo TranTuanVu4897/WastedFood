@@ -58,12 +58,12 @@ public class ProductSellerAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return arrayProduct.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return arrayProduct.get(position).getId();
     }
 
     @Override
