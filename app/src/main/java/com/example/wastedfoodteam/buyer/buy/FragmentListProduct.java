@@ -2,9 +2,12 @@ package com.example.wastedfoodteam.buyer.buy;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -56,6 +59,24 @@ public class FragmentListProduct extends ListFragment {
         adapter = new ProductAdapter(getActivity().getApplicationContext(), R.layout.list_buyer_product_item, arrProduct, getResources());
         lvProduction.setAdapter(adapter);
         getData();
+
+        lvProduction.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
+
+
         return view;
     }
 
@@ -109,8 +130,6 @@ public class FragmentListProduct extends ListFragment {
                 .addToBackStack(null)
                 .commit();
     }
-
-
 
 
 }
