@@ -47,7 +47,7 @@ public class ListProductSellerFragment extends Fragment {
         lvProduct = view.findViewById(R.id.listProduct);
         Bundle bundle = getArguments();
         arrProduct = new ArrayList<Product>();
-        seller_id = bundle.getInt("id");
+        seller_id = Variable.ACCOUNT_ID;
         String urlGetData = Variable.ipAddress + "seller/getListProductSeller.php?seller_id=" + seller_id;
         adapter = new ProductSellerAdapter( getActivity().getApplicationContext(), R.layout.list_seller_product , arrProduct, getResources());
         lvProduct.setAdapter(adapter);

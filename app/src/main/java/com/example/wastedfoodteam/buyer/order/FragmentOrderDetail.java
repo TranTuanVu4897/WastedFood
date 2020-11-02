@@ -106,9 +106,9 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
         // Add a marker in fptUniversity and move the camera
         LatLng fptUniversity = new LatLng(21.013255, 105.5248756);
         mMap.addMarker(new MarkerOptions().position(fptUniversity).title("Bạn ở đây"));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(Variable.seller.getLatitude(), Variable.seller.getLongitude())).title(Variable.seller.getName()));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(Variable.SELLER.getLatitude(), Variable.SELLER.getLongitude())).title(Variable.SELLER.getName()));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(fptUniversity, 16f));
-        new TaskDirectionRequest().execute(buildRequestUrl(fptUniversity, new LatLng(Variable.seller.getLatitude(), Variable.seller.getLongitude())));
+        new TaskDirectionRequest().execute(buildRequestUrl(fptUniversity, new LatLng(Variable.SELLER.getLatitude(), Variable.SELLER.getLongitude())));
     }
 
     private void requestPermission(String permission) {

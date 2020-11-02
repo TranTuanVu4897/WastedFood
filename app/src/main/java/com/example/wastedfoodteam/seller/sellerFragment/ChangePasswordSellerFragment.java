@@ -52,11 +52,8 @@ public class ChangePasswordSellerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_change_password_seller, container, false);
 
         //get from home seller
-        Bundle bundle = getArguments();
-        if(bundle!= null){
-            id = bundle.getInt("id");
-            oldPassword = bundle.getString("password");
-        }
+        id = Variable.ACCOUNT_ID;
+        oldPassword = Variable.SELLER.getPassword();
 
         //ui view
         editText_change_password_current = view.findViewById(R.id.editText_change_password_current);

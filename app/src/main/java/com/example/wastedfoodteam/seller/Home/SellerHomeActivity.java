@@ -57,9 +57,6 @@ public class SellerHomeActivity extends AppCompatActivity {
         seller = new Seller();
         Intent intent = new Intent();
 
-        seller = (Seller) getIntent().getExtras().getSerializable("SELLER");
-        password = getIntent().getExtras().getString("PASSWORD");
-
         //get the header view
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
@@ -74,17 +71,13 @@ public class SellerHomeActivity extends AppCompatActivity {
         tv_nav_header_user_name.setText(seller.getName());
 
 
+
         //button for seller add product
         btn_seller_home_fragment = (FloatingActionButton)  findViewById(R.id.fab);
         btn_seller_home_fragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(SellerHomeActivity.this,"Make a Post",Toast.LENGTH_LONG).show();
-                //pass data to create product seller fragment
-                Bundle bundle = new Bundle();
-                bundle.putInt("seller_id" , seller.getId());
                 AddProductFragment addProductFragment = new AddProductFragment();
-                addProductFragment.setArguments(bundle);
                 FragmentManager manager = getSupportFragmentManager();
                 manager.beginTransaction().replace(R.id.content_main, addProductFragment, addProductFragment.getTag()).commit();
             }
@@ -112,37 +105,19 @@ public class SellerHomeActivity extends AppCompatActivity {
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_main, sellerHomeFragment, sellerHomeFragment.getTag()).commit();
                 } else if(id == R.id.item_nav_drawer_menu_information){
-                    //pass data to edit seller fragment
-                    Bundle editSellerBundler = new Bundle();
-                    //Todo
-                    editSellerBundler.putInt("id" , seller.getId());
                     EditSellerFragment editSellerFragment = new EditSellerFragment();
-                    editSellerFragment.setArguments(editSellerBundler);
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_main,editSellerFragment,editSellerFragment.getTag()).commit();
                 } else if(id == R.id.item_nav_drawer_menu_change_password){
-                    //pass data to edit seller fragment
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("id" , seller.getId());
-                    bundle.putString("password", password);
                     ChangePasswordSellerFragment changePasswordSellerFragment = new ChangePasswordSellerFragment();
-                    changePasswordSellerFragment.setArguments(bundle);
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_main,changePasswordSellerFragment,changePasswordSellerFragment.getTag()).commit();
                 }else if (id == R.id.item_nav_drawer_menu_feedback){
-                    //pass data to feedback seller fragment
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("id",seller.getId());
                     SendFeedbackSellerFragment sendFeedbackSellerFragment = new SendFeedbackSellerFragment();
-                    sendFeedbackSellerFragment.setArguments(bundle);
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_main,sendFeedbackSellerFragment,sendFeedbackSellerFragment.getTag()).commit();
                 }else if(id == R.id.item_nav_drawer_menu_manager){
-                    //pass data to manager product seller fragment
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("id",seller.getId());
                     ListProductSellerFragment listProductSellerFragment = new ListProductSellerFragment();
-                    listProductSellerFragment.setArguments(bundle);
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_main,listProductSellerFragment,listProductSellerFragment.getTag()).commit();
                 }
