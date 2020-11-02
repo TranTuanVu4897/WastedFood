@@ -1,8 +1,9 @@
 package com.example.wastedfoodteam.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Account {
+public class Account implements Serializable {
     private int id;
     private int role_id;
     private String username;

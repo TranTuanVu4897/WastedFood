@@ -39,7 +39,7 @@ public class FragmentListSellerFollow extends ListFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_seller_follow, container, false);
         urlGetData = Variable.ipAddress + "information/getListSellerFollow.php?buyer_id=" + Variable.ACCOUNT_ID;
-        lvSeller = view.findViewById(R.id.list);
+        lvSeller = view.findViewById(android.R.id.list);
         listSellers = new ArrayList<>();
         adapter = new SellerFollowAdapter(getActivity().getApplicationContext(), R.layout.list_seller_follow_item, listSellers, getResources());
         lvSeller.setAdapter(adapter);
