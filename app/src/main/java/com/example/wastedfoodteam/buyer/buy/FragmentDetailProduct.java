@@ -73,7 +73,7 @@ public class FragmentDetailProduct extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_product_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_buyer_product_detail, container, false);
         //mapping view
         mappingViewWithVariable(view);
 
