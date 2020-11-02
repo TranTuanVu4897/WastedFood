@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 
 import com.android.volley.Request;
@@ -18,11 +17,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.load.engine.Resource;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.model.Buyer;
-import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.model.Seller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,7 +39,7 @@ public class FragmentListSellerFollow extends ListFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_seller_follow, container, false);
         urlGetData = Variable.ipAddress + "information/getListSellerFollow.php?buyer_id=" + Variable.ACCOUNT_ID;
-        lvSeller = view.findViewById(R.id.listSeller);
+        lvSeller = view.findViewById(R.id.list);
         listSellers = new ArrayList<>();
         adapter = new SellerFollowAdapter(getActivity().getApplicationContext(), R.layout.list_seller_follow_item, listSellers, getResources());
         lvSeller.setAdapter(adapter);
