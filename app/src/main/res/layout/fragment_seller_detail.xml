@@ -17,10 +17,13 @@
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent">
                 <ImageView
+                    android:id="@+id/ivPhotoSellerFSD"
                     android:layout_width="match_parent"
                     android:layout_height="170dp" />
 
                 <TextView
+                    android:id="@+id/tvNameSellerFSD"
+                    android:textStyle="bold"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:text="Name Seller"
@@ -31,10 +34,16 @@
                     android:layout_height="50dp"
                     android:orientation="horizontal"
                     android:weightSum="5">
+                    <TextView
+                        android:id="@+id/tvAddressFSD"
+                        android:textSize="18dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
 
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tvDescriptionFSD"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:text="asdjasdahsjkdhashdjashjdhaskasdasdkjaskjdasjdklja"

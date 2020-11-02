@@ -35,12 +35,12 @@ public class SellerFollowAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return sellerList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return sellerList.get(position).getId();
     }
 
     private class ViewHolder {
