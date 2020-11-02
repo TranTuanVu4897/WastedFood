@@ -58,11 +58,11 @@ public class FragmentEditInformationBuyer extends Fragment {
         mapping(view);
         btUpdate.setVisibility(View.VISIBLE);
         btCancel.setVisibility(View.VISIBLE);
-        if(Variable.CHECK_LOGIN == 2){
+        if (Variable.CHECK_LOGIN == 2) {
             btUpdate.setVisibility(View.INVISIBLE);
             btCancel.setVisibility(View.INVISIBLE);
             resultFacebook();
-        } else if(Variable.CHECK_LOGIN == 0){
+        } else if (Variable.CHECK_LOGIN == 0) {
             accountId = Variable.ACCOUNT_ID + "";
             url = Variable.ipAddress + "information/informationBuyer.php?account_id=" + accountId;
             getData(url);
@@ -87,7 +87,7 @@ public class FragmentEditInformationBuyer extends Fragment {
                     String urlImage = "";
                     String dob = buyer.getDate_of_birth().toString();
                     //check information change
-                    if(!buyer.getDate_of_birth().toString().equals(etDob.getText().toString()))
+                    if (!buyer.getDate_of_birth().toString().equals(etDob.getText().toString()))
                         dob = etDob.getText().toString();
                     String gender = "";
                     if (rbBoy.isChecked()) {
@@ -103,7 +103,6 @@ public class FragmentEditInformationBuyer extends Fragment {
 
 
         //get account it
-
 
 
         return view;
@@ -130,13 +129,14 @@ public class FragmentEditInformationBuyer extends Fragment {
                 try {
                     JSONArray object = new JSONArray(response);
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                   buyer = gson.fromJson(object.getString(0), Buyer.class);
+                    buyer = gson.fromJson(object.getString(0), Buyer.class);
 
                     //set edit text here
+                    etName.setText(buyer.getName());
                     etDob.setText(buyer.getDate_of_birth() + "");
-                    if(buyer.isGender()){
+                    if (buyer.isGender()) {
                         rbGirl.setChecked(true);
-                    }else {
+                    } else {
                         rbBoy.setChecked(true);
                     }
 
