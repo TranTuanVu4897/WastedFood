@@ -94,6 +94,7 @@ public class EditSellerFragment extends Fragment {
     String string_editSeller_name ;
     String string_editSeller_address ;
     String string_editSeller_description ;
+    Seller seller;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,11 +115,7 @@ public class EditSellerFragment extends Fragment {
         iv_editSeller_avatar = view.findViewById(R.id.iv_editSeller_avatar);
 
 
-        Bundle bundle = getArguments();
-        if(bundle!= null){
-            id = bundle.getInt("id");
-        }
-
+        id = Variable.ACCOUNT_ID;
         getSeller(id);
 
 

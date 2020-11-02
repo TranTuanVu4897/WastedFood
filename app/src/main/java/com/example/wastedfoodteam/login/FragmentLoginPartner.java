@@ -24,7 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.seller.Home.SellerHomeActivity;
+import com.example.wastedfoodteam.seller.home.SellerHomeActivity;
 import com.example.wastedfoodteam.model.Seller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -113,8 +113,9 @@ public class FragmentLoginPartner extends Fragment {
                             Seller seller = gson.fromJson(object.getString(0), Seller.class);
 
                             Intent intent = new Intent(getActivity(), SellerHomeActivity.class);//TODO change to seller activity
-                            intent.putExtra("SELLER",seller);
-                            intent.putExtra("PASSWORD", password);
+
+                            Variable.ACCOUNT_ID = seller.getId();
+                            Variable.SELLER = seller;
                             //TODO pass data through intent
                             startActivity(intent);
                         } catch (Exception e) {

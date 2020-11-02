@@ -58,12 +58,12 @@ public class ProductSellerAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return arrayProduct.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return arrayProduct.get(position).getId();
     }
 
     @Override
@@ -91,8 +91,10 @@ public class ProductSellerAdapter extends BaseAdapter {
         }
         holder.swOnOff.setTag(position);
         holder.tvName.setText(product.getName());
+        //change to use Glide
+        Glide.with(convertView.getContext()).load(product.getImage()).into(holder.ivImage);
         //get image from url
-        new DownloadImageTask(holder.ivImage,resources).execute(product.getImage());
+        //new DownloadImageTask(holder.ivImage,resources).execute(product.getImage());
         //Picasso.get().load(product.getImage().isEmpty() ? Variable.noImageUrl : product.getImage()).into(holder.ivImage);
         // TODO replace with other type
         holder.swOnOff.setOnClickListener(new View.OnClickListener() {

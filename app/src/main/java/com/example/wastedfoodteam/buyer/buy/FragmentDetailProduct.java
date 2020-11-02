@@ -95,7 +95,7 @@ public class FragmentDetailProduct extends Fragment {
                                              @Override
                                              public void onSuccess(Seller seller) {
                                                  CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), seller.getImage(), civSeller);
-                                                 Variable.seller = seller;
+                                                 Variable.SELLER = seller;
                                              }
                                          },
                 product.getSeller_id() + "");

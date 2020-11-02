@@ -2,7 +2,9 @@ package com.example.wastedfoodteam.seller.sellerFragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.ListFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
-public class ListProductSellerFragment extends Fragment {
+public class ListProductSellerFragment extends ListFragment {
 
     ArrayList<Product> arrProduct;
     ProductSellerAdapter adapter;
@@ -47,7 +49,7 @@ public class ListProductSellerFragment extends Fragment {
         lvProduct = view.findViewById(R.id.listProduct);
         Bundle bundle = getArguments();
         arrProduct = new ArrayList<Product>();
-        seller_id = bundle.getInt("id");
+        seller_id = Variable.ACCOUNT_ID;
         String urlGetData = Variable.ipAddress + "seller/getListProductSeller.php?seller_id=" + seller_id;
         adapter = new ProductSellerAdapter( getActivity().getApplicationContext(), R.layout.list_seller_product , arrProduct, getResources());
         lvProduct.setAdapter(adapter);
@@ -92,5 +94,16 @@ public class ListProductSellerFragment extends Fragment {
                     }
                 });
         requestQueue.add(jsonArrayRequest);
+    }
+
+    @Override
+    public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
+        Product product = (Product) l.getAdapter().getItem(position);
+
+        //open seller detail product fragment
+        getActivity().getSupportFragmentManager().beginTransaction()
+                //.replace( R.id.content_main, detailProductSeller, "")//TODO check if this work
+                .addToBackStack(null)
+                .commit();
     }
 }

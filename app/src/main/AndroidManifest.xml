@@ -26,7 +26,7 @@
 
 
 
-        <activity android:name=".seller.Home.SellerHomeActivity"/>
+        <activity android:name=".seller.home.SellerHomeActivity"/>
 
 <!--        <activity android:name=".seller.PostActivity">-->
 <!--            <intent-filter>-->
