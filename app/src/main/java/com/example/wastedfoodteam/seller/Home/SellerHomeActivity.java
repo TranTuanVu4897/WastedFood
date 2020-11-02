@@ -82,7 +82,7 @@ public class SellerHomeActivity extends AppCompatActivity {
                 Toast.makeText(SellerHomeActivity.this,"Make a Post",Toast.LENGTH_LONG).show();
                 //pass data to create product seller fragment
                 Bundle bundle = new Bundle();
-                bundle.putInt("seller_id" , seller.getAccount_id());
+                bundle.putInt("seller_id" , seller.getId());
                 AddProductFragment addProductFragment = new AddProductFragment();
                 addProductFragment.setArguments(bundle);
                 FragmentManager manager = getSupportFragmentManager();
@@ -114,7 +114,8 @@ public class SellerHomeActivity extends AppCompatActivity {
                 } else if(id == R.id.item_nav_drawer_menu_information){
                     //pass data to edit seller fragment
                     Bundle editSellerBundler = new Bundle();
-                    editSellerBundler.putInt("id" , seller.getAccount_id());
+                    //Todo
+                    editSellerBundler.putInt("id" , seller.getId());
                     EditSellerFragment editSellerFragment = new EditSellerFragment();
                     editSellerFragment.setArguments(editSellerBundler);
                     FragmentManager manager = getSupportFragmentManager();
@@ -122,7 +123,7 @@ public class SellerHomeActivity extends AppCompatActivity {
                 } else if(id == R.id.item_nav_drawer_menu_change_password){
                     //pass data to edit seller fragment
                     Bundle bundle = new Bundle();
-                    bundle.putInt("id" , seller.getAccount_id());
+                    bundle.putInt("id" , seller.getId());
                     bundle.putString("password", password);
                     ChangePasswordSellerFragment changePasswordSellerFragment = new ChangePasswordSellerFragment();
                     changePasswordSellerFragment.setArguments(bundle);
@@ -131,7 +132,7 @@ public class SellerHomeActivity extends AppCompatActivity {
                 }else if (id == R.id.item_nav_drawer_menu_feedback){
                     //pass data to feedback seller fragment
                     Bundle bundle = new Bundle();
-                    bundle.putInt("id",seller.getAccount_id());
+                    bundle.putInt("id",seller.getId());
                     SendFeedbackSellerFragment sendFeedbackSellerFragment = new SendFeedbackSellerFragment();
                     sendFeedbackSellerFragment.setArguments(bundle);
                     FragmentManager manager = getSupportFragmentManager();
@@ -139,7 +140,7 @@ public class SellerHomeActivity extends AppCompatActivity {
                 }else if(id == R.id.item_nav_drawer_menu_manager){
                     //pass data to manager product seller fragment
                     Bundle bundle = new Bundle();
-                    bundle.putInt("id",seller.getAccount_id());
+                    bundle.putInt("id",seller.getId());
                     ListProductSellerFragment listProductSellerFragment = new ListProductSellerFragment();
                     listProductSellerFragment.setArguments(bundle);
                     FragmentManager manager = getSupportFragmentManager();
