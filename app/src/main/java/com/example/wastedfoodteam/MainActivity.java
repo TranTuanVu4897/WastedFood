@@ -28,8 +28,6 @@ public class MainActivity extends AppCompatActivity {
         //fragment for login
         FragmentLoginBuyer fragment = new FragmentLoginBuyer();
 
-        //fragment for buyer buy product
-//        FragmentHome fragment = new FragmentHome();
 
         fragmentTransaction.add(R.id.flFragmentLayoutAM, fragment);
         fragmentTransaction.commit();

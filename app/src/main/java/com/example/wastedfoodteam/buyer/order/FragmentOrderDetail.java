@@ -23,6 +23,7 @@ import com.example.wastedfoodteam.DirectionParser;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Buyer;
+import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -51,12 +52,15 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
     private final static int MY_PERMISSIONS_REQUEST = 32;
     private Buyer buyer;
     private Product product;
-    private int orderQuantity;
+    private Order order;
     private TextView tvTitle,tvBuyQuantity;
     private ImageView ivProduct;
 
-    public FragmentOrderDetail(int orderQuantity) {
-        this.orderQuantity = orderQuantity;
+    public FragmentOrderDetail() {
+    }
+
+    public FragmentOrderDetail(Order order) {
+        this.order = order;
     }
 
     @Nullable
@@ -72,12 +76,12 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
 
         Bundle bundle = getActivity().getIntent().getExtras();
         buyer = (Buyer) getArguments().get("BUYER");
-        product = (Product) getArguments().get("PRODUCT");
+//        product = (Product) getArguments().get("PRODUCT");
 
         //set content
         CommonFunction.setImageViewSrc(getActivity().getApplicationContext(),product.getImage(),ivProduct);
-        tvBuyQuantity.setText("Đã đặt trước: " +orderQuantity + " sản phẩm.");
-        tvTitle.setText(product.getName());
+        tvBuyQuantity.setText("Đã đặt trước: " + order.getQuantity() + " sản phẩm.");
+//        tvTitle.setText(product.getName());
 
         //TODO fix later
         String apikey = getString(R.string.maps_api_key);
