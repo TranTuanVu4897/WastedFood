@@ -26,6 +26,5 @@
         app:menu="@menu/nav_drawer_menu_buyer"
         />
 
-
 </androidx.drawerlayout.widget.DrawerLayout>
 

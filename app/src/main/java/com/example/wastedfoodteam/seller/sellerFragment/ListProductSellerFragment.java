@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -46,13 +47,19 @@ public class ListProductSellerFragment extends ListFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_product_seller, container, false);
         //mapping view
-        lvProduct = view.findViewById(R.id.listProduct);
+        lvProduct = view.findViewById(android.R.id.list);
         Bundle bundle = getArguments();
         arrProduct = new ArrayList<Product>();
         seller_id = Variable.ACCOUNT_ID;
         String urlGetData = Variable.ipAddress + "seller/getListProductSeller.php?seller_id=" + seller_id;
         adapter = new ProductSellerAdapter( getActivity().getApplicationContext(), R.layout.list_seller_product , arrProduct, getResources());
         lvProduct.setAdapter(adapter);
+        lvProduct.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         getData(urlGetData);
         return view;
     }
