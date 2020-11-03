@@ -171,6 +171,23 @@ public class FragmentDetailProduct extends Fragment {
                     }
             }
         });
+
+        civSeller.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentSellerDetail fragmentSellerDetail = new FragmentSellerDetail();
+
+                //put product to next screen
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("PRODUCT", Variable.SELLER);
+                fragmentSellerDetail.setArguments(bundle);
+
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.flSearchResultAH, fragmentSellerDetail, "")//TODO check if this work
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
         return view;
     }
 

@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.buyer.buy.FragmentSellerDetail;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Seller;
 import com.google.gson.Gson;
@@ -33,6 +34,8 @@ public class FragmentListSellerFollow extends ListFragment {
     SellerFollowAdapter adapter;
     ArrayList<Seller> listSellers;
     ListView lvSeller;
+    Bundle bundleDetail;
+    FragmentSellerDetail restaurant;
 
     @Nullable
     @Override
@@ -74,5 +77,23 @@ public class FragmentListSellerFollow extends ListFragment {
                     }
                 });
         requestQueue.add(getProductAround);
+    }
+
+    @Override
+    public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
+        Seller seller = (Seller) l.getAdapter().getItem(position);
+
+
+        //put bundle
+        bundleDetail = new Bundle();
+        bundleDetail.putSerializable("SELLER", seller);
+        restaurant = new FragmentSellerDetail();
+        restaurant.setArguments(bundleDetail);
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.flSearchResultAH, restaurant, "")//TODO check if this work
+                .addToBackStack(null)
+                .commit();
+//        super.onListItemClick(l, v, position, id);
     }
 }
