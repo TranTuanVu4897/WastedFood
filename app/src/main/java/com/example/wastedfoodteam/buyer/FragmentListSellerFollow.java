@@ -94,6 +94,6 @@ public class FragmentListSellerFollow extends ListFragment {
                 .replace(R.id.flSearchResultAH, restaurant, "")//TODO check if this work
                 .addToBackStack(null)
                 .commit();
-        super.onListItemClick(l, v, position, id);
+//        super.onListItemClick(l, v, position, id);
     }
 }

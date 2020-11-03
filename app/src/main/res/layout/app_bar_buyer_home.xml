@@ -16,7 +16,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/ibUserInfo"
                 android:layout_width="30dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="14dp"
@@ -25,14 +25,14 @@
                 app:srcCompat="@drawable/user" />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageView"
+                android:id="@+id/ivAppIcon"
                 android:layout_width="97dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/home" />
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/ibFilter"
                 android:layout_width="30dp"
                 android:layout_height="60dp"
                 android:layout_marginTop="14dp"

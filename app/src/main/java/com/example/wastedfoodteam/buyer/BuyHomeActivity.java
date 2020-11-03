@@ -41,15 +41,16 @@ public class BuyHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_buyer_home);
         btnLogout = findViewById(R.id.btnLogout);
         btnFollow = findViewById(R.id.btnFollow);
-        imageView = findViewById(R.id.imageView);
+        imageView = findViewById(R.id.ivAppIcon);
         etSearch = findViewById(R.id.etSearchBHA);
-        imageButton = findViewById(R.id.imageButton);
+        imageButton = findViewById(R.id.ibUserInfo);
         SharedPreferences pre = getSharedPreferences("my_data",MODE_PRIVATE);
         String name = pre.getString("name","khong thay");
 
         //get the header view
         NavigationView navigationView = findViewById(R.id.nav_view_buyer);
         View headerView = navigationView.getHeaderView(0);
+
 
 
         // Find our drawer view
@@ -80,6 +81,7 @@ public class BuyHomeActivity extends AppCompatActivity {
                 return true;
             }
         });
+
 
 
 //        if(Variable.CHECK_LOGIN == 2){
