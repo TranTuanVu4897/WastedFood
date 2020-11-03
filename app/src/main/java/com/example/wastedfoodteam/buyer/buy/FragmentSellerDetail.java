@@ -29,7 +29,7 @@ public class FragmentSellerDetail extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_seller_detail_test, container, false);
+        View view = inflater.inflate(R.layout.fragment_seller_detail, container, false);
         mapping(view);
         //set up url volley
 //        urlGetData = Variable.ipAddress + Variable.SEARCH_PRODUCT;
@@ -37,14 +37,11 @@ public class FragmentSellerDetail extends Fragment {
 
         seller = (Seller) getArguments().get("SELLER");
 
-//        tvNameSeller.setText(seller.getName() + "");
-//        tvAddress.setText(seller.getAddress() + "");
-//        tvDescription.setText(seller.getDescription() + "");
+        tvNameSeller.setText(seller.getName() + "");
+        tvAddress.setText(seller.getAddress() + "");
+        tvDescription.setText(seller.getDescription() + "");
 
 
-        tvNameSeller.setText("name");
-        tvAddress.setText("address");
-        tvDescription.setText("a lot of text");
 
 
 
