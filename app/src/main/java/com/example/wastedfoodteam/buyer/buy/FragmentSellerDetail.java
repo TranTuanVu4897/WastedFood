@@ -53,7 +53,7 @@ public class FragmentSellerDetail extends Fragment {
                 bundle = new Bundle();
                 bundle.putSerializable("SELLER", seller);
                 report = new FragmentReport();
-                report.setArguments(bundleDetail);
+                report.setArguments(bundle);
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.flSearchResultAH, report, "")//TODO check if this work
                         .addToBackStack(null)
