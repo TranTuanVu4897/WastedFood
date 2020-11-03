@@ -6,7 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -43,10 +45,11 @@ public class ListProductSellerFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.i("ListProductSellerFragment","Show the list view");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_product_seller, container, false);
         //mapping view
-        lvProduct = view.findViewById(R.id.listProduct);
+        lvProduct = view.findViewById(android.R.id.list);
         Bundle bundle = getArguments();
         arrProduct = new ArrayList<Product>();
         seller_id = Variable.ACCOUNT_ID;
@@ -54,6 +57,21 @@ public class ListProductSellerFragment extends ListFragment {
         adapter = new ProductSellerAdapter( getActivity().getApplicationContext(), R.layout.list_seller_product , arrProduct, getResources());
         lvProduct.setAdapter(adapter);
         getData(urlGetData);
+        lvProduct.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
         return view;
     }
 
@@ -98,12 +116,17 @@ public class ListProductSellerFragment extends ListFragment {
 
     @Override
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        Log.i("ListProductSellerFragment","On item clicked");
         Product product = (Product) l.getAdapter().getItem(position);
 
+        SellerDetailProductFragment sellerDetailProductFragment = new SellerDetailProductFragment();
         //open seller detail product fragment
         getActivity().getSupportFragmentManager().beginTransaction()
-                //.replace( R.id.content_main, detailProductSeller, "")//TODO check if this work
+                .replace( R.id.content_main, sellerDetailProductFragment, "")//TODO check if this work
                 .addToBackStack(null)
                 .commit();
     }
+
+
 }

@@ -35,4 +35,6 @@ public class Variable {
     public static Seller SELLER;
 
     public static int CHECK_LOGIN;
+
+    public static final String noImageUrl = "https://www.actbus.net/fleetwiki/images/8/84/Noimage.jpg";
 }

@@ -92,7 +92,7 @@ public class ProductSellerAdapter extends BaseAdapter {
         holder.swOnOff.setTag(position);
         holder.tvName.setText(product.getName());
         //change to use Glide
-        Glide.with(convertView.getContext()).load(product.getImage()).into(holder.ivImage);
+        Glide.with(convertView.getContext()).load(product.getImage().isEmpty() ? Variable.noImageUrl : product.getImage()).into(holder.ivImage);
         //get image from url
         //new DownloadImageTask(holder.ivImage,resources).execute(product.getImage());
         //Picasso.get().load(product.getImage().isEmpty() ? Variable.noImageUrl : product.getImage()).into(holder.ivImage);
