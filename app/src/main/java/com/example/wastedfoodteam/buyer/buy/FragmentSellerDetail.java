@@ -4,14 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.buyer.FragmentListSellerFollow;
+import com.example.wastedfoodteam.buyer.FragmentReport;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.model.Seller;
 
@@ -26,6 +30,9 @@ public class FragmentSellerDetail extends Fragment {
     Seller seller;
     TextView tvNameSeller, tvAddress, tvDescription;
     ImageView ivPhotoSeller;
+    Button btnReport;
+    Bundle bundle;
+    FragmentReport report;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,6 +47,19 @@ public class FragmentSellerDetail extends Fragment {
         tvNameSeller.setText(seller.getName() + "");
         tvAddress.setText(seller.getAddress() + "");
         tvDescription.setText(seller.getDescription() + "");
+        btnReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bundle = new Bundle();
+                bundle.putSerializable("SELLER", seller);
+                report = new FragmentReport();
+                report.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.flSearchResultAH, report, "")//TODO check if this work
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
 
 
@@ -53,7 +73,9 @@ public class FragmentSellerDetail extends Fragment {
         tvAddress = view.findViewById(R.id.tvAddressFSD);
         tvDescription = view.findViewById(R.id.tvDescriptionFSD);
         ivPhotoSeller = view.findViewById(R.id.ivPhotoSellerFSD);
+        btnReport = view.findViewById(R.id.btnReportFSD);
     }
+
 //    public void getData() {
 //
 //        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());

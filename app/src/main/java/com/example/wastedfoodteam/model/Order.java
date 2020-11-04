@@ -1,12 +1,13 @@
 package com.example.wastedfoodteam.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
  * Order class
  * author Vutt
  */
-public class Order {
+public class Order implements Serializable {
     int id;
     int buyer_id;
     int product_id;
@@ -93,5 +94,13 @@ public class Order {
         this.total_cost = total_cost;
         this.buyer_rating = buyer_rating;
         this.buyer_comment = buyer_comment;
+    }
+
+    public Order(int buyer_id, int product_id, int quantity, String status, double total_cost) {
+        this.buyer_id = buyer_id;
+        this.product_id = product_id;
+        this.quantity = quantity;
+        this.status = status;
+        this.total_cost = total_cost;
     }
 }

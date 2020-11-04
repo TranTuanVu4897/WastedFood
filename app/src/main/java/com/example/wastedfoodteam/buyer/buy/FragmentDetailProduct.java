@@ -26,6 +26,7 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.order.FragmentOrderDetail;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Buyer;
+import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.utils.CommonFunction;
@@ -234,7 +235,9 @@ public class FragmentDetailProduct extends Fragment {
      * Open after buy
      */
     private void moveToFragmentOrderDetail() {
-        FragmentOrderDetail fragmentOrderDetail = new FragmentOrderDetail(orderQuantity);
+        Order order = new Order(Variable.ACCOUNT_ID,product.getId(),orderQuantity,Variable.ORDER_STATUS_ORDERING,orderQuantity * product.getSell_price());
+
+        FragmentOrderDetail fragmentOrderDetail = new FragmentOrderDetail(order);
 
         //put product to next screen
         Bundle bundle = new Bundle();
