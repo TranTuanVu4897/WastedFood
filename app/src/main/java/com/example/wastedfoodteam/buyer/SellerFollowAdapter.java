@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.load.engine.Resource;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.model.Seller;
+import com.example.wastedfoodteam.utils.CommonFunction;
 
 import java.util.List;
 
@@ -69,6 +70,7 @@ public class SellerFollowAdapter extends BaseAdapter {
         holder.tvNameSeller.setText(seller.getName());
         holder.tvAddress.setText(seller.getAddress());
         holder.tvDirection.setText("2km");
+        CommonFunction.setImageViewSrc(context,seller.getImage(),holder.ivseller);
         return convertView;
     }
 }
