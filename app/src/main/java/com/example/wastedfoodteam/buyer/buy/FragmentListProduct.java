@@ -1,6 +1,7 @@
 package com.example.wastedfoodteam.buyer.buy;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -45,6 +46,7 @@ public class FragmentListProduct extends ListFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_product_buyer, container, false);
+        Log.i("FragmentListProduct","Show the list view");
         //set up url volley
         urlGetData = Variable.ipAddress + Variable.SEARCH_PRODUCT;
 
@@ -116,7 +118,7 @@ public class FragmentListProduct extends ListFragment {
     @Override
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
         Product product = (Product) l.getAdapter().getItem(position);
-
+        Log.i("FragmentListProduct","On item clicked");
 
         //put bundle
         bundleDetail.putSerializable("PRODUCT", product);

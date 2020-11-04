@@ -18,43 +18,42 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-
-        <ImageView
-            android:focusable="false"
-            android:clickable="false"
-            android:id="@+id/iv_list_seller_image"
-            android:layout_width="117dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            tools:srcCompat="@tools:sample/avatars" />
-
         <TextView
             android:focusable="false"
             android:clickable="false"
-            android:id="@+id/tv_list_seller_name"
+            android:id="@+id/tv_list_order_buyerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:text="TextView" />
 
-        <RelativeLayout
+        <TextView
             android:focusable="false"
             android:clickable="false"
+            android:id="@+id/tv_list_order_productName"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="TextView" />
 
-            <Switch
-                android:focusable="false"
-                android:clickable="false"
-                android:id="@+id/sw_list_seller_onOff"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="15dp"
-                android:text="Trạng thái hiện tại" />
+        <TextView
+            android:focusable="false"
+            android:clickable="false"
+            android:id="@+id/tv_list_order_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="TextView" />
 
-        </RelativeLayout>
+        <TextView
+            android:focusable="false"
+            android:clickable="false"
+            android:id="@+id/tv_list_order_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="TextView" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

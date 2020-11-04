@@ -12,6 +12,8 @@ import java.sql.Date;
 public class Order implements Serializable {
     int id;
     int buyer_id;
+    String buyerName;
+    String nameProduct;
     int product_id;
     int quantity;
     Status status;
@@ -92,6 +94,21 @@ public class Order implements Serializable {
         this.buyer_comment = buyer_comment;
     }
 
+    public String getBuyerName() {
+        return buyerName;
+    }
+
+    public void setBuyerName(String buyerName) {
+        this.buyerName = buyerName;
+    }
+
+    public String getNameProduct() {
+        return nameProduct;
+    }
+
+    public void setNameProduct(String nameProduct) {
+        this.nameProduct = nameProduct;
+    }
 
     public Order() {
     }
@@ -108,6 +125,7 @@ public class Order implements Serializable {
     }
 
     public Order(int buyer_id, int product_id, int quantity, Status status, double total_cost) {
+
         this.buyer_id = buyer_id;
         this.product_id = product_id;
         this.quantity = quantity;
