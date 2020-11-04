@@ -16,9 +16,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.sellerFragment.AddProductFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.ChangePasswordSellerFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.EditSellerFragment;
+import com.example.wastedfoodteam.seller.sellerFragment.ListOrderHistoryFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.ListProductSellerFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.SellerHomeFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.SendFeedbackSellerFragment;
@@ -66,8 +68,8 @@ public class SellerHomeActivity extends AppCompatActivity {
 
 
         //TODO đường dẫn ảnh firebase
-        Glide.with(this).load(seller.getImage()).into(iv_nav_header_profile_image);
-        tv_nav_header_user_name.setText(seller.getName());
+        Glide.with(this).load(Variable.SELLER.getImage()).into(iv_nav_header_profile_image);
+        tv_nav_header_user_name.setText(Variable.SELLER.getName());
 
 
 
@@ -119,6 +121,10 @@ public class SellerHomeActivity extends AppCompatActivity {
                     ListProductSellerFragment listProductSellerFragment = new ListProductSellerFragment();
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_main,listProductSellerFragment,listProductSellerFragment.getTag()).commit();
+                }else if(id == R.id.item_nav_drawer_menu_history){
+                    ListOrderHistoryFragment listOrderHistoryFragment = new ListOrderHistoryFragment();
+                    FragmentManager manager = getSupportFragmentManager();
+                    manager.beginTransaction().replace(R.id.content_main,listOrderHistoryFragment,listOrderHistoryFragment.getTag()).commit();
                 }
                 DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
