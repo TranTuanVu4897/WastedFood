@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,12 +30,12 @@ import java.util.UUID;
 
 public class CameraStorageFunction  {
     //permission constants
-    private static final int CAMERA_REQUEST_CODE = 200;
-    private static final int STORAGE_REQUEST_CODE = 300;
+    public static final int CAMERA_REQUEST_CODE = 200;
+    public static final int STORAGE_REQUEST_CODE = 300;
 
     //image pick constants
-    private static final int IMAGE_PICK_GALLERY_CODE = 400;
-    private static final int IMAGE_PICK_CAMERA_CODE = 500;
+    public static final int IMAGE_PICK_GALLERY_CODE = 400;
+    public static final int IMAGE_PICK_CAMERA_CODE = 500;
 
     //permission array
     private String[] cameraPermission;
@@ -64,14 +66,14 @@ public class CameraStorageFunction  {
 
 
     //start of for camera handle
-    public void pickFromGallery() {
+    protected void pickFromGallery() {
         //intent to pick image from gallery
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         myActivity.startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE); ;
     }
 
-    private void showImagePickDialog() {
+    public void showImagePickDialog() {
         //display in dialog
         String[] options = {"Camera", "Gallery"};
         //dialog
@@ -112,7 +114,7 @@ public class CameraStorageFunction  {
         contentValues.put(MediaStore.Images.Media.DESCRIPTION, "Temp_Image_Description");
 
         image_uri = myActivity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-
+        Log.i("CameraStorageFunction","image_uri :" + image_uri);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
         myActivity.startActivityForResult(intent, IMAGE_PICK_CAMERA_CODE);
@@ -138,6 +140,24 @@ public class CameraStorageFunction  {
 
     private void requestCameraPermission() {
         ActivityCompat.requestPermissions(myActivity, cameraPermission, CAMERA_REQUEST_CODE);
+    }
+
+    public  void onActivityResult(int requestCode, int resultCode, Intent data ) {
+        if (resultCode == -1) {
+            if (requestCode == IMAGE_PICK_GALLERY_CODE) {
+                Log.i("CameraStorageFunction","image pick gallery");
+                //image pick from gallery
+
+                //save picked image uri
+                image_uri = data.getData();
+
+                //image picked from camera
+                //imageView.setImageURI(image_uri);
+            } else if (requestCode == IMAGE_PICK_CAMERA_CODE) {
+                //image pick from camera
+                //imageView.setImageURI(image_uri);
+            }
+        }
     }
 
     // UploadImage method

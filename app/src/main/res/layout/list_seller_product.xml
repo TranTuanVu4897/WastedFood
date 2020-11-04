@@ -8,6 +8,7 @@
 
     <LinearLayout
         android:layout_width="0dp"
+        android:descendantFocusability="blocksDescendants"
         android:layout_height="150dp"
         android:orientation="horizontal"
         android:layout_marginTop="30dp"
@@ -19,6 +20,8 @@
 
 
         <ImageView
+            android:focusable="false"
+            android:clickable="false"
             android:id="@+id/iv_list_seller_image"
             android:layout_width="117dp"
             android:layout_height="wrap_content"
@@ -26,6 +29,8 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
+            android:focusable="false"
+            android:clickable="false"
             android:id="@+id/tv_list_seller_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,10 +38,14 @@
             android:text="TextView" />
 
         <RelativeLayout
+            android:focusable="false"
+            android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <Switch
+                android:focusable="false"
+                android:clickable="false"
                 android:id="@+id/sw_list_seller_onOff"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

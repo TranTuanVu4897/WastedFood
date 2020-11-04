@@ -38,7 +38,6 @@ public class ListProductSellerFragment extends ListFragment {
 
     ArrayList<Product> arrProduct;
     ProductSellerAdapter adapter;
-    ArrayAdapter<Product> arrayAdapter;
     ListView lvProduct;
     int seller_id;
 
@@ -50,13 +49,13 @@ public class ListProductSellerFragment extends ListFragment {
         View view = inflater.inflate(R.layout.fragment_list_product_seller, container, false);
         //mapping view
         lvProduct = view.findViewById(android.R.id.list);
-        Bundle bundle = getArguments();
         arrProduct = new ArrayList<Product>();
         seller_id = Variable.ACCOUNT_ID;
         String urlGetData = Variable.ipAddress + "seller/getListProductSeller.php?seller_id=" + seller_id;
         adapter = new ProductSellerAdapter( getActivity().getApplicationContext(), R.layout.list_seller_product , arrProduct, getResources());
         lvProduct.setAdapter(adapter);
         getData(urlGetData);
+
         lvProduct.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -119,6 +118,7 @@ public class ListProductSellerFragment extends ListFragment {
         super.onListItemClick(l, v, position, id);
         Log.i("ListProductSellerFragment","On item clicked");
         Product product = (Product) l.getAdapter().getItem(position);
+        Variable.PRODUCT = product;
 
         SellerDetailProductFragment sellerDetailProductFragment = new SellerDetailProductFragment();
         //open seller detail product fragment

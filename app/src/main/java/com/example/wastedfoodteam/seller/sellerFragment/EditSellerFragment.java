@@ -312,10 +312,6 @@ public class EditSellerFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-
-
-
-
     //update seller data
     private void updateSeller(String url){
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
