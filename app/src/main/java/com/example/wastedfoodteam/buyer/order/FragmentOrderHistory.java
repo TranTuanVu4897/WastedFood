@@ -1,6 +1,7 @@
 package com.example.wastedfoodteam.buyer.order;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.buyer.buy.FragmentDetailProduct;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
+import com.example.wastedfoodteam.model.OrderStatusTypeDeserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -43,7 +44,7 @@ public class FragmentOrderHistory extends ListFragment {
        View view = inflater.inflate(R.layout.fragment_buyer_order_history,container,false);
 
         //set up url volley
-        urlGetData = Variable.ipAddress + Variable.SEARCH_PRODUCT;
+        urlGetData = Variable.ipAddress + Variable.ORDER_HISTORY + "?buyer_id="+Variable.ACCOUNT_ID;
 
         //mapping view
         lvOrder = view.findViewById(android.R.id.list);
@@ -65,9 +66,6 @@ public class FragmentOrderHistory extends ListFragment {
 
     private void getData() {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        //TODO
-        //require edit latitude
-        urlGetData = urlGetData + "?lat=" + Variable.gps.latitude + "&lng=" + Variable.gps.longitude;//TODO should remove it?
 
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
@@ -76,7 +74,11 @@ public class FragmentOrderHistory extends ListFragment {
                         // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         try {
                             JSONArray jsonOrders = new JSONArray(response);
-                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                            GsonBuilder gsonBuilder = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss")
+                                    .registerTypeAdapter(Order.Status.class,new OrderStatusTypeDeserializer());
+                            Gson gson = gsonBuilder.create();
+
+
                             for (int i = 0; i < jsonOrders.length(); i++) {
                                 orderArrayList.add((Order) gson.fromJson(jsonOrders.getString(i), Order.class));
                                 adapter.notifyDataSetChanged();

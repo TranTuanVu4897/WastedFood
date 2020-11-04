@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.example.wastedfoodteam.DirectionParser;
@@ -33,6 +34,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.gson.internal.$Gson$Preconditions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,7 +55,7 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
     private Buyer buyer;
     private Product product;
     private Order order;
-    private TextView tvTitle,tvBuyQuantity;
+    private TextView tvTitle, tvBuyQuantity;
     private ImageView ivProduct;
 
     public FragmentOrderDetail() {
@@ -68,6 +70,8 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_buyer_order_detail, container, false);
 
+        product = new Product();//TODO delte later
+
         //mapping
         tvTitle = view.findViewById(R.id.tvProductName);
         tvBuyQuantity = view.findViewById(R.id.tvBuyQuantity);
@@ -79,9 +83,16 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
 //        product = (Product) getArguments().get("PRODUCT");
 
         //set content
-        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(),product.getImage(),ivProduct);
+        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), product.getImage(), ivProduct);
         tvBuyQuantity.setText("Đã đặt trước: " + order.getQuantity() + " sản phẩm.");
 //        tvTitle.setText(product.getName());
+
+        //show dialog
+        if (order.getStatus() == Order.Status.SUCCESS && order.getBuyer_comment() == null){
+            RatingDialogFragment ratingDialogFragment = new RatingDialogFragment(getActivity(), order);
+            ratingDialogFragment.show(getActivity().getSupportFragmentManager(),"missiles");
+        }
+
 
         //TODO fix later
         String apikey = getString(R.string.maps_api_key);
@@ -110,9 +121,9 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
         // Add a marker in fptUniversity and move the camera
         LatLng fptUniversity = new LatLng(21.013255, 105.5248756);
         mMap.addMarker(new MarkerOptions().position(fptUniversity).title("Bạn ở đây"));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(Variable.SELLER.getLatitude(), Variable.SELLER.getLongitude())).title(Variable.SELLER.getName()));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(order.getProduct().getSeller().getLatitude(), order.getProduct().getSeller().getLongitude())).title(order.getProduct().getSeller().getName()));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(fptUniversity, 16f));
-        new TaskDirectionRequest().execute(buildRequestUrl(fptUniversity, new LatLng(Variable.SELLER.getLatitude(), Variable.SELLER.getLongitude())));
+        new TaskDirectionRequest().execute(buildRequestUrl(fptUniversity, new LatLng(order.getProduct().getSeller().getLatitude(), order.getProduct().getSeller().getLongitude())));
     }
 
     private void requestPermission(String permission) {
@@ -247,4 +258,6 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
             }
         }
     }
+
+
 }
