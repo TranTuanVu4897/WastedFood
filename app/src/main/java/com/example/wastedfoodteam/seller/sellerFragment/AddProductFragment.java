@@ -367,7 +367,6 @@ public class AddProductFragment extends Fragment {
                 iv_add_product_icon.setImageURI(image_uri);
             }
         }
-
         super.onActivityResult(requestCode, resultCode, data);
     }
 
