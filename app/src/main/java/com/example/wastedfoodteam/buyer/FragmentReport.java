@@ -46,6 +46,7 @@ public class FragmentReport extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_report, container, false);
         seller = (Seller) getArguments().get("SELLER");
+        //mapping
         mapping(view);
         //get param
         url = Variable.ipAddress + "FeedbackReport/report.php";
@@ -112,7 +113,7 @@ public class FragmentReport extends Fragment {
     }
 
     private void mapping(View view) {
-        tvAccused = view.findViewById(R.id.tvAddressFSD);
+        tvAccused = view.findViewById(R.id.tvAccusedFR);
         etContent = view.findViewById(R.id.etContentFR);
         btnCommit = view.findViewById(R.id.btnCommitFR);
     }
