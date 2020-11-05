@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+
+
+        <ImageView
+            android:id="@+id/ivProductLSPI"
+            android:layout_width="131dp"
+            android:layout_height="131dp"
+            android:layout_margin="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.533"
+            tools:srcCompat="@drawable/no_image"></ImageView>
+
+        <TextView
+            android:id="@+id/tvQuantity"
+            android:layout_width="131dp"
+            android:layout_height="wrap_content"
+            android:background="#6BF271"
+            android:text="Còn: 10/10"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="@+id/ivProductLSPI"
+            app:layout_constraintEnd_toEndOf="@+id/ivProductLPI"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/ivProductLSPI"
+            app:layout_constraintTop_toTopOf="@+id/ivProductLPI"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/tvDiscount"
+            android:layout_width="40dp"
+            android:layout_height="38dp"
+            android:layout_marginBottom="96dp"
+            android:background="@drawable/triangle_text_view_background"
+            android:text="20%"
+            android:textAlignment="textStart"
+            app:layout_constraintBottom_toBottomOf="@+id/ivProductLSPI"
+            app:layout_constraintEnd_toEndOf="@+id/ivProductLPI"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/ivProductLSPI"
+            app:layout_constraintTop_toTopOf="@+id/ivProductLPI"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="249dp"
+            android:layout_height="131dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivProductLPI"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvOriginalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:foreground="@drawable/strike_through"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="20,000 VND"
+                app:layout_constraintBottom_toBottomOf="@+id/tvSellPrice"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/tvSellPrice"
+                app:layout_constraintTop_toTopOf="@+id/tvSellPrice"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <TextView
+                android:id="@+id/tvNameLSPI"
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:layout_margin="5dp"
+                android:text="Bánh Mỳ Tôm"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.179"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.044" />
+
+            <TextView
+                android:id="@+id/tvSellPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="20,000 VND"
+                android:textColor="#009688"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.193"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.598" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

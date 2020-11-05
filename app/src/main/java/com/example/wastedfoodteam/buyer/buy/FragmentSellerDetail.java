@@ -1,14 +1,18 @@
 package com.example.wastedfoodteam.buyer.buy;
 
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +21,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.ListFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,6 +30,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.buyer.FragmentListSellerFollow;
 import com.example.wastedfoodteam.buyer.FragmentReport;
 import com.example.wastedfoodteam.global.Variable;
@@ -38,12 +44,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FragmentSellerDetail extends ListFragment {
     String urlGetData;
     ArrayList<Product> arrProduct;
-    ProductAdapter adapter;
+    ProductAdapterOfSeller adapter;
     FragmentDetailProduct detailProduct;
     Bundle bundleDetail;
     Seller seller;
@@ -53,6 +61,14 @@ public class FragmentSellerDetail extends ListFragment {
     Bundle bundle;
     FragmentReport report;
     ListView lvProduction;
+    String content ="";
+    String url;
+    String accusedId;
+    String reporterId;
+    TextView tvAccused ;
+    EditText etContent ;
+    Button btnCommit ;
+    Button btnCancel;
 
 
     @Nullable
@@ -61,7 +77,6 @@ public class FragmentSellerDetail extends ListFragment {
         View view = inflater.inflate(R.layout.fragment_seller_detail, container, false);
         mapping(view);
         //set up url volley
-//        urlGetData = Variable.ipAddress + Variable.SEARCH_PRODUCT;
 
 
         seller = (Seller) getArguments().get("SELLER");
@@ -74,14 +89,15 @@ public class FragmentSellerDetail extends ListFragment {
         btnReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bundle = new Bundle();
-                bundle.putSerializable("SELLER", seller);
-                report = new FragmentReport();
-                report.setArguments(bundle);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.flSearchResultAH, report, "")//TODO check if this work
-                        .addToBackStack(null)
-                        .commit();
+                dialogReport();
+//                bundle = new Bundle();
+//                bundle.putSerializable("SELLER", seller);
+//                report = new FragmentReport();
+//                report.setArguments(bundle);
+//                getActivity().getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.flSearchResultAH, report, "")//TODO check if this work
+//                        .addToBackStack(null)
+//                        .commit();
             }
         });
 
@@ -95,7 +111,7 @@ public class FragmentSellerDetail extends ListFragment {
         //setup bundle
         bundleDetail = new Bundle();
         arrProduct = new ArrayList<>();
-        adapter = new ProductAdapter(getActivity().getApplicationContext(), R.layout.list_buyer_product_item, arrProduct, getResources());
+        adapter = new ProductAdapterOfSeller(getActivity().getApplicationContext(), R.layout.list_seller_product_item, arrProduct, getResources());
         lvProduction.setAdapter(adapter);
         getData(urlGetData);
 
@@ -173,6 +189,74 @@ public class FragmentSellerDetail extends ListFragment {
                 .replace(R.id.flSearchResultAH, detailProduct, "")//TODO check if this work
                 .addToBackStack(null)
                 .commit();
+    }
+    private void dialogReport(){
+        Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.dialog_report);
+        dialog.show();
+        //mapping
+        tvAccused = dialog.findViewById(R.id.tvAccusedDR);
+        etContent = dialog.findViewById(R.id.etContentDR);
+        btnCommit = dialog.findViewById(R.id.btnCommitDR);
+        btnCancel = dialog.findViewById(R.id.btnCancelDR);
+        //set param
+        url = Variable.ipAddress + "FeedbackReport/report.php";
+        reporterId = Variable.ACCOUNT_ID+"";
+        accusedId = seller.getId()+"";
+        btnCommit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                content = etContent.getText().toString();
+                //TODO don't know get url image
+                insertData(url, reporterId, accusedId, content,"");
+            }
+        });
+        tvAccused.setText(seller.getName());
+    }
+    private void insertData(final String url, final String reporter_id, final String accused_id, final String report_text, final String report_image) {
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+                switch (response) {
+                    case "ERROR":
+                        Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_LONG).show();
+                        break;
+                    default:
+                        Toast.makeText(getActivity(), "OK Insert data", Toast.LENGTH_LONG).show();
+                        try {
+
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), "ERROR " + url, Toast.LENGTH_LONG).show();//TODO get data
+            }
+        }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("reporter_id", reporter_id);
+                params.put("accused_id", accused_id);
+                params.put("report_text", report_text);
+                params.put("report_image", report_image);
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
+
     }
 
 
