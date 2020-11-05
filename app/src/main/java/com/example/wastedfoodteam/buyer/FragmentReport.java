@@ -52,7 +52,8 @@ public class FragmentReport extends Fragment {
         url = Variable.ipAddress + "FeedbackReport/report.php";
         accusedName = seller.getName();
         reporterId = Variable.ACCOUNT_ID+"";
-        tvAccused.setText(accusedName);
+        tvAccused.setText(seller.getName());
+
         accusedId = seller.getId()+"";
         btnCommit.setOnClickListener(new View.OnClickListener() {
             @Override

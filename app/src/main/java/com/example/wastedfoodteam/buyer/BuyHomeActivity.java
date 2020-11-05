@@ -20,12 +20,13 @@ import android.widget.Toast;
 import com.example.wastedfoodteam.MainActivity;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.buy.FragmentListProduct;
+import com.example.wastedfoodteam.buyer.order.FragmentOrderHistory;
 import com.example.wastedfoodteam.global.Variable;
 import com.facebook.login.LoginManager;
 import com.google.android.material.navigation.NavigationView;
 
 public class BuyHomeActivity extends AppCompatActivity {
-    Button btnLogout,btnFollow;
+    Button btnLogout,btnFollow,btnHistory;
     ImageView imageView,imageButton;
     Bundle bundle;
     EditText etSearch;
@@ -39,11 +40,16 @@ public class BuyHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyer_home);
+
+        //mapping
         btnLogout = findViewById(R.id.btnLogout);
         btnFollow = findViewById(R.id.btnFollow);
+        btnHistory = findViewById(R.id.btnHistory);
         imageView = findViewById(R.id.ivAppIcon);
         etSearch = findViewById(R.id.etSearchBHA);
         imageButton = findViewById(R.id.ibUserInfo);
+
+
         SharedPreferences pre = getSharedPreferences("my_data",MODE_PRIVATE);
         String name = pre.getString("name","khong thay");
 
@@ -116,6 +122,19 @@ public class BuyHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addFragmentSellerFollow();
+            }
+        });
+
+
+        btnHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentOrderHistory fragmentOrderHistory = new FragmentOrderHistory();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.flSearchResultAH,fragmentOrderHistory,"")
+                        .addToBackStack(null)
+                        .commit();
             }
         });
     }

@@ -235,7 +235,7 @@ public class FragmentDetailProduct extends Fragment {
      * Open after buy
      */
     private void moveToFragmentOrderDetail() {
-        Order order = new Order(Variable.ACCOUNT_ID,product.getId(),orderQuantity,Variable.ORDER_STATUS_ORDERING,orderQuantity * product.getSell_price());
+        Order order = new Order(Variable.ACCOUNT_ID,product.getId(),orderQuantity,Order.Status.BUYING,orderQuantity * product.getSell_price());
 
         FragmentOrderDetail fragmentOrderDetail = new FragmentOrderDetail(order);
 

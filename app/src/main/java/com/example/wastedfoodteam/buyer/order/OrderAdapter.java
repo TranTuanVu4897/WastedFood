@@ -10,11 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.buyer.buy.ProductAdapter;
 import com.example.wastedfoodteam.model.Order;
-import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class OrderAdapter extends BaseAdapter {
@@ -75,11 +74,11 @@ public class OrderAdapter extends BaseAdapter {
 
         Order order = orderList.get(position);
 
-        holder.tvName.setText(order.getProduct_id() + "");
+        holder.tvName.setText(order.getProduct().getName() + "");
         holder.tvSellPrice.setText(CommonFunction.getCurrency(order.getTotal_cost()));
-        holder.tvOpenTime.setText(order.getBuyer_rating());
+        holder.tvOpenTime.setText(LocalDateTime.now() + "");//TODO change later
         //get image from url
-        CommonFunction.setImageViewSrc(context,"",holder.ivProduct);
+        CommonFunction.setImageViewSrc(context,order.getProduct().getImage(),holder.ivProduct);
 
         return convertView;
 
