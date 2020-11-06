@@ -112,7 +112,7 @@ public class SellerDetailProductFragment extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if(response.trim().equals("Succesfully update")){
+                        if(response.trim().equals("Successfully update")){
                             Toast.makeText(getActivity(),"Cập nhật thành công",Toast.LENGTH_SHORT).show();
                             //TODO move back to home
                         }else{

@@ -87,11 +87,11 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
         tvBuyQuantity.setText("Đã đặt trước: " + order.getQuantity() + " sản phẩm.");
 //        tvTitle.setText(product.getName());
 
-        //show dialog
-        if (order.getStatus() == Order.Status.SUCCESS && order.getBuyer_comment() == null){
-            RatingDialogFragment ratingDialogFragment = new RatingDialogFragment(getActivity(), order);
-            ratingDialogFragment.show(getActivity().getSupportFragmentManager(),"missiles");
-        }
+        //show dialog//TODO
+//        if (order.getStatus() == Order.Status.SUCCESS && order.getBuyer_comment() == null){
+//            RatingDialogFragment ratingDialogFragment = new RatingDialogFragment(getActivity(), order);
+//            ratingDialogFragment.show(getActivity().getSupportFragmentManager(),"missiles");
+//        }
 
 
         //TODO fix later

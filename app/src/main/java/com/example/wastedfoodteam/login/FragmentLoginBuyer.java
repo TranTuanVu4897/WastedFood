@@ -292,7 +292,7 @@ public class FragmentLoginBuyer extends Fragment {
 
 
                             Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
-                            Variable.CHECK_LOGIN = 1;
+                            Variable.CHECK_LOGIN = 0;
 
                             Variable.ACCOUNT_ID = buyer.getId();
                             //TODO pass data through intent

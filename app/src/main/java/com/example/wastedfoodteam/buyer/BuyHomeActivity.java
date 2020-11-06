@@ -20,13 +20,14 @@ import android.widget.Toast;
 import com.example.wastedfoodteam.MainActivity;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.buy.FragmentListProduct;
+import com.example.wastedfoodteam.buyer.order.FragmentOrderDetail;
 import com.example.wastedfoodteam.buyer.order.FragmentOrderHistory;
 import com.example.wastedfoodteam.global.Variable;
 import com.facebook.login.LoginManager;
 import com.google.android.material.navigation.NavigationView;
 
 public class BuyHomeActivity extends AppCompatActivity {
-    Button btnLogout,btnFollow,btnHistory;
+    Button btnLogout,btnFollow,btnHistory,btnHome;
     ImageView imageView,imageButton;
     Bundle bundle;
     EditText etSearch;
@@ -45,6 +46,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         btnLogout = findViewById(R.id.btnLogout);
         btnFollow = findViewById(R.id.btnFollow);
         btnHistory = findViewById(R.id.btnHistory);
+        btnHome = findViewById(R.id.btnHome);
         imageView = findViewById(R.id.ivAppIcon);
         etSearch = findViewById(R.id.etSearchBHA);
         imageButton = findViewById(R.id.ibUserInfo);
@@ -110,21 +112,12 @@ public class BuyHomeActivity extends AppCompatActivity {
         });
 
 
-        FragmentListProduct fragmentListProduct = new FragmentListProduct();
-
-        //add fragment search result
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.flSearchResultAH, fragmentListProduct, "")
-                .addToBackStack(null)
-                .commit();
         btnFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addFragmentSellerFollow();
             }
         });
-
 
         btnHistory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,7 +130,30 @@ public class BuyHomeActivity extends AppCompatActivity {
                         .commit();
             }
         });
+
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFragmentHome();
+            }
+        });
+
+        openFragmentHome();
     }
+
+    private void openFragmentHome() {
+        FragmentListProduct fragmentListProduct = new FragmentListProduct();
+
+        //add fragment search result
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.flSearchResultAH, fragmentListProduct, "")
+                .addToBackStack(null)
+                .commit();
+
+
+    }
+
     public void addFragmentSellerFollow() {
 
         FragmentListSellerFollow fragment = new FragmentListSellerFollow();
