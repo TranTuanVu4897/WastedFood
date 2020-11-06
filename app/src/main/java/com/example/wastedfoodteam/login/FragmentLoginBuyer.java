@@ -292,7 +292,6 @@ public class FragmentLoginBuyer extends Fragment {
 
 
                             Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
-                            Variable.CHECK_LOGIN = 1;
 
                             Variable.ACCOUNT_ID = buyer.getId();
                             //TODO pass data through intent
@@ -363,7 +362,6 @@ public class FragmentLoginBuyer extends Fragment {
                     Buyer buyer = gson.fromJson(object.getString(0), Buyer.class);
 
                     Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
-                    Variable.CHECK_LOGIN = 2;
                     Variable.ACCOUNT_ID = buyer.getId();
                     //TODO pass data through intent
                     startActivity(intent);
