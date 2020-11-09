@@ -1,5 +1,7 @@
 package com.example.wastedfoodteam.buyer.order;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -9,7 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,7 +74,7 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_buyer_order_detail, container, false);
 
-        product = new Product();//TODO delte later
+        product = new Product();//TODO delete later
 
         //mapping
         tvTitle = view.findViewById(R.id.tvProductName);
@@ -88,10 +92,12 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
 //        tvTitle.setText(product.getName());
 
         //show dialog//TODO
-//        if (order.getStatus() == Order.Status.SUCCESS && order.getBuyer_comment() == null){
+        if (order.getStatus() == Order.Status.SUCCESS && order.getBuyer_comment() == null){
 //            RatingDialogFragment ratingDialogFragment = new RatingDialogFragment(getActivity(), order);
 //            ratingDialogFragment.show(getActivity().getSupportFragmentManager(),"missiles");
-//        }
+            RatingDialog ratingDialog = new RatingDialog(getActivity(),getLayoutInflater(),order);
+            ratingDialog.displayRatingOrderDialog();
+        }
 
 
         //TODO fix later
@@ -109,6 +115,33 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
 
         return view;
     }
+
+//    private void displayRatingOrderDialog() {
+//        LayoutInflater inflater = getLayoutInflater();
+//        View ratingLayout = inflater.inflate(R.layout.dialog_buyer_rating,null);
+//        final RatingBar rbRating= ratingLayout.findViewById(R.id.rbRating);
+//        final EditText etRating = ratingLayout.findViewById(R.id.etRating);
+//
+//        AlertDialog.Builder builderDialogRating = new AlertDialog.Builder(getActivity());
+//        builderDialogRating.setTitle("Đánh giá");
+//        builderDialogRating.setView(ratingLayout);
+//        builderDialogRating.setCancelable(true);
+//
+//        builderDialogRating.setNegativeButton("Bỏ qua", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.cancel();
+//            }
+//        });
+//        builderDialogRating.setPositiveButton("Đánh giá", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//            }
+//        });
+//        AlertDialog dialogRating = builderDialogRating.create();
+//        dialogRating.show();
+//    }
 
 
     @Override
