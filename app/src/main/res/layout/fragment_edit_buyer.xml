@@ -88,12 +88,13 @@
                 android:paddingEnd="50dp"
                 android:textColorHint="#B6ADAD"
                 android:layout_marginBottom="30dp"/>
-            <TextView
-                android:id="@+id/tvMailFEB"
+
+            <EditText
+                android:id="@+id/etMailFEB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="Email: "
+                android:hint="Email: "
                 android:textSize="18dp"
                 android:paddingEnd="50dp"
                 android:textColorHint="#B6ADAD"

@@ -1,12 +1,13 @@
 package com.example.wastedfoodteam.buyer;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -24,45 +25,42 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Buyer;
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class FragmentEditInformationBuyer extends Fragment {
-    EditText etName, etPhone, etDob;
+    EditText etName, etPhone, etDob, etMail;
     RadioButton rbBoy, rbGirl;
     String url = "";
     Buyer buyer;
-    TextView tvMail;
     ImageView ivAvatar;
     Button btUpdate, btCancel;
     String accountId;
+    int lastSelectedYear;
+    int lastSelectedMonth;
+    int lastSelectedDayOfMonth;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_buyer, container, false);
         mapping(view);
-        btUpdate.setVisibility(View.VISIBLE);
-        btCancel.setVisibility(View.VISIBLE);
-        if (Variable.CHECK_LOGIN == 2) {
-            btUpdate.setVisibility(View.INVISIBLE);
-            btCancel.setVisibility(View.INVISIBLE);
-            resultFacebook();
-        } else if (Variable.CHECK_LOGIN == 0) {
+//        btUpdate.setVisibility(View.VISIBLE);
+//        btCancel.setVisibility(View.VISIBLE);
+//        if (Variable.CHECK_LOGIN == 2) {
+//            btUpdate.setVisibility(View.INVISIBLE);
+//            btCancel.setVisibility(View.INVISIBLE);
+//            resultFacebook();
+//        } else if (Variable.CHECK_LOGIN == 0) {
             accountId = Variable.ACCOUNT_ID + "";
             url = Variable.ipAddress + "information/informationBuyer.php?account_id=" + accountId;
             getData(url);
@@ -72,6 +70,16 @@ public class FragmentEditInformationBuyer extends Fragment {
 //        } else {
 //            rbGirl.setChecked(true);
 //        }
+        etDob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectDate();
+            }
+        });
+        final Calendar c = Calendar.getInstance();
+        this.lastSelectedYear = c.get(Calendar.YEAR);
+        this.lastSelectedMonth = c.get(Calendar.MONTH);
+        this.lastSelectedDayOfMonth = c.get(Calendar.DAY_OF_MONTH);
 
             btUpdate.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -95,11 +103,10 @@ public class FragmentEditInformationBuyer extends Fragment {
                     } else {
                         gender = "1";
                     }
-
                     updateData(url, accountId, name, phone, urlImage, dob, gender);
                 }
             });
-        }
+//        }
 
 
         //get account it
@@ -114,7 +121,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         etPhone = view.findViewById(R.id.etEditPhoneFEB);
         rbBoy = view.findViewById(R.id.rbBoy);
         rbGirl = view.findViewById(R.id.rbGirl);
-        tvMail = view.findViewById(R.id.tvMailFEB);
+        etMail = view.findViewById(R.id.etMailFEB);
         ivAvatar = view.findViewById(R.id.ivBuyerAvatarFEB);
         btUpdate = view.findViewById(R.id.btUpdateBuyerFEB);
         btCancel = view.findViewById(R.id.btCancelFEB);
@@ -134,6 +141,8 @@ public class FragmentEditInformationBuyer extends Fragment {
                     //set edit text here
                     etName.setText(buyer.getName());
                     etDob.setText(buyer.getDate_of_birth() + "");
+                    etMail.setText(buyer.getEmail());
+                    etPhone.setText(buyer.getPhone());
                     if (buyer.isGender()) {
                         rbGirl.setChecked(true);
                     } else {
@@ -201,29 +210,43 @@ public class FragmentEditInformationBuyer extends Fragment {
         };
         requestQueue.add(stringRequest);
     }
-
-    private void resultFacebook() {
-        GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+    private void selectDate(){
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
-                Log.d("Json", response.getJSONObject().toString());
-                try {
-                    etName.setText("Tên: " + object.getString("name"));
-                    tvMail.setText("Email: " + object.getString("email"));
-                    etDob.setText("Birthday: " + object.getString("birthday"));
-                    String idF = object.getString("id");
-
-                    String imageF = "https://graph.facebook.com/" + idF + "/picture?type=large";
-                    Glide.with(getActivity()).load(imageF).into(ivAvatar);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                etDob.setText(year + "-" + month + "-" + dayOfMonth);
+                lastSelectedYear = year;
+                lastSelectedMonth = month;
+                lastSelectedDayOfMonth = dayOfMonth;
             }
-        });
-        Bundle parameter = new Bundle();
-        parameter.putString("fields", "id,name,email,gender,birthday");
-        graphRequest.setParameters(parameter);
-        graphRequest.executeAsync();
-        Log.d("Tag: ", "failed");
+        };
+        DatePickerDialog datePickerDialog = null;
+        datePickerDialog = new DatePickerDialog(getActivity(),
+                dateSetListener, lastSelectedYear, lastSelectedMonth, lastSelectedDayOfMonth);
+        datePickerDialog.show();
     }
+//    private void resultFacebook() {
+//        GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+//            @Override
+//            public void onCompleted(JSONObject object, GraphResponse response) {
+//                Log.d("Json", response.getJSONObject().toString());
+//                try {
+//                    etName.setText("Tên: " + object.getString("name"));
+//                    tvMail.setText("Email: " + object.getString("email"));
+//                    etDob.setText("Birthday: " + object.getString("birthday"));
+//                    String idF = object.getString("id");
+//
+//                    String imageF = "https://graph.facebook.com/" + idF + "/picture?type=large";
+//                    Glide.with(getActivity()).load(imageF).into(ivAvatar);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//        Bundle parameter = new Bundle();
+//        parameter.putString("fields", "id,name,email,gender,birthday");
+//        graphRequest.setParameters(parameter);
+//        graphRequest.executeAsync();
+//        Log.d("Tag: ", "failed");
+//    }
 }

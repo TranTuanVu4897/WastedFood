@@ -292,7 +292,6 @@ public class FragmentLoginBuyer extends Fragment {
 
 
                             Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
-                            Variable.CHECK_LOGIN = 0;
 
                             Variable.ACCOUNT_ID = buyer.getId();
                             //TODO pass data through intent
@@ -332,6 +331,7 @@ public class FragmentLoginBuyer extends Fragment {
                     String gender = "1";
                     String urlImage = "https://graph.facebook.com/" + thirdPartyId + "/picture?type=large";
                     String urlInsert = Variable.ipAddress + "login/register3rdParty.php";
+
                     checkDataAndInsert3rdParty(urlInsert, email, thirdPartyId, name, urlImage, dob, gender);
 
 
@@ -354,25 +354,19 @@ public class FragmentLoginBuyer extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
-                switch (response) {
-                    case "OK":
-                        Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();
-                        Variable.CHECK_LOGIN = 2;
-                        startActivity(intent);
-                        break;
-                    default:
-                        Toast.makeText(getActivity(), "OK Insert data", Toast.LENGTH_LONG).show();
-                        try {
+                try {
+                    JSONArray object = new JSONArray(response);
 
-                            Variable.CHECK_LOGIN = 2;
-                            //TODO pass data through intent
-                            startActivity(intent);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break;
+                    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
+                    Buyer buyer = gson.fromJson(object.getString(0), Buyer.class);
+
+                    Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+                    Variable.ACCOUNT_ID = buyer.getId();
+                    //TODO pass data through intent
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
             }
