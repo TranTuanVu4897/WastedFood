@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.buyer.order;
+package com.example.wastedfoodteam.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;

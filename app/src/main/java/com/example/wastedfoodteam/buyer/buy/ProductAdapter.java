@@ -76,7 +76,8 @@ public class ProductAdapter extends BaseAdapter {
         holder.tvOriginalPrice.setText(CommonFunction.getCurrency(product.getOriginal_price()));
         holder.tvOpenTime.setText(CommonFunction.getOpenClose(product.getStart_time(),product.getEnd_time()));
         holder.tvDiscount.setText(CommonFunction.getDiscount(product.getSell_price(),product.getOriginal_price()));
-        holder.tvQuantity.setText(CommonFunction.getQuantity(product.getRemain_quantity(),product.getOriginal_quantity()));
+//        holder.tvQuantity.setText(CommonFunction.getQuantity(product.getRemain_quantity(),product.getOriginal_quantity()));
+        CommonFunction.setQuantityTextView(holder.tvQuantity,product.getRemain_quantity(),product.getOriginal_quantity());
         //get image from url
         CommonFunction.setImageViewSrc(context,product.getImage(),holder.ivProduct);
 

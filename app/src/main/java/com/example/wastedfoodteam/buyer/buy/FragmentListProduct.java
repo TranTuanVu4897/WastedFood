@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.ListFragment;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -31,7 +32,10 @@ import com.google.gson.GsonBuilder;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FragmentListProduct extends ListFragment {
     String urlGetData;
@@ -42,11 +46,12 @@ public class FragmentListProduct extends ListFragment {
     Bundle bundleDetail;
     Seller seller;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_product_buyer, container, false);
-        Log.i("FragmentListProduct","Show the list view");
+        Log.i("FragmentListProduct", "Show the list view");
         //set up url volley
         urlGetData = Variable.ipAddress + Variable.SEARCH_PRODUCT;
 
@@ -56,8 +61,8 @@ public class FragmentListProduct extends ListFragment {
         //setup bundle
         bundleDetail = new Bundle();
 
-        //set up list display
-        arrProduct = new ArrayList<>();
+        setUpArrayProduct();
+
         adapter = new ProductAdapter(getActivity().getApplicationContext(), R.layout.list_buyer_product_item, arrProduct, getResources());
         lvProduction.setAdapter(adapter);
         getData();
@@ -88,7 +93,10 @@ public class FragmentListProduct extends ListFragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         //TODO
         //require edit latitude
-        urlGetData = urlGetData + "?lat=" + Variable.gps.latitude + "&lng=" + Variable.gps.longitude;
+        urlGetData = urlGetData + "?lat=" + Variable.gps.latitude + "&lng=" + Variable.gps.longitude
+                + "&distance=" + Variable.distance
+                + "&start_time=" + Variable.startTime + "&end_time=" + Variable.endTime
+                + "&discount=" + Variable.discount;
 
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
@@ -118,7 +126,7 @@ public class FragmentListProduct extends ListFragment {
     @Override
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
         Product product = (Product) l.getAdapter().getItem(position);
-        Log.i("FragmentListProduct","On item clicked");
+        Log.i("FragmentListProduct", "On item clicked");
 
         //put bundle
         bundleDetail.putSerializable("PRODUCT", product);
@@ -131,6 +139,15 @@ public class FragmentListProduct extends ListFragment {
                 .replace(R.id.flSearchResultAH, detailProduct, "")//TODO check if this work
                 .addToBackStack(null)
                 .commit();
+    }
+
+    public void createNewArrayProduct() {
+        arrProduct = new ArrayList<>();
+        if (adapter != null) adapter.notifyDataSetChanged();
+    }
+
+    private void setUpArrayProduct() {
+        if (arrProduct == null) createNewArrayProduct();
     }
 
 
