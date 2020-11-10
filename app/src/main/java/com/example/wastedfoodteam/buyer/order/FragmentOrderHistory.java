@@ -44,7 +44,8 @@ public class FragmentOrderHistory extends ListFragment {
        View view = inflater.inflate(R.layout.fragment_buyer_order_history,container,false);
 
         //set up url volley
-        urlGetData = Variable.ipAddress + Variable.ORDER_HISTORY + "?buyer_id="+Variable.ACCOUNT_ID;
+        //TODO
+        //urlGetData = Variable.ipAddress + Variable.ORDER_HISTORY + "?buyer_id="+Variable.ACCOUNT_ID;
 
         //mapping view
         lvOrder = view.findViewById(android.R.id.list);

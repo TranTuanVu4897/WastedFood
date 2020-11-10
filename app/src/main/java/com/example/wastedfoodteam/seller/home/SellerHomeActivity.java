@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -32,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SellerHomeActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
+    private ImageButton information_tab_seller;
 
     private DrawerLayout drawerLayout;
 
@@ -66,6 +67,15 @@ public class SellerHomeActivity extends AppCompatActivity {
         iv_nav_header_profile_image = (CircleImageView ) headerView.findViewById(R.id.iv_nav_header_profile_image);
         tv_nav_header_user_name = headerView.findViewById(R.id.tv_nav_header_user_name);
 
+        information_tab_seller = findViewById(R.id.information_tab_seller);
+
+        //button for open drawer layout
+        information_tab_seller.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
 
         //TODO đường dẫn ảnh firebase
         Glide.with(this).load(Variable.SELLER.getImage()).into(iv_nav_header_profile_image);
@@ -83,14 +93,6 @@ public class SellerHomeActivity extends AppCompatActivity {
                 manager.beginTransaction().replace(R.id.content_main, addProductFragment, addProductFragment.getTag()).commit();
             }
         });
-
-        // Set a Toolbar to replace the ActionBar.
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        // This will display an Up icon (<-) can change in resource
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         // Find our drawer view
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

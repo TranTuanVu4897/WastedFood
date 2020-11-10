@@ -21,6 +21,7 @@ public class Order implements Serializable {
     int buyer_rating;
     String buyer_comment;
     Product product;
+    String image;
 
     public Product getProduct() {
         return product;
@@ -110,10 +111,18 @@ public class Order implements Serializable {
         this.nameProduct = nameProduct;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public Order() {
     }
 
-    public Order(int id, int buyer_id, int product_id, int quantity, Status status, double total_cost, int buyer_rating, String buyer_comment, Date modified_date) {
+    public Order(int id, int buyer_id, int product_id, int quantity, Status status, double total_cost, int buyer_rating, String buyer_comment, Date modified_date , String image) {
         this.id = id;
         this.buyer_id = buyer_id;
         this.product_id = product_id;
@@ -122,6 +131,7 @@ public class Order implements Serializable {
         this.total_cost = total_cost;
         this.buyer_rating = buyer_rating;
         this.buyer_comment = buyer_comment;
+        this.image = image;
     }
 
     public Order(int buyer_id, int product_id, int quantity, Status status, double total_cost) {

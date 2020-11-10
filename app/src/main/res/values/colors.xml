@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryOfHomeActivity">#00acee</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorLightGreen">#32a873</color>
+    <color name="colorHeavyGrey">#82868a</color>
+    <color name="colorRed">#FF0000</color>
+    <color name="colorBlue">#4F61A1</color>
 </resources>

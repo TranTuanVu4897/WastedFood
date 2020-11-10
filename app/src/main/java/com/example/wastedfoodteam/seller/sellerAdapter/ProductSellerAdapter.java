@@ -2,6 +2,7 @@ package com.example.wastedfoodteam.seller.sellerAdapter;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +28,16 @@ import com.example.wastedfoodteam.seller.Product1;
 import com.example.wastedfoodteam.utils.DownloadImageTask;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class ProductSellerAdapter extends BaseAdapter {
     Context myContext;
@@ -41,7 +49,10 @@ public class ProductSellerAdapter extends BaseAdapter {
     private class ViewHolder {
         TextView tvName;
         ImageView ivImage;
-        Switch swOnOff;
+        //Switch swOnOff;
+        TextView tvRemainProduct;
+        TextView tvSoldProduct;
+        TextView tvTimeProduct;
     }
 
     public ProductSellerAdapter(Context context, int layout, List<Product> productList , Resources resources){
@@ -76,7 +87,10 @@ public class ProductSellerAdapter extends BaseAdapter {
             convertView = inflater.inflate(myLayout, null);
             holder.tvName = convertView.findViewById(R.id.tv_list_seller_name);
             holder.ivImage = convertView.findViewById(R.id.iv_list_seller_image);
-            holder.swOnOff = convertView.findViewById(R.id.sw_list_seller_onOff);
+            /*holder.swOnOff = convertView.findViewById(R.id.sw_list_seller_onOff);*/
+            holder.tvRemainProduct = convertView.findViewById(R.id.tv_list_seller_remainTotal);
+            holder.tvSoldProduct = convertView.findViewById(R.id.tv_list_seller_product_sold);
+            holder.tvTimeProduct = convertView.findViewById(R.id.tv_list_seller_product_time);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -84,38 +98,71 @@ public class ProductSellerAdapter extends BaseAdapter {
 
         final String urlGetData = Variable.ipAddress + "seller/setActiveForProduct.php";
         product = arrayProduct.get(position);
-        if(product.getStatus().equals("selling")){
+        //for remain textView
+        if(product.getRemain_quantity()!=0){
+            holder.tvRemainProduct.setText("CÒN " + product.getRemain_quantity() + " SẢN PHẨM");
+            holder.tvRemainProduct.setBackgroundResource(R.color.colorLightGreen);
+        }else {
+            holder.tvRemainProduct.setText("HẾT HÀNG");
+            holder.tvRemainProduct.setBackgroundResource(R.color.colorHeavyGrey);
+        }
+
+        holder.tvName.setText(product.getName());
+        holder.tvSoldProduct.setText(product.getOriginal_quantity() - product.getRemain_quantity() + " ĐÃ BÁN");
+        Glide.with(convertView.getContext()).load(product.getImage().isEmpty() ? Variable.noImageUrl : product.getImage()).into(holder.ivImage);
+        long timeDifferent =  product.getSell_date().getTime() - Calendar.getInstance().getTime().getTime();
+        if(timeDifferent > 0){
+            long seconds = timeDifferent / 1000;
+            long minutes = seconds / 60;
+            long hours = minutes / 60;
+            long days = hours / 24;
+            //String time = days + ":" + hours % 24 + ":" + minutes % 60;
+            holder.tvTimeProduct.setText("KẾT THÚC TRONG : " + days + " NGÀY " + + hours%24 +" GIỜ"  + minutes%60  + " PHÚT ");
+        }else {
+            holder.tvTimeProduct.setText("ĐÃ KẾT THÚC");
+        }
+
+
+
+
+        //Date remainTime = product.getEnd_time().getTime() - currentTime.getTime();
+        /*if(product.getStatus().equals("selling")){
             holder.swOnOff.setChecked(true);
         }else{
             holder.swOnOff.setChecked(false);
         }
         holder.swOnOff.setTag(position);
-        holder.tvName.setText(product.getName());
-        //change to use Glide
-        Glide.with(convertView.getContext()).load(product.getImage().isEmpty() ? Variable.noImageUrl : product.getImage()).into(holder.ivImage);
+        */
         //get image from url
         //new DownloadImageTask(holder.ivImage,resources).execute(product.getImage());
         //Picasso.get().load(product.getImage().isEmpty() ? Variable.noImageUrl : product.getImage()).into(holder.ivImage);
         // TODO replace with other type
-        holder.swOnOff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(holder.swOnOff.isChecked())
-                {
-                    int position=(Integer)v.getTag();
-                    product = arrayProduct.get(position);
-                    Toast.makeText( v.getContext() , "Switch is on", Toast.LENGTH_LONG).show();
-                    updateProductStatus(urlGetData,"selling",product.getId());
-                }
-                else {
-                    int position=(Integer)v.getTag();
-                    product = arrayProduct.get(position);
-                    Toast.makeText( v.getContext(), "Switch is Off", Toast.LENGTH_LONG).show();
-                    updateProductStatus(urlGetData, "stop",product.getId());
-                }
-            }
-        });
+//        holder.swOnOff.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(holder.swOnOff.isChecked())
+//                {
+//                    int position=(Integer)v.getTag();
+//                    product = arrayProduct.get(position);
+//                    Toast.makeText( v.getContext() , "Switch is on", Toast.LENGTH_LONG).show();
+//                    updateProductStatus(urlGetData,"selling",product.getId());
+//                }
+//                else {
+//                    int position=(Integer)v.getTag();
+//                    product = arrayProduct.get(position);
+//                    Toast.makeText( v.getContext(), "Switch is Off", Toast.LENGTH_LONG).show();
+//                    updateProductStatus(urlGetData, "stop",product.getId());
+//                }
+//            }
+//        });
         return convertView;
+    }
+
+    //date to calender
+    public static Calendar toCalendar(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
     }
 
     //update product status

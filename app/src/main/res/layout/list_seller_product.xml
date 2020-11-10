@@ -9,8 +9,9 @@
     <LinearLayout
         android:layout_width="0dp"
         android:descendantFocusability="blocksDescendants"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@color/browser_actions_bg_grey"
         android:layout_marginTop="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,32 +19,83 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:orientation="vertical">
+            <ImageView
+                android:focusable="false"
+                android:clickable="false"
+                android:id="@+id/iv_list_seller_image"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                tools:srcCompat="@tools:sample/avatars" />
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="20dp"
+                android:id="@+id/tv_list_seller_remainTotal"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@color/colorWhite">
+            </TextView>
+        </LinearLayout>
 
-        <ImageView
-            android:focusable="false"
-            android:clickable="false"
-            android:id="@+id/iv_list_seller_image"
-            android:layout_width="117dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            tools:srcCompat="@tools:sample/avatars" />
 
-        <TextView
-            android:focusable="false"
-            android:clickable="false"
-            android:id="@+id/tv_list_seller_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:text="TextView" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:focusable="false"
+                android:clickable="false"
+                android:id="@+id/tv_list_seller_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="TextView" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:id="@+id/tv_list_seller_product_sold"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/colorRed"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="TextView" />
+                <TextView
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:id="@+id/tv_list_seller_product_confirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="TextView" />
+            </LinearLayout>
+            <TextView
+                android:focusable="false"
+                android:clickable="false"
+                android:id="@+id/tv_list_seller_product_time"
+                android:maxLines="2"
+                android:lines="2"
+                android:drawableLeft="@drawable/ic_icons8_clock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="TextView" />
+        </LinearLayout>
 
-        <RelativeLayout
+
+        <!--<RelativeLayout
             android:focusable="false"
             android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <Switch
+            &lt;!&ndash;<Switch
                 android:focusable="false"
                 android:clickable="false"
                 android:id="@+id/sw_list_seller_onOff"
@@ -52,9 +104,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="15dp"
-                android:text="Trạng thái hiện tại" />
+                android:text="Trạng thái hiện tại" />&ndash;&gt;
 
-        </RelativeLayout>
+        </RelativeLayout>-->
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

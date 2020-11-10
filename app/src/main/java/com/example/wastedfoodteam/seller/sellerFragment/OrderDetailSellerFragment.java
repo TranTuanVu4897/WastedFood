@@ -3,7 +3,6 @@ package com.example.wastedfoodteam.seller.sellerFragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.ListFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +18,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
-import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderAdapter;
+import com.example.wastedfoodteam.seller.sellerAdapter.OrderConfirmAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -29,30 +28,34 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
-public class ListOrderHistoryFragment extends ListFragment {
+public class OrderDetailSellerFragment extends Fragment {
 
-    ListView lvOrder;
+    ListView lvOrderConfirm,lvOrderPayment,lvOrderDone;
     ArrayList<Order> arrOrder;
     String urlGetData;
-    OrderAdapter orderAdapter;
+    OrderConfirmAdapter orderAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_list_order_history, container, false);
-        lvOrder = view.findViewById(android.R.id.list);
+        View view = inflater.inflate(R.layout.fragment_order_detail_seller, container, false);
+        lvOrderConfirm = view.findViewById(android.R.id.list);
+        lvOrderPayment = view.findViewById(R.id.lv_list_product_2);
+        lvOrderDone = view.findViewById(R.id.lv_list_product_3);
         arrOrder = new ArrayList<Order>();
-        orderAdapter = new OrderAdapter(getActivity().getApplicationContext(), R.layout.list_seller_order, arrOrder, getResources());
-        lvOrder.setAdapter(orderAdapter);
-        getData();
+        orderAdapter = new OrderConfirmAdapter(getActivity().getApplicationContext(), R.layout.list_seller_confirm_order, arrOrder, getResources());
+        lvOrderConfirm.setAdapter(orderAdapter);
+        lvOrderPayment.setAdapter(orderAdapter);
+        lvOrderDone.setAdapter(orderAdapter);
+        getData("'wait for confirm'");
         return view;
     }
 
-    public void getData() {
+    public void getData(String status) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        urlGetData = Variable.ipAddress + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() ;
+        urlGetData = Variable.ipAddress + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() + "&product_id=" + Variable.PRODUCT.getId() + "&order_status=" + status;
 
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
@@ -78,6 +81,4 @@ public class ListOrderHistoryFragment extends ListFragment {
                 });
         requestQueue.add(getProductAround);
     }
-
-
 }

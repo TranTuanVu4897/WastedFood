@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/colorAccent"
+        android:layout_height="100dp">
+        <Button
+            android:id="@+id/btn_editProduct_stop"
+            android:layout_width="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:text="NGỪNG BÁN"
+            android:background="@color/colorRed"
+            android:textColor="@color/colorWhite"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content">
+
+        </Button>
+
+        <Button
+            android:id="@+id/btn_editProduct_edit"
+            android:layout_toLeftOf="@id/btn_editProduct_stop"
+            android:layout_width="wrap_content"
+            android:background="@color/colorBlue"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:textColor="@color/colorWhite"
+            android:text="CHỈNH SỬA"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right">
+        </Button>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:background="@color/colorLightGreen"
+        android:layout_height="wrap_content">
+    </TextView>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Đang chờ xác nhận"
+            >
+        </TextView>
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:nestedScrollingEnabled="true"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Đang chờ lấy hàng"
+            >
+        </TextView>
+        <ListView
+            android:id="@+id/lv_list_product_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:nestedScrollingEnabled="true"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Đã lấy hàng"
+            >
+        </TextView>
+        <ListView
+            android:id="@+id/lv_list_product_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:nestedScrollingEnabled="true"
+            />
+    </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
