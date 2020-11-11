@@ -40,6 +40,10 @@
                 android:drawableLeft="@drawable/googleplus3"
                 android:text="Continue with Google"
                 android:textColor="#FDF8F8" />
+<!--            <com.google.android.gms.common.SignInButton-->
+<!--                android:id="@+id/sign_in_button"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content" />-->
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/btnFacebookSignInFLB"

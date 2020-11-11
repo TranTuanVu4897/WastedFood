@@ -1,7 +1,7 @@
 package com.example.wastedfoodteam.login;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
@@ -44,6 +45,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -58,19 +60,18 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import static android.content.Context.MODE_PRIVATE;
-
 
 public class FragmentLoginBuyer extends Fragment {
     GoogleSignInClient mGoogleSignInClient;
-    int RC_SIGN_IN;
+    int RC_SIGN_IN = 10002;
     EditText etSDT, etPass;
     TextView tvWarning;
-    Button btnSignIn, btnSignInGoogle, btnPartnerOption;
+    Button btnSignIn, btnPartnerOption, btnSignInGoogle;
+    //    SignInButton btnSignInGoogle;
     LoginButton btnSignInFacebook;
     CallbackManager callbackManager;
     String urlGetData = "";
-
+    private FirebaseAuth mAuth;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -82,6 +83,7 @@ public class FragmentLoginBuyer extends Fragment {
         btnSignInGoogle = view.findViewById(R.id.btnGoogleSignInFLB);
         btnSignInFacebook = view.findViewById(R.id.btnFacebookSignInFLB);
         btnPartnerOption = view.findViewById(R.id.btnPartnerOptionFLB);
+        mAuth = FirebaseAuth.getInstance();
         handleSignInFacebook();
 
         //facebook option
@@ -154,6 +156,7 @@ public class FragmentLoginBuyer extends Fragment {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
+        Variable.CHECK_LOGIN = 1;
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
     }
 
@@ -162,6 +165,7 @@ public class FragmentLoginBuyer extends Fragment {
      */
     private void signInGoogle() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        Variable.CHECK_LOGIN = 1;
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
@@ -172,7 +176,9 @@ public class FragmentLoginBuyer extends Fragment {
      */
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
+            Variable.CHECK_LOGIN = 1;
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            resultGoogle();
             startActivity(new Intent(getActivity(), BuyHomeActivity.class));
         } catch (ApiException e) {
             e.printStackTrace();
@@ -196,6 +202,7 @@ public class FragmentLoginBuyer extends Fragment {
         try {
             if (requestCode == RC_SIGN_IN) {
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                Variable.CHECK_LOGIN = 1;
                 handleSignInResult(task);
             }
         } catch (Exception e) {
@@ -203,14 +210,14 @@ public class FragmentLoginBuyer extends Fragment {
         }
     }
 
-    @Override
-    public void onStart() {
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
-        if (account != null) {
-            startActivity(new Intent(getActivity(), BuyHomeActivity.class));
-        }
-        super.onStart();
-    }
+//    @Override
+//    public void onStart() {
+//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
+//        if (account != null) {
+//            startActivity(new Intent(getActivity(), BuyHomeActivity.class));
+//        }
+//        super.onStart();
+//    }
 
     /**
      * Keep Sign In Facebook
@@ -315,7 +322,20 @@ public class FragmentLoginBuyer extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-
+    private void resultGoogle() {
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
+        if (acct != null) {
+            String name = acct.getDisplayName();
+            String email = acct.getEmail();
+            String thirdPartyId = acct.getId();
+            Uri personPhoto  = acct.getPhotoUrl();
+            String urlImage = personPhoto.toString();
+            String gender = "1";
+            String dob ="0000-00-00";
+            String urlInsert = Variable.ipAddress + "login/register3rdParty.php";
+            checkDataAndInsert3rdParty(urlInsert, email, thirdPartyId, name, urlImage, dob, gender);
+        }
+    }
     private void resultFacebook() {
 
         GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
