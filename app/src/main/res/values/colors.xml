@@ -5,8 +5,11 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorWhite">#ffffff</color>
-    <color name="colorLightGreen">#32a873</color>
-    <color name="colorHeavyGrey">#82868a</color>
+    <color name="colorLightGreen">#A4FF84</color>
+    <color name="colorHeavyGrey">#ACB3BF</color>
     <color name="colorRed">#FF0000</color>
-    <color name="colorBlue">#4F61A1</color>
+    <color name="colorBlue">#0400D6</color>
+    <color name="lightBlue">#0094FF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorBackGroundOrder">#E8E7E7</color>
 </resources>

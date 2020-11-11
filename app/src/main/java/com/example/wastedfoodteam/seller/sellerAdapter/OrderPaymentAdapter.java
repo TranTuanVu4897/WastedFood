@@ -17,7 +17,7 @@ import com.example.wastedfoodteam.model.Order;
 
 import java.util.List;
 
-public class OrderConfirmAdapter extends BaseAdapter {
+public class OrderPaymentAdapter extends BaseAdapter {
     Context myContext;
     int myLayout;
     List<Order> arrayOrder;
@@ -30,7 +30,7 @@ public class OrderConfirmAdapter extends BaseAdapter {
         TextView tvDescription,tvQuantity,tvTotalCost;
     }
 
-    public OrderConfirmAdapter(Context context, int layout, List<Order> orderList , Resources resources){
+    public OrderPaymentAdapter(Context context, int layout, List<Order> orderList , Resources resources){
         myContext = context;
         myLayout = layout;
         arrayOrder = orderList;
@@ -61,12 +61,12 @@ public class OrderConfirmAdapter extends BaseAdapter {
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(myLayout, null);
-            holder.tvDescription = convertView.findViewById(R.id.tv_list_seller_confirm_description);
-            holder.tvQuantity = convertView.findViewById(R.id.tv_list_seller_confirm_quantity);
-            holder.tvTotalCost = convertView.findViewById(R.id.tv_list_seller_confirm_cost);
-            holder.btnConfirm = convertView.findViewById(R.id.btn_list_seller_confirm_confirm);
-            holder.btnReject = convertView.findViewById(R.id.btn_list_seller_confirm_reject);
-            holder.ivBuyer = convertView.findViewById(R.id.iv_list_seller_confirm_image);
+            holder.tvDescription = convertView.findViewById(R.id.tv_list_seller_payment_description);
+            holder.tvQuantity = convertView.findViewById(R.id.tv_list_seller_payment_quantity);
+            holder.tvTotalCost = convertView.findViewById(R.id.tv_list_seller_payment_cost);
+            holder.btnConfirm = convertView.findViewById(R.id.btn_list_seller_payment_confirm);
+            holder.btnReject = convertView.findViewById(R.id.btn_list_seller_payment_reject);
+            holder.ivBuyer = convertView.findViewById(R.id.iv_list_seller_payment_image);
             convertView.setTag(holder);
         }else {
             holder = (ViewHolder) convertView.getTag();

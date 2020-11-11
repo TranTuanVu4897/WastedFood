@@ -4,8 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
 
@@ -14,13 +12,22 @@
         android:orientation="horizontal"
         android:background="@color/colorAccent"
         android:layout_height="100dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/iv_list_order_product_picture"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:layout_height="match_parent">
+
+        </ImageView>
         <Button
             android:id="@+id/btn_editProduct_stop"
             android:layout_width="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_margin="10dp"
             android:text="NGỪNG BÁN"
-            android:background="@color/colorRed"
+            android:background="@drawable/custom_button"
+            android:backgroundTint="@color/colorRed"
             android:textColor="@color/colorWhite"
             android:layout_alignParentRight="true"
             android:layout_height="wrap_content">
@@ -31,7 +38,8 @@
             android:id="@+id/btn_editProduct_edit"
             android:layout_toLeftOf="@id/btn_editProduct_stop"
             android:layout_width="wrap_content"
-            android:background="@color/colorBlue"
+            android:backgroundTint="@color/colorBlue"
+            android:background="@drawable/custom_button"
             android:layout_alignParentBottom="true"
             android:layout_margin="10dp"
             android:textColor="@color/colorWhite"
@@ -48,9 +56,10 @@
     </TextView>
 
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:fillViewport="true"
+        android:layout_height="fill_parent">
 
 
     <LinearLayout
@@ -60,44 +69,46 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:textSize="25dp"
             android:text="Đang chờ xác nhận"
             >
         </TextView>
-        <ListView
+        <com.example.wastedfoodteam.utils.service.NonScrollListView
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:nestedScrollingEnabled="true"
+            android:nestedScrollingEnabled="false"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:textSize="25dp"
             android:text="Đang chờ lấy hàng"
             >
         </TextView>
-        <ListView
+        <com.example.wastedfoodteam.utils.service.NonScrollListView
             android:id="@+id/lv_list_product_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:nestedScrollingEnabled="true"
+            android:nestedScrollingEnabled="false"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:textSize="25dp"
             android:text="Đã lấy hàng"
             >
         </TextView>
-        <ListView
+        <com.example.wastedfoodteam.utils.service.NonScrollListView
             android:id="@+id/lv_list_product_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:nestedScrollingEnabled="true"
             />
     </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </LinearLayout>
