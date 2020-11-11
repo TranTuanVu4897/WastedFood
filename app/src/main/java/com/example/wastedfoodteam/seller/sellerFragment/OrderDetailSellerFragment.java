@@ -1,18 +1,25 @@
 package com.example.wastedfoodteam.seller.sellerFragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -35,17 +42,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OrderDetailSellerFragment extends Fragment {
 
     ListView lvOrderConfirm,lvOrderPayment,lvOrderDone;
     ArrayList<Order> arrOrder,arrOrderPayment,arrOrderDone;
-    String urlGetData;
+    Button editProduct,cancelProduct;
     OrderConfirmAdapter orderAdapter;
     OrderPaymentAdapter orderPaymentAdapter;
     OrderDoneAdapter orderDoneAdapter;
     ImageView imageView;
     Product product;
+    TextView tvConfirmAlert,tvPaymentAlert,tvDoneAlert;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,28 +66,90 @@ public class OrderDetailSellerFragment extends Fragment {
         lvOrderPayment = view.findViewById(R.id.lv_list_product_2);
         lvOrderDone = view.findViewById(R.id.lv_list_product_3);
         imageView = view.findViewById(R.id.iv_list_order_product_picture);
+        editProduct = view.findViewById(R.id.btn_editProduct_edit);
+        cancelProduct = view.findViewById(R.id.btn_editProduct_stop);
+        tvConfirmAlert = view.findViewById(R.id.tv_order_detail_seller_confirm);
+        tvPaymentAlert = view.findViewById(R.id.tv_order_detail_seller_payment);
+        tvDoneAlert = view.findViewById(R.id.tv_order_detail_seller_done);
+        editProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SellerDetailProductFragment sellerDetailProductFragment = new SellerDetailProductFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace( R.id.content_main, sellerDetailProductFragment , "")//TODO check if this work
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        cancelProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(cancelProduct.getText().equals("NGỪNG BÁN")){
+                    updateProductStatus(Variable.ipAddress + "seller/setActiveForProduct.php","stop",product.getId());
+                    cancelProduct.setText("MỞ LẠI BÁN");
+                }else {
+                    updateProductStatus(Variable.ipAddress + "seller/setActiveForProduct.php","selling",product.getId());
+                    cancelProduct.setText("NGỪNG BÁN");
+                }
+            }
+        });
         product = Variable.PRODUCT;
         Glide.with(view.getContext()).load(product.getImage().isEmpty() ? "https://i.pinimg.com/originals/95/ee/86/95ee8696f8ed1abb3767928c4d0daf65.jpg" : product.getImage()).into(imageView);
         arrOrder = new ArrayList<Order>();
         arrOrderPayment = new ArrayList<Order>();
         arrOrderDone = new ArrayList<Order>();
-        orderAdapter = new OrderConfirmAdapter(getActivity().getApplicationContext(), R.layout.list_seller_confirm_order, arrOrder, getResources());
-        orderPaymentAdapter = new OrderPaymentAdapter(getActivity().getApplicationContext(), R.layout.list_seller_payment_order, arrOrderPayment, getResources());
-        orderDoneAdapter = new OrderDoneAdapter(getActivity().getApplicationContext(), R.layout.list_seller_done_order, arrOrderDone, getResources());
-        lvOrderConfirm.setAdapter(orderAdapter);
+        orderAdapter = new OrderConfirmAdapter(getActivity().getApplicationContext(), R.layout.list_seller_confirm_order, arrOrder, getResources(),getActivity());
+        orderPaymentAdapter = new OrderPaymentAdapter(getActivity().getApplicationContext(), R.layout.list_seller_payment_order, arrOrderPayment, getResources(),getActivity());
+        orderDoneAdapter = new OrderDoneAdapter(getActivity().getApplicationContext(), R.layout.list_seller_done_order, arrOrderDone, getResources(),getActivity());
         lvOrderPayment.setAdapter(orderPaymentAdapter);
         lvOrderDone.setAdapter(orderDoneAdapter);
-        setListViewHeightBasedOnItems(lvOrderDone);
+        lvOrderConfirm.setAdapter(orderAdapter);
+        //setListViewHeightBasedOnItems(lvOrderDone);
         getData("'wait for confirm'");
         getData("'wait for payment'");
         getData("'done'");
+
         return view;
+    }
+
+    //update product status
+    public void updateProductStatus(String url, final String status , final int id){
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if(response.trim().equals("Succesfully update")){
+                            Toast.makeText(getContext(),"Cập nhật thành công",Toast.LENGTH_SHORT).show();
+                            //TODO move back to home
+                        }else{
+                            Toast.makeText( getContext(),"Lỗi cập nhật",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(),"Xảy ra lỗi, vui lòng thử lại",Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("seller_id", String.valueOf(product.getSeller_id()));
+                params.put("status",  status );
+                params.put("id" ,  String.valueOf(id) );
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
     public void getData(final String status) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        urlGetData = Variable.ipAddress + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() + "&product_id=" + Variable.PRODUCT.getId() + "&order_status=" + status;
+        String urlGetData = Variable.ipAddress + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() + "&product_id=" + Variable.PRODUCT.getId() + "&order_status=" + status;
 
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
@@ -97,8 +169,17 @@ public class OrderDetailSellerFragment extends Fragment {
                                     arrOrderDone.add((Order) gson.fromJson(jsonOrders.getString(i), Order.class));
                                     orderDoneAdapter.notifyDataSetChanged();
                                 }
-
                             }
+                            if(orderPaymentAdapter.getCount() != 0){
+                                tvPaymentAlert.setVisibility(View.INVISIBLE);
+                            }
+                            if(orderDoneAdapter.getCount() != 0){
+                                tvDoneAlert.setVisibility(View.INVISIBLE);
+                            }
+                            if(orderAdapter.getCount() != 0){
+                                tvConfirmAlert.setVisibility(View.INVISIBLE);
+                            }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -110,38 +191,5 @@ public class OrderDetailSellerFragment extends Fragment {
                     }
                 });
         requestQueue.add(getProductAround);
-    }
-
-    public static boolean setListViewHeightBasedOnItems(ListView listView) {
-
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter != null) {
-
-            int numberOfItems = listAdapter.getCount();
-
-            // Get total height of all items.
-            int totalItemsHeight = 0;
-            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
-                View item = listAdapter.getView(itemPos, null, listView);
-                item.measure(0, 0);
-                totalItemsHeight += item.getMeasuredHeight();
-            }
-
-            // Get total height of all item dividers.
-            int totalDividersHeight = listView.getDividerHeight() *
-                    (numberOfItems - 1);
-
-            // Set list height.
-            ViewGroup.LayoutParams params = listView.getLayoutParams();
-            params.height = totalItemsHeight + totalDividersHeight;
-            listView.setLayoutParams(params);
-            listView.requestLayout();
-
-            return true;
-
-        } else {
-            return false;
-        }
-
     }
 }

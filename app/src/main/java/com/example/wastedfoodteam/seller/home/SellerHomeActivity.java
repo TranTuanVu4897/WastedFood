@@ -45,13 +45,6 @@ public class SellerHomeActivity extends AppCompatActivity {
 
     Seller seller;
 
-    String password;
-
-
-
-
-    // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
-    private ActionBarDrawerToggle drawerToggle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

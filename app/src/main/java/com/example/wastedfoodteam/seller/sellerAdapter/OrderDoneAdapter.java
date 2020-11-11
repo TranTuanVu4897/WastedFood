@@ -10,10 +10,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentActivity;
+
 import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
+import com.example.wastedfoodteam.seller.sellerFragment.OrderDetailSellerFragment;
 
 import java.util.List;
 
@@ -22,6 +25,7 @@ public class OrderDoneAdapter extends BaseAdapter {
     int myLayout;
     List<Order> arrayOrder;
     Order order;
+    FragmentActivity myFragmentActivity;
     Resources resources;
 
     private class ViewHolder {
@@ -30,11 +34,12 @@ public class OrderDoneAdapter extends BaseAdapter {
         TextView tvDescription,tvQuantity,tvTotalCost;
     }
 
-    public OrderDoneAdapter(Context context, int layout, List<Order> orderList , Resources resources){
+    public OrderDoneAdapter(Context context, int layout, List<Order> orderList , Resources resources , FragmentActivity fragmentActivity){
         myContext = context;
         myLayout = layout;
         arrayOrder = orderList;
         this.resources = resources;
+        myFragmentActivity = fragmentActivity;
     }
 
 
@@ -81,6 +86,8 @@ public class OrderDoneAdapter extends BaseAdapter {
             public void onClick(View v) {
                 //set status = wait for payment
                 //reload fragment
+                OrderDetailSellerFragment orderDetailSellerFragment = new OrderDetailSellerFragment();
+                myFragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, orderDetailSellerFragment, orderDetailSellerFragment.getTag()).commit();
             }
         });
 

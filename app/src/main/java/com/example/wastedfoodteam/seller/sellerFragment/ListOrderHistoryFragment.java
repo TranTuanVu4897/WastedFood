@@ -50,7 +50,6 @@ public class ListOrderHistoryFragment extends ListFragment {
     }
 
     public void getData() {
-
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         urlGetData = Variable.ipAddress + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() ;
 

@@ -1,7 +1,12 @@
 package com.example.wastedfoodteam.seller.sellerAdapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
+
+import com.example.wastedfoodteam.seller.sellerFragment.AddProductFragment;
+import com.example.wastedfoodteam.seller.sellerFragment.OrderDetailSellerFragment;
+import com.example.wastedfoodteam.utils.service.updateStatusForOrder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +14,9 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
@@ -20,6 +28,7 @@ import java.util.List;
 public class OrderConfirmAdapter extends BaseAdapter {
     Context myContext;
     int myLayout;
+    FragmentActivity myActivity;
     List<Order> arrayOrder;
     Order order;
     Resources resources;
@@ -30,11 +39,12 @@ public class OrderConfirmAdapter extends BaseAdapter {
         TextView tvDescription,tvQuantity,tvTotalCost;
     }
 
-    public OrderConfirmAdapter(Context context, int layout, List<Order> orderList , Resources resources){
+    public OrderConfirmAdapter(Context context, int layout, List<Order> orderList , Resources resources ,FragmentActivity fragmentActivity ){
         myContext = context;
         myLayout = layout;
         arrayOrder = orderList;
         this.resources = resources;
+        myActivity = fragmentActivity;
     }
 
 
@@ -56,7 +66,7 @@ public class OrderConfirmAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        final ViewHolder holder;
         if(convertView == null){
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -82,6 +92,9 @@ public class OrderConfirmAdapter extends BaseAdapter {
             public void onClick(View v) {
                 //set status = wait for payment
                 //reload fragment
+                updateStatusForOrder.updateOrderStatus(Variable.ipAddress + "seller/updateStatusForOrderSeller.php","wait for payment", order.getId(),myContext);
+                OrderDetailSellerFragment orderDetailSellerFragment = new OrderDetailSellerFragment();
+                myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, orderDetailSellerFragment, orderDetailSellerFragment.getTag()).commit();
             }
         });
         holder.btnReject.setOnClickListener(new View.OnClickListener() {
