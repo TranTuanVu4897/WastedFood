@@ -63,7 +63,7 @@
             android:layout_margin="15dp"
             android:id="@+id/tv_list_seller_payment_description"
             android:layout_width="match_parent"
-
+            style="@style/AppTheme"
             android:lines="4"
             android:maxLines="4"
             android:layout_height="60dp">
@@ -75,6 +75,7 @@
                 android:layout_margin="15dp"
                 android:id="@+id/tv_list_seller_payment_quantity"
                 android:text="123"
+                style="@style/AppTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             </TextView>
@@ -82,6 +83,7 @@
                 android:layout_margin="15dp"
                 android:id="@+id/tv_list_seller_payment_cost"
                 android:text="123"
+                style="@style/AppTheme"
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">

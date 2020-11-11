@@ -12,6 +12,7 @@
         android:layout_height="200dp"
         android:background="@color/colorBackGroundOrder"
         android:orientation="vertical"
+
         android:layout_marginTop="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,6 +62,7 @@
 
         <TextView
             android:layout_margin="15dp"
+            style="@style/AppTheme"
             android:id="@+id/tv_list_seller_confirm_description"
             android:layout_width="match_parent"
             android:lines="4"
@@ -74,6 +76,7 @@
                 android:layout_margin="15dp"
                 android:id="@+id/tv_list_seller_confirm_quantity"
                 android:text="123"
+                style="@style/AppTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             </TextView>
@@ -81,6 +84,7 @@
                 android:layout_margin="15dp"
                 android:id="@+id/tv_list_seller_confirm_cost"
                 android:text="123"
+                style="@style/AppTheme"
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
