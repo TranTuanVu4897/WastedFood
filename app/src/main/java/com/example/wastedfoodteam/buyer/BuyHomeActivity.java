@@ -23,13 +23,18 @@ import com.example.wastedfoodteam.buyer.buy.FragmentListProduct;
 import com.example.wastedfoodteam.buyer.order.FragmentOrderHistory;
 import com.example.wastedfoodteam.global.Variable;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class BuyHomeActivity extends AppCompatActivity {
     Button btnLogout,btnFollow,btnHistory;
     ImageView imageView,imageButton;
     Bundle bundle;
     EditText etSearch;
+
 
 
     private Toolbar toolbar;
@@ -105,6 +110,9 @@ public class BuyHomeActivity extends AppCompatActivity {
                     case 0:
                         startActivity(new Intent(BuyHomeActivity.this,MainActivity.class));
                         break;
+                    case 1:
+                        signOutGoogle();
+                        break;
                 }
             }
         });
@@ -161,6 +169,11 @@ public class BuyHomeActivity extends AppCompatActivity {
     private void signOutFacebook() {
         LoginManager.getInstance().logOut();
         Toast.makeText(BuyHomeActivity.this, "Sign out Success", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(BuyHomeActivity.this, MainActivity.class));
+    }
+
+    private void signOutGoogle() {
+        FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(BuyHomeActivity.this, MainActivity.class));
     }
 
