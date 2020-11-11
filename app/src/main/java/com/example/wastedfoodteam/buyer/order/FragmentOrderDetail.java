@@ -17,16 +17,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.example.wastedfoodteam.DirectionParser;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Buyer;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.utils.CommonFunction;
+import com.example.wastedfoodteam.utils.RatingDialog;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -34,7 +33,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.gson.internal.$Gson$Preconditions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,7 +68,7 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_buyer_order_detail, container, false);
 
-        product = new Product();//TODO delte later
+        product = new Product();//TODO delete later
 
         //mapping
         tvTitle = view.findViewById(R.id.tvProductName);
@@ -87,10 +85,12 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
         tvBuyQuantity.setText("Đã đặt trước: " + order.getQuantity() + " sản phẩm.");
 //        tvTitle.setText(product.getName());
 
-        //show dialog
+        //show dialog//TODO
         if (order.getStatus() == Order.Status.SUCCESS && order.getBuyer_comment() == null){
-            RatingDialogFragment ratingDialogFragment = new RatingDialogFragment(getActivity(), order);
-            ratingDialogFragment.show(getActivity().getSupportFragmentManager(),"missiles");
+//            RatingDialogFragment ratingDialogFragment = new RatingDialogFragment(getActivity(), order);
+//            ratingDialogFragment.show(getActivity().getSupportFragmentManager(),"missiles");
+            RatingDialog ratingDialog = new RatingDialog(getActivity(),getLayoutInflater(),order);
+            ratingDialog.displayRatingOrderDialog();
         }
 
 
@@ -109,6 +109,33 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
 
         return view;
     }
+
+//    private void displayRatingOrderDialog() {
+//        LayoutInflater inflater = getLayoutInflater();
+//        View ratingLayout = inflater.inflate(R.layout.dialog_buyer_rating,null);
+//        final RatingBar rbRating= ratingLayout.findViewById(R.id.rbRating);
+//        final EditText etRating = ratingLayout.findViewById(R.id.etRating);
+//
+//        AlertDialog.Builder builderDialogRating = new AlertDialog.Builder(getActivity());
+//        builderDialogRating.setTitle("Đánh giá");
+//        builderDialogRating.setView(ratingLayout);
+//        builderDialogRating.setCancelable(true);
+//
+//        builderDialogRating.setNegativeButton("Bỏ qua", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.cancel();
+//            }
+//        });
+//        builderDialogRating.setPositiveButton("Đánh giá", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//            }
+//        });
+//        AlertDialog dialogRating = builderDialogRating.create();
+//        dialogRating.show();
+//    }
 
 
     @Override

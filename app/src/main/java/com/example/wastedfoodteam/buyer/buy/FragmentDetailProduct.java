@@ -180,7 +180,7 @@ public class FragmentDetailProduct extends Fragment {
 
                 //put product to next screen
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("PRODUCT", Variable.SELLER);
+                bundle.putSerializable("SELLER", product.getSeller());
                 fragmentSellerDetail.setArguments(bundle);
 
                 getActivity().getSupportFragmentManager().beginTransaction()
@@ -223,7 +223,7 @@ public class FragmentDetailProduct extends Fragment {
                 params.put("buyer", Variable.ACCOUNT_ID + "");//TODO change to other ways
                 params.put("product", product.getId() + "");
                 params.put("quantity", orderQuantity + "");
-                params.put("status", Variable.ORDER_STATUS_ORDERING);
+                params.put("status", Order.Status.BUYING.getKey()+"");
                 params.put("total_cost", (orderQuantity * product.getSell_price()) + "");
                 return params;
             }
@@ -236,7 +236,7 @@ public class FragmentDetailProduct extends Fragment {
      */
     private void moveToFragmentOrderDetail() {
         Order order = new Order(Variable.ACCOUNT_ID,product.getId(),orderQuantity,Order.Status.BUYING,orderQuantity * product.getSell_price());
-
+        order.setProduct(product);
         FragmentOrderDetail fragmentOrderDetail = new FragmentOrderDetail(order);
 
         //put product to next screen
