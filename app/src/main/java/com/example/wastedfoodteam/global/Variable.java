@@ -27,7 +27,8 @@ public class Variable {
     public static final String ORDER_STATUS_ORDERING = "ORDERING";
     public static final String GET_FOLLOW = "follow/getFollow.php";
     public static final String UPDATE_FOLLOW = "follow/updateFollow.php";
-
+    public static final String ORDER_HISTORY = "";
+    public static final String UPDATE_RATING = "";
     public static LatLng gps;
     public static Account ACCOUNT;
 
