@@ -30,7 +30,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class BuyHomeActivity extends AppCompatActivity {
-    Button btnLogout,btnFollow,btnHistory;
+    Button btnHome, btnLogout,btnFollow,btnHistory;
     ImageView imageView,imageButton;
     Bundle bundle;
     EditText etSearch;
@@ -50,6 +50,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         btnLogout = findViewById(R.id.btnLogout);
         btnFollow = findViewById(R.id.btnFollow);
         btnHistory = findViewById(R.id.btnHistory);
+        btnHome = findViewById(R.id.btnHome);
         imageView = findViewById(R.id.ivAppIcon);
         etSearch = findViewById(R.id.etSearchBHA);
         imageButton = findViewById(R.id.ibUserInfo);
@@ -118,14 +119,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         });
 
 
-        FragmentListProduct fragmentListProduct = new FragmentListProduct();
 
-        //add fragment search result
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.flSearchResultAH, fragmentListProduct, "")
-                .addToBackStack(null)
-                .commit();
         btnFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,6 +139,26 @@ public class BuyHomeActivity extends AppCompatActivity {
                         .commit();
             }
         });
+
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addFragmentListProduct();
+            }
+        });
+
+        addFragmentListProduct();
+    }
+
+    private  void addFragmentListProduct(){
+        FragmentListProduct fragmentListProduct = new FragmentListProduct();
+
+        //add fragment search result
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.flSearchResultAH, fragmentListProduct, "")
+                .addToBackStack(null)
+                .commit();
     }
     public void addFragmentSellerFollow() {
 
