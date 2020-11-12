@@ -34,11 +34,9 @@ public class BuyHomeActivity extends AppCompatActivity {
     Button btnHome, btnLogout, btnFollow, btnHistory;
     ImageView ivAppIcon;
     ImageButton ibUserInfo, ibFilter;
-    Bundle bundle;
     EditText etSearch;
     FragmentListProduct fragmentListProduct;
 
-    private Toolbar toolbar;
 
     private DrawerLayout drawerLayout;
 
@@ -220,30 +218,5 @@ public class BuyHomeActivity extends AppCompatActivity {
         fragmentListProduct.getData();
     }
 
-//    private void resultFacebook() {
-//        GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-//            @Override
-//            public void onCompleted(JSONObject object, GraphResponse response) {
-//                Log.d("Json", response.getJSONObject().toString());
-//                try {
-//
-////                    txtEmail.setText("Email:" + object.getString("email"));
-////                    txtName.setText("Name:" + object.getString("name"));
-////                    txtId.setText("id:" + object.getString("id"));
-//                    String idF = object.getString("id");
-//                    etSearch.setText("id:" + object.getString("id"));
-//                    String imageF = "https://graph.facebook.com/" + idF + "/picture?type=large";
-//                    Glide.with(BuyHomeActivity.this).load(imageF).into(imageView);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        Bundle parameter = new Bundle();
-//        parameter.putString("fields", "id,name,email,gender,birthday");
-//        graphRequest.setParameters(parameter);
-//        graphRequest.executeAsync();
-//        Log.d("Tag: ", "failed");
-//    }
 
 }

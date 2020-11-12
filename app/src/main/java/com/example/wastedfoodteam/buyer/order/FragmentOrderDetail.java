@@ -78,17 +78,13 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
 
         Bundle bundle = getActivity().getIntent().getExtras();
         buyer = (Buyer) getArguments().get("BUYER");
-//        product = (Product) getArguments().get("PRODUCT");
 
         //set content
         CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), product.getImage(), ivProduct);
         tvBuyQuantity.setText("Đã đặt trước: " + order.getQuantity() + " sản phẩm.");
-//        tvTitle.setText(product.getName());
 
         //show dialog//TODO
         if (order.getStatus() == Order.Status.SUCCESS && order.getBuyer_comment() == null){
-//            RatingDialogFragment ratingDialogFragment = new RatingDialogFragment(getActivity(), order);
-//            ratingDialogFragment.show(getActivity().getSupportFragmentManager(),"missiles");
             RatingDialog ratingDialog = new RatingDialog(getActivity(),getLayoutInflater(),order);
             ratingDialog.displayRatingOrderDialog();
         }
@@ -109,33 +105,6 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
 
         return view;
     }
-
-//    private void displayRatingOrderDialog() {
-//        LayoutInflater inflater = getLayoutInflater();
-//        View ratingLayout = inflater.inflate(R.layout.dialog_buyer_rating,null);
-//        final RatingBar rbRating= ratingLayout.findViewById(R.id.rbRating);
-//        final EditText etRating = ratingLayout.findViewById(R.id.etRating);
-//
-//        AlertDialog.Builder builderDialogRating = new AlertDialog.Builder(getActivity());
-//        builderDialogRating.setTitle("Đánh giá");
-//        builderDialogRating.setView(ratingLayout);
-//        builderDialogRating.setCancelable(true);
-//
-//        builderDialogRating.setNegativeButton("Bỏ qua", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.cancel();
-//            }
-//        });
-//        builderDialogRating.setPositiveButton("Đánh giá", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//
-//            }
-//        });
-//        AlertDialog dialogRating = builderDialogRating.create();
-//        dialogRating.show();
-//    }
 
 
     @Override

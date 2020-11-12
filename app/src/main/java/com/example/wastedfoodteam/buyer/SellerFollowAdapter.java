@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.engine.Resource;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.utils.CommonFunction;
@@ -45,7 +44,7 @@ public class SellerFollowAdapter extends BaseAdapter {
     }
 
     private class ViewHolder {
-        ImageView ivseller;
+        ImageView ivSeller;
         TextView tvNameSeller, tvDirection, tvAddress;
     }
 
@@ -58,7 +57,7 @@ public class SellerFollowAdapter extends BaseAdapter {
             convertView = inflater.inflate(layout,null);
             holder.tvNameSeller = convertView.findViewById(R.id.tvNameSellerFSFI);
             holder.tvAddress = convertView.findViewById(R.id.tvAddress);
-            holder.ivseller = convertView.findViewById(R.id.ivSellerLSFI);
+            holder.ivSeller = convertView.findViewById(R.id.ivSellerLSFI);
             holder.tvDirection = convertView.findViewById(R.id.tvDirection);
             convertView.setTag(holder);
         }
@@ -70,7 +69,7 @@ public class SellerFollowAdapter extends BaseAdapter {
         holder.tvNameSeller.setText(seller.getName());
         holder.tvAddress.setText(seller.getAddress());
         holder.tvDirection.setText("2km");
-        CommonFunction.setImageViewSrc(context,seller.getImage(),holder.ivseller);
+        CommonFunction.setImageViewSrc(context,seller.getImage(),holder.ivSeller);
         return convertView;
     }
 }

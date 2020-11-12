@@ -122,39 +122,6 @@ public class ProductSellerAdapter extends BaseAdapter {
             holder.tvTimeProduct.setText("ĐÃ KẾT THÚC");
         }
 
-
-
-
-        //Date remainTime = product.getEnd_time().getTime() - currentTime.getTime();
-        /*if(product.getStatus().equals("selling")){
-            holder.swOnOff.setChecked(true);
-        }else{
-            holder.swOnOff.setChecked(false);
-        }
-        holder.swOnOff.setTag(position);
-        */
-        //get image from url
-        //new DownloadImageTask(holder.ivImage,resources).execute(product.getImage());
-        //Picasso.get().load(product.getImage().isEmpty() ? Variable.noImageUrl : product.getImage()).into(holder.ivImage);
-        // TODO replace with other type
-//        holder.swOnOff.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(holder.swOnOff.isChecked())
-//                {
-//                    int position=(Integer)v.getTag();
-//                    product = arrayProduct.get(position);
-//                    Toast.makeText( v.getContext() , "Switch is on", Toast.LENGTH_LONG).show();
-//                    updateProductStatus(urlGetData,"selling",product.getId());
-//                }
-//                else {
-//                    int position=(Integer)v.getTag();
-//                    product = arrayProduct.get(position);
-//                    Toast.makeText( v.getContext(), "Switch is Off", Toast.LENGTH_LONG).show();
-//                    updateProductStatus(urlGetData, "stop",product.getId());
-//                }
-//            }
-//        });
         return convertView;
     }
 
