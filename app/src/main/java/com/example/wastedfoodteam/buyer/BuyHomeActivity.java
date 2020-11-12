@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -22,20 +23,20 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.buy.FragmentListProduct;
 import com.example.wastedfoodteam.buyer.order.FragmentOrderHistory;
 import com.example.wastedfoodteam.global.Variable;
+import com.example.wastedfoodteam.utils.FilterDialog;
 import com.facebook.login.LoginManager;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.sql.Time;
+
 public class BuyHomeActivity extends AppCompatActivity {
-    Button btnHome, btnLogout,btnFollow,btnHistory;
-    ImageView imageView,imageButton;
+    Button btnHome, btnLogout, btnFollow, btnHistory;
+    ImageView ivAppIcon;
+    ImageButton ibUserInfo, ibFilter;
     Bundle bundle;
     EditText etSearch;
-
-
+    FragmentListProduct fragmentListProduct;
 
     private Toolbar toolbar;
 
@@ -51,25 +52,25 @@ public class BuyHomeActivity extends AppCompatActivity {
         btnFollow = findViewById(R.id.btnFollow);
         btnHistory = findViewById(R.id.btnHistory);
         btnHome = findViewById(R.id.btnHome);
-        imageView = findViewById(R.id.ivAppIcon);
+        ivAppIcon = findViewById(R.id.ivAppIcon);
         etSearch = findViewById(R.id.etSearchBHA);
-        imageButton = findViewById(R.id.ibUserInfo);
+        ibUserInfo = findViewById(R.id.ibUserInfo);
+        ibFilter = findViewById(R.id.ibFilter);
 
 
-        SharedPreferences pre = getSharedPreferences("my_data",MODE_PRIVATE);
-        String name = pre.getString("name","khong thay");
+        SharedPreferences pre = getSharedPreferences("my_data", MODE_PRIVATE);
+        String name = pre.getString("name", "khong thay");
 
         //get the header view
         NavigationView navigationView = findViewById(R.id.nav_view_buyer);
         View headerView = navigationView.getHeaderView(0);
 
 
-
         // Find our drawer view
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_buyer);
 
         //or maybe u can use button instead
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        ibUserInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawerLayout.openDrawer(GravityCompat.START);
@@ -82,7 +83,7 @@ public class BuyHomeActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if(id == R.id.item_nav_drawer_menu_buyer_information){
+                if (id == R.id.item_nav_drawer_menu_buyer_information) {
                     //nhớ này muốn sửa đoạn header của drawer navigation thì vào nav_header_buyer và sửa và xem menu thì vào nav_header_buyer
                     FragmentEditInformationBuyer fragment = new FragmentEditInformationBuyer();
                     FragmentManager manager = getSupportFragmentManager();
@@ -94,22 +95,15 @@ public class BuyHomeActivity extends AppCompatActivity {
             }
         });
 
-
-
-//        if(Variable.CHECK_LOGIN == 2){
-//                //resultFacebook();
-//        }
-
-
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (Variable.CHECK_LOGIN){
+                switch (Variable.CHECK_LOGIN) {
                     case 2:
                         signOutFacebook();
                         break;
                     case 0:
-                        startActivity(new Intent(BuyHomeActivity.this,MainActivity.class));
+                        startActivity(new Intent(BuyHomeActivity.this, MainActivity.class));
                         break;
                     case 1:
                         signOutGoogle();
@@ -117,7 +111,6 @@ public class BuyHomeActivity extends AppCompatActivity {
                 }
             }
         });
-
 
 
         btnFollow.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +127,7 @@ public class BuyHomeActivity extends AppCompatActivity {
                 FragmentOrderHistory fragmentOrderHistory = new FragmentOrderHistory();
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.flSearchResultAH,fragmentOrderHistory,"")
+                        .replace(R.id.flSearchResultAH, fragmentOrderHistory, "")
                         .addToBackStack(null)
                         .commit();
             }
@@ -147,11 +140,40 @@ public class BuyHomeActivity extends AppCompatActivity {
             }
         });
 
+        ibFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FilterDialog filterDialog = new FilterDialog(getLayoutInflater(), BuyHomeActivity.this);
+                filterDialog.showFilterDialog(new FilterDialog.ModifyFilter() {
+                    @Override
+                    public void onClear() {
+                        Variable.startTime = Time.valueOf("11:00:00");
+                        Variable.endTime = Time.valueOf("22:00:00");
+                        Variable.distance = "20";
+                        Variable.discount = "90";
+
+                        if (fragmentListProduct != null) {
+                            changeListProductItem();
+                        }
+                    }
+
+                    @Override
+                    public void onChange() {
+                        if (fragmentListProduct != null) {
+                            changeListProductItem();
+                        }
+                    }
+
+
+                });
+            }
+        });
+
         addFragmentListProduct();
     }
 
-    private  void addFragmentListProduct(){
-        FragmentListProduct fragmentListProduct = new FragmentListProduct();
+    private void addFragmentListProduct() {
+        fragmentListProduct = new FragmentListProduct();
 
         //add fragment search result
         getSupportFragmentManager()
@@ -160,6 +182,7 @@ public class BuyHomeActivity extends AppCompatActivity {
                 .addToBackStack(null)
                 .commit();
     }
+
     public void addFragmentSellerFollow() {
 
         FragmentListSellerFollow fragment = new FragmentListSellerFollow();
@@ -189,6 +212,12 @@ public class BuyHomeActivity extends AppCompatActivity {
     private void signOutGoogle() {
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(BuyHomeActivity.this, MainActivity.class));
+    }
+
+
+    private void changeListProductItem(){
+        fragmentListProduct.createNewArrayProduct();
+        fragmentListProduct.getData();
     }
 
 //    private void resultFacebook() {
