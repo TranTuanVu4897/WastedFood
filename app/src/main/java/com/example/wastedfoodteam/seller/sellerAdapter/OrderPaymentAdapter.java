@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
+import com.example.wastedfoodteam.utils.CommonFunction;
 
 import java.util.List;
 
@@ -73,7 +74,7 @@ public class OrderPaymentAdapter extends BaseAdapter {
         }
 
         order = arrayOrder.get(position);
-        Glide.with(convertView.getContext()).load(order.getImage().isEmpty() ? Variable.noImageUrl : order.getImage()).into(holder.ivBuyer);
+        CommonFunction.setImageViewSrc(myContext,order.getImage(),holder.ivBuyer);
         holder.tvDescription.setText("Ghi chú: " + order.getBuyer_comment());
         holder.tvTotalCost.setText( "Thành tiền: " + String.valueOf(order.getTotal_cost()));
         holder.tvQuantity.setText("Số lượng: " + String.valueOf(order.getQuantity()));
