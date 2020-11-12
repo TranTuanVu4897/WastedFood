@@ -58,7 +58,7 @@ public class FragmentDetailProduct extends Fragment {
             tvOpenTime, tvPriceOriginal,
             tvDirect, tvDescription,
             tvBuyQuantity, tvQuantity;
-    Button btnIncreate, btnDecreate, btnBuy;
+    Button btnIncrease, btnDecrease, btnBuy;
     private FollowVolley followVolley;
 
     public FragmentDetailProduct() {
@@ -131,7 +131,7 @@ public class FragmentDetailProduct extends Fragment {
 
 
         //set event
-        btnDecreate.setOnClickListener(new View.OnClickListener() {
+        btnDecrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (orderQuantity > 0) {
@@ -141,7 +141,7 @@ public class FragmentDetailProduct extends Fragment {
             }
         });
 
-        btnIncreate.setOnClickListener(new View.OnClickListener() {
+        btnIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (orderQuantity < product.getRemain_quantity()) {
@@ -270,8 +270,8 @@ public class FragmentDetailProduct extends Fragment {
         tvBuyQuantity = view.findViewById(R.id.tvBuyQuantity);
         tvOpenTime = view.findViewById(R.id.tvOpenTime);
 
-        btnIncreate = view.findViewById(R.id.btnIncreate);
-        btnDecreate = view.findViewById(R.id.btnDecreate);
+        btnIncrease = view.findViewById(R.id.btnIncrease);
+        btnDecrease = view.findViewById(R.id.btnDecrease);
         btnBuy = view.findViewById(R.id.btnBuy);
         ibFollow = view.findViewById(R.id.iBtnFollow);
     }
