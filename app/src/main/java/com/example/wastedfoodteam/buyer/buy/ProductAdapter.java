@@ -20,6 +20,7 @@ public class ProductAdapter extends BaseAdapter {
     private int layout;
     private List<Product> productList;
     Resources resources;
+
     public ProductAdapter(Context context, int layout, List<Product> productList, Resources resources) {
         this.context = context;
         this.layout = layout;
@@ -28,7 +29,7 @@ public class ProductAdapter extends BaseAdapter {
     }
 
     private class ViewHolder {
-        TextView tvName,tvDiscount,tvQuantity,tvOriginalPrice,tvSellPrice,tvOpenTime,tvDirect,tvRating;
+        TextView tvName, tvDiscount, tvQuantity, tvOriginalPrice, tvSellPrice, tvOpenTime, tvDirect, tvRating;
         ImageView ivProduct;
     }
 
@@ -74,14 +75,22 @@ public class ProductAdapter extends BaseAdapter {
         holder.tvName.setText(product.getName() + "");
         holder.tvSellPrice.setText(CommonFunction.getCurrency(product.getSell_price()));
         holder.tvOriginalPrice.setText(CommonFunction.getCurrency(product.getOriginal_price()));
-        holder.tvOpenTime.setText(CommonFunction.getOpenClose(product.getStart_time(),product.getEnd_time()));
-        holder.tvDiscount.setText(CommonFunction.getDiscount(product.getSell_price(),product.getOriginal_price()));
+        holder.tvOpenTime.setText(CommonFunction.getOpenClose(product.getStart_time(), product.getEnd_time()));
+        holder.tvDiscount.setText(CommonFunction.getDiscount(product.getSell_price(), product.getOriginal_price()));
 //        holder.tvQuantity.setText(CommonFunction.getQuantity(product.getRemain_quantity(),product.getOriginal_quantity()));
-        CommonFunction.setQuantityTextView(holder.tvQuantity,product.getRemain_quantity(),product.getOriginal_quantity());
+        CommonFunction.setQuantityTextView(holder.tvQuantity, product.getRemain_quantity(), product.getOriginal_quantity());
         //get image from url
-        CommonFunction.setImageViewSrc(context,product.getImage(),holder.ivProduct);
+        CommonFunction.setImageViewSrc(context, product.getImage(), holder.ivProduct);
 
         return convertView;
 
+    }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
     }
 }

@@ -143,7 +143,10 @@ public class FragmentListProduct extends ListFragment {
 
     public void createNewArrayProduct() {
         arrProduct = new ArrayList<>();
-        if (adapter != null) adapter.notifyDataSetChanged();
+        if (adapter != null){
+            adapter.getProductList().clear();
+            adapter.setProductList(arrProduct);
+            adapter.notifyDataSetChanged();}
     }
 
     private void setUpArrayProduct() {
