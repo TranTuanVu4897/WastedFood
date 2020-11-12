@@ -10,10 +10,10 @@ import java.sql.Time;
 
 
 public class Variable {
-    //public static final String ipAddress = "http://192.168.3.4/wastedfoodphp/";//Vutt ip
+    public static final String ipAddress = "http://192.168.3.4/wastedfoodphp/";//Vutt ip
 //    public static final String ipAddress ="http://10.22.178.239/wastedfoodphp/";//FPT University ip
 //    public static final String ipAddress = "http://192.168.1.46/wastedfoodphp/";//TungPT ip
-    public static final String ipAddress ="http://192.168.1.10/wastedfoodphp/";//DucHC ip
+//    public static final String ipAddress ="http://192.168.1.10/wastedfoodphp/";//DucHC ip
     //public static final String ipAddress ="http://192.168.156.2/wastedfoodphp/";//DucHC ip lan
 
 
@@ -27,7 +27,6 @@ public class Variable {
     public static final String GET_SELLER_BY_ID = "getSellerById.php";
 
     //Order status constraint
-    public static final String ORDER_STATUS_ORDERING = "ORDERING";
     public static final String GET_FOLLOW = "follow/getFollow.php";
     public static final String UPDATE_FOLLOW = "follow/updateFollow.php";
     public static LatLng gps;
