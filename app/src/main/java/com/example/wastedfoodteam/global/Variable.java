@@ -6,6 +6,8 @@ import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.model.Seller;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.sql.Time;
+
 public class Variable {
     //public static final String ipAddress = "http://192.168.3.4/wastedfoodphp/";//Vutt ip
 //    public static final String ipAddress ="http://10.22.178.239/wastedfoodphp/";//FPT University ip
@@ -38,6 +40,8 @@ public class Variable {
     public static int ACCOUNT_ID;
 
     public static int CHECK_LOGIN;
+    public static Time startTime = Time.valueOf("11:00:00"), endTime = Time.valueOf("22:00:00");
+    public static String distance = "20", discount = "90";
 
     public static final String noImageUrl = "https://www.actbus.net/fleetwiki/images/8/84/Noimage.jpg";
 }
