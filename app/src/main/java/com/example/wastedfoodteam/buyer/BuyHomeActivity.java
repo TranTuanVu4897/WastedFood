@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +24,11 @@ import com.example.wastedfoodteam.buyer.buy.FragmentListProduct;
 import com.example.wastedfoodteam.buyer.order.FragmentOrderHistory;
 import com.example.wastedfoodteam.global.Variable;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInApi;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -34,6 +39,8 @@ public class BuyHomeActivity extends AppCompatActivity {
     ImageView imageView,imageButton;
     Bundle bundle;
     EditText etSearch;
+    GoogleSignInClient mGoogleSignInClient;
+    GoogleSignInApi mGoogleSignInApi;
 
 
 
@@ -45,7 +52,6 @@ public class BuyHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyer_home);
-
         //mapping
         btnLogout = findViewById(R.id.btnLogout);
         btnFollow = findViewById(R.id.btnFollow);
@@ -173,8 +179,26 @@ public class BuyHomeActivity extends AppCompatActivity {
     }
 
     private void signOutGoogle() {
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(BuyHomeActivity.this, MainActivity.class));
+try{
+    FirebaseAuth.getInstance().signOut();
+    GoogleSignIn.getClient(
+            getApplicationContext(),
+            new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+    ).signOut();
+    startActivity(new Intent(BuyHomeActivity.this, MainActivity.class));
+//    mGoogleSignInClient.signOut()
+////            .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+////                @Override
+////                public void onComplete(@NonNull Task<Void> task) {
+////                    startActivity(new Intent(BuyHomeActivity.this, MainActivity.class));
+////                }
+////            });
+
+} catch (Exception e){
+    Log.d("e: ", e.getMessage());
+}
+
+//        startActivity(new Intent(BuyHomeActivity.this, MainActivity.class));
     }
 
 //    private void resultFacebook() {

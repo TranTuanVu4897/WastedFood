@@ -210,14 +210,14 @@ public class FragmentLoginBuyer extends Fragment {
         }
     }
 
-//    @Override
-//    public void onStart() {
-//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
-//        if (account != null) {
-//            startActivity(new Intent(getActivity(), BuyHomeActivity.class));
-//        }
-//        super.onStart();
-//    }
+    @Override
+    public void onStart() {
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
+        if (account != null) {
+            startActivity(new Intent(getActivity(), BuyHomeActivity.class));
+        }
+        super.onStart();
+    }
 
     /**
      * Keep Sign In Facebook
