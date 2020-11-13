@@ -90,14 +90,6 @@ public class FragmentSellerDetail extends ListFragment {
             @Override
             public void onClick(View v) {
                 dialogReport();
-//                bundle = new Bundle();
-//                bundle.putSerializable("SELLER", seller);
-//                report = new FragmentReport();
-//                report.setArguments(bundle);
-//                getActivity().getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.flSearchResultAH, report, "")//TODO check if this work
-//                        .addToBackStack(null)
-//                        .commit();
             }
         });
 
@@ -152,7 +144,6 @@ public class FragmentSellerDetail extends ListFragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         try {
                             JSONArray jsonProducts = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();

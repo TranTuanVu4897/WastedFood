@@ -54,22 +54,11 @@ public class FragmentEditInformationBuyer extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_buyer, container, false);
         mapping(view);
-//        btUpdate.setVisibility(View.VISIBLE);
-//        btCancel.setVisibility(View.VISIBLE);
-//        if (Variable.CHECK_LOGIN == 2) {
-//            btUpdate.setVisibility(View.INVISIBLE);
-//            btCancel.setVisibility(View.INVISIBLE);
-//            resultFacebook();
-//        } else if (Variable.CHECK_LOGIN == 0) {
-            accountId = Variable.ACCOUNT_ID + "";
-            url = Variable.ipAddress + "information/informationBuyer.php?account_id=" + accountId;
-            getData(url);
-//        etDob.setText(buyer.getDate_of_birth().toString());
-//        if (buyer.isGender()) {
-//            rbBoy.setChecked(true);
-//        } else {
-//            rbGirl.setChecked(true);
-//        }
+
+        accountId = Variable.ACCOUNT_ID + "";
+        url = Variable.ipAddress + "information/informationBuyer.php?account_id=" + accountId;
+        getData(url);
+
         etDob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,36 +70,31 @@ public class FragmentEditInformationBuyer extends Fragment {
         this.lastSelectedMonth = c.get(Calendar.MONTH);
         this.lastSelectedDayOfMonth = c.get(Calendar.DAY_OF_MONTH);
 
-            btUpdate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    url = Variable.ipAddress + "information/changeInfoBuyer.php";
-                    String name = etName.getText().toString();
-                    if (name.trim().isEmpty()) {
-                        Toast.makeText(getActivity(), "Vui lòng điền tên", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    String phone = etPhone.getText().toString();
-                    String urlImage = "";
-                    String dob = buyer.getDate_of_birth().toString();
-                    //check information change
-                    if (!buyer.getDate_of_birth().toString().equals(etDob.getText().toString()))
-                        dob = etDob.getText().toString();
-                    String gender = "";
-                    if (rbBoy.isChecked()) {
-                        gender = "0";
-                    } else {
-                        gender = "1";
-                    }
-                    updateData(url, accountId, name, phone, urlImage, dob, gender);
+        btUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                url = Variable.ipAddress + "information/changeInfoBuyer.php";
+                String name = etName.getText().toString();
+                if (name.trim().isEmpty()) {
+                    Toast.makeText(getActivity(), "Vui lòng điền tên", Toast.LENGTH_LONG).show();
+                    return;
                 }
-            });
-//        }
 
-
-        //get account it
-
+                String phone = etPhone.getText().toString();
+                String urlImage = "";
+                String dob = buyer.getDate_of_birth().toString();
+                //check information change
+                if (!buyer.getDate_of_birth().toString().equals(etDob.getText().toString()))
+                    dob = etDob.getText().toString();
+                String gender = "";
+                if (rbBoy.isChecked()) {
+                    gender = "0";
+                } else {
+                    gender = "1";
+                }
+                updateData(url, accountId, name, phone, urlImage, dob, gender);
+            }
+        });
 
         return view;
     }
@@ -210,7 +194,8 @@ public class FragmentEditInformationBuyer extends Fragment {
         };
         requestQueue.add(stringRequest);
     }
-    private void selectDate(){
+
+    private void selectDate() {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -225,28 +210,4 @@ public class FragmentEditInformationBuyer extends Fragment {
                 dateSetListener, lastSelectedYear, lastSelectedMonth, lastSelectedDayOfMonth);
         datePickerDialog.show();
     }
-//    private void resultFacebook() {
-//        GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-//            @Override
-//            public void onCompleted(JSONObject object, GraphResponse response) {
-//                Log.d("Json", response.getJSONObject().toString());
-//                try {
-//                    etName.setText("Tên: " + object.getString("name"));
-//                    tvMail.setText("Email: " + object.getString("email"));
-//                    etDob.setText("Birthday: " + object.getString("birthday"));
-//                    String idF = object.getString("id");
-//
-//                    String imageF = "https://graph.facebook.com/" + idF + "/picture?type=large";
-//                    Glide.with(getActivity()).load(imageF).into(ivAvatar);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
-//        Bundle parameter = new Bundle();
-//        parameter.putString("fields", "id,name,email,gender,birthday");
-//        graphRequest.setParameters(parameter);
-//        graphRequest.executeAsync();
-//        Log.d("Tag: ", "failed");
-//    }
 }

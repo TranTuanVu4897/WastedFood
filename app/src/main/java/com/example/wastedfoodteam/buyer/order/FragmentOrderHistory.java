@@ -41,10 +41,11 @@ public class FragmentOrderHistory extends ListFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       View view = inflater.inflate(R.layout.fragment_buyer_order_history,container,false);
+        View view = inflater.inflate(R.layout.fragment_buyer_order_history, container, false);
 
         //set up url volley
-        urlGetData = Variable.ipAddress + Variable.ORDER_HISTORY + "?buyer_id="+Variable.ACCOUNT_ID;
+
+        urlGetData = Variable.ipAddress + Variable.ORDER_HISTORY + "?buyer_id=" + Variable.ACCOUNT_ID;
 
         //mapping view
         lvOrder = view.findViewById(android.R.id.list);
@@ -57,8 +58,6 @@ public class FragmentOrderHistory extends ListFragment {
         adapter = new OrderAdapter(getActivity().getApplicationContext(), R.layout.list_buyer_product_item, orderArrayList, getResources());
         lvOrder.setAdapter(adapter);
         getData();
-
-
 
 
         return view;
@@ -75,7 +74,7 @@ public class FragmentOrderHistory extends ListFragment {
                         try {
                             JSONArray jsonOrders = new JSONArray(response);
                             GsonBuilder gsonBuilder = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss")
-                                    .registerTypeAdapter(Order.Status.class,new OrderStatusTypeDeserializer());
+                                    .registerTypeAdapter(Order.Status.class, new OrderStatusTypeDeserializer());
                             Gson gson = gsonBuilder.create();
 
 

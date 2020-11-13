@@ -3,6 +3,7 @@ package com.example.wastedfoodteam.seller.sellerFragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.ListFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,7 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
-public class ListOrderHistoryFragment extends Fragment {
+public class ListOrderHistoryFragment extends ListFragment {
 
     ListView lvOrder;
     ArrayList<Order> arrOrder;
@@ -61,6 +62,7 @@ public class ListOrderHistoryFragment extends Fragment {
                             JSONArray jsonOrders = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             for (int i = 0; i < jsonOrders.length(); i++) {
+                                Order order = (Order) gson.fromJson(jsonOrders.getString(i), Order.class);
                                 arrOrder.add((Order) gson.fromJson(jsonOrders.getString(i), Order.class));
                                 orderAdapter.notifyDataSetChanged();
                             }

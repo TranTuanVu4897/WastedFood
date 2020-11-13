@@ -6,15 +6,12 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.ListFragment;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,17 +22,13 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.model.Seller;
-import com.example.wastedfoodteam.utils.service.SellerVolley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class FragmentListProduct extends ListFragment {
     String urlGetData;
@@ -44,7 +37,6 @@ public class FragmentListProduct extends ListFragment {
     ListView lvProduction;
     FragmentDetailProduct detailProduct;
     Bundle bundleDetail;
-    Seller seller;
 
 
     @Nullable
@@ -102,7 +94,6 @@ public class FragmentListProduct extends ListFragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         try {
                             JSONArray jsonProducts = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
@@ -143,7 +134,10 @@ public class FragmentListProduct extends ListFragment {
 
     public void createNewArrayProduct() {
         arrProduct = new ArrayList<>();
-        if (adapter != null) adapter.notifyDataSetChanged();
+        if (adapter != null){
+            adapter.getProductList().clear();
+            adapter.setProductList(arrProduct);
+            adapter.notifyDataSetChanged();}
     }
 
     private void setUpArrayProduct() {

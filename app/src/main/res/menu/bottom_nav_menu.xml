@@ -1,19 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:id="@+id/search"
+            android:title="search"
+            />
 
         <item
-            android:id="@+id/starFragment"
-
-            android:title="bottom_nav_title_star"/>
-
-        <item
-            android:id="@+id/statsFragment"
-
-            android:title="bottom_nav_title_stats"/>
+            android:id="@+id/bottom_nav_menu_add"
+            android:icon="@drawable/ic_baseline_post_add_24"
+            android:title="Đăng bài"
+            />
 
         <item
-            android:id="@+id/userFragment"
-
-            android:title="bottom_nav_title_user"/>
-
+            android:id="@+id/more"
+            android:title="more"
+            />
 </menu>

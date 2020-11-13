@@ -94,8 +94,6 @@ public class FragmentLoginBuyer extends Fragment {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-//                urlGetData = Variable.ipAddress + "login/buyerLogin.php?third_party_id=" + etSDT.getText().toString();
-//                getData(urlGetData);
                 resultFacebook();
                 Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
                 Variable.CHECK_LOGIN = 2;
@@ -210,6 +208,7 @@ public class FragmentLoginBuyer extends Fragment {
         }
     }
 
+
     @Override
     public void onStart() {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
@@ -218,6 +217,7 @@ public class FragmentLoginBuyer extends Fragment {
         }
         super.onStart();
     }
+
 
     /**
      * Keep Sign In Facebook
@@ -347,7 +347,6 @@ public class FragmentLoginBuyer extends Fragment {
                     String name = object.getString("name");
                     String thirdPartyId = object.getString("id");
                     String dob = object.getString("birthday");
-//                    String gender = object.getString("gender");
                     String gender = "1";
                     String urlImage = "https://graph.facebook.com/" + thirdPartyId + "/picture?type=large";
                     String urlInsert = Variable.ipAddress + "login/register3rdParty.php";

@@ -32,7 +32,6 @@ public class FragmentBuyerInformation extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_information_buyer, container, false);
         mapping(view);
-//        bundle = getIntent().getExtras();
         //TODO
         if(bundle != null){
             checkOption = bundle.getString("Check_option");

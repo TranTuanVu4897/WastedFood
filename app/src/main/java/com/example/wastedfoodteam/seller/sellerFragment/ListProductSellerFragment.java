@@ -13,17 +13,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
+import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.seller.sellerAdapter.ProductSellerAdapter;
 import com.example.wastedfoodteam.model.Product;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +44,9 @@ public class ListProductSellerFragment extends ListFragment {
     ArrayList<Product> arrProduct;
     ProductSellerAdapter adapter;
     ListView lvProduct;
+    TextView tv_total_product;
     int seller_id;
+    int totalProduct;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,11 +58,13 @@ public class ListProductSellerFragment extends ListFragment {
         lvProduct = view.findViewById(android.R.id.list);
         arrProduct = new ArrayList<Product>();
         seller_id = Variable.ACCOUNT_ID;
+        tv_total_product = view.findViewById(R.id.tv_total_product);
         String urlGetData = Variable.ipAddress + "seller/getListProductSeller.php?seller_id=" + seller_id;
         adapter = new ProductSellerAdapter( getActivity().getApplicationContext(), R.layout.list_seller_product , arrProduct, getResources());
         lvProduct.setAdapter(adapter);
         getData(urlGetData);
-
+        //tv_total_product.setText(adapter.getCount() + " sản phẩm");
+        getTotalProduct(Variable.ipAddress + "seller/getTotalProduct.php");
         lvProduct.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -113,6 +122,28 @@ public class ListProductSellerFragment extends ListFragment {
         requestQueue.add(jsonArrayRequest);
     }
 
+    public void getTotalProduct(String url){
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        StringRequest getProductAround = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            totalProduct = new Integer(response);
+                            tv_total_product.setText( totalProduct + " sản phẩm");
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                });
+        requestQueue.add(getProductAround);
+    }
+
     @Override
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
@@ -120,10 +151,10 @@ public class ListProductSellerFragment extends ListFragment {
         Product product = (Product) l.getAdapter().getItem(position);
         Variable.PRODUCT = product;
 
-        SellerDetailProductFragment sellerDetailProductFragment = new SellerDetailProductFragment();
+        OrderDetailSellerFragment orderDetailSellerFragment = new OrderDetailSellerFragment();
         //open seller detail product fragment
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace( R.id.content_main, sellerDetailProductFragment, "")//TODO check if this work
+                .replace( R.id.content_main,orderDetailSellerFragment , "")//TODO check if this work
                 .addToBackStack(null)
                 .commit();
     }

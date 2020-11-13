@@ -7,22 +7,32 @@
     tools:context=".seller.home.SellerHomeActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme">
+        android:background="@color/colorPrimaryOfHomeActivity">
 
-        <androidx.appcompat.widget.Toolbar
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/toolbar"
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:fitsSystemWindows="true"
-            android:minHeight="?attr/actionBarSize"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:background="?attr/colorPrimary">
-        </androidx.appcompat.widget.Toolbar>
+            android:layout_height="50dp">
 
+            <ImageButton
+                android:id="@+id/information_tab_seller"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/colorPrimaryOfHomeActivity"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_view_headline_24" />
+
+            <!--<de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivAppIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="130dp"
+                android:layout_gravity="center"
+                android:src="@drawable/home" />-->
+
+        </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <include
@@ -31,17 +41,24 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:layout_height="match_parent"></androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+"
+    <!--<com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimaryOfHomeActivity"
+        app:menu="@menu/bottom_nav_menu"
+        android:layout_height="60dp">
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:backgroundTint="@color/colorPrimary"
-        android:layout_margin="16dp"
         app:srcCompat="@android:drawable/ic_input_add" />
-
-
+    
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
