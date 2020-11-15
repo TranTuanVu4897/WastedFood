@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam;
+package com.example.wastedfoodteam.utils;
 
 import com.google.android.gms.maps.model.LatLng;
 

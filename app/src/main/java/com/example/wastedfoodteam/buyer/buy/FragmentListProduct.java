@@ -21,7 +21,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
-import com.example.wastedfoodteam.model.Seller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -85,7 +84,7 @@ public class FragmentListProduct extends ListFragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         //TODO
         //require edit latitude
-        urlGetData = urlGetData + "?lat=" + Variable.gps.latitude + "&lng=" + Variable.gps.longitude
+        urlGetData = urlGetData + "?lat=" + Variable.gps.getLatitude() + "&lng=" + Variable.gps.getLongitude()
                 + "&distance=" + Variable.distance
                 + "&start_time=" + Variable.startTime + "&end_time=" + Variable.endTime
                 + "&discount=" + Variable.discount;

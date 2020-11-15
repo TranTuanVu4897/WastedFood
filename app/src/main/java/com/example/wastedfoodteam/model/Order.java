@@ -156,28 +156,9 @@ public class Order implements Serializable {
     }
 
     public enum Status {
-        BUYING(0),
-        SUCCESS(1),
-        CANCEL(2);
+        BUYING,
+        SUCCESS,
+        CANCEL,
 
-        private final int key;
-
-        Status(int key) {
-            this.key = key;
-        }
-
-        public int getKey() {
-            return this.key;
-        }
-
-        @Nullable
-        public static Status fromKey(int key) {
-            for (Status type : Status.values()) {
-                if (type.getKey() == key) {
-                    return type;
-                }
-            }
-            return null;
-        }
     }
 }

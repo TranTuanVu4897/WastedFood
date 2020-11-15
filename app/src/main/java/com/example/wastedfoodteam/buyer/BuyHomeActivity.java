@@ -3,12 +3,19 @@ package com.example.wastedfoodteam.buyer;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,19 +31,24 @@ import com.example.wastedfoodteam.buyer.buy.FragmentListProduct;
 import com.example.wastedfoodteam.buyer.order.FragmentOrderHistory;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.utils.FilterDialog;
+import com.example.wastedfoodteam.utils.GPSTracker;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+
+import android.test.mock.MockPackageManager;
 
 import java.sql.Time;
 
 public class BuyHomeActivity extends AppCompatActivity {
+    private static final int REQUEST_CODE_PERMISSION = 2;
     Button btnHome, btnLogout, btnFollow, btnHistory;
     ImageView ivAppIcon;
     ImageButton ibUserInfo, ibFilter;
     EditText etSearch;
     FragmentListProduct fragmentListProduct;
-
+    GPSTracker gps;
 
     private DrawerLayout drawerLayout;
 
@@ -44,6 +56,22 @@ public class BuyHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyer_home);
+
+        try {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != MockPackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        REQUEST_CODE_PERMISSION);
+
+                //TODO dialog confirm
+                finishAndRemoveTask();
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         //mapping
         btnLogout = findViewById(R.id.btnLogout);
@@ -55,6 +83,15 @@ public class BuyHomeActivity extends AppCompatActivity {
         ibUserInfo = findViewById(R.id.ibUserInfo);
         ibFilter = findViewById(R.id.ibFilter);
 
+        //get GPS
+        gps = new GPSTracker(this);
+        if (gps.canGetLocation()) {
+            Variable.gps = gps.getLocation();
+            Toast.makeText(getApplicationContext(), "Your Location is - \nLat: "
+                    + gps.getLatitude() + "\nLong: " + gps.getLongitude(), Toast.LENGTH_LONG).show();
+        } else {
+            gps.showSettingAlert();
+        }
 
         SharedPreferences pre = getSharedPreferences("my_data", MODE_PRIVATE);
         String name = pre.getString("name", "khong thay");
@@ -168,6 +205,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         });
 
         addFragmentListProduct();
+
     }
 
     private void addFragmentListProduct() {
@@ -213,7 +251,7 @@ public class BuyHomeActivity extends AppCompatActivity {
     }
 
 
-    private void changeListProductItem(){
+    private void changeListProductItem() {
         fragmentListProduct.createNewArrayProduct();
         fragmentListProduct.getData();
     }

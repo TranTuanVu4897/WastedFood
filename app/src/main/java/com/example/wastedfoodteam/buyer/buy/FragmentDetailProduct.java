@@ -223,7 +223,7 @@ public class FragmentDetailProduct extends Fragment {
                 params.put("buyer", Variable.ACCOUNT_ID + "");//TODO change to other ways
                 params.put("product", product.getId() + "");
                 params.put("quantity", orderQuantity + "");
-                params.put("status", Order.Status.BUYING.getKey()+"");
+                params.put("status", Order.Status.BUYING+"");
                 params.put("total_cost", (orderQuantity * product.getSell_price()) + "");
                 return params;
             }

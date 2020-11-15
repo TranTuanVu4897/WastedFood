@@ -1,7 +1,6 @@
 package com.example.wastedfoodteam.buyer.order;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
-import com.example.wastedfoodteam.model.OrderStatusTypeDeserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -73,8 +71,7 @@ public class FragmentOrderHistory extends ListFragment {
                         // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         try {
                             JSONArray jsonOrders = new JSONArray(response);
-                            GsonBuilder gsonBuilder = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss")
-                                    .registerTypeAdapter(Order.Status.class, new OrderStatusTypeDeserializer());
+                            GsonBuilder gsonBuilder = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss");
                             Gson gson = gsonBuilder.create();
 
 
