@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class FragmentListProduct extends ListFragment {
     FragmentDetailProduct detailProduct;
     Bundle bundleDetail;
 
+    EditText etSearch;
 
     @Nullable
     @Override
@@ -49,6 +51,7 @@ public class FragmentListProduct extends ListFragment {
 
         //mapping view
         lvProduction = view.findViewById(android.R.id.list);
+        etSearch = view.findViewById(R.id.etSearchBHA);
 
         //setup bundle
         bundleDetail = new Bundle();
@@ -86,13 +89,15 @@ public class FragmentListProduct extends ListFragment {
         urlGetData = urlGetData + "?lat=" + Variable.gps.getLatitude() + "&lng=" + Variable.gps.getLongitude()
                 + "&distance=" + Variable.distance
                 + "&start_time=" + Variable.startTime + "&end_time=" + Variable.endTime
-                + "&discount=" + Variable.discount;
+                + "&discount=" + Variable.discount
+                + "&search_text=" + etSearch.getText();
 
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            Log.e("ListProduct", response);
                             JSONArray jsonProducts = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             for (int i = 0; i < jsonProducts.length(); i++) {
@@ -126,7 +131,7 @@ public class FragmentListProduct extends ListFragment {
 
         //open detail product fragment
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flSearchResultAH, detailProduct, "")//TODO check if this work
+                .replace(R.id.flSearchResultAH, detailProduct, "")
                 .addToBackStack(null)
                 .commit();
     }

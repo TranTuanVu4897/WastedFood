@@ -22,7 +22,7 @@
                 android:layout_marginTop="14dp"
                 android:layout_weight="1"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/user" />
+                app:srcCompat="@drawable/button_user_information" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ivAppIcon"
@@ -37,7 +37,7 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="14dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/list" />
+                app:srcCompat="@drawable/button_filter" />
         </LinearLayout>
 
 
@@ -58,43 +58,39 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <Button
-                android:id="@+id/btnHome"
+            <ImageButton
+                android:id="@+id/iBtnHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="0dp"
                 android:layout_weight="1"
-                android:text="Home"
+                android:src="@drawable/button_home"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
-            <Button
-                android:id="@+id/btnHistory"
+            <ImageButton
+                android:id="@+id/iBtnNotification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="History" />
+                android:src="@drawable/button_notification" />
 
-            <Button
-                android:id="@+id/btnFollow"
+            <ImageButton
+                android:id="@+id/iBtnHistory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Follow" />
+                android:src="@drawable/button_order_history" />
 
-            <Button
-                android:id="@+id/btnLogout"
-                android:layout_width="100dp"
+            <ImageButton
+                android:id="@+id/iBtnFollow"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Logout" />
+                android:src="@drawable/button_follow_seller" />
+
         </LinearLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
-
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

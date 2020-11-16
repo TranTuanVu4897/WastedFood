@@ -58,7 +58,7 @@ public class SellerFollowAdapter extends BaseAdapter {
             holder.tvNameSeller = convertView.findViewById(R.id.tvNameSellerFSFI);
             holder.tvAddress = convertView.findViewById(R.id.tvAddress);
             holder.ivSeller = convertView.findViewById(R.id.ivSellerLSFI);
-            holder.tvDirection = convertView.findViewById(R.id.tvDirection);
+            holder.tvDirection = convertView.findViewById(R.id.tvDistance);
             convertView.setTag(holder);
         }
         else {

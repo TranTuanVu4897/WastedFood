@@ -111,7 +111,7 @@ public class AddProductFragment extends Fragment {
         seller_id= Variable.ACCOUNT_ID;
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_add_product, container, false);
+        View view = inflater.inflate(R.layout.fragment_seller_add_product, container, false);
 
         // get the Firebase  storage reference
         storage = FirebaseStorage.getInstance();

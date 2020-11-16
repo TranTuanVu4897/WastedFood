@@ -2,7 +2,6 @@ package com.example.wastedfoodteam.buyer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -10,13 +9,11 @@ import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.test.mock.MockPackageManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -44,17 +41,13 @@ import java.sql.Time;
 
 public class BuyHomeActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_PERMISSION = 2;
-    Button btnHome, btnLogout, btnFollow, btnHistory;
+    ImageButton iBtnHome, iBtnNotification, iBtnFollow, iBtnHistory;
     ImageView ivAppIcon;
     ImageButton ibUserInfo, ibFilter;
-    EditText etSearch;
     FragmentListProduct fragmentListProduct;
     GPSTracker gps;
     GoogleSignInClient mGoogleSignInClient;
     GoogleSignInApi mGoogleSignInApi;
-
-
-    private Toolbar toolbar;
 
     private DrawerLayout drawerLayout;
 
@@ -78,12 +71,13 @@ public class BuyHomeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
         //mapping
-        btnLogout = findViewById(R.id.btnLogout);
-        btnFollow = findViewById(R.id.btnFollow);
-        btnHistory = findViewById(R.id.btnHistory);
-        etSearch = findViewById(R.id.etSearchBHA);
+        ibUserInfo = findViewById(R.id.ibUserInfo);
+        ibFilter = findViewById(R.id.ibFilter);
+        iBtnNotification = findViewById(R.id.iBtnNotification);
+        iBtnHome = findViewById(R.id.iBtnHome);
+        iBtnFollow = findViewById(R.id.iBtnFollow);
+        iBtnHistory = findViewById(R.id.iBtnHistory);
 
         //get GPS
         gps = new GPSTracker(this);
@@ -95,13 +89,9 @@ public class BuyHomeActivity extends AppCompatActivity {
             gps.showSettingAlert();
         }
 
-        SharedPreferences pre = getSharedPreferences("my_data", MODE_PRIVATE);
-        String name = pre.getString("name", "khong thay");
-
         //get the header view
         NavigationView navigationView = findViewById(R.id.nav_view_buyer);
         View headerView = navigationView.getHeaderView(0);
-
 
         // Find our drawer view
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_buyer);
@@ -120,42 +110,39 @@ public class BuyHomeActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if (id == R.id.item_nav_drawer_menu_buyer_information) {
-                    //nhớ này muốn sửa đoạn header của drawer navigation thì vào nav_header_buyer và sửa và xem menu thì vào nav_header_buyer
-                    FragmentEditInformationBuyer fragment = new FragmentEditInformationBuyer();
-                    FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.flSearchResultAH, fragment, fragment.getTag()).commit();
+                switch (id){
+                    case R.id.itemNavMenuBuyerInfor:
+                        //nhớ này muốn sửa đoạn header của drawer navigation thì vào nav_header_buyer và sửa và xem menu thì vào nav_header_buyer
+                        FragmentEditInformationBuyer fragment = new FragmentEditInformationBuyer();
+                        FragmentManager manager = getSupportFragmentManager();
+                        manager.beginTransaction().replace(R.id.flSearchResultAH, fragment, fragment.getTag()).commit();
+                        break;
+                    case R.id.itemNavLogout:
+                        Variable.ACCOUNT_ID = 0;
+                        switch (Variable.CHECK_LOGIN) {
+                            case 2:
+                                finish();
+                                signOutFacebook();
+                                break;
+                            case 0:
+                                finish();
+                                startActivity(new Intent(BuyHomeActivity.this, MainActivity.class));
+                                break;
+                            case 1:
+                                finish();
+                                signOutGoogle();
+                                break;
+                        }
+                        break;
                 }
+
                 DrawerLayout drawer = findViewById(R.id.drawer_layout_buyer);
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             }
         });
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (Variable.CHECK_LOGIN) {
-                    case 2:
-                        signOutFacebook();
-                        break;
-                    case 0:
-                        startActivity(new Intent(BuyHomeActivity.this, MainActivity.class));
-                        break;
-                    case 1:
-                        signOutGoogle();
-                        break;
-                }
-            }
-        });
-
-        //add fragment search result
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.flSearchResultAH, fragmentListProduct, "")
-                .addToBackStack(null)
-                .commit();
-        btnFollow.setOnClickListener(new View.OnClickListener() {
+        iBtnFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addFragmentSellerFollow();
@@ -163,7 +150,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         });
 
 
-        btnHistory.setOnClickListener(new View.OnClickListener() {
+        iBtnHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentOrderHistory fragmentOrderHistory = new FragmentOrderHistory();
@@ -174,7 +161,7 @@ public class BuyHomeActivity extends AppCompatActivity {
                         .commit();
             }
         });
-        btnHome.setOnClickListener(new View.OnClickListener() {
+        iBtnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addFragmentListProduct();
@@ -216,7 +203,6 @@ public class BuyHomeActivity extends AppCompatActivity {
 
     private void addFragmentListProduct() {
         fragmentListProduct = new FragmentListProduct();
-
         //add fragment search result
         getSupportFragmentManager()
                 .beginTransaction()
@@ -266,11 +252,9 @@ public class BuyHomeActivity extends AppCompatActivity {
 
     }
 
-
     private void changeListProductItem() {
         fragmentListProduct.createNewArrayProduct();
         fragmentListProduct.getData();
     }
-
 
 }

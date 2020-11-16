@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/item_nav_drawer_menu_buyer_information"
+        android:id="@+id/itemNavMenuBuyerInfor"
         android:title="Đổi Thông tin" />
     <item
         android:title="Đổi mật khẩu" />
@@ -15,4 +15,7 @@
         android:title="Thông báo" />
     <item
         android:title="Phản hồi với chúng tôi" />
+    <item
+        android:id="@+id/itemNavLogout"
+        android:title="Đăng xuất"/>
 </menu>

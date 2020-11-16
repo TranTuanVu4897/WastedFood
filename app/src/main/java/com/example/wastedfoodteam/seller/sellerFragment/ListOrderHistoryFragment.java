@@ -28,19 +28,17 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 public class ListOrderHistoryFragment extends ListFragment {
-
     ListView lvOrder;
     ArrayList<Order> arrOrder;
     String urlGetData;
     OrderAdapter orderAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_order_history, container, false);
         lvOrder = view.findViewById(android.R.id.list);
-        arrOrder = new ArrayList<Order>();
+        arrOrder = new ArrayList<>();
         orderAdapter = new OrderAdapter(getActivity().getApplicationContext(), R.layout.list_seller_order, arrOrder, getResources());
         lvOrder.setAdapter(orderAdapter);
         getData();
@@ -48,10 +46,8 @@ public class ListOrderHistoryFragment extends ListFragment {
     }
 
     public void getData() {
-
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        urlGetData = Variable.IP_ADDRESS + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() ;
-
+        urlGetData = Variable.IP_ADDRESS + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId();
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
                     @Override
@@ -76,6 +72,5 @@ public class ListOrderHistoryFragment extends ListFragment {
                 });
         requestQueue.add(getProductAround);
     }
-
 
 }

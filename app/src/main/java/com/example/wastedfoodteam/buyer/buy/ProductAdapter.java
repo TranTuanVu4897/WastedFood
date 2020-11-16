@@ -80,7 +80,7 @@ public class ProductAdapter extends BaseAdapter {
     private void mappingViewToHolder(ViewHolder holder, View convertView) {
         holder.tvName = convertView.findViewById(R.id.tvTitleLPI);
         holder.ivProduct = convertView.findViewById(R.id.ivProductLPI);
-        holder.tvDirect = convertView.findViewById(R.id.tvDirection);
+        holder.tvDirect = convertView.findViewById(R.id.tvDistance);
         holder.tvDiscount = convertView.findViewById(R.id.tvDiscount);
         holder.tvQuantity = convertView.findViewById(R.id.tvQuantity);
         holder.tvOpenTime = convertView.findViewById(R.id.tvOpenTime);
