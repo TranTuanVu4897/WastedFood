@@ -26,6 +26,7 @@ import com.example.wastedfoodteam.MainActivity;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.buy.FragmentListProduct;
 import com.example.wastedfoodteam.buyer.followseller.FragmentListSellerFollow;
+import com.example.wastedfoodteam.buyer.infomation.FragmentEditInformationBuyer;
 import com.example.wastedfoodteam.buyer.order.FragmentOrderHistory;
 import com.example.wastedfoodteam.global.Variable;
 

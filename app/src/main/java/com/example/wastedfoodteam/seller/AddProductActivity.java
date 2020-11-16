@@ -48,9 +48,6 @@ import java.util.UUID;
 
 public class AddProductActivity extends AppCompatActivity {
 
-    //set up firebase
-    //tool -> firebase -> authentication
-
     //ui view
     private ImageView productIconIv;
     private EditText editTextName;

@@ -122,7 +122,6 @@ public class FragmentLoginBuyer extends Fragment {
             }
         });
 
-
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -223,14 +222,10 @@ public class FragmentLoginBuyer extends Fragment {
      */
     private void handleSignInFacebook() {
         //check loginFB
-        if (AccessToken.getCurrentAccessToken() != null && com.facebook.Profile.getCurrentProfile() != null) {
-
-
-            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
+        if (AccessToken.getCurrentAccessToken() != null && com.facebook.Profile.getCurrentProfile() != null) {LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
             Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
             Variable.CHECK_LOGIN = 2;
             startActivity(intent);
-
         }
     }
 
@@ -238,7 +233,6 @@ public class FragmentLoginBuyer extends Fragment {
      * add fragment login for seller
      */
     public void addFragmentLoginPartner() {
-
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         FragmentLoginPartner fragmentLoginPartner = new FragmentLoginPartner();
@@ -285,7 +279,6 @@ public class FragmentLoginBuyer extends Fragment {
                         Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO fix for suitable error
                         break;
                     case "PHONE_IS_NULL":
-
                         //startActivity(new Intent(getActivity(),BuyHomeActivity.class));
                     default:
                         Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();//TODO get data
@@ -293,12 +286,8 @@ public class FragmentLoginBuyer extends Fragment {
                             JSONArray object = new JSONArray(response);
 
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-
                             Buyer buyer = gson.fromJson(object.getString(0), Buyer.class);
-
-
                             Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
-
                             Variable.ACCOUNT_ID = buyer.getId();
                             //TODO pass data through intent
                             startActivity(intent);

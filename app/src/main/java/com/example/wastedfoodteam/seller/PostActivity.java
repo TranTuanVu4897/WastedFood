@@ -25,7 +25,6 @@ public class PostActivity extends AppCompatActivity {
     ListView lvProduct;
     ArrayList<Product1> arrayList = new ArrayList<>();
     ArrayAdapter<Product1> arrayAdapter;
-    Product1 product;
     private Button btnAdd;
 
     @Override
@@ -36,7 +35,6 @@ public class PostActivity extends AppCompatActivity {
         btnAdd = findViewById(R.id.btnIncrease);
         lvProduct = findViewById(R.id.lvProduct);
 
-        product = new Product1();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users").child("2").child("Products");
 
         arrayAdapter = new ArrayAdapter<Product1>(this, android.R.layout.simple_list_item_1,arrayList);
