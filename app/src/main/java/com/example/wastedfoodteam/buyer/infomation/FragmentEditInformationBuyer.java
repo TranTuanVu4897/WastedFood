@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.buyer;
+package com.example.wastedfoodteam.buyer.infomation;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -11,7 +11,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Buyer;
 import com.google.gson.Gson;
@@ -56,7 +56,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         mapping(view);
 
         accountId = Variable.ACCOUNT_ID + "";
-        url = Variable.ipAddress + "information/informationBuyer.php?account_id=" + accountId;
+        url = Variable.IP_ADDRESS + "information/informationBuyer.php?account_id=" + accountId;
         getData(url);
 
         etDob.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +73,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                url = Variable.ipAddress + "information/changeInfoBuyer.php";
+                url = Variable.IP_ADDRESS + "information/changeInfoBuyer.php";
                 String name = etName.getText().toString();
                 if (name.trim().isEmpty()) {
                     Toast.makeText(getActivity(), "Vui lòng điền tên", Toast.LENGTH_LONG).show();

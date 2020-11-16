@@ -2,7 +2,6 @@ package com.example.wastedfoodteam.seller.sellerFragment;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 
 import android.view.LayoutInflater;
@@ -19,7 +18,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
-import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -52,7 +50,7 @@ public class ListOrderHistoryFragment extends ListFragment {
     public void getData() {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        urlGetData = Variable.ipAddress + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() ;
+        urlGetData = Variable.IP_ADDRESS + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() ;
 
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {

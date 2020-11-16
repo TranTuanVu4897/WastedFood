@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,7 +22,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
-import com.example.wastedfoodteam.model.Seller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -45,7 +45,7 @@ public class FragmentListProduct extends ListFragment {
         View view = inflater.inflate(R.layout.fragment_list_product_buyer, container, false);
         Log.i("FragmentListProduct", "Show the list view");
         //set up url volley
-        urlGetData = Variable.ipAddress + Variable.SEARCH_PRODUCT;
+        urlGetData = Variable.IP_ADDRESS + Variable.SEARCH_PRODUCT;
 
         //mapping view
         lvProduction = view.findViewById(android.R.id.list);
@@ -81,11 +81,9 @@ public class FragmentListProduct extends ListFragment {
 
 
     public void getData() {
-
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        //TODO
         //require edit latitude
-        urlGetData = urlGetData + "?lat=" + Variable.gps.latitude + "&lng=" + Variable.gps.longitude
+        urlGetData = urlGetData + "?lat=" + Variable.gps.getLatitude() + "&lng=" + Variable.gps.getLongitude()
                 + "&distance=" + Variable.distance
                 + "&start_time=" + Variable.startTime + "&end_time=" + Variable.endTime
                 + "&discount=" + Variable.discount;
@@ -109,6 +107,7 @@ public class FragmentListProduct extends ListFragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_LONG);
                     }
                 });
         requestQueue.add(getProductAround);
@@ -134,10 +133,11 @@ public class FragmentListProduct extends ListFragment {
 
     public void createNewArrayProduct() {
         arrProduct = new ArrayList<>();
-        if (adapter != null){
+        if (adapter != null) {
             adapter.getProductList().clear();
             adapter.setProductList(arrProduct);
-            adapter.notifyDataSetChanged();}
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void setUpArrayProduct() {

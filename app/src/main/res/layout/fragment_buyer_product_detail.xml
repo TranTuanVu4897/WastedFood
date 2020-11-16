@@ -105,7 +105,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btnIncreate"
+        android:id="@+id/btnIncrease"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="+"
@@ -117,15 +117,15 @@
         app:layout_constraintVertical_bias="0.063" />
 
     <Button
-        android:id="@+id/btnDecreate"
+        android:id="@+id/btnDecrease"
         android:layout_width="82dp"
         android:layout_height="49dp"
         android:text="-"
-        app:layout_constraintBottom_toBottomOf="@+id/btnIncreate"
+        app:layout_constraintBottom_toBottomOf="@+id/btnIncrease"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.031"
-        app:layout_constraintStart_toEndOf="@+id/btnIncreate"
-        app:layout_constraintTop_toTopOf="@+id/btnIncreate"
+        app:layout_constraintStart_toEndOf="@+id/btnIncrease"
+        app:layout_constraintTop_toTopOf="@+id/btnIncrease"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -133,10 +133,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/btnDecreate"
+        app:layout_constraintBottom_toBottomOf="@+id/btnDecrease"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnDecreate"
-        app:layout_constraintTop_toTopOf="@+id/btnDecreate" />
+        app:layout_constraintStart_toEndOf="@+id/btnDecrease"
+        app:layout_constraintTop_toTopOf="@+id/btnDecrease" />
 
     <Button
         android:id="@+id/btnBuy"

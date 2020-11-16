@@ -16,6 +16,13 @@ import java.util.Date;
 import java.util.Locale;
 
 public class CommonFunction {
+
+    /**
+     * set image view src from image url
+     * @param context
+     * @param src
+     * @param imageView
+     */
     public static void setImageViewSrc(Context context, String src, ImageView imageView) {
         if (src == null || src.isEmpty())
             imageView.setImageResource(R.drawable.no_image);
@@ -23,24 +30,52 @@ public class CommonFunction {
             Glide.with(context).load(src).into(imageView);
     }
 
-
+    /**
+     * set currency by double money input
+     * @param money
+     * @return
+     */
     public static String getCurrency(Double money) {
         return String.format("%,.0f", money) + " VND";
     }
 
+    /**
+     * set open close time string
+     * @param start_time
+     * @param end_time
+     * @return
+     */
     public static String getOpenClose(Date start_time, Date end_time) {
         return start_time.getHours() + ":" + start_time.getMinutes() + " : "
                 + end_time.getHours() + ":" + end_time.getMinutes();
     }
 
+    /**
+     * set discount string
+     * @param sell_price
+     * @param original_price
+     * @return
+     */
     public static String getDiscount(double sell_price, double original_price) {
         return "%" + String.format("%.0f", sell_price / original_price * 100);
     }
 
+    /**
+     * set quantity string
+     * @param remain_quantity
+     * @param original_quantity
+     * @return
+     */
     public static String getQuantity(int remain_quantity, int original_quantity) {
         return "Còn: " + remain_quantity + "/" + original_quantity;
     }
 
+    /**
+     * set textview for out of stock
+     * @param tvQuantity
+     * @param remain_quantity
+     * @param original_quantity
+     */
     public static void setQuantityTextView(TextView tvQuantity, int remain_quantity, int original_quantity) {
         if (remain_quantity > 0)
             tvQuantity.setText(getQuantity(remain_quantity, original_quantity));

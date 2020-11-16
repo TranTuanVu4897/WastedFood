@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.buyer;
+package com.example.wastedfoodteam.buyer.followseller;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.buyer.buy.FragmentSellerDetail;
+import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Seller;
 
@@ -49,7 +49,7 @@ public class FragmentReport extends Fragment {
         //mapping
         mapping(view);
         //get param
-        url = Variable.ipAddress + "FeedbackReport/report.php";
+        url = Variable.IP_ADDRESS + "FeedbackReport/report.php";
         accusedName = seller.getName();
         reporterId = Variable.ACCOUNT_ID+"";
         tvAccused.setText(seller.getName());
@@ -82,7 +82,6 @@ public class FragmentReport extends Fragment {
                     default:
                         Toast.makeText(getActivity(), "OK Insert data", Toast.LENGTH_LONG).show();
                         try {
-
                             startActivity(intent);
                         } catch (Exception e) {
                             e.printStackTrace();

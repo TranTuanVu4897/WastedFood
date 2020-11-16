@@ -25,14 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
-import com.example.wastedfoodteam.utils.DownloadImageTask;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -90,7 +83,7 @@ public class SellerDetailProductFragment extends Fragment {
         btn_detail_product_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String urlGetData = Variable.ipAddress + "seller/updateProductByID.php";
+                String urlGetData = Variable.IP_ADDRESS + "seller/updateProductByID.php";
                 updateProduct(urlGetData);
             }
         });

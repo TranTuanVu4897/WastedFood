@@ -19,7 +19,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.wastedfoodteam.DirectionParser;
+import com.example.wastedfoodteam.global.Variable;
+import com.example.wastedfoodteam.utils.DirectionParser;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.model.Buyer;
 import com.example.wastedfoodteam.model.Order;
@@ -50,8 +51,6 @@ import java.util.List;
 public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     private final static int MY_PERMISSIONS_REQUEST = 32;
-    private Buyer buyer;
-    private Product product;
     private Order order;
     private TextView tvTitle, tvBuyQuantity;
     private ImageView ivProduct;
@@ -68,35 +67,20 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_buyer_order_detail, container, false);
 
-        product = new Product();//TODO delete later
-
         //mapping
         tvTitle = view.findViewById(R.id.tvProductName);
         tvBuyQuantity = view.findViewById(R.id.tvBuyQuantity);
         ivProduct = view.findViewById(R.id.ivProduct);
 
-
-        Bundle bundle = getActivity().getIntent().getExtras();
-        buyer = (Buyer) getArguments().get("BUYER");
-
         //set content
-        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), product.getImage(), ivProduct);
+        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), order.getProduct().getImage(), ivProduct);
         tvBuyQuantity.setText("Đã đặt trước: " + order.getQuantity() + " sản phẩm.");
 
         //show dialog//TODO
-        if (order.getStatus() == Order.Status.SUCCESS && order.getBuyer_comment() == null){
-            RatingDialog ratingDialog = new RatingDialog(getActivity(),getLayoutInflater(),order);
+        if (order.getStatus() == Order.Status.SUCCESS && order.getBuyer_comment() == null) {
+            RatingDialog ratingDialog = new RatingDialog(getActivity(), getLayoutInflater(), order);
             ratingDialog.displayRatingOrderDialog();
         }
-
-
-        //TODO fix later
-        String apikey = getString(R.string.maps_api_key);
-        LatLng here = new LatLng(21.013255, 105.5248756);
-        LatLng end = new LatLng(21.0092414, 105.528148);
-        float[] distanceB = new float[1];
-        Location.distanceBetween(here.latitude, here.longitude, end.latitude, end.longitude, distanceB);
-
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
@@ -115,19 +99,11 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
 
 
         // Add a marker in fptUniversity and move the camera
-        LatLng fptUniversity = new LatLng(21.013255, 105.5248756);
+        LatLng fptUniversity = new LatLng(Variable.gps.getLatitude(), Variable.gps.getLongitude());
         mMap.addMarker(new MarkerOptions().position(fptUniversity).title("Bạn ở đây"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(order.getProduct().getSeller().getLatitude(), order.getProduct().getSeller().getLongitude())).title(order.getProduct().getSeller().getName()));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(fptUniversity, 16f));
         new TaskDirectionRequest().execute(buildRequestUrl(fptUniversity, new LatLng(order.getProduct().getSeller().getLatitude(), order.getProduct().getSeller().getLongitude())));
-    }
-
-    private void requestPermission(String permission) {
-        if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{permission},
-                    MY_PERMISSIONS_REQUEST);
-        }
     }
 
     private String buildRequestUrl(LatLng origin, LatLng destination) {
