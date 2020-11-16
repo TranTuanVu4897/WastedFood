@@ -68,7 +68,7 @@ public class FragmentSellerDetail extends ListFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_seller_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_buyer_get_seller_detail, container, false);
         mapping(view);
         //set up url volley
 
@@ -156,14 +156,12 @@ public class FragmentSellerDetail extends ListFragment {
         tvDescription = view.findViewById(R.id.tvDescriptionFSD);
         ivPhotoSeller = view.findViewById(R.id.ivPhotoSellerFSD);
         btnReport = view.findViewById(R.id.btnReportFSD);
+        ibFollow = view.findViewById(R.id.iBtnFollow);
     }
 
     public void getData(String urlGetData) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        //TODO
-        //require edit latitude
-
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
                     @Override
@@ -201,7 +199,7 @@ public class FragmentSellerDetail extends ListFragment {
 
         //open detail product fragment
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flSearchResultAH, detailProduct, "")//TODO check if this work
+                .replace(R.id.flSearchResultAH, detailProduct, "")
                 .addToBackStack(null)
                 .commit();
     }
@@ -258,7 +256,7 @@ public class FragmentSellerDetail extends ListFragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "ERROR " + url, Toast.LENGTH_LONG).show();//TODO get data
+                Toast.makeText(getActivity(), "ERROR " + url, Toast.LENGTH_LONG).show();
             }
         }
         ) {

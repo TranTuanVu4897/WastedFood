@@ -94,7 +94,7 @@ public class FragmentReport extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "ERROR " + url, Toast.LENGTH_LONG).show();//TODO get data
+                Toast.makeText(getActivity(), "ERROR " + url, Toast.LENGTH_LONG).show();
             }
         }
         ) {

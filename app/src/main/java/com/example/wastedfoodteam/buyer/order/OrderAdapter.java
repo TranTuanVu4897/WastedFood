@@ -22,7 +22,6 @@ public class OrderAdapter extends BaseAdapter {
     private List<Order> orderList;
     Resources resources;
 
-    //TODO fix all sources
     public OrderAdapter(Context context, int layout, List<Order> orderList, Resources resources) {
         this.context = context;
         this.layout = layout;

@@ -39,11 +39,12 @@
         app:layout_constraintBottom_toBottomOf="@+id/iBtnFollow"
         app:layout_constraintEnd_toEndOf="@+id/iBtnFollow"
         app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintStart_toStartOf="@+id/tableLayout"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/iBtnFollow"
         app:layout_constraintVertical_bias="0.0" />
 
     <TableLayout
+        android:layout_marginTop="0dp"
         android:id="@+id/tableLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -178,7 +179,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textSize="20dp"
             android:text="Một vài dòng mô tả của cửa hàng"
+            android:maxWidth="300dp"
             android:textAlignment="center" />
     </TableLayout>
 

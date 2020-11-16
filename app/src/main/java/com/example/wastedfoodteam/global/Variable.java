@@ -19,7 +19,6 @@ public class Variable {
 //    public static final String IP_ADDRESS ="http://192.168.156.2/wastedfoodphp/";//DucHC ip lan
 //    public static final String IP_ADDRESS ="https://wasted-food-service.herokuapp.com/";//heroku server
 
-    //TODO
     //other php variable
     public static final String SEARCH_PRODUCT = "search/getListProducts.php";
 

@@ -42,7 +42,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class FragmentDetailProduct extends Fragment {
     private Product product;
     private final String UPDATE_ORDER_URL = Variable.IP_ADDRESS + Variable.INSERT_NEW_ORDER;
-    private final String GET_SELLER_URL = Variable.IP_ADDRESS + Variable.GET_SELLER_BY_ID;
     private final String GET_FOLLOW_INFORMATION_URL = Variable.IP_ADDRESS + Variable.GET_FOLLOW;
     private final String UPDATE_FOLLOW_URL = Variable.IP_ADDRESS + Variable.UPDATE_FOLLOW;
     private int orderQuantity;
@@ -75,7 +74,7 @@ public class FragmentDetailProduct extends Fragment {
         tvQuantity.setText("Còn: " + product.getRemain_quantity() + "/" + product.getOriginal_quantity());
         tvPriceDiscount.setText(product.getSell_price() + "");
         tvPriceOriginal.setText(product.getOriginal_price() + "");
-        tvOpenTime.setText("Mở cửa từ: " + product.getStart_time() + " - " + product.getEnd_time());//TODO edit format date
+        tvOpenTime.setText("Mở cửa từ: " + CommonFunction.getOpenClose(product.getStart_time(),product.getEnd_time()));
         tvDescription.setText(product.getDescription());
         tvBuyQuantity.setText(orderQuantity + "");
 
@@ -138,7 +137,7 @@ public class FragmentDetailProduct extends Fragment {
                 fragmentSellerDetail.setArguments(bundle);
 
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.flSearchResultAH, fragmentSellerDetail, "")//TODO check if this work
+                        .replace(R.id.flSearchResultAH, fragmentSellerDetail, "")
                         .addToBackStack(null)
                         .commit();
             }
@@ -235,7 +234,7 @@ public class FragmentDetailProduct extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("buyer", Variable.ACCOUNT_ID + "");//TODO change to other ways
+                params.put("buyer", Variable.ACCOUNT_ID + "");
                 params.put("product", product.getId() + "");
                 params.put("quantity", orderQuantity + "");
                 params.put("status", Order.Status.BUYING + "");
@@ -260,7 +259,7 @@ public class FragmentDetailProduct extends Fragment {
         fragmentOrderDetail.setArguments(bundle);
 
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flSearchResultAH, fragmentOrderDetail, "")//TODO check if this work
+                .replace(R.id.flSearchResultAH, fragmentOrderDetail, "")
                 .addToBackStack(null)
                 .commit();
 

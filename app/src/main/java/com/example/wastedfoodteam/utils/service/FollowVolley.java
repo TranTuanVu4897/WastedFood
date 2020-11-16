@@ -25,7 +25,7 @@ public class FollowVolley {
 
     public FollowVolley(Context context) {
         this.context = context;
-        this.requestQueue = Volley.newRequestQueue(context);//TODO add to only one request
+        this.requestQueue = Volley.newRequestQueue(context);
 
     }
 

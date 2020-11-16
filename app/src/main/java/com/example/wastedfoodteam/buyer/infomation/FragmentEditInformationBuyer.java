@@ -116,7 +116,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();//TODO get data
+                Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();
                 try {
                     JSONArray object = new JSONArray(response);
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();

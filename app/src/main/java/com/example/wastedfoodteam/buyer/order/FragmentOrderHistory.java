@@ -95,7 +95,7 @@ public class FragmentOrderHistory extends ListFragment {
 
         //open detail order fragment
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flSearchResultAH, orderDetail, "")//TODO check if this work
+                .replace(R.id.flSearchResultAH, orderDetail, "")
                 .addToBackStack(null)
                 .commit();
     }

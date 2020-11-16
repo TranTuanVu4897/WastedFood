@@ -63,7 +63,6 @@ public class BuyHomeActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         REQUEST_CODE_PERMISSION);
 
-                //TODO dialog confirm
                 finishAndRemoveTask();
 
             }
