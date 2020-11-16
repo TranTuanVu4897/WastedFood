@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.utils.CommonFunction;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -50,10 +51,9 @@ public class FragmentBuyerInformation extends Fragment {
 
                     tvEmail.setText("Email:" + object.getString("email"));
                     tvName.setText("Name:" + object.getString("name"));
-//                    txtId.setText("id:" + object.getString("id"));
                     String idF = object.getString("id");
                     String imageF = "https://graph.facebook.com/" + idF + "/picture?type=large";
-                    Glide.with(getActivity()).load(imageF).into(avatarBuyer);
+                    CommonFunction.setImageViewSrc(getActivity(),imageF,avatarBuyer);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -29,7 +29,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 public class FragmentListSellerFollow extends ListFragment {
-    String urlGetData;
+    final String urlGetData = Variable.IP_ADDRESS + "information/getListSellerFollow.php?buyer_id=" + Variable.ACCOUNT_ID;
     SellerFollowAdapter adapter;
     ArrayList<Seller> listSellers;
     ListView lvSeller;
@@ -40,7 +40,6 @@ public class FragmentListSellerFollow extends ListFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_seller_follow, container, false);
-        urlGetData = Variable.IP_ADDRESS + "information/getListSellerFollow.php?buyer_id=" + Variable.ACCOUNT_ID;
         lvSeller = view.findViewById(android.R.id.list);
         listSellers = new ArrayList<>();
         adapter = new SellerFollowAdapter(getActivity().getApplicationContext(), R.layout.list_seller_follow_item, listSellers, getResources());
@@ -54,21 +53,21 @@ public class FragmentListSellerFollow extends ListFragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        try {
-                            JSONArray jsonProducts = new JSONArray(response);
-                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                            for (int i = 0; i < jsonProducts.length(); i++) {
-                                listSellers.add((Seller) gson.fromJson(jsonProducts.getString(i), Seller.class));
-                                adapter.notifyDataSetChanged();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+            @Override
+            public void onResponse(String response) {
+                // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                try {
+                    JSONArray jsonProducts = new JSONArray(response);
+                    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                    for (int i = 0; i < jsonProducts.length(); i++) {
+                        listSellers.add((Seller) gson.fromJson(jsonProducts.getString(i), Seller.class));
+                        adapter.notifyDataSetChanged();
                     }
-                },
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {

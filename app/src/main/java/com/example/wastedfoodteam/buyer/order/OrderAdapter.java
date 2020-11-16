@@ -58,15 +58,8 @@ public class OrderAdapter extends BaseAdapter {
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(layout, null);
-            holder.tvName = convertView.findViewById(R.id.tvTitleLPI);
-            holder.ivProduct = convertView.findViewById(R.id.ivProductLPI);
-            holder.tvDirect = convertView.findViewById(R.id.tvDirection);
-            holder.tvDiscount = convertView.findViewById(R.id.tvDiscount);
-            holder.tvQuantity = convertView.findViewById(R.id.tvQuantity);
-            holder.tvOpenTime = convertView.findViewById(R.id.tvOpenTime);
-            holder.tvOriginalPrice = convertView.findViewById(R.id.tvOriginalPrice);
-            holder.tvSellPrice = convertView.findViewById(R.id.tvSellPrice);
-            holder.tvRating = convertView.findViewById(R.id.tvRating);
+            mappingViewToHolder(holder,convertView);
+
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -82,5 +75,17 @@ public class OrderAdapter extends BaseAdapter {
 
         return convertView;
 
+    }
+
+    private void mappingViewToHolder(ViewHolder holder, View convertView) {
+        holder.tvName = convertView.findViewById(R.id.tvTitleLPI);
+        holder.ivProduct = convertView.findViewById(R.id.ivProductLPI);
+        holder.tvDirect = convertView.findViewById(R.id.tvDirection);
+        holder.tvDiscount = convertView.findViewById(R.id.tvDiscount);
+        holder.tvQuantity = convertView.findViewById(R.id.tvQuantity);
+        holder.tvOpenTime = convertView.findViewById(R.id.tvOpenTime);
+        holder.tvOriginalPrice = convertView.findViewById(R.id.tvOriginalPrice);
+        holder.tvSellPrice = convertView.findViewById(R.id.tvSellPrice);
+        holder.tvRating = convertView.findViewById(R.id.tvRating);
     }
 }

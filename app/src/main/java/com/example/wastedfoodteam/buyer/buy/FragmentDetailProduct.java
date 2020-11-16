@@ -28,16 +28,11 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.followseller.FragmentSellerDetail;
 import com.example.wastedfoodteam.buyer.order.FragmentOrderDetail;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.model.Buyer;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Product;
-import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.service.FollowResponseCallback;
 import com.example.wastedfoodteam.utils.service.FollowVolley;
-import com.example.wastedfoodteam.utils.service.SellerResponseCallback;
-import com.example.wastedfoodteam.utils.service.SellerVolley;
-import com.google.android.gms.maps.GoogleMap;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,14 +40,11 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FragmentDetailProduct extends Fragment {
-    private GoogleMap mMap;
     private Product product;
-    private Seller seller;
-    private Buyer buyer;
-    private String updateOrderUrl;
-    private String getSellerUrl;
-    private String GET_FOLLOW_INFORMATION_URL;
-    private String UPDATE_FOLLOW_URL;
+    private final String UPDATE_ORDER_URL = Variable.IP_ADDRESS + Variable.INSERT_NEW_ORDER;
+    private final String GET_SELLER_URL = Variable.IP_ADDRESS + Variable.GET_SELLER_BY_ID;
+    private final String GET_FOLLOW_INFORMATION_URL = Variable.IP_ADDRESS + Variable.GET_FOLLOW;
+    private final String UPDATE_FOLLOW_URL = Variable.IP_ADDRESS + Variable.UPDATE_FOLLOW;
     private int orderQuantity;
     ImageButton ibFollow;
     ImageView ivProduct;
@@ -75,28 +67,10 @@ public class FragmentDetailProduct extends Fragment {
         //mapping view
         mappingViewWithVariable(view);
 
-
-        //set url
-        updateOrderUrl = Variable.IP_ADDRESS + Variable.INSERT_NEW_ORDER;
-        getSellerUrl = Variable.IP_ADDRESS + Variable.GET_SELLER_BY_ID;
-        GET_FOLLOW_INFORMATION_URL = Variable.IP_ADDRESS + Variable.GET_FOLLOW;
-        UPDATE_FOLLOW_URL = Variable.IP_ADDRESS + Variable.UPDATE_FOLLOW;
-
         //get bundle values
-        buyer = (Buyer) getArguments().get("BUYER");
         product = (Product) getArguments().get("PRODUCT");
 
-        //set content for views about seller
-        SellerVolley sellerVolley = new SellerVolley(getActivity().getApplicationContext(), getSellerUrl);
-        sellerVolley.setRequestGetSeller(new SellerResponseCallback() {
-                                             @Override
-                                             public void onSuccess(Seller seller) {
-                                                 CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), seller.getImage(), civSeller);
-                                                 Variable.SELLER = seller;
-                                             }
-                                         },
-                product.getSeller_id() + "");
-
+        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), product.getSeller().getImage(), civSeller);
         //set content for views about product
         tvQuantity.setText("Còn: " + product.getRemain_quantity() + "/" + product.getOriginal_quantity());
         tvPriceDiscount.setText(product.getSell_price() + "");
@@ -111,9 +85,9 @@ public class FragmentDetailProduct extends Fragment {
             @Override
             public void onSuccess(String result) {
                 if (result.equalsIgnoreCase("TRUE")) {
-                    changeButtonFollowStatus(ibFollow,R.drawable.followed);
+                    changeButtonFollowStatus(ibFollow, R.drawable.followed);
                 } else {
-                    changeButtonFollowStatus(ibFollow,R.drawable.not_followed);
+                    changeButtonFollowStatus(ibFollow, R.drawable.not_followed);
                 }
 
             }
@@ -141,7 +115,7 @@ public class FragmentDetailProduct extends Fragment {
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                confirmBuy();
+                setDialogConfirmBuy();
             }
         });
 
@@ -149,7 +123,7 @@ public class FragmentDetailProduct extends Fragment {
         ibFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               imageButtonFollowOnClick(v);
+                imageButtonFollowOnClick(v);
             }
         });
 
@@ -186,25 +160,25 @@ public class FragmentDetailProduct extends Fragment {
         }
     }
 
-    private void imageButtonFollowOnClick(View v){
+    private void imageButtonFollowOnClick(View v) {
         if (ibFollow.getTag() != null)
             if (isImageButtonIsFollowed(ibFollow.getTag())) {
-                changeButtonFollowStatus(ibFollow,R.drawable.not_followed);
+                changeButtonFollowStatus(ibFollow, R.drawable.not_followed);
             } else {
-                changeButtonFollowStatus(ibFollow,R.drawable.followed);
+                changeButtonFollowStatus(ibFollow, R.drawable.followed);
             }
     }
 
-    private boolean isImageButtonIsFollowed(Object tag){
+    private boolean isImageButtonIsFollowed(Object tag) {
         return tag.equals(R.drawable.followed);
     }
 
-    private void changeButtonFollowStatus(ImageButton ibFollow, int resourceId){
+    private void changeButtonFollowStatus(ImageButton ibFollow, int resourceId) {
         ibFollow.setImageResource(resourceId);
         ibFollow.setTag(resourceId);
     }
 
-    private boolean confirmBuy() {
+    private boolean setDialogConfirmBuy() {
         final Dialog confirmDialog = new Dialog(getActivity());
         confirmDialog.setTitle("Xác nhận mua hàng");
         confirmDialog.setContentView(R.layout.dialog_buyer_confirm_buy);
@@ -238,7 +212,7 @@ public class FragmentDetailProduct extends Fragment {
      */
     private void btnBuyOnClick(final String message) {
         RequestQueue requestInsertOrder = Volley.newRequestQueue(getActivity().getApplicationContext());
-        StringRequest stringRequestInsert = new StringRequest(Request.Method.POST, updateOrderUrl, new Response.Listener<String>() {
+        StringRequest stringRequestInsert = new StringRequest(Request.Method.POST, UPDATE_ORDER_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (response.equalsIgnoreCase("SUCCESS")) {
@@ -292,7 +266,6 @@ public class FragmentDetailProduct extends Fragment {
 
     }
 
-
     /**
      * Set value for view variable
      *
@@ -320,7 +293,7 @@ public class FragmentDetailProduct extends Fragment {
     @Override
     public void onPause() {
         boolean isFollow = false;
-        if (isImageButtonIsFollowed( ibFollow.getTag())) isFollow = true;
+        if (isImageButtonIsFollowed(ibFollow.getTag())) isFollow = true;
         followVolley.setRequestUpdateFollow(new FollowResponseCallback() {
             @Override
             public void onSuccess(String result) {

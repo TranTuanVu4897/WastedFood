@@ -82,7 +82,6 @@ public class FragmentReport extends Fragment {
                     default:
                         Toast.makeText(getActivity(), "OK Insert data", Toast.LENGTH_LONG).show();
                         try {
-
                             startActivity(intent);
                         } catch (Exception e) {
                             e.printStackTrace();

@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -80,9 +81,7 @@ public class FragmentListProduct extends ListFragment {
 
 
     public void getData() {
-
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        //TODO
         //require edit latitude
         urlGetData = urlGetData + "?lat=" + Variable.gps.getLatitude() + "&lng=" + Variable.gps.getLongitude()
                 + "&distance=" + Variable.distance
@@ -108,6 +107,7 @@ public class FragmentListProduct extends ListFragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_LONG);
                     }
                 });
         requestQueue.add(getProductAround);
@@ -133,10 +133,11 @@ public class FragmentListProduct extends ListFragment {
 
     public void createNewArrayProduct() {
         arrProduct = new ArrayList<>();
-        if (adapter != null){
+        if (adapter != null) {
             adapter.getProductList().clear();
             adapter.setProductList(arrProduct);
-            adapter.notifyDataSetChanged();}
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void setUpArrayProduct() {

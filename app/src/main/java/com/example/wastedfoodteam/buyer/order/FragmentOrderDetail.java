@@ -51,8 +51,6 @@ import java.util.List;
 public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     private final static int MY_PERMISSIONS_REQUEST = 32;
-    private Buyer buyer;
-    private Product product;
     private Order order;
     private TextView tvTitle, tvBuyQuantity;
     private ImageView ivProduct;
@@ -69,24 +67,18 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_buyer_order_detail, container, false);
 
-        product = new Product();//TODO delete later
-
         //mapping
         tvTitle = view.findViewById(R.id.tvProductName);
         tvBuyQuantity = view.findViewById(R.id.tvBuyQuantity);
         ivProduct = view.findViewById(R.id.ivProduct);
 
-
-        Bundle bundle = getActivity().getIntent().getExtras();
-        buyer = (Buyer) getArguments().get("BUYER");
-
         //set content
-        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), product.getImage(), ivProduct);
+        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), order.getProduct().getImage(), ivProduct);
         tvBuyQuantity.setText("Đã đặt trước: " + order.getQuantity() + " sản phẩm.");
 
         //show dialog//TODO
-        if (order.getStatus() == Order.Status.SUCCESS && order.getBuyer_comment() == null){
-            RatingDialog ratingDialog = new RatingDialog(getActivity(),getLayoutInflater(),order);
+        if (order.getStatus() == Order.Status.SUCCESS && order.getBuyer_comment() == null) {
+            RatingDialog ratingDialog = new RatingDialog(getActivity(), getLayoutInflater(), order);
             ratingDialog.displayRatingOrderDialog();
         }
 
@@ -112,14 +104,6 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
         mMap.addMarker(new MarkerOptions().position(new LatLng(order.getProduct().getSeller().getLatitude(), order.getProduct().getSeller().getLongitude())).title(order.getProduct().getSeller().getName()));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(fptUniversity, 16f));
         new TaskDirectionRequest().execute(buildRequestUrl(fptUniversity, new LatLng(order.getProduct().getSeller().getLatitude(), order.getProduct().getSeller().getLongitude())));
-    }
-
-    private void requestPermission(String permission) {
-        if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), permission) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{permission},
-                    MY_PERMISSIONS_REQUEST);
-        }
     }
 
     private String buildRequestUrl(LatLng origin, LatLng destination) {
