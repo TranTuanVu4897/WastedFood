@@ -68,12 +68,6 @@ public class FragmentDetailProduct extends Fragment {
         orderQuantity = 1;
     }
 
-    public FragmentDetailProduct(Product product, Seller seller) {
-        orderQuantity = 1;
-        this.product = product;
-        this.seller = seller;
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -116,13 +110,10 @@ public class FragmentDetailProduct extends Fragment {
         followVolley.setRequestGetFollow(new FollowResponseCallback() {
             @Override
             public void onSuccess(String result) {
-
                 if (result.equalsIgnoreCase("TRUE")) {
-                    ibFollow.setImageResource(R.drawable.followed);
-                    ibFollow.setTag(R.drawable.followed);
+                    changeButtonFollowStatus(ibFollow,R.drawable.followed);
                 } else {
-                    ibFollow.setTag(R.drawable.not_followed);
-                    ibFollow.setImageResource(R.drawable.not_followed);
+                    changeButtonFollowStatus(ibFollow,R.drawable.not_followed);
                 }
 
             }
@@ -136,20 +127,14 @@ public class FragmentDetailProduct extends Fragment {
         btnDecrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (orderQuantity > 0) {
-                    orderQuantity--;
-                    tvBuyQuantity.setText(orderQuantity + "");
-                }
+                btnDecreaseOnclick();
             }
         });
 
         btnIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (orderQuantity < product.getRemain_quantity()) {
-                    orderQuantity++;
-                    tvBuyQuantity.setText(orderQuantity + "");
-                }
+                btnIncreaseOnClick();
             }
         });
 
@@ -164,14 +149,7 @@ public class FragmentDetailProduct extends Fragment {
         ibFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ibFollow.getTag() != null)
-                    if (ibFollow.getTag().equals(R.drawable.followed)) {
-                        ibFollow.setImageResource(R.drawable.not_followed);
-                        ibFollow.setTag(R.drawable.not_followed);
-                    } else {
-                        ibFollow.setImageResource(R.drawable.followed);
-                        ibFollow.setTag(R.drawable.followed);
-                    }
+               imageButtonFollowOnClick(v);
             }
         });
 
@@ -192,6 +170,38 @@ public class FragmentDetailProduct extends Fragment {
             }
         });
         return view;
+    }
+
+    private void btnIncreaseOnClick() {
+        if (orderQuantity < product.getRemain_quantity()) {
+            orderQuantity++;
+            tvBuyQuantity.setText(orderQuantity + "");
+        }
+    }
+
+    private void btnDecreaseOnclick() {
+        if (orderQuantity > 0) {
+            orderQuantity--;
+            tvBuyQuantity.setText(orderQuantity + "");
+        }
+    }
+
+    private void imageButtonFollowOnClick(View v){
+        if (ibFollow.getTag() != null)
+            if (isImageButtonIsFollowed(ibFollow.getTag())) {
+                changeButtonFollowStatus(ibFollow,R.drawable.not_followed);
+            } else {
+                changeButtonFollowStatus(ibFollow,R.drawable.followed);
+            }
+    }
+
+    private boolean isImageButtonIsFollowed(Object tag){
+        return tag.equals(R.drawable.followed);
+    }
+
+    private void changeButtonFollowStatus(ImageButton ibFollow, int resourceId){
+        ibFollow.setImageResource(resourceId);
+        ibFollow.setTag(resourceId);
     }
 
     private boolean confirmBuy() {
@@ -310,7 +320,7 @@ public class FragmentDetailProduct extends Fragment {
     @Override
     public void onPause() {
         boolean isFollow = false;
-        if (ibFollow.getTag().equals(R.drawable.followed)) isFollow = true;
+        if (isImageButtonIsFollowed( ibFollow.getTag())) isFollow = true;
         followVolley.setRequestUpdateFollow(new FollowResponseCallback() {
             @Override
             public void onSuccess(String result) {
