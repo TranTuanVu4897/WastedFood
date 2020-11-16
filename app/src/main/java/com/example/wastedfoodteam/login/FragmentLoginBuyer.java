@@ -66,7 +66,6 @@ public class FragmentLoginBuyer extends Fragment {
     EditText etSDT, etPass;
     TextView tvWarning;
     Button btnSignIn, btnPartnerOption, btnSignInGoogle;
-    //    SignInButton btnSignInGoogle;
     LoginButton btnSignInFacebook;
     CallbackManager callbackManager;
     String urlGetData = "";
@@ -94,9 +93,8 @@ public class FragmentLoginBuyer extends Fragment {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 resultFacebook();
-                Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
                 Variable.CHECK_LOGIN = 2;
-                startActivity(intent);
+                openBuyHomeActivity();
             }
 
             @Override
@@ -175,7 +173,7 @@ public class FragmentLoginBuyer extends Fragment {
             Variable.CHECK_LOGIN = 1;
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             resultGoogle();
-            startActivity(new Intent(getActivity(), BuyHomeActivity.class));
+            openBuyHomeActivity();
         } catch (ApiException e) {
             e.printStackTrace();
             Log.w("TAG", "Failed code" + e.getStatusCode());
@@ -211,7 +209,7 @@ public class FragmentLoginBuyer extends Fragment {
     public void onStart() {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
         if (account != null) {
-            startActivity(new Intent(getActivity(), BuyHomeActivity.class));
+            openBuyHomeActivity();
         }
         super.onStart();
     }
@@ -223,9 +221,8 @@ public class FragmentLoginBuyer extends Fragment {
     private void handleSignInFacebook() {
         //check loginFB
         if (AccessToken.getCurrentAccessToken() != null && com.facebook.Profile.getCurrentProfile() != null) {LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
-            Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
             Variable.CHECK_LOGIN = 2;
-            startActivity(intent);
+            openBuyHomeActivity();
         }
     }
 
@@ -287,10 +284,8 @@ public class FragmentLoginBuyer extends Fragment {
 
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             Buyer buyer = gson.fromJson(object.getString(0), Buyer.class);
-                            Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
                             Variable.ACCOUNT_ID = buyer.getId();
-                            //TODO pass data through intent
-                            startActivity(intent);
+                            openBuyHomeActivity();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -368,10 +363,8 @@ public class FragmentLoginBuyer extends Fragment {
 
                     Buyer buyer = gson.fromJson(object.getString(0), Buyer.class);
 
-                    Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
                     Variable.ACCOUNT_ID = buyer.getId();
-                    //TODO pass data through intent
-                    startActivity(intent);
+                    openBuyHomeActivity();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -399,5 +392,10 @@ public class FragmentLoginBuyer extends Fragment {
         requestQueue.add(stringRequest);
     }
 
+    private void openBuyHomeActivity(){
+        Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+        getActivity().finish();
+        startActivity(intent);
+    }
 
 }

@@ -31,11 +31,8 @@ public class FilterDialog {
     }
 
     public interface ModifyFilter {
-
         void onClear();
-
         void onChange();
-
     }
 
 

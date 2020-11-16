@@ -34,7 +34,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Seller;
-import com.example.wastedfoodteam.utils.DownloadImageTask;
+import com.example.wastedfoodteam.utils.CommonFunction;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -168,7 +168,7 @@ public class EditSellerFragment extends Fragment {
                             editText_editSeller_name.setText(seller.getName());
                             editText_editSeller_address.setText(seller.getAddress());
                             editText_editSeller_description.setText(seller.getDescription());
-                            new DownloadImageTask(iv_editSeller_avatar,getResources()).execute(seller.getImage());
+                            CommonFunction.setImageViewSrc(getActivity(),seller.getImage(),iv_editSeller_avatar);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -190,8 +190,6 @@ public class EditSellerFragment extends Fragment {
         name = editText_editSeller_name.getText().toString().trim();
         address = editText_editSeller_address.getText().toString();
         description = editText_editSeller_description.getText().toString();
-
-
 
         //Validate
         //TODO Do it later
