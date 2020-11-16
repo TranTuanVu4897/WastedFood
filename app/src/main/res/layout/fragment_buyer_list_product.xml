@@ -19,7 +19,31 @@
             android:layout_margin="10dp"
             android:hint="Tìm kiếm" />
     </LinearLayout>
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:textAlignment="center"
+            android:text="Gần đây"
+            android:id="@+id/btnNearProduct"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:textAlignment="center"
+            android:text="Tất cả"
+            android:id="@+id/btnAllProduct"
+            android:layout_marginStart="20dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:textAlignment="center"
+            android:id="@+id/btnFollowSellerProduct"
+            android:text="Yêu thích"
+            android:layout_marginStart="20dp"
+            />
+    </LinearLayout>
 
         <ListView
             android:id="@android:id/list"

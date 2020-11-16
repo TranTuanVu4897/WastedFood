@@ -42,7 +42,7 @@ public class FragmentListProduct extends ListFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list_product_buyer, container, false);
+        View view = inflater.inflate(R.layout.fragment_buyer_list_product, container, false);
         Log.i("FragmentListProduct", "Show the list view");
         //set up url volley
         urlGetData = Variable.IP_ADDRESS + Variable.SEARCH_PRODUCT;
