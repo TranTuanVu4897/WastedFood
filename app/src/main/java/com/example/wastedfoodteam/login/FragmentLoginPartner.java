@@ -54,7 +54,7 @@ public class FragmentLoginPartner extends Fragment {
             @Override
             public void onClick(View v) {
                 password = md5(etPass.getText().toString());
-                urlGetData = Variable.ipAddress + "login/sellerLogin.php?username=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
+                urlGetData = Variable.IP_ADDRESS + "login/sellerLogin.php?username=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
                 getData(urlGetData);
             }
         });

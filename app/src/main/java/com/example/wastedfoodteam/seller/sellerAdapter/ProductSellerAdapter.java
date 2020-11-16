@@ -85,7 +85,7 @@ public class ProductSellerAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        final String urlGetData = Variable.ipAddress + "seller/setActiveForProduct.php";
+        final String urlGetData = Variable.IP_ADDRESS + "seller/setActiveForProduct.php";
         product = arrayProduct.get(position);
         //for remain textView
         if(product.getRemain_quantity()!=0){

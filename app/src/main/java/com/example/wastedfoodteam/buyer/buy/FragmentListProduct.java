@@ -44,7 +44,7 @@ public class FragmentListProduct extends ListFragment {
         View view = inflater.inflate(R.layout.fragment_list_product_buyer, container, false);
         Log.i("FragmentListProduct", "Show the list view");
         //set up url volley
-        urlGetData = Variable.ipAddress + Variable.SEARCH_PRODUCT;
+        urlGetData = Variable.IP_ADDRESS + Variable.SEARCH_PRODUCT;
 
         //mapping view
         lvProduction = view.findViewById(android.R.id.list);

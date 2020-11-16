@@ -25,7 +25,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
@@ -132,7 +131,7 @@ public class FragmentLoginBuyer extends Fragment {
 
                 } else {
                     Variable.CHECK_LOGIN = 0;
-                    urlGetData = Variable.ipAddress + "login/buyerLogin.php?phone=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
+                    urlGetData = Variable.IP_ADDRESS + "login/buyerLogin.php?phone=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
                     getData(urlGetData);
                 }
             }
@@ -332,7 +331,7 @@ public class FragmentLoginBuyer extends Fragment {
             String urlImage = personPhoto.toString();
             String gender = "1";
             String dob ="0000-00-00";
-            String urlInsert = Variable.ipAddress + "login/register3rdParty.php";
+            String urlInsert = Variable.IP_ADDRESS + "login/register3rdParty.php";
             checkDataAndInsert3rdParty(urlInsert, email, thirdPartyId, name, urlImage, dob, gender);
         }
     }
@@ -349,7 +348,7 @@ public class FragmentLoginBuyer extends Fragment {
                     String dob = object.getString("birthday");
                     String gender = "1";
                     String urlImage = "https://graph.facebook.com/" + thirdPartyId + "/picture?type=large";
-                    String urlInsert = Variable.ipAddress + "login/register3rdParty.php";
+                    String urlInsert = Variable.IP_ADDRESS + "login/register3rdParty.php";
 
                     checkDataAndInsert3rdParty(urlInsert, email, thirdPartyId, name, urlImage, dob, gender);
 

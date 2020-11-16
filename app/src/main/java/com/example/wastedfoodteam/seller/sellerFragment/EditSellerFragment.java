@@ -1,14 +1,11 @@
 package com.example.wastedfoodteam.seller.sellerFragment;
 
 import android.Manifest;
-import android.app.ProgressDialog;
-import android.app.VoiceInteractor;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -16,7 +13,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -33,24 +29,19 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.model.Seller;
-import com.example.wastedfoodteam.seller.editSeller.EditSellerActivity;
 import com.example.wastedfoodteam.utils.DownloadImageTask;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -163,7 +154,7 @@ public class EditSellerFragment extends Fragment {
     }
 
     private void getSeller(int id) {
-        urlGetData = Variable.ipAddress + "getSellerById.php?id=" + id;
+        urlGetData = Variable.IP_ADDRESS + "getSellerById.php?id=" + id;
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest getSellerRequestString = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
@@ -206,7 +197,7 @@ public class EditSellerFragment extends Fragment {
         //TODO Do it later
 
         //Modify in DB
-        String urlGetData = Variable.ipAddress + "seller/sellerEdit.php";
+        String urlGetData = Variable.IP_ADDRESS + "seller/sellerEdit.php";
         //updateSeller("http://192.168.1.10/wastedfoodphp/seller/sellerEdit.php");
         updateSeller(urlGetData);
 

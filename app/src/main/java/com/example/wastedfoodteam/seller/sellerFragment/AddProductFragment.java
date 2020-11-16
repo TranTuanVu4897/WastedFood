@@ -2,7 +2,6 @@ package com.example.wastedfoodteam.seller.sellerFragment;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -26,7 +25,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -39,19 +37,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.seller.AddProductActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
-import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -209,7 +202,7 @@ public class AddProductFragment extends Fragment {
         btn_add_product_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String urlGetData = Variable.ipAddress + Variable.ADD_PRODUCT_SELLER;
+                String urlGetData = Variable.IP_ADDRESS + Variable.ADD_PRODUCT_SELLER;
                 //addProduct("http://192.168.1.10/wastedfoodphp/seller/SellerCreateProduct.php");
                 addProduct(urlGetData);
             }

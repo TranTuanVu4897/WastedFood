@@ -7,11 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,7 +22,6 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Product;
-import com.example.wastedfoodteam.seller.sellerAdapter.OrderAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderConfirmAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderDoneAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderPaymentAdapter;
@@ -77,7 +74,7 @@ public class OrderDetailSellerFragment extends Fragment {
     public void getData(final String status) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        urlGetData = Variable.ipAddress + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() + "&product_id=" + Variable.PRODUCT.getId() + "&order_status=" + status;
+        urlGetData = Variable.IP_ADDRESS + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() + "&product_id=" + Variable.PRODUCT.getId() + "&order_status=" + status;
 
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {

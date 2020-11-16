@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -28,7 +27,7 @@ import java.util.Map;
 public class RatingDialog {
     private RatingBar rbRating;
     private EditText etRating;
-    final private String urlUpdateRating = Variable.ipAddress + Variable.UPDATE_RATING;
+    final private String urlUpdateRating = Variable.IP_ADDRESS + Variable.UPDATE_RATING;
     private int rating;
     Context context;
     LayoutInflater inflater;

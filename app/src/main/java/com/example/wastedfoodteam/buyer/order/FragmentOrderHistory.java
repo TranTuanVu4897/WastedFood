@@ -43,7 +43,7 @@ public class FragmentOrderHistory extends ListFragment {
 
         //set up url volley
 
-        urlGetData = Variable.ipAddress + Variable.ORDER_HISTORY + "?buyer_id=" + Variable.ACCOUNT_ID;
+        urlGetData = Variable.IP_ADDRESS + Variable.ORDER_HISTORY + "?buyer_id=" + Variable.ACCOUNT_ID;
 
         //mapping view
         lvOrder = view.findViewById(android.R.id.list);

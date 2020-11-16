@@ -83,10 +83,10 @@ public class FragmentDetailProduct extends Fragment {
 
 
         //set url
-        updateOrderUrl = Variable.ipAddress + Variable.INSERT_NEW_ORDER;
-        getSellerUrl = Variable.ipAddress + Variable.GET_SELLER_BY_ID;
-        GET_FOLLOW_INFORMATION_URL = Variable.ipAddress + Variable.GET_FOLLOW;
-        UPDATE_FOLLOW_URL = Variable.ipAddress + Variable.UPDATE_FOLLOW;
+        updateOrderUrl = Variable.IP_ADDRESS + Variable.INSERT_NEW_ORDER;
+        getSellerUrl = Variable.IP_ADDRESS + Variable.GET_SELLER_BY_ID;
+        GET_FOLLOW_INFORMATION_URL = Variable.IP_ADDRESS + Variable.GET_FOLLOW;
+        UPDATE_FOLLOW_URL = Variable.IP_ADDRESS + Variable.UPDATE_FOLLOW;
 
         //get bundle values
         buyer = (Buyer) getArguments().get("BUYER");

@@ -49,7 +49,7 @@ public class FragmentReport extends Fragment {
         //mapping
         mapping(view);
         //get param
-        url = Variable.ipAddress + "FeedbackReport/report.php";
+        url = Variable.IP_ADDRESS + "FeedbackReport/report.php";
         accusedName = seller.getName();
         reporterId = Variable.ACCOUNT_ID+"";
         tvAccused.setText(seller.getName());

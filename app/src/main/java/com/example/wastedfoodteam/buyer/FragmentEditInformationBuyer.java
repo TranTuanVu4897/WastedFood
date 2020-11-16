@@ -11,7 +11,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -56,7 +55,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         mapping(view);
 
         accountId = Variable.ACCOUNT_ID + "";
-        url = Variable.ipAddress + "information/informationBuyer.php?account_id=" + accountId;
+        url = Variable.IP_ADDRESS + "information/informationBuyer.php?account_id=" + accountId;
         getData(url);
 
         etDob.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +72,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                url = Variable.ipAddress + "information/changeInfoBuyer.php";
+                url = Variable.IP_ADDRESS + "information/changeInfoBuyer.php";
                 String name = etName.getText().toString();
                 if (name.trim().isEmpty()) {
                     Toast.makeText(getActivity(), "Vui lòng điền tên", Toast.LENGTH_LONG).show();

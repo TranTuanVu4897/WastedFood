@@ -61,8 +61,8 @@ public class FragmentSellerDetail extends ListFragment {
     TextView tvAccused;
     EditText etContent;
     Button btnCommit, btnCancel, btnReport;
-    private final String GET_FOLLOW_INFORMATION_URL = Variable.ipAddress + Variable.GET_FOLLOW;
-    private final String UPDATE_FOLLOW_URL = Variable.ipAddress + Variable.UPDATE_FOLLOW;
+    private final String GET_FOLLOW_INFORMATION_URL = Variable.IP_ADDRESS + Variable.GET_FOLLOW;
+    private final String UPDATE_FOLLOW_URL = Variable.IP_ADDRESS + Variable.UPDATE_FOLLOW;
     private FollowVolley followVolley;
 
     @Nullable
@@ -88,7 +88,7 @@ public class FragmentSellerDetail extends ListFragment {
         });
 
         //list product
-        urlGetData = Variable.ipAddress + "search/getListProductsOfSeller.php?seller_id=" + seller.getId();
+        urlGetData = Variable.IP_ADDRESS + "search/getListProductsOfSeller.php?seller_id=" + seller.getId();
 
         followVolley = new FollowVolley(getActivity().getApplicationContext());
         followVolley.setRequestGetFollow(new FollowResponseCallback() {
@@ -216,7 +216,7 @@ public class FragmentSellerDetail extends ListFragment {
         btnCommit = dialog.findViewById(R.id.btnCommitDR);
         btnCancel = dialog.findViewById(R.id.btnCancelDR);
         //set param
-        url = Variable.ipAddress + "FeedbackReport/report.php";
+        url = Variable.IP_ADDRESS + "FeedbackReport/report.php";
         reporterId = Variable.ACCOUNT_ID + "";
         accusedId = seller.getId() + "";
         btnCommit.setOnClickListener(new View.OnClickListener() {
