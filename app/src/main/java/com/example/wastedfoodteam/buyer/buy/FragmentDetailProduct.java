@@ -1,10 +1,12 @@
 package com.example.wastedfoodteam.buyer.buy;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,8 +51,8 @@ public class FragmentDetailProduct extends Fragment {
     private Buyer buyer;
     private String updateOrderUrl;
     private String getSellerUrl;
-    private String getFollowUrl;
-    private String updateFollowUrl;
+    private String GET_FOLLOW_INFORMATION_URL;
+    private String UPDATE_FOLLOW_URL;
     private int orderQuantity;
     ImageButton ibFollow;
     ImageView ivProduct;
@@ -83,11 +85,10 @@ public class FragmentDetailProduct extends Fragment {
         //set url
         updateOrderUrl = Variable.ipAddress + Variable.INSERT_NEW_ORDER;
         getSellerUrl = Variable.ipAddress + Variable.GET_SELLER_BY_ID;
-        getFollowUrl = Variable.ipAddress + Variable.GET_FOLLOW;
-        updateFollowUrl = Variable.ipAddress + Variable.UPDATE_FOLLOW;
+        GET_FOLLOW_INFORMATION_URL = Variable.ipAddress + Variable.GET_FOLLOW;
+        UPDATE_FOLLOW_URL = Variable.ipAddress + Variable.UPDATE_FOLLOW;
 
         //get bundle values
-        Bundle bundle = getActivity().getIntent().getExtras();
         buyer = (Buyer) getArguments().get("BUYER");
         product = (Product) getArguments().get("PRODUCT");
 
@@ -125,7 +126,7 @@ public class FragmentDetailProduct extends Fragment {
                 }
 
             }
-        }, getFollowUrl, Variable.ACCOUNT_ID, product.getSeller_id());
+        }, GET_FOLLOW_INFORMATION_URL, Variable.ACCOUNT_ID, product.getSeller_id());
 
         //set image from url
         Glide.with(getActivity().getApplicationContext()).load(product.getImage()).into(ivProduct);
@@ -155,7 +156,7 @@ public class FragmentDetailProduct extends Fragment {
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnBuyOnClick();
+                confirmBuy();
             }
         });
 
@@ -193,17 +194,46 @@ public class FragmentDetailProduct extends Fragment {
         return view;
     }
 
+    private boolean confirmBuy() {
+        final Dialog confirmDialog = new Dialog(getActivity());
+        confirmDialog.setTitle("Xác nhận mua hàng");
+        confirmDialog.setContentView(R.layout.dialog_buyer_confirm_buy);
+        confirmDialog.show();
+
+        final EditText etMessage = confirmDialog.findViewById(R.id.etMessage);
+        final Button btnConfirm = confirmDialog.findViewById(R.id.btnConfirm);
+        final Button btnCancel = confirmDialog.findViewById(R.id.btnCancel);
+        final TextView tvNotice = confirmDialog.findViewById(R.id.tvNotice);
+
+        tvNotice.setText("Xác nhận mua " + orderQuantity + " sản phẩm?");
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnBuyOnClick(etMessage.getText().toString());
+                confirmDialog.cancel();
+            }
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmDialog.cancel();
+            }
+        });
+
+        return false;
+    }
+
     /**
      * buy
      */
-    private void btnBuyOnClick() {
+    private void btnBuyOnClick(final String message) {
         RequestQueue requestInsertOrder = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest stringRequestInsert = new StringRequest(Request.Method.POST, updateOrderUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (response.equalsIgnoreCase("SUCCESS")) {
                     Toast.makeText(getActivity().getApplicationContext(), "Thành công", Toast.LENGTH_LONG);
-                    //TODO move to order detail screen
+                    //TODO send massage to seller
                     moveToFragmentOrderDetail();
                 } else if (response.equalsIgnoreCase("NOT ENOUGH QUANTITY")) {
                     Toast.makeText(getActivity().getApplicationContext(), "Số lượng còn lại không đủ", Toast.LENGTH_LONG);
@@ -224,7 +254,7 @@ public class FragmentDetailProduct extends Fragment {
                 params.put("buyer", Variable.ACCOUNT_ID + "");//TODO change to other ways
                 params.put("product", product.getId() + "");
                 params.put("quantity", orderQuantity + "");
-                params.put("status", Order.Status.BUYING+"");
+                params.put("status", Order.Status.BUYING + "");
                 params.put("total_cost", (orderQuantity * product.getSell_price()) + "");
                 return params;
             }
@@ -236,7 +266,7 @@ public class FragmentDetailProduct extends Fragment {
      * Open after buy
      */
     private void moveToFragmentOrderDetail() {
-        Order order = new Order(Variable.ACCOUNT_ID,product.getId(),orderQuantity,Order.Status.BUYING,orderQuantity * product.getSell_price());
+        Order order = new Order(Variable.ACCOUNT_ID, product.getId(), orderQuantity, Order.Status.BUYING, orderQuantity * product.getSell_price());
         order.setProduct(product);
         FragmentOrderDetail fragmentOrderDetail = new FragmentOrderDetail(order);
 
@@ -286,7 +316,7 @@ public class FragmentDetailProduct extends Fragment {
             public void onSuccess(String result) {
 
             }
-        }, updateFollowUrl, Variable.ACCOUNT_ID, product.getSeller_id(), isFollow);
+        }, UPDATE_FOLLOW_URL, Variable.ACCOUNT_ID, product.getSeller_id(), isFollow);
         super.onPause();
     }
 }
