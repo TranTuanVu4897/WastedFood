@@ -28,6 +28,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+//    applicationVariants.all { variant ->
+//        variant.outputs.all { output ->
+//            def appName = "WastedFood"
+//            def buildType = variant.buildType.name
+//            def date = new Date()
+//            def formattedDate = date.format('yyyyMMdd')
+//            def newName = "${appName}-${buildType}-${formattedDate}.apk"
+//            outputFileName = new File(newName)
+//        }
+//    }
 }
 
 dependencies {
