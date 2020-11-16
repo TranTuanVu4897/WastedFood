@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.buyer;
+package com.example.wastedfoodteam.buyer.followseller;
 
 import android.content.Context;
 import android.content.res.Resources;

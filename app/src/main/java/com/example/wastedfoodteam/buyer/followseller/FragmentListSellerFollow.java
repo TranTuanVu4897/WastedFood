@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.buyer;
+package com.example.wastedfoodteam.buyer.followseller;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,7 +18,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.buyer.buy.FragmentSellerDetail;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Seller;
 import com.google.gson.Gson;
