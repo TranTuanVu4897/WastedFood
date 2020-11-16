@@ -10,9 +10,9 @@ import java.sql.Time;
 
 
 public class Variable {
-    public static final String ipAddress = "http://192.168.3.4/wastedfoodphp/";//Vutt ip
+    //public static final String ipAddress = "http://192.168.3.4/wastedfoodphp/";//Vutt ip
 //    public static final String ipAddress ="http://10.22.178.239/wastedfoodphp/";//FPT University ip
-//    public static final String ipAddress = "http://192.168.1.46/wastedfoodphp/";//TungPT ip
+    public static final String ipAddress = "http://192.168.1.46/wastedfoodphp/";//TungPT ip
 //    public static final String ipAddress ="http://192.168.1.10/wastedfoodphp/";//DucHC ip
     //public static final String ipAddress ="http://192.168.156.2/wastedfoodphp/";//DucHC ip lan
 

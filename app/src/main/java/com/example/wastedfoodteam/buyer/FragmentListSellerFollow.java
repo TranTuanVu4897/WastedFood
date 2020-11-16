@@ -91,7 +91,7 @@ public class FragmentListSellerFollow extends ListFragment {
         restaurant.setArguments(bundleDetail);
 
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flSearchResultAH, restaurant, "")//TODO check if this work
+                .replace(R.id.flSearchResultAH, restaurant, "")
                 .addToBackStack(null)
                 .commit();
     }

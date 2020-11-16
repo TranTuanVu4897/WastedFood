@@ -25,7 +25,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
@@ -57,6 +56,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,7 +72,9 @@ public class FragmentLoginBuyer extends Fragment {
     LoginButton btnSignInFacebook;
     CallbackManager callbackManager;
     String urlGetData = "";
+    int check = 0;
     private FirebaseAuth mAuth;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -110,7 +113,6 @@ public class FragmentLoginBuyer extends Fragment {
                 Toast.makeText(getActivity(), "Kiểm tra lại kết nối Internet", Toast.LENGTH_LONG).show();
             }
         });
-
         //google option
         AddGoogleSignInOption();
         btnSignInGoogle.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +164,8 @@ public class FragmentLoginBuyer extends Fragment {
      * Start Sign in Google flow
      */
     private void signInGoogle() {
+        Date currentTime = Calendar.getInstance().getTime();
+        Log.d("date:", currentTime.toString());
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         Variable.CHECK_LOGIN = 1;
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -225,8 +229,6 @@ public class FragmentLoginBuyer extends Fragment {
     private void handleSignInFacebook() {
         //check loginFB
         if (AccessToken.getCurrentAccessToken() != null && com.facebook.Profile.getCurrentProfile() != null) {
-
-
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
             Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
             Variable.CHECK_LOGIN = 2;
@@ -328,14 +330,15 @@ public class FragmentLoginBuyer extends Fragment {
             String name = acct.getDisplayName();
             String email = acct.getEmail();
             String thirdPartyId = acct.getId();
-            Uri personPhoto  = acct.getPhotoUrl();
+            Uri personPhoto = acct.getPhotoUrl();
             String urlImage = personPhoto.toString();
             String gender = "1";
-            String dob ="0000-00-00";
+            String dob = "0000-00-00";
             String urlInsert = Variable.ipAddress + "login/register3rdParty.php";
             checkDataAndInsert3rdParty(urlInsert, email, thirdPartyId, name, urlImage, dob, gender);
         }
     }
+
     private void resultFacebook() {
 
         GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
@@ -373,6 +376,7 @@ public class FragmentLoginBuyer extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+
                 try {
                     JSONArray object = new JSONArray(response);
 
