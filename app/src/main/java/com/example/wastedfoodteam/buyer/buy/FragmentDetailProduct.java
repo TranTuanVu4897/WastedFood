@@ -75,7 +75,7 @@ public class FragmentDetailProduct extends Fragment {
         tvQuantity.setText("Còn: " + product.getRemain_quantity() + "/" + product.getOriginal_quantity());
         tvPriceDiscount.setText(product.getSell_price() + "");
         tvPriceOriginal.setText(product.getOriginal_price() + "");
-        tvOpenTime.setText("Mở cửa từ: " + CommonFunction.getOpenClose(product.getStart_time(),product.getEnd_time()));
+        tvOpenTime.setText("Mở cửa từ: " + CommonFunction.getOpenClose(product.getStart_time(), product.getEnd_time()));
         tvDescription.setText(product.getDescription());
         tvBuyQuantity.setText(orderQuantity + "");
 
@@ -94,7 +94,7 @@ public class FragmentDetailProduct extends Fragment {
         }, GET_FOLLOW_INFORMATION_URL, Variable.ACCOUNT_ID, product.getSeller_id());
 
         //set image from url
-        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(),product.getImage(),ivProduct);
+        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), product.getImage(), ivProduct);
 
         //set event
         btnDecrease.setOnClickListener(new View.OnClickListener() {
@@ -291,14 +291,12 @@ public class FragmentDetailProduct extends Fragment {
 
     @Override
     public void onPause() {
-        boolean isFollow = false;
-        if (isImageButtonIsFollowed(ibFollow.getTag())) isFollow = true;
         followVolley.setRequestUpdateFollow(new FollowResponseCallback() {
             @Override
             public void onSuccess(String result) {
-                Log.w("FollowResult",result);
+                Log.w("FollowResult", result);
             }
-        }, UPDATE_FOLLOW_URL, Variable.ACCOUNT_ID, product.getSeller_id(), isFollow);
+        }, UPDATE_FOLLOW_URL, Variable.ACCOUNT_ID, product.getSeller_id(), isImageButtonIsFollowed(ibFollow.getTag()));
         super.onPause();
     }
 }
