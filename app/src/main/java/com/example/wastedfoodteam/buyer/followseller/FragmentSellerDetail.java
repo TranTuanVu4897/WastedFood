@@ -3,6 +3,7 @@ package com.example.wastedfoodteam.buyer.followseller;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -88,7 +89,9 @@ public class FragmentSellerDetail extends ListFragment {
         });
 
         //list product
-        urlGetData = Variable.IP_ADDRESS + "search/getListProductsOfSeller.php?seller_id=" + seller.getId();
+        urlGetData = Variable.IP_ADDRESS + "search/getListProductsOfSeller.php?seller_id=" + seller.getId()
+                + "&lat=" + Variable.gps.getLatitude()
+                + "&lng=" + Variable.gps.getLongitude();
 
         followVolley = new FollowVolley(getActivity().getApplicationContext());
         followVolley.setRequestGetFollow(new FollowResponseCallback() {
@@ -175,6 +178,7 @@ public class FragmentSellerDetail extends ListFragment {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.e("ResponseString", response);
                         }
                     }
                 },
@@ -273,6 +277,7 @@ public class FragmentSellerDetail extends ListFragment {
         requestQueue.add(stringRequest);
 
     }
+
     @Override
     public void onPause() {
         boolean isFollow = false;

@@ -8,88 +8,97 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="93dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/ibUserInfo"
-                android:layout_width="30dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="14dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
                 android:layout_weight="1"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/button_user_information" />
+                android:orientation="horizontal">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ivAppIcon"
-                android:layout_width="97dp"
+                <ImageButton
+                    android:id="@+id/ibUserInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/button_user_information" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivAppIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="4"
+                    android:src="@drawable/home" />
+
+                <ImageButton
+                    android:id="@+id/ibFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/button_filter" />
+            </LinearLayout>
+
+
+            <FrameLayout
+                android:id="@+id/flSearchResultAH"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/home" />
+                android:layout_weight="20"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
-            <ImageButton
-                android:id="@+id/ibFilter"
-                android:layout_width="30dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="14dp"
+            </FrameLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/button_filter" />
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageButton
+                    android:id="@+id/iBtnHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="0dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/button_home"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/iBtnNotification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/button_notification" />
+
+                <ImageButton
+                    android:id="@+id/iBtnHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/button_order_history" />
+
+                <ImageButton
+                    android:id="@+id/iBtnFollow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/button_follow_seller" />
+
+            </LinearLayout>
         </LinearLayout>
-
-
-        <FrameLayout
-            android:id="@+id/flSearchResultAH"
-            android:layout_width="match_parent"
-            android:layout_height="583dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-        </FrameLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <ImageButton
-                android:id="@+id/iBtnHome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="0dp"
-                android:layout_weight="1"
-                android:src="@drawable/button_home"
-                app:layout_constraintBottom_toBottomOf="parent" />
-
-            <ImageButton
-                android:id="@+id/iBtnNotification"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/button_notification" />
-
-            <ImageButton
-                android:id="@+id/iBtnHistory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/button_order_history" />
-
-            <ImageButton
-                android:id="@+id/iBtnFollow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/button_follow_seller" />
-
-        </LinearLayout>
-
     </com.google.android.material.appbar.AppBarLayout>
 
 

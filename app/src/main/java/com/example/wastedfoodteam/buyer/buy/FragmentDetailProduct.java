@@ -94,8 +94,7 @@ public class FragmentDetailProduct extends Fragment {
         }, GET_FOLLOW_INFORMATION_URL, Variable.ACCOUNT_ID, product.getSeller_id());
 
         //set image from url
-        Glide.with(getActivity().getApplicationContext()).load(product.getImage()).into(ivProduct);
-
+        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(),product.getImage(),ivProduct);
 
         //set event
         btnDecrease.setOnClickListener(new View.OnClickListener() {
