@@ -2,7 +2,6 @@ package com.example.wastedfoodteam.seller.sellerFragment;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -26,7 +25,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -39,19 +37,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.seller.AddProductActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
-import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -115,10 +108,10 @@ public class AddProductFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         //get seller id from seller home activity
-        seller_id= Variable.ACCOUNT_ID;
+        seller_id = Variable.ACCOUNT_ID;
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_add_product, container, false);
+        View view = inflater.inflate(R.layout.fragment_seller_add_product, container, false);
 
         // get the Firebase  storage reference
         storage = FirebaseStorage.getInstance();
@@ -209,7 +202,7 @@ public class AddProductFragment extends Fragment {
         btn_add_product_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String urlGetData = Variable.ipAddress + Variable.ADD_PRODUCT_SELLER;
+                String urlGetData = Variable.IP_ADDRESS + Variable.ADD_PRODUCT_SELLER;
                 //addProduct("http://192.168.1.10/wastedfoodphp/seller/SellerCreateProduct.php");
                 addProduct(urlGetData);
             }
@@ -390,20 +383,12 @@ public class AddProductFragment extends Fragment {
                                     UploadTask.TaskSnapshot taskSnapshot) {
 
                                 // Image uploaded successfully
-                                Toast
-                                        .makeText(getActivity(),
-                                                "Image Uploaded!!",
-                                                Toast.LENGTH_SHORT)
-                                        .show();
+                                Toast.makeText(getActivity(), "Image Uploaded!!", Toast.LENGTH_SHORT).show();
                                 taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
                                         storage_location = uri.toString();
-                                        Toast
-                                                .makeText(getActivity(),
-                                                        uri.toString(),
-                                                        Toast.LENGTH_LONG)
-                                                .show();
+                                        //Toast.makeText(getActivity(), uri.toString(), Toast.LENGTH_LONG).show();
                                     }
                                 });
                             }
@@ -412,13 +397,8 @@ public class AddProductFragment extends Fragment {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
                         // Error, Image not uploaded
-                        Toast
-                                .makeText(getActivity(),
-                                        "Failed " + e.getMessage(),
-                                        Toast.LENGTH_SHORT)
-                                .show();
+                        Toast.makeText(getActivity(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }

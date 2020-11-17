@@ -77,7 +77,7 @@ public class ChangePasswordSellerFragment extends Fragment {
                 }else {
                     //validate new password
                     //update password to db
-                    String urlGetData = Variable.ipAddress + "seller/updatePasswordAccount.php";
+                    String urlGetData = Variable.IP_ADDRESS + "seller/updatePasswordAccount.php";
                     updateSellerPassword(urlGetData);
                 }
             }

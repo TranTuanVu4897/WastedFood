@@ -1,8 +1,9 @@
-package com.example.wastedfoodteam.buyer.buy;
+package com.example.wastedfoodteam.buyer.followseller;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,10 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.ListFragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -31,12 +29,12 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.BuyHomeActivity;
-import com.example.wastedfoodteam.buyer.FragmentListSellerFollow;
-import com.example.wastedfoodteam.buyer.FragmentReport;
+import com.example.wastedfoodteam.buyer.buy.FragmentDetailProduct;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.model.Seller;
-import com.example.wastedfoodteam.utils.CommonFunction;
+import com.example.wastedfoodteam.utils.service.FollowResponseCallback;
+import com.example.wastedfoodteam.utils.service.FollowVolley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -45,7 +43,6 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class FragmentSellerDetail extends ListFragment {
@@ -56,25 +53,23 @@ public class FragmentSellerDetail extends ListFragment {
     Bundle bundleDetail;
     Seller seller;
     TextView tvNameSeller, tvAddress, tvDescription;
-    ImageView ivPhotoSeller;
-    Button btnReport;
-    Bundle bundle;
-    FragmentReport report;
+    ImageView ivPhotoSeller, ibFollow;
     ListView lvProduction;
-    String content ="";
+    String content = "";
     String url;
     String accusedId;
     String reporterId;
-    TextView tvAccused ;
-    EditText etContent ;
-    Button btnCommit ;
-    Button btnCancel;
-
+    TextView tvAccused;
+    EditText etContent;
+    Button btnCommit, btnCancel, btnReport;
+    private final String GET_FOLLOW_INFORMATION_URL = Variable.IP_ADDRESS + Variable.GET_FOLLOW;
+    private final String UPDATE_FOLLOW_URL = Variable.IP_ADDRESS + Variable.UPDATE_FOLLOW;
+    private FollowVolley followVolley;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_seller_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_buyer_get_seller_detail, container, false);
         mapping(view);
         //set up url volley
 
@@ -90,20 +85,30 @@ public class FragmentSellerDetail extends ListFragment {
             @Override
             public void onClick(View v) {
                 dialogReport();
-//                bundle = new Bundle();
-//                bundle.putSerializable("SELLER", seller);
-//                report = new FragmentReport();
-//                report.setArguments(bundle);
-//                getActivity().getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.flSearchResultAH, report, "")//TODO check if this work
-//                        .addToBackStack(null)
-//                        .commit();
             }
         });
 
         //list product
+        urlGetData = Variable.IP_ADDRESS + "search/getListProductsOfSeller.php?seller_id=" + seller.getId()
+                + "&lat=" + Variable.gps.getLatitude()
+                + "&lng=" + Variable.gps.getLongitude();
 
-        urlGetData = Variable.ipAddress + "search/getListProductsOfSeller.php?seller_id=" + seller.getId();
+        followVolley = new FollowVolley(getActivity().getApplicationContext());
+        followVolley.setRequestGetFollow(new FollowResponseCallback() {
+            @Override
+            public void onSuccess(String result) {
+
+                if (result.equalsIgnoreCase("TRUE")) {
+                    ibFollow.setImageResource(R.drawable.followed);
+                    ibFollow.setTag(R.drawable.followed);
+                } else {
+                    ibFollow.setTag(R.drawable.not_followed);
+                    ibFollow.setImageResource(R.drawable.not_followed);
+                }
+
+            }
+        }, GET_FOLLOW_INFORMATION_URL, Variable.ACCOUNT_ID, seller.getId());
+
 
         //mapping view
         lvProduction = view.findViewById(android.R.id.list);
@@ -131,28 +136,39 @@ public class FragmentSellerDetail extends ListFragment {
             }
         });
 
+        ibFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ibFollow.getTag() != null)
+                    if (ibFollow.getTag().equals(R.drawable.followed)) {
+                        ibFollow.setImageResource(R.drawable.not_followed);
+                        ibFollow.setTag(R.drawable.not_followed);
+                    } else {
+                        ibFollow.setImageResource(R.drawable.followed);
+                        ibFollow.setTag(R.drawable.followed);
+                    }
+            }
+        });
 
-//        getData();
         return view;
     }
-    private void mapping(View view){
+
+    private void mapping(View view) {
         tvNameSeller = view.findViewById(R.id.tvNameSellerFSD);
         tvAddress = view.findViewById(R.id.tvAddressFSD);
         tvDescription = view.findViewById(R.id.tvDescriptionFSD);
         ivPhotoSeller = view.findViewById(R.id.ivPhotoSellerFSD);
         btnReport = view.findViewById(R.id.btnReportFSD);
+        ibFollow = view.findViewById(R.id.iBtnFollow);
     }
+
     public void getData(String urlGetData) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        //TODO
-        //require edit latitude
-
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         try {
                             JSONArray jsonProducts = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
@@ -162,6 +178,7 @@ public class FragmentSellerDetail extends ListFragment {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.e("ResponseString", response);
                         }
                     }
                 },
@@ -186,11 +203,12 @@ public class FragmentSellerDetail extends ListFragment {
 
         //open detail product fragment
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flSearchResultAH, detailProduct, "")//TODO check if this work
+                .replace(R.id.flSearchResultAH, detailProduct, "")
                 .addToBackStack(null)
                 .commit();
     }
-    private void dialogReport(){
+
+    private void dialogReport() {
         Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.dialog_report);
         dialog.show();
@@ -200,19 +218,20 @@ public class FragmentSellerDetail extends ListFragment {
         btnCommit = dialog.findViewById(R.id.btnCommitDR);
         btnCancel = dialog.findViewById(R.id.btnCancelDR);
         //set param
-        url = Variable.ipAddress + "FeedbackReport/report.php";
-        reporterId = Variable.ACCOUNT_ID+"";
-        accusedId = seller.getId()+"";
+        url = Variable.IP_ADDRESS + "FeedbackReport/report.php";
+        reporterId = Variable.ACCOUNT_ID + "";
+        accusedId = seller.getId() + "";
         btnCommit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 content = etContent.getText().toString();
                 //TODO don't know get url image
-                insertData(url, reporterId, accusedId, content,"");
+                insertData(url, reporterId, accusedId, content, "");
             }
         });
         tvAccused.setText(seller.getName());
     }
+
     private void insertData(final String url, final String reporter_id, final String accused_id, final String report_text, final String report_image) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
@@ -241,7 +260,7 @@ public class FragmentSellerDetail extends ListFragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "ERROR " + url, Toast.LENGTH_LONG).show();//TODO get data
+                Toast.makeText(getActivity(), "ERROR " + url, Toast.LENGTH_LONG).show();
             }
         }
         ) {
@@ -259,5 +278,17 @@ public class FragmentSellerDetail extends ListFragment {
 
     }
 
+    @Override
+    public void onPause() {
+        boolean isFollow = false;
+        if (ibFollow.getTag().equals(R.drawable.followed)) isFollow = true;
+        followVolley.setRequestUpdateFollow(new FollowResponseCallback() {
+            @Override
+            public void onSuccess(String result) {
+
+            }
+        }, UPDATE_FOLLOW_URL, Variable.ACCOUNT_ID, seller.getId(), isFollow);
+        super.onPause();
+    }
 
 }

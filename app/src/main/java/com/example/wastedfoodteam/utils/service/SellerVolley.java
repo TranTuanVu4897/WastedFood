@@ -29,7 +29,7 @@ public class SellerVolley {
     public SellerVolley(Context context, String url) {
         this.context = context;
         this.url = url;
-        this.requestQueue = Volley.newRequestQueue(context);//TODO add to only one request
+        this.requestQueue = Volley.newRequestQueue(context);
     }
 
     /**

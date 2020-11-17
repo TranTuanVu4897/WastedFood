@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etSearchBHA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:hint="Tìm kiếm" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:text="Gần đây"
+            android:id="@+id/btnNearProduct"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:text="Tất cả"
+            android:id="@+id/btnAllProduct"
+            android:layout_marginStart="20dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:id="@+id/btnFollowSellerProduct"
+            android:text="Yêu thích"
+            android:layout_marginStart="20dp"
+            />
+    </LinearLayout>
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:nestedScrollingEnabled="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+</LinearLayout>

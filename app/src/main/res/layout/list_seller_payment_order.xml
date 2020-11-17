@@ -33,18 +33,18 @@
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:layout_height="60dp">
+
                 <Button
                     android:id="@+id/btn_list_seller_payment_confirm"
                     android:layout_width="wrap_content"
-                    android:backgroundTint="@color/colorLightGreen"
-                    android:layout_toLeftOf="@+id/btn_list_seller_confirm_reject"
+                    android:layout_height="30dp"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/custom_button"
                     android:layout_marginRight="15dp"
-                    android:textColor="@color/colorWhite"
+                    android:layout_toLeftOf="@+id/btn_list_seller_confirm_reject"
+                    android:background="@drawable/custom_button"
+                    android:backgroundTint="#1DCC01"
                     android:text="ĐÃ THANH TOÁN"
-                    android:layout_height="30dp">
-                </Button>
+                    android:textColor="@color/colorWhite"></Button>
                 <Button
 
                     android:id="@+id/btn_list_seller_payment_reject"

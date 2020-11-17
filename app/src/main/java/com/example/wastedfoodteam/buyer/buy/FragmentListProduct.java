@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.ListFragment;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -24,18 +23,13 @@ import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
-import com.example.wastedfoodteam.model.Seller;
-import com.example.wastedfoodteam.utils.service.SellerVolley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class FragmentListProduct extends ListFragment {
     String urlGetData;
@@ -44,19 +38,20 @@ public class FragmentListProduct extends ListFragment {
     ListView lvProduction;
     FragmentDetailProduct detailProduct;
     Bundle bundleDetail;
-    Seller seller;
 
+    EditText etSearch;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list_product_buyer, container, false);
+        View view = inflater.inflate(R.layout.fragment_buyer_list_product, container, false);
         Log.i("FragmentListProduct", "Show the list view");
         //set up url volley
-        urlGetData = Variable.ipAddress + Variable.SEARCH_PRODUCT;
+        urlGetData = Variable.IP_ADDRESS + Variable.SEARCH_PRODUCT;
 
         //mapping view
         lvProduction = view.findViewById(android.R.id.list);
+        etSearch = view.findViewById(R.id.etSearchBHA);
 
         //setup bundle
         bundleDetail = new Bundle();
@@ -89,35 +84,36 @@ public class FragmentListProduct extends ListFragment {
 
 
     public void getData() {
-
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        //TODO
         //require edit latitude
-        urlGetData = urlGetData + "?lat=" + Variable.gps.latitude + "&lng=" + Variable.gps.longitude
+        urlGetData = urlGetData + "?lat=" + Variable.gps.getLatitude() + "&lng=" + Variable.gps.getLongitude()
                 + "&distance=" + Variable.distance
                 + "&start_time=" + Variable.startTime + "&end_time=" + Variable.endTime
-                + "&discount=" + Variable.discount;
+                + "&discount=" + Variable.discount
+                + "&search_text=" + etSearch.getText();
 
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         try {
                             JSONArray jsonProducts = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             for (int i = 0; i < jsonProducts.length(); i++) {
                                 arrProduct.add((Product) gson.fromJson(jsonProducts.getString(i), Product.class));
+                                adapter.setProductList(arrProduct);
                                 adapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.e("ListProduct", response);
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_LONG);
                     }
                 });
         requestQueue.add(getProductAround);
@@ -136,14 +132,18 @@ public class FragmentListProduct extends ListFragment {
 
         //open detail product fragment
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flSearchResultAH, detailProduct, "")//TODO check if this work
+                .replace(R.id.flSearchResultAH, detailProduct, "")
                 .addToBackStack(null)
                 .commit();
     }
 
     public void createNewArrayProduct() {
         arrProduct = new ArrayList<>();
-        if (adapter != null) adapter.notifyDataSetChanged();
+        if (adapter != null) {
+            adapter.getProductList().clear();
+            adapter.setProductList(arrProduct);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void setUpArrayProduct() {

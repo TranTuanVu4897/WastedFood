@@ -16,7 +16,7 @@ public class Seller extends Account implements Serializable {
     double longitude;
     String description;
 
-    //add for get date easier TODO should change again?
+    //add for get date easier
     long distance;
 
     public String getName() {

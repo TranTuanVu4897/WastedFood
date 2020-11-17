@@ -3,7 +3,6 @@ package com.example.wastedfoodteam.seller.sellerFragment;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,11 +24,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.seller.sellerAdapter.ProductSellerAdapter;
 import com.example.wastedfoodteam.model.Product;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,12 +60,12 @@ public class ListProductSellerFragment extends ListFragment {
         seller_id = Variable.ACCOUNT_ID;
         product = Variable.PRODUCT;
         tv_total_product = view.findViewById(R.id.tv_total_product);
-        String urlGetData = Variable.ipAddress + "seller/getListProductSeller.php?seller_id=" + seller_id;
+        String urlGetData = Variable.IP_ADDRESS + "seller/getListProductSeller.php?seller_id=" + seller_id;
         adapter = new ProductSellerAdapter( getActivity().getApplicationContext(), R.layout.list_seller_product , arrProduct, getResources());
         lvProduct.setAdapter(adapter);
         getData(urlGetData);
         //tv_total_product.setText(adapter.getCount() + " sản phẩm");
-        getTotalProduct(Variable.ipAddress + "seller/getTotalProduct.php");
+        getTotalProduct(Variable.IP_ADDRESS + "seller/getTotalProduct.php");
         lvProduct.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

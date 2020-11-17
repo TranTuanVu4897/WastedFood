@@ -54,7 +54,7 @@ public class FragmentLoginPartner extends Fragment {
             @Override
             public void onClick(View v) {
                 password = md5(etPass.getText().toString());
-                urlGetData = Variable.ipAddress + "login/sellerLogin.php?username=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
+                urlGetData = Variable.IP_ADDRESS + "login/sellerLogin.php?username=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
                 getData(urlGetData);
             }
         });
@@ -70,6 +70,7 @@ public class FragmentLoginPartner extends Fragment {
 
     /**
      * encode md5
+     *
      * @param str
      * @return
      */
@@ -89,6 +90,7 @@ public class FragmentLoginPartner extends Fragment {
 
     /**
      * get data from mySql
+     *
      * @param url
      */
     private void getData(String url) {
@@ -107,17 +109,11 @@ public class FragmentLoginPartner extends Fragment {
                         Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();//TODO get data
                         try {
                             JSONArray object = new JSONArray(response);
-
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-
                             Seller seller = gson.fromJson(object.getString(0), Seller.class);
-
-                            Intent intent = new Intent(getActivity(), SellerHomeActivity.class);//TODO change to seller activity
-
                             Variable.ACCOUNT_ID = seller.getId();
                             Variable.SELLER = seller;
-                            //TODO pass data through intent
-                            startActivity(intent);
+                            openSellerHome();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -139,11 +135,17 @@ public class FragmentLoginPartner extends Fragment {
     /**
      * move to fragment buyer
      */
-    public void addFragmentLoginPartner(){
+    public void addFragmentLoginPartner() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         FragmentLoginBuyer fragmentLoginBuyer = new FragmentLoginBuyer();
-        fragmentTransaction.replace(R.id.flFragmentLayoutAM,fragmentLoginBuyer);
+        fragmentTransaction.replace(R.id.flFragmentLayoutAM, fragmentLoginBuyer);
         fragmentTransaction.commit();
+    }
+
+    private void openSellerHome() {
+        Intent intent = new Intent(getActivity(), SellerHomeActivity.class);//TODO change to seller activity
+        getActivity().finish();
+        startActivity(intent);
     }
 }

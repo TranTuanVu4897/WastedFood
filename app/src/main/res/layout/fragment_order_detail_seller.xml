@@ -36,17 +36,19 @@
 
         <Button
             android:id="@+id/btn_editProduct_edit"
-            android:layout_toLeftOf="@id/btn_editProduct_stop"
             android:layout_width="wrap_content"
-            android:backgroundTint="@color/colorBlue"
-            android:background="@drawable/custom_button"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="10dp"
-            android:textColor="@color/colorWhite"
-            android:text="CHỈNH SỬA"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right">
-        </Button>
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom|right"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toLeftOf="@id/btn_editProduct_stop"
+            android:background="@drawable/custom_button"
+            android:backgroundTint="@color/colorBlue"
+            android:text="CHỈNH SỬA"
+            android:textColor="@color/colorWhite"></Button>
     </RelativeLayout>
 
     <TextView

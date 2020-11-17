@@ -47,12 +47,6 @@ public class FragmentRegister extends Fragment {
     }
     //Check legal
     public void regex( String password, String cfPassword ){
-//        Pattern pattern = Pattern.compile("^[a-zA-Z0-9](_(?!(\\.|_))|\\.(?!(_|\\.))|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$");
-//
-//        if(pattern.matcher(username).matches() == false){
-//            Toast.makeText(getActivity(), "Tên đăng nhập không hợp lệ",Toast.LENGTH_LONG);
-//            return;
-//        }
         Pattern pattern = Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[a-zA-Z]).{8,16}$");
         if(pattern.matcher(password).matches() == false){
             Toast.makeText(getActivity(), "Mật khẩu từ 8-16 ký tự và có ít nhất một chữ cái và một số",Toast.LENGTH_LONG);
@@ -62,11 +56,6 @@ public class FragmentRegister extends Fragment {
             Toast.makeText(getActivity(), "Xác nhận mật khẩu sai",Toast.LENGTH_LONG);
             return;
         }
-//        pattern = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
-//        if(pattern.matcher(password).matches() == false){
-//            return;
-//        }
-
 
     }
 

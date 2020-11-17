@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -28,8 +27,7 @@ import java.util.Map;
 public class RatingDialog {
     private RatingBar rbRating;
     private EditText etRating;
-    final private String urlUpdateRating = Variable.ipAddress + Variable.UPDATE_RATING;
-    private int rating;
+    final private String urlUpdateRating = Variable.IP_ADDRESS + Variable.UPDATE_RATING;
     Context context;
     LayoutInflater inflater;
     Order order;
@@ -41,13 +39,10 @@ public class RatingDialog {
     }
 
     public void displayRatingOrderDialog() {
-
         View ratingLayout = inflater.inflate(R.layout.dialog_buyer_rating, null);
         rbRating = ratingLayout.findViewById(R.id.rbRating);
         etRating = ratingLayout.findViewById(R.id.etRating);
-
         AlertDialog.Builder builderDialogRating = setUpDialogBuilder(ratingLayout);
-
         AlertDialog dialogRating = builderDialogRating.create();
         dialogRating.show();
     }

@@ -24,7 +24,6 @@ public class PostSellerFragment extends Fragment {
     ListView lvProduct;
     ArrayList<Product1> arrayList = new ArrayList<>();
     ArrayAdapter<Product1> arrayAdapter;
-    Product1 product;
     private Button btn_post_add_product;
     @Override
     public void onCreate(Bundle savedInstanceState) {

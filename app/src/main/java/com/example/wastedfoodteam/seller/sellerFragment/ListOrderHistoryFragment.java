@@ -2,9 +2,9 @@ package com.example.wastedfoodteam.seller.sellerFragment;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +19,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
-import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -30,19 +29,17 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 public class ListOrderHistoryFragment extends ListFragment {
-
     ListView lvOrder;
     ArrayList<Order> arrOrder;
     String urlGetData;
     OrderAdapter orderAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_order_history, container, false);
         lvOrder = view.findViewById(android.R.id.list);
-        arrOrder = new ArrayList<Order>();
+        arrOrder = new ArrayList<>();
         orderAdapter = new OrderAdapter(getActivity().getApplicationContext(), R.layout.list_seller_order, arrOrder, getResources());
         lvOrder.setAdapter(orderAdapter);
         getData();
@@ -51,8 +48,7 @@ public class ListOrderHistoryFragment extends ListFragment {
 
     public void getData() {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        urlGetData = Variable.ipAddress + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() ;
-
+        urlGetData = Variable.IP_ADDRESS + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId();//TODO missing product id???
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
                     @Override
@@ -66,6 +62,7 @@ public class ListOrderHistoryFragment extends ListFragment {
                                 orderAdapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {
+                            Log.e("ResponseString",response);
                             e.printStackTrace();
                         }
                     }
@@ -77,6 +74,5 @@ public class ListOrderHistoryFragment extends ListFragment {
                 });
         requestQueue.add(getProductAround);
     }
-
 
 }

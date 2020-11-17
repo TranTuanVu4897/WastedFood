@@ -48,9 +48,6 @@ import java.util.UUID;
 
 public class AddProductActivity extends AppCompatActivity {
 
-    //set up firebase
-    //tool -> firebase -> authentication
-
     //ui view
     private ImageView productIconIv;
     private EditText editTextName;
@@ -196,12 +193,9 @@ public class AddProductActivity extends AppCompatActivity {
         productPrice = Double.parseDouble(editTextPrice.getText().toString().trim());
         productDiscount = Integer.parseInt(editTextDiscount.getText().toString().trim());
         productQuantity = Integer.parseInt(editTextQuantity.getText().toString().trim());
-        //productOpenDate = Calendar.getInstance().getTime();
-        //productCloseDate = Calendar.getInstance().getTime();
 
         productOpenDate = new SimpleDateFormat("dd/MM/yyyy").parse(editTextOpenDate.getText().toString().trim());
         productCloseDate = new SimpleDateFormat("dd/MM/yyyy").parse(editTextCloseDate.getText().toString().trim());
-        //productCloseDate = new SimpleDateFormat("hh:mm:ss a").parse(editTextCloseDate.getText().toString().trim());
 
 
         //Validate
@@ -230,7 +224,6 @@ public class AddProductActivity extends AppCompatActivity {
             hashMap.put("productOpenDate", "" + productOpenDate);
             hashMap.put("productCloseDate", "" + productCloseDate);
             hashMap.put("timestamp", "" + timestamp);
-            //hashMap.put("uid", "" + firebaseAuth.getUid());
             //need to make user id in future
 
             //add to db
