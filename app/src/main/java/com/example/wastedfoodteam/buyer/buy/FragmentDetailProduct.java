@@ -2,6 +2,7 @@ package com.example.wastedfoodteam.buyer.buy;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -296,7 +297,7 @@ public class FragmentDetailProduct extends Fragment {
         followVolley.setRequestUpdateFollow(new FollowResponseCallback() {
             @Override
             public void onSuccess(String result) {
-
+                Log.w("FollowResult",result);
             }
         }, UPDATE_FOLLOW_URL, Variable.ACCOUNT_ID, product.getSeller_id(), isFollow);
         super.onPause();

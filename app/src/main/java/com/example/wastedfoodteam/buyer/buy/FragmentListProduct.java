@@ -97,15 +97,16 @@ public class FragmentListProduct extends ListFragment {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            Log.e("ListProduct", response);
                             JSONArray jsonProducts = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             for (int i = 0; i < jsonProducts.length(); i++) {
                                 arrProduct.add((Product) gson.fromJson(jsonProducts.getString(i), Product.class));
+                                adapter.setProductList(arrProduct);
                                 adapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.e("ListProduct", response);
                         }
                     }
                 },

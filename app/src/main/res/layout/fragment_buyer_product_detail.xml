@@ -6,52 +6,38 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <ImageButton
-        android:id="@+id/iBtnFollow"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_margin="10dp"
-        android:background="@drawable/not_followed"
-        app:layout_constraintBottom_toBottomOf="@+id/ivProduct"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ivProduct"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <ImageView
-        android:id="@+id/ivProduct"
-        android:layout_width="410dp"
-        android:layout_height="124dp"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/no_image" />
+        app:layout_constraintVertical_bias="0.0">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/civSeller"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:src="@drawable/user"
-        app:layout_constraintBottom_toBottomOf="@+id/iBtnFollow"
-        app:layout_constraintEnd_toEndOf="@+id/iBtnFollow"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/iBtnFollow"
-        app:layout_constraintVertical_bias="0.0" />
+        <ImageView
+            android:id="@+id/ivProduct"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:srcCompat="@drawable/no_image" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="#58BE28"/>
+    </LinearLayout>
 
     <TableLayout
-        android:layout_marginTop="0dp"
         android:id="@+id/tableLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivProduct"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintVertical_bias="0.0">
 
         <TableRow>
@@ -59,9 +45,9 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/button_filter"
-                android:layout_gravity="center" />
+                android:src="@drawable/button_filter" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -73,8 +59,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="20,000 VND"
-                    android:textColor="#33C600"
                     android:textAlignment="center"
+                    android:textColor="#33C600"
                     android:textSize="24dp" />
 
                 <TextView
@@ -92,9 +78,9 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/ic_icons8_clock"
-                android:layout_gravity="center"/>
+                android:src="@drawable/ic_icons8_clock" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -107,7 +93,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="14.00 - 16.00"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textSize="24dp" />
             </LinearLayout>
         </TableRow>
@@ -117,9 +103,9 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/location"
-                android:layout_gravity="center"/>
+                android:src="@drawable/location" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -131,21 +117,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:textColor="#0E9EEF"
+                    android:maxWidth="250dp"
                     android:text="KM29, Thạch thất hòa lạc"
-                    android:textAlignment="center"
-                    android:textSize="24dp"
-                    android:maxWidth="250dp"/>
+                    android:textAlignment="textStart"
+                    android:textColor="#0E9EEF"
+                    android:textSize="24dp" />
             </LinearLayout>
         </TableRow>
+
         <TableRow>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/ic_distance"
-                android:layout_gravity="center"/>
+                android:src="@drawable/ic_distance" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -157,10 +144,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:maxWidth="250dp"
                     android:text="4,1 KM"
-                    android:textAlignment="center"
-                    android:textSize="24dp"
-                    android:maxWidth="250dp"/>
+                    android:textAlignment="textStart"
+                    android:textSize="24dp" />
             </LinearLayout>
         </TableRow>
 
@@ -179,10 +166,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:textSize="20dp"
-            android:text="Một vài dòng mô tả của cửa hàng"
             android:maxWidth="300dp"
-            android:textAlignment="center" />
+            android:text="Một vài dòng mô tả của cửa hàng"
+            android:textAlignment="center"
+            android:textSize="20dp" />
     </TableLayout>
 
     <Button
@@ -251,5 +238,30 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnIncrease" />
+
+    <ImageButton
+        android:id="@+id/iBtnFollow"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/not_followed"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civSeller"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@drawable/user"
+        app:layout_constraintBottom_toBottomOf="@+id/iBtnFollow"
+        app:layout_constraintEnd_toEndOf="@+id/iBtnFollow"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iBtnFollow"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

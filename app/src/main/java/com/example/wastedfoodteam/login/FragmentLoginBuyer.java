@@ -390,6 +390,7 @@ public class FragmentLoginBuyer extends Fragment {
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Log.e("StringResponse",response);
                 }
 
             }

@@ -1,6 +1,7 @@
 package com.example.wastedfoodteam.utils.service;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -50,12 +51,12 @@ public class FollowVolley {
         StringRequest updateFollowRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
+                callback.onSuccess(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.e("FollowError",error.getMessage());
             }
         }){
             @Override

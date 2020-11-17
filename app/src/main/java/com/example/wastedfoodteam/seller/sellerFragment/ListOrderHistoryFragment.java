@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.ListFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,7 @@ public class ListOrderHistoryFragment extends ListFragment {
 
     public void getData() {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        urlGetData = Variable.IP_ADDRESS + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId();
+        urlGetData = Variable.IP_ADDRESS + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId();//TODO missing product id???
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
                     @Override
@@ -61,6 +62,7 @@ public class ListOrderHistoryFragment extends ListFragment {
                                 orderAdapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {
+                            Log.e("ResponseString",response);
                             e.printStackTrace();
                         }
                     }

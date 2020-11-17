@@ -108,7 +108,7 @@ public class AddProductFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         //get seller id from seller home activity
-        seller_id= Variable.ACCOUNT_ID;
+        seller_id = Variable.ACCOUNT_ID;
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_seller_add_product, container, false);
@@ -383,20 +383,12 @@ public class AddProductFragment extends Fragment {
                                     UploadTask.TaskSnapshot taskSnapshot) {
 
                                 // Image uploaded successfully
-                                Toast
-                                        .makeText(getActivity(),
-                                                "Image Uploaded!!",
-                                                Toast.LENGTH_SHORT)
-                                        .show();
+                                Toast.makeText(getActivity(), "Image Uploaded!!", Toast.LENGTH_SHORT).show();
                                 taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
                                         storage_location = uri.toString();
-                                        Toast
-                                                .makeText(getActivity(),
-                                                        uri.toString(),
-                                                        Toast.LENGTH_LONG)
-                                                .show();
+                                        //Toast.makeText(getActivity(), uri.toString(), Toast.LENGTH_LONG).show();
                                     }
                                 });
                             }
@@ -405,13 +397,8 @@ public class AddProductFragment extends Fragment {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
                         // Error, Image not uploaded
-                        Toast
-                                .makeText(getActivity(),
-                                        "Failed " + e.getMessage(),
-                                        Toast.LENGTH_SHORT)
-                                .show();
+                        Toast.makeText(getActivity(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
