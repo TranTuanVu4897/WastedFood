@@ -35,6 +35,7 @@ import com.example.wastedfoodteam.seller.sellerAdapter.OrderAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderConfirmAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderDoneAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderPaymentAdapter;
+import com.example.wastedfoodteam.utils.CommonFunction;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -85,10 +86,10 @@ public class OrderDetailSellerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(cancelProduct.getText().equals("NGỪNG BÁN")){
-                    updateProductStatus(Variable.ipAddress + "seller/setActiveForProduct.php","stop",product.getId());
+                    updateProductStatus(Variable.IP_ADDRESS + "seller/setActiveForProduct.php","stop",product.getId());
                     cancelProduct.setText("MỞ LẠI BÁN");
                 }else {
-                    updateProductStatus(Variable.ipAddress + "seller/setActiveForProduct.php","selling",product.getId());
+                    updateProductStatus(Variable.IP_ADDRESS + "seller/setActiveForProduct.php","selling",product.getId());
                     cancelProduct.setText("NGỪNG BÁN");
                 }
             }
@@ -105,10 +106,13 @@ public class OrderDetailSellerFragment extends Fragment {
         lvOrderDone.setAdapter(orderDoneAdapter);
         lvOrderConfirm.setAdapter(orderAdapter);
         //setListViewHeightBasedOnItems(lvOrderDone);
-        getData("'wait for confirm'");
-        getData("'wait for payment'");
-        getData("'done'");
+        //("'wait for confirm'");
+        //getData("'wait for payment'");
+        //getData("'done'");
 
+
+        getData(Order.Status.BUYING);
+        getData(Order.Status.SUCCESS);
         return view;
     }
 
@@ -146,7 +150,8 @@ public class OrderDetailSellerFragment extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    public void getData(final String status) {
+
+    public void getData(final Order.Status status) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         String urlGetData = Variable.ipAddress + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() + "&product_id=" + Variable.PRODUCT.getId() + "&order_status=" + status;
@@ -158,28 +163,20 @@ public class OrderDetailSellerFragment extends Fragment {
                         try {
                             JSONArray jsonOrders = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                            for (int i = 0; i < jsonOrders.length(); i++) {
-                                if(status.equals("'wait for confirm'")){
-                                    arrOrder.add((Order) gson.fromJson(jsonOrders.getString(i), Order.class));
-                                    orderAdapter.notifyDataSetChanged();
-                                }else if (status.equals("'wait for payment'")){
-                                    arrOrderPayment.add((Order) gson.fromJson(jsonOrders.getString(i), Order.class));
-                                    orderPaymentAdapter.notifyDataSetChanged();
-                                }else if(status.equals("'done'")){
-                                    arrOrderDone.add((Order) gson.fromJson(jsonOrders.getString(i), Order.class));
-                                    orderDoneAdapter.notifyDataSetChanged();
-                                }
-                            }
-                            if(orderPaymentAdapter.getCount() != 0){
-                                tvPaymentAlert.setVisibility(View.INVISIBLE);
-                            }
-                            if(orderDoneAdapter.getCount() != 0){
-                                tvDoneAlert.setVisibility(View.INVISIBLE);
-                            }
-                            if(orderAdapter.getCount() != 0){
-                                tvConfirmAlert.setVisibility(View.INVISIBLE);
-                            }
 
+                            for (int i = 0; i < jsonOrders.length(); i++) {
+                                switch (status) {
+                                    case BUYING:
+                                        arrOrderPayment.add(gson.fromJson(jsonOrders.getString(i), SellerOrder.class));
+                                        orderPaymentAdapter.notifyDataSetChanged();
+                                        break;
+                                    case SUCCESS:
+                                        arrOrderDone.add(gson.fromJson(jsonOrders.getString(i), SellerOrder.class));
+                                        orderDoneAdapter.notifyDataSetChanged();
+                                        break;
+                                }
+
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -191,5 +188,38 @@ public class OrderDetailSellerFragment extends Fragment {
                     }
                 });
         requestQueue.add(getProductAround);
+    }
+
+    public static boolean setListViewHeightBasedOnItems(ListView listView) {
+
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter != null) {
+
+            int numberOfItems = listAdapter.getCount();
+
+            // Get total height of all items.
+            int totalItemsHeight = 0;
+            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
+                View item = listAdapter.getView(itemPos, null, listView);
+                item.measure(0, 0);
+                totalItemsHeight += item.getMeasuredHeight();
+            }
+
+            // Get total height of all item dividers.
+            int totalDividersHeight = listView.getDividerHeight() *
+                    (numberOfItems - 1);
+
+            // Set list height.
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            params.height = totalItemsHeight + totalDividersHeight;
+            listView.setLayoutParams(params);
+            listView.requestLayout();
+
+            return true;
+
+        } else {
+            return false;
+        }
+
     }
 }

@@ -1,7 +1,5 @@
 package com.example.wastedfoodteam.model;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -12,24 +10,12 @@ import java.sql.Date;
 public class Order implements Serializable {
     int id;
     int buyer_id;
-    String buyerName;
-    String nameProduct;
     int product_id;
     int quantity;
     Status status;
     double total_cost;
     int buyer_rating;
     String buyer_comment;
-    Product product;
-    String image;
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 
     public int getId() {
         return id;
@@ -95,47 +81,12 @@ public class Order implements Serializable {
         this.buyer_comment = buyer_comment;
     }
 
-    public String getBuyerName() {
-        return buyerName;
-    }
-
-    public void setBuyerName(String buyerName) {
-        this.buyerName = buyerName;
-    }
-
-    public String getNameProduct() {
-        return nameProduct;
-    }
-
-    public void setNameProduct(String nameProduct) {
-        this.nameProduct = nameProduct;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
 
     public Order() {
     }
 
-    public Order(int id, int buyer_id, int product_id, int quantity, Status status, double total_cost, int buyer_rating, String buyer_comment, Date modified_date , String image) {
-        this.id = id;
-        this.buyer_id = buyer_id;
-        this.product_id = product_id;
-        this.quantity = quantity;
-        this.status = status;
-        this.total_cost = total_cost;
-        this.buyer_rating = buyer_rating;
-        this.buyer_comment = buyer_comment;
-        this.image = image;
-    }
 
     public Order(int buyer_id, int product_id, int quantity, Status status, double total_cost) {
-
         this.buyer_id = buyer_id;
         this.product_id = product_id;
         this.quantity = quantity;
@@ -143,7 +94,7 @@ public class Order implements Serializable {
         this.total_cost = total_cost;
     }
 
-    public Order(int id, int buyer_id, int product_id, int quantity, Status status, double total_cost, int buyer_rating, String buyer_comment, Product product) {
+    public Order(int id, int buyer_id, int product_id, int quantity, Status status, double total_cost, int buyer_rating, String buyer_comment) {
         this.id = id;
         this.buyer_id = buyer_id;
         this.product_id = product_id;
@@ -152,7 +103,6 @@ public class Order implements Serializable {
         this.total_cost = total_cost;
         this.buyer_rating = buyer_rating;
         this.buyer_comment = buyer_comment;
-        this.product = product;
     }
 
     public enum Status {

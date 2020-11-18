@@ -18,7 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.model.Order;
+import com.example.wastedfoodteam.seller.sellerAdapter.SellerOrder;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 public class ListOrderHistoryFragment extends ListFragment {
     ListView lvOrder;
-    ArrayList<Order> arrOrder;
+    ArrayList<SellerOrder> arrOrder;
     String urlGetData;
     OrderAdapter orderAdapter;
 
@@ -57,8 +57,8 @@ public class ListOrderHistoryFragment extends ListFragment {
                             JSONArray jsonOrders = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             for (int i = 0; i < jsonOrders.length(); i++) {
-                                Order order = (Order) gson.fromJson(jsonOrders.getString(i), Order.class);
-                                arrOrder.add((Order) gson.fromJson(jsonOrders.getString(i), Order.class));
+//                                Order order = (Order) gson.fromJson(jsonOrders.getString(i), Order.class);
+                                arrOrder.add( gson.fromJson(jsonOrders.getString(i), SellerOrder.class));
                                 orderAdapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {

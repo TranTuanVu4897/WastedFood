@@ -24,13 +24,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.followseller.FragmentSellerDetail;
 import com.example.wastedfoodteam.buyer.order.FragmentOrderDetail;
 import com.example.wastedfoodteam.global.Variable;
+import com.example.wastedfoodteam.buyer.order.BuyerOrder;
 import com.example.wastedfoodteam.model.Order;
-import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.service.FollowResponseCallback;
 import com.example.wastedfoodteam.utils.service.FollowVolley;
@@ -41,7 +40,7 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FragmentDetailProduct extends Fragment {
-    private Product product;
+    private BuyerProduct product;
     private final String UPDATE_ORDER_URL = Variable.IP_ADDRESS + Variable.INSERT_NEW_ORDER;
     private final String GET_FOLLOW_INFORMATION_URL = Variable.IP_ADDRESS + Variable.GET_FOLLOW;
     private final String UPDATE_FOLLOW_URL = Variable.IP_ADDRESS + Variable.UPDATE_FOLLOW;
@@ -68,7 +67,7 @@ public class FragmentDetailProduct extends Fragment {
         mappingViewWithVariable(view);
 
         //get bundle values
-        product = (Product) getArguments().get("PRODUCT");
+        product = (BuyerProduct) getArguments().get("PRODUCT");
 
         CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), product.getSeller().getImage(), civSeller);
         //set content for views about product
@@ -249,7 +248,7 @@ public class FragmentDetailProduct extends Fragment {
      * Open after buy
      */
     private void moveToFragmentOrderDetail() {
-        Order order = new Order(Variable.ACCOUNT_ID, product.getId(), orderQuantity, Order.Status.BUYING, orderQuantity * product.getSell_price());
+        BuyerOrder order = new BuyerOrder(Variable.ACCOUNT_ID, product.getId(), orderQuantity, Order.Status.BUYING, orderQuantity * product.getSell_price());
         order.setProduct(product);
         FragmentOrderDetail fragmentOrderDetail = new FragmentOrderDetail(order);
 

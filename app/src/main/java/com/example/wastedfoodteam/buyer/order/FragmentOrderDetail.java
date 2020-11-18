@@ -1,8 +1,6 @@
 package com.example.wastedfoodteam.buyer.order;
 
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,16 +13,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.utils.DirectionParser;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.model.Buyer;
 import com.example.wastedfoodteam.model.Order;
-import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.RatingDialog;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -51,14 +45,14 @@ import java.util.List;
 public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     private final static int MY_PERMISSIONS_REQUEST = 32;
-    private Order order;
+    private BuyerOrder order;
     private TextView tvTitle, tvBuyQuantity;
     private ImageView ivProduct;
 
     public FragmentOrderDetail() {
     }
 
-    public FragmentOrderDetail(Order order) {
+    public FragmentOrderDetail(BuyerOrder order) {
         this.order = order;
     }
 
