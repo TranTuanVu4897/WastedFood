@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
 import java.util.List;
@@ -19,8 +18,8 @@ import java.util.List;
 public class OrderDoneAdapter extends BaseAdapter {
     Context myContext;
     int myLayout;
-    List<Order> arrayOrder;
-    Order order;
+    List<SellerOrder> arrayOrder;
+    SellerOrder order;
     Resources resources;
 
     private class ViewHolder {
@@ -29,7 +28,7 @@ public class OrderDoneAdapter extends BaseAdapter {
         TextView tvDescription,tvQuantity,tvTotalCost;
     }
 
-    public OrderDoneAdapter(Context context, int layout, List<Order> orderList , Resources resources){
+    public OrderDoneAdapter(Context context, int layout, List<SellerOrder> orderList , Resources resources){
         myContext = context;
         myLayout = layout;
         arrayOrder = orderList;

@@ -18,10 +18,10 @@ import java.util.List;
 public class ProductAdapter extends BaseAdapter {
     private Context context;
     private int layout;
-    private List<Product> productList;
+    private List<BuyerProduct> productList;
     Resources resources;
 
-    public ProductAdapter(Context context, int layout, List<Product> productList, Resources resources) {
+    public ProductAdapter(Context context, int layout, List<BuyerProduct> productList, Resources resources) {
         this.context = context;
         this.layout = layout;
         this.productList = productList;
@@ -89,11 +89,11 @@ public class ProductAdapter extends BaseAdapter {
         holder.tvRating = convertView.findViewById(R.id.tvRating);
     }
 
-    public List<Product> getProductList() {
+    public List<BuyerProduct> getProductList() {
         return productList;
     }
 
-    public void setProductList(List<Product> productList) {
+    public void setProductList(List<BuyerProduct> productList) {
         this.productList = productList;
     }
 }

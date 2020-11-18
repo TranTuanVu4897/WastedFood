@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
 import java.time.LocalDateTime;
@@ -19,10 +18,10 @@ import java.util.List;
 public class OrderAdapter extends BaseAdapter {
     private Context context;
     private int layout;
-    private List<Order> orderList;
+    private List<BuyerOrder> orderList;
     Resources resources;
 
-    public OrderAdapter(Context context, int layout, List<Order> orderList, Resources resources) {
+    public OrderAdapter(Context context, int layout, List<BuyerOrder> orderList, Resources resources) {
         this.context = context;
         this.layout = layout;
         this.orderList = orderList;
@@ -64,7 +63,7 @@ public class OrderAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Order order = orderList.get(position);
+        BuyerOrder order = orderList.get(position);
 
         holder.tvName.setText(order.getProduct().getName() + "");
         holder.tvSellPrice.setText(CommonFunction.getCurrency(order.getTotal_cost()));

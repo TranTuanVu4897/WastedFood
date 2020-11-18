@@ -18,7 +18,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.model.Order;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -29,7 +28,7 @@ import java.util.ArrayList;
 
 public class FragmentOrderHistory extends ListFragment {
   final  String urlGetData = Variable.IP_ADDRESS + Variable.ORDER_HISTORY + "?buyer_id=" + Variable.ACCOUNT_ID;
-    ArrayList<Order> orderArrayList;
+    ArrayList<BuyerOrder> orderArrayList;
     OrderAdapter adapter;
     ListView lvOrder;
     FragmentOrderDetail orderDetail;
@@ -68,7 +67,7 @@ public class FragmentOrderHistory extends ListFragment {
                             Gson gson = gsonBuilder.create();
 
                             for (int i = 0; i < jsonOrders.length(); i++) {
-                                orderArrayList.add((Order) gson.fromJson(jsonOrders.getString(i), Order.class));
+                                orderArrayList.add( gson.fromJson(jsonOrders.getString(i), BuyerOrder.class));
                                 adapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {
@@ -86,7 +85,7 @@ public class FragmentOrderHistory extends ListFragment {
 
     @Override
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
-        Order order = (Order) l.getAdapter().getItem(position);
+        BuyerOrder order = (BuyerOrder) l.getAdapter().getItem(position);
 
         //put bundle
         bundleDetail.putSerializable("PRODUCT", order);

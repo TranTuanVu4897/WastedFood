@@ -17,11 +17,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Product;
+import com.example.wastedfoodteam.seller.sellerAdapter.SellerOrder;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderConfirmAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderDoneAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderPaymentAdapter;
@@ -37,7 +37,7 @@ import java.util.ArrayList;
 public class OrderDetailSellerFragment extends Fragment {
 
     ListView lvOrderConfirm, lvOrderPayment, lvOrderDone;
-    ArrayList<Order> arrOrder, arrOrderPayment, arrOrderDone;
+    ArrayList<SellerOrder> arrOrder, arrOrderPayment, arrOrderDone;
     String urlGetData;
     OrderConfirmAdapter orderAdapter;
     OrderPaymentAdapter orderPaymentAdapter;
@@ -95,11 +95,11 @@ public class OrderDetailSellerFragment extends Fragment {
                             for (int i = 0; i < jsonOrders.length(); i++) {
                                 switch (status) {
                                     case BUYING:
-                                        arrOrderPayment.add(gson.fromJson(jsonOrders.getString(i), Order.class));
+                                        arrOrderPayment.add(gson.fromJson(jsonOrders.getString(i), SellerOrder.class));
                                         orderPaymentAdapter.notifyDataSetChanged();
                                         break;
                                     case SUCCESS:
-                                        arrOrderDone.add(gson.fromJson(jsonOrders.getString(i), Order.class));
+                                        arrOrderDone.add(gson.fromJson(jsonOrders.getString(i), SellerOrder.class));
                                         orderDoneAdapter.notifyDataSetChanged();
                                         break;
                                 }

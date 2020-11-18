@@ -10,24 +10,12 @@ import java.sql.Date;
 public class Order implements Serializable {
     int id;
     int buyer_id;
-    String buyer_name;
-    String name_product;
     int product_id;
     int quantity;
     Status status;
     double total_cost;
     int buyer_rating;
     String buyer_comment;
-    String buyer_avatar;
-    Product product;
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 
     public int getId() {
         return id;
@@ -93,47 +81,12 @@ public class Order implements Serializable {
         this.buyer_comment = buyer_comment;
     }
 
-    public String getBuyer_name() {
-        return buyer_name;
-    }
-
-    public void setBuyer_name(String buyer_name) {
-        this.buyer_name = buyer_name;
-    }
-
-    public String getName_product() {
-        return name_product;
-    }
-
-    public void setName_product(String name_product) {
-        this.name_product = name_product;
-    }
-
-    public String getBuyer_avatar() {
-        return buyer_avatar;
-    }
-
-    public void setBuyer_avatar(String buyer_avatar) {
-        this.buyer_avatar = buyer_avatar;
-    }
 
     public Order() {
     }
 
-    public Order(int id, int buyer_id, int product_id, int quantity, Status status, double total_cost, int buyer_rating, String buyer_comment, Date modified_date , String buyer_avatar) {
-        this.id = id;
-        this.buyer_id = buyer_id;
-        this.product_id = product_id;
-        this.quantity = quantity;
-        this.status = status;
-        this.total_cost = total_cost;
-        this.buyer_rating = buyer_rating;
-        this.buyer_comment = buyer_comment;
-        this.buyer_avatar = buyer_avatar;
-    }
 
     public Order(int buyer_id, int product_id, int quantity, Status status, double total_cost) {
-
         this.buyer_id = buyer_id;
         this.product_id = product_id;
         this.quantity = quantity;
@@ -141,7 +94,7 @@ public class Order implements Serializable {
         this.total_cost = total_cost;
     }
 
-    public Order(int id, int buyer_id, int product_id, int quantity, Status status, double total_cost, int buyer_rating, String buyer_comment, Product product) {
+    public Order(int id, int buyer_id, int product_id, int quantity, Status status, double total_cost, int buyer_rating, String buyer_comment) {
         this.id = id;
         this.buyer_id = buyer_id;
         this.product_id = product_id;
@@ -150,7 +103,6 @@ public class Order implements Serializable {
         this.total_cost = total_cost;
         this.buyer_rating = buyer_rating;
         this.buyer_comment = buyer_comment;
-        this.product = product;
     }
 
     public enum Status {

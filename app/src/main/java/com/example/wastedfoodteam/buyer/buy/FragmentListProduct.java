@@ -22,7 +22,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.model.Product;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -33,7 +32,7 @@ import java.util.ArrayList;
 
 public class FragmentListProduct extends ListFragment {
     String urlGetData;
-    ArrayList<Product> arrProduct;
+    ArrayList<BuyerProduct> arrProduct;
     ProductAdapter adapter;
     ListView lvProduction;
     FragmentDetailProduct detailProduct;
@@ -100,7 +99,7 @@ public class FragmentListProduct extends ListFragment {
                             JSONArray jsonProducts = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             for (int i = 0; i < jsonProducts.length(); i++) {
-                                arrProduct.add((Product) gson.fromJson(jsonProducts.getString(i), Product.class));
+                                arrProduct.add( gson.fromJson(jsonProducts.getString(i), BuyerProduct.class));
                                 adapter.setProductList(arrProduct);
                                 adapter.notifyDataSetChanged();
                             }
@@ -121,7 +120,7 @@ public class FragmentListProduct extends ListFragment {
 
     @Override
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
-        Product product = (Product) l.getAdapter().getItem(position);
+        BuyerProduct product = (BuyerProduct) l.getAdapter().getItem(position);
         Log.i("FragmentListProduct", "On item clicked");
 
         //put bundle

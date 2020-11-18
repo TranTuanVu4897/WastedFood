@@ -9,15 +9,14 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.model.Order;
 
 import java.util.List;
 
 public class OrderAdapter extends BaseAdapter {
     Context myContext;
     int myLayout;
-    List<Order> arrayOrder;
-    Order order;
+    List<SellerOrder> arrayOrder;
+    SellerOrder order;
     Resources resources;
 
     private class ViewHolder {
@@ -27,7 +26,7 @@ public class OrderAdapter extends BaseAdapter {
         TextView tvTotalCost;
     }
 
-    public OrderAdapter(Context context, int layout, List<Order> orderList , Resources resources){
+    public OrderAdapter(Context context, int layout, List<SellerOrder> orderList , Resources resources){
         myContext = context;
         myLayout = layout;
         arrayOrder = orderList;
@@ -70,7 +69,7 @@ public class OrderAdapter extends BaseAdapter {
         order = arrayOrder.get(position);
         holder.tvNameBuyer.setText(order.getBuyer_name());
         holder.tvTotalCost.setText(String.valueOf(order.getTotal_cost()));
-        holder.tvNameProduct.setText(String.valueOf(order.getName_product()));
+        holder.tvNameProduct.setText(String.valueOf(order.getProduct_name()));
         holder.tvQuantity.setText(String.valueOf(order.getQuantity()));
         return convertView;
     }
