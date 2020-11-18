@@ -9,9 +9,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 
+import java.sql.Time;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -19,6 +21,7 @@ public class CommonFunction {
 
     /**
      * set image view src from image url
+     *
      * @param context
      * @param src
      * @param imageView
@@ -32,6 +35,7 @@ public class CommonFunction {
 
     /**
      * set currency by double money input
+     *
      * @param money
      * @return
      */
@@ -39,8 +43,20 @@ public class CommonFunction {
         return String.format("%,.0f", money) + " VND";
     }
 
+    public static String getShortCurrency(Double money) {
+        return String.format("%,.0f", money) + "đ";
+    }
+
+    public static String getEmptyString(String msg) {
+        if (msg == null || msg.isEmpty()) {
+            return "Trống";
+        }
+        return msg;
+    }
+
     /**
      * set open close time string
+     *
      * @param start_time
      * @param end_time
      * @return
@@ -52,6 +68,7 @@ public class CommonFunction {
 
     /**
      * set discount string
+     *
      * @param sell_price
      * @param original_price
      * @return
@@ -62,6 +79,7 @@ public class CommonFunction {
 
     /**
      * set quantity string
+     *
      * @param remain_quantity
      * @param original_quantity
      * @return
@@ -72,6 +90,7 @@ public class CommonFunction {
 
     /**
      * set textview for out of stock
+     *
      * @param tvQuantity
      * @param remain_quantity
      * @param original_quantity
@@ -83,5 +102,10 @@ public class CommonFunction {
             tvQuantity.setText("Hết hàng");
             tvQuantity.setBackgroundColor(Color.RED);
         }
+    }
+
+    public static String getCurrentDate() {
+        Date currentTime = Calendar.getInstance().getTime();
+        return String.format("%d-%02d-%02d", currentTime.getYear(), currentTime.getMonth() + 1, currentTime.getDay());
     }
 }

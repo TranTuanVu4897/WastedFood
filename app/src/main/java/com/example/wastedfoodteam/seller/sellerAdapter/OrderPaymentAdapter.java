@@ -24,17 +24,16 @@ public class OrderPaymentAdapter extends BaseAdapter {
 
     private class ViewHolder {
         ImageView ivBuyer;
-        Button btnConfirm,btnReject;
-        TextView tvDescription,tvQuantity,tvTotalCost;
+        Button btnConfirm, btnReject;
+        TextView tvDescription, tvQuantity, tvTotalCost;
     }
 
-    public OrderPaymentAdapter(Context context, int layout, List<SellerOrder> orderList , Resources resources){
+    public OrderPaymentAdapter(Context context, int layout, List<SellerOrder> orderList, Resources resources) {
         myContext = context;
         myLayout = layout;
         arrayOrder = orderList;
         this.resources = resources;
     }
-
 
 
     @Override
@@ -55,25 +54,25 @@ public class OrderPaymentAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        if(convertView == null){
+        if (convertView == null) {
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(myLayout, null);
-            holder.tvDescription = convertView.findViewById(R.id.tv_list_seller_payment_description);
-            holder.tvQuantity = convertView.findViewById(R.id.tv_list_seller_payment_quantity);
-            holder.tvTotalCost = convertView.findViewById(R.id.tv_list_seller_payment_cost);
-            holder.btnConfirm = convertView.findViewById(R.id.btn_list_seller_payment_confirm);
-            holder.btnReject = convertView.findViewById(R.id.btn_list_seller_payment_reject);
-            holder.ivBuyer = convertView.findViewById(R.id.iv_list_seller_payment_image);
+            holder.tvDescription = convertView.findViewById(R.id.tvDescription);
+            holder.tvQuantity = convertView.findViewById(R.id.tvQuantity);
+            holder.tvTotalCost = convertView.findViewById(R.id.tvTotalCost);
+            holder.btnConfirm = convertView.findViewById(R.id.btnConfirm);
+            holder.btnReject = convertView.findViewById(R.id.btnReject);
+            holder.ivBuyer = convertView.findViewById(R.id.ivBuyer);
             convertView.setTag(holder);
-        }else {
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         order = arrayOrder.get(position);
-        CommonFunction.setImageViewSrc(myContext,order.getBuyer_avatar(),holder.ivBuyer);
-        holder.tvDescription.setText("Ghi chú: " + order.getBuyer_comment());
-        holder.tvTotalCost.setText( "Thành tiền: " + String.valueOf(order.getTotal_cost()));
+        CommonFunction.setImageViewSrc(myContext, order.getBuyer_avatar(), holder.ivBuyer);
+        holder.tvDescription.setText("Ghi chú: " + CommonFunction.getEmptyString(order.getBuyer_comment()));
+        holder.tvTotalCost.setText("Thành tiền: " + CommonFunction.getShortCurrency(order.getTotal_cost()));
         holder.tvQuantity.setText("Số lượng: " + String.valueOf(order.getQuantity()));
         holder.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override

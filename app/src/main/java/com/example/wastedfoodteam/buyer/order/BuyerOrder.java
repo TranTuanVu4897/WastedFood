@@ -3,14 +3,12 @@ package com.example.wastedfoodteam.buyer.order;
 import com.example.wastedfoodteam.buyer.buy.BuyerProduct;
 import com.example.wastedfoodteam.model.Order;
 
-import java.sql.Date;
-
 public class BuyerOrder extends Order {
     private BuyerProduct product;
 
 
-    public BuyerOrder(int buyer_id, int product_id, int quantity, Status status, double total_cost) {
-        super(buyer_id, product_id, quantity, status, total_cost);
+    public BuyerOrder(int buyer_id, int product_id, int quantity, OrderStatus orderStatus, double total_cost) {
+        super(buyer_id, product_id, quantity, orderStatus, total_cost);
     }
 
 

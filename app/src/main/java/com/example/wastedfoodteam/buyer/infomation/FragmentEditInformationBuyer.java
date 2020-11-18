@@ -52,7 +52,7 @@ public class FragmentEditInformationBuyer extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_edit_buyer, container, false);
+        View view = inflater.inflate(R.layout.fragment_buyer_edit, container, false);
         mapping(view);
 
         accountId = Variable.ACCOUNT_ID + "";

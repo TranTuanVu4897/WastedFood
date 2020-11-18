@@ -71,7 +71,7 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
         tvBuyQuantity.setText("Đã đặt trước: " + order.getQuantity() + " sản phẩm.");
 
         //show dialog
-        if (order.getStatus() == Order.Status.SUCCESS && order.getBuyer_comment() == null) {
+        if (order.getOrderStatus() == Order.OrderStatus.SUCCESS && order.getBuyer_comment() == null) {
             RatingDialog ratingDialog = new RatingDialog(getActivity(), getLayoutInflater(), order);
             ratingDialog.displayRatingOrderDialog();
         }

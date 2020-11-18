@@ -1,7 +1,6 @@
 package com.example.wastedfoodteam.model;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 /**
  * Order class
@@ -12,7 +11,7 @@ public class Order implements Serializable {
     int buyer_id;
     int product_id;
     int quantity;
-    Status status;
+    OrderStatus orderStatus;
     double total_cost;
     int buyer_rating;
     String buyer_comment;
@@ -49,12 +48,12 @@ public class Order implements Serializable {
         this.quantity = quantity;
     }
 
-    public Status getStatus() {
-        return status;
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     public double getTotal_cost() {
@@ -86,26 +85,26 @@ public class Order implements Serializable {
     }
 
 
-    public Order(int buyer_id, int product_id, int quantity, Status status, double total_cost) {
+    public Order(int buyer_id, int product_id, int quantity, OrderStatus orderStatus, double total_cost) {
         this.buyer_id = buyer_id;
         this.product_id = product_id;
         this.quantity = quantity;
-        this.status = status;
+        this.orderStatus = orderStatus;
         this.total_cost = total_cost;
     }
 
-    public Order(int id, int buyer_id, int product_id, int quantity, Status status, double total_cost, int buyer_rating, String buyer_comment) {
+    public Order(int id, int buyer_id, int product_id, int quantity, OrderStatus orderStatus, double total_cost, int buyer_rating, String buyer_comment) {
         this.id = id;
         this.buyer_id = buyer_id;
         this.product_id = product_id;
         this.quantity = quantity;
-        this.status = status;
+        this.orderStatus = orderStatus;
         this.total_cost = total_cost;
         this.buyer_rating = buyer_rating;
         this.buyer_comment = buyer_comment;
     }
 
-    public enum Status {
+    public enum OrderStatus {
         BUYING,
         SUCCESS,
         CANCEL,

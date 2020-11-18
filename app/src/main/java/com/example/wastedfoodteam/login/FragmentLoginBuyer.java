@@ -78,7 +78,7 @@ public class FragmentLoginBuyer extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login_buyer, container, false);
+        View view = inflater.inflate(R.layout.fragment_buyer_login, container, false);
         etSDT = view.findViewById(R.id.etSdtBuyerFLB);
         etPass = view.findViewById(R.id.etPassBuyerFLB);
         tvWarning = view.findViewById(R.id.tvWarningFLB);

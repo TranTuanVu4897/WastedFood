@@ -24,7 +24,7 @@
             <ImageView
                 android:focusable="false"
                 android:clickable="false"
-                android:id="@+id/iv_list_seller_done_image"
+                android:id="@+id/ivBuyer"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -34,7 +34,7 @@
                 android:orientation="horizontal"
                 android:layout_height="60dp">
                 <Button
-                    android:id="@+id/btn_list_seller_done_detail"
+                    android:id="@+id/btnDetail"
                     android:layout_width="wrap_content"
                     android:backgroundTint="@color/lightBlue"
                     android:background="@drawable/custom_button"
@@ -49,7 +49,7 @@
 
         <TextView
             android:layout_margin="15dp"
-            android:id="@+id/tv_list_seller_done_description"
+            android:id="@+id/tvDescription"
             android:layout_width="match_parent"
             android:lines="4"
             android:maxLines="4"
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:layout_margin="15dp"
-                android:id="@+id/tv_list_seller_done_quantity"
+                android:id="@+id/tvQuantity"
                 android:text="123"
                 android:layout_width="wrap_content"
                 style="@style/AppTheme"
@@ -69,7 +69,7 @@
             </TextView>
             <TextView
                 android:layout_margin="15dp"
-                android:id="@+id/tv_list_seller_done_cost"
+                android:id="@+id/tvTotalCost"
                 android:text="123"
                 android:layout_alignParentRight="true"
                 style="@style/AppTheme"

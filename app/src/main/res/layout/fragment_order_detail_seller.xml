@@ -14,7 +14,7 @@
         android:layout_height="100dp">
         <ImageView
             android:layout_width="match_parent"
-            android:id="@+id/iv_list_order_product_picture"
+            android:id="@+id/ivProductImage"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
             android:layout_height="match_parent">
@@ -83,7 +83,7 @@
             android:text="Đang chờ lấy hàng"
             android:textSize="25dp"></TextView>
         <com.example.wastedfoodteam.utils.service.NonScrollListView
-            android:id="@+id/lv_list_product_2"
+            android:id="@+id/lvOrderPayment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -97,7 +97,7 @@
             >
         </TextView>
         <com.example.wastedfoodteam.utils.service.NonScrollListView
-            android:id="@+id/lv_list_product_3"
+            android:id="@+id/lvOrderDone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

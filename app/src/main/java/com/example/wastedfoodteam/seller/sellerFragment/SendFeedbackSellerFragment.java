@@ -28,11 +28,11 @@ import java.util.Map;
 public class SendFeedbackSellerFragment extends Fragment {
 
     //ui view
-    EditText editText_sendFeedback_title;
-    EditText editText_sendFeedback_description;
-    Button btn_sendFeedback_send;
+    EditText etSendFeedbackTitle;
+    EditText etSendFeedbackDescription;
+    Button btnSendFeedbackSend;
 
-    String title,description;
+    String title, description;
 
     int id;
 
@@ -48,24 +48,24 @@ public class SendFeedbackSellerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_send_feedback_seller, container, false);
 
         //init ui view
-        editText_sendFeedback_title = view.findViewById(R.id.editText_sendFeedback_title);
-        editText_sendFeedback_description = view.findViewById(R.id.editText_sendFeedback_description);
-        btn_sendFeedback_send = view.findViewById(R.id.btn_sendFeedback_send);
+        etSendFeedbackTitle = view.findViewById(R.id.etSendFeedbackTitle);
+        etSendFeedbackDescription = view.findViewById(R.id.etSendFeedbackDescription);
+        btnSendFeedbackSend = view.findViewById(R.id.btnSendFeedbackSend);
 
         //for multiline EditText
         //scroll for EditText
-        editText_sendFeedback_description.setScroller(new Scroller( getActivity().getApplicationContext()));
-        editText_sendFeedback_description.setVerticalScrollBarEnabled(true);
+        etSendFeedbackDescription.setScroller(new Scroller(getActivity().getApplicationContext()));
+        etSendFeedbackDescription.setVerticalScrollBarEnabled(true);
 
         //Edit Text Line
-        editText_sendFeedback_description.setMinLines(5);
-        editText_sendFeedback_description.setMaxLines(5);
+        etSendFeedbackDescription.setMinLines(5);
+        etSendFeedbackDescription.setMaxLines(5);
 
         //get data from home activity
         id = Variable.ACCOUNT_ID;
 
         //click send button handle
-        btn_sendFeedback_send.setOnClickListener(new View.OnClickListener() {
+        btnSendFeedbackSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 inputData();
@@ -75,14 +75,14 @@ public class SendFeedbackSellerFragment extends Fragment {
         return view;
     }
 
-    private void ClearText(){
-        editText_sendFeedback_description.setText("");
-        editText_sendFeedback_title.setText("");
+    private void ClearText() {
+        etSendFeedbackDescription.setText("");
+        etSendFeedbackTitle.setText("");
     }
 
-    private void inputData(){
-        title = editText_sendFeedback_title.getText().toString();
-        description = editText_sendFeedback_description.getText().toString();
+    private void inputData() {
+        title = etSendFeedbackTitle.getText().toString();
+        description = etSendFeedbackDescription.getText().toString();
 
         //validate data
         //TODO
@@ -94,35 +94,34 @@ public class SendFeedbackSellerFragment extends Fragment {
     }
 
 
-
     //add feedback data
-    private void addFeedback(String url){
+    private void addFeedback(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if(response.trim().equals("Succesfully update")){
-                            Toast.makeText(getActivity(),"Cập nhật thành công",Toast.LENGTH_SHORT).show();
+                        if (response.trim().equals("Succesfully update")) {
+                            Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                             ClearText();
                             //TODO move back to home
-                        }else{
-                            Toast.makeText(getActivity(),"Lỗi cập nhật",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), "Lỗi cập nhật", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(),"Xảy ra lỗi, vui lòng thử lại",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Xảy ra lỗi, vui lòng thử lại", Toast.LENGTH_SHORT).show();
                     }
                 }
-        ){
+        ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
+                Map<String, String> params = new HashMap<>();
                 params.put("account_id", String.valueOf(id));
-                params.put("title",title);
+                params.put("title", title);
                 params.put("description", description);
                 return params;
             }

@@ -16,7 +16,6 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -28,13 +27,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.seller.sellerFragment.AddProductFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
@@ -44,7 +41,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.UUID;
 
 public class AddProductActivity extends AppCompatActivity {
 
@@ -103,8 +99,8 @@ public class AddProductActivity extends AppCompatActivity {
         productIconIv = findViewById(R.id.productIconIv);
         editTextName = findViewById(R.id.editTextName);
         editTextPrice = findViewById(R.id.editTextPrice);
-        editTextDiscount = findViewById(R.id.editTextDiscount);
-        editTextQuantity = findViewById(R.id.editTextQuantity);
+//        editTextDiscount = findViewById(R.id.editTextDiscount);
+        editTextQuantity = findViewById(R.id.etQuantity);
         editTextOpenDate = findViewById(R.id.editTextOpenDate);
         editTextCloseDate = findViewById(R.id.editTextCloseDate);
         btnAddProduct = findViewById(R.id.btnAddProduct);

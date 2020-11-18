@@ -236,7 +236,7 @@ public class FragmentDetailProduct extends Fragment {
                 params.put("buyer", Variable.ACCOUNT_ID + "");
                 params.put("product", product.getId() + "");
                 params.put("quantity", orderQuantity + "");
-                params.put("status", Order.Status.BUYING + "");
+                params.put("status", Order.OrderStatus.BUYING + "");
                 params.put("total_cost", (orderQuantity * product.getSell_price()) + "");
                 return params;
             }
@@ -248,7 +248,7 @@ public class FragmentDetailProduct extends Fragment {
      * Open after buy
      */
     private void moveToFragmentOrderDetail() {
-        BuyerOrder order = new BuyerOrder(Variable.ACCOUNT_ID, product.getId(), orderQuantity, Order.Status.BUYING, orderQuantity * product.getSell_price());
+        BuyerOrder order = new BuyerOrder(Variable.ACCOUNT_ID, product.getId(), orderQuantity, Order.OrderStatus.BUYING, orderQuantity * product.getSell_price());
         order.setProduct(product);
         FragmentOrderDetail fragmentOrderDetail = new FragmentOrderDetail(order);
 

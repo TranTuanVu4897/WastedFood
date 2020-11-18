@@ -35,7 +35,7 @@ public class PostSellerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_edit_seller, container, false);
+        View view = inflater.inflate(R.layout.fragment_seller_edit, container, false);
 
         //init ui
         btn_post_add_product = view.findViewById(R.id.btn_post_add_product);

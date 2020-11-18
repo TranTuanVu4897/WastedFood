@@ -59,11 +59,11 @@ public class OrderDoneAdapter extends BaseAdapter {
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(myLayout, null);
-            holder.tvDescription = convertView.findViewById(R.id.tv_list_seller_done_description);
-            holder.tvQuantity = convertView.findViewById(R.id.tv_list_seller_done_quantity);
-            holder.tvTotalCost = convertView.findViewById(R.id.tv_list_seller_done_cost);
-            holder.btnDetail = convertView.findViewById(R.id.btn_list_seller_done_detail);
-            holder.ivBuyer = convertView.findViewById(R.id.iv_list_seller_done_image);
+            holder.tvDescription = convertView.findViewById(R.id.tvDescription);
+            holder.tvQuantity = convertView.findViewById(R.id.tvQuantity);
+            holder.tvTotalCost = convertView.findViewById(R.id.tvTotalCost);
+            holder.btnDetail = convertView.findViewById(R.id.btnDetail);
+            holder.ivBuyer = convertView.findViewById(R.id.ivBuyer);
             convertView.setTag(holder);
         }else {
             holder = (ViewHolder) convertView.getTag();
@@ -71,8 +71,8 @@ public class OrderDoneAdapter extends BaseAdapter {
 
         order = arrayOrder.get(position);
         CommonFunction.setImageViewSrc(myContext,order.getBuyer_avatar(),holder.ivBuyer);
-        holder.tvDescription.setText("Ghi chú: " + order.getBuyer_comment());
-        holder.tvTotalCost.setText( "Thành tiền: " + String.valueOf(order.getTotal_cost()));
+        holder.tvDescription.setText("Ghi chú: " + CommonFunction.getEmptyString(order.getBuyer_comment()));
+        holder.tvTotalCost.setText( "Thành tiền: " + CommonFunction.getShortCurrency(order.getTotal_cost()));
         holder.tvQuantity.setText("Số lượng: " + String.valueOf(order.getQuantity()));
         holder.btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override

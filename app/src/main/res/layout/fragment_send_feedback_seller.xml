@@ -23,7 +23,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/editText_sendFeedback_title"
+                android:id="@+id/etSendFeedbackTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -32,7 +32,7 @@
                 android:textColorHint="#B6ADAD" />
 
             <EditText
-                android:id="@+id/editText_sendFeedback_description"
+                android:id="@+id/etSendFeedbackDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -43,7 +43,7 @@
 
 
             <Button
-                android:id="@+id/btn_sendFeedback_send"
+                android:id="@+id/btnSendFeedbackSend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Gửi" />

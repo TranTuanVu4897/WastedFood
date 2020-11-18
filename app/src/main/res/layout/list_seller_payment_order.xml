@@ -24,7 +24,7 @@
             <ImageView
                 android:focusable="false"
                 android:clickable="false"
-                android:id="@+id/iv_list_seller_payment_image"
+                android:id="@+id/ivBuyer"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -35,7 +35,7 @@
                 android:layout_height="60dp">
 
                 <Button
-                    android:id="@+id/btn_list_seller_payment_confirm"
+                    android:id="@+id/btnConfirm"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_centerInParent="true"
@@ -47,7 +47,7 @@
                     android:textColor="@color/colorWhite"></Button>
                 <Button
 
-                    android:id="@+id/btn_list_seller_payment_reject"
+                    android:id="@+id/btnReject"
                     android:layout_width="wrap_content"
                     android:background="@color/colorRed"
                     android:layout_centerInParent="true"
@@ -61,7 +61,7 @@
 
         <TextView
             android:layout_margin="15dp"
-            android:id="@+id/tv_list_seller_payment_description"
+            android:id="@+id/tvDescription"
             android:layout_width="match_parent"
             style="@style/AppTheme"
             android:lines="4"
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:layout_margin="15dp"
-                android:id="@+id/tv_list_seller_payment_quantity"
+                android:id="@+id/tvQuantity"
                 android:text="123"
                 style="@style/AppTheme"
                 android:layout_width="wrap_content"
@@ -81,7 +81,7 @@
             </TextView>
             <TextView
                 android:layout_margin="15dp"
-                android:id="@+id/tv_list_seller_payment_cost"
+                android:id="@+id/tvTotalCost"
                 android:text="123"
                 style="@style/AppTheme"
                 android:layout_alignParentRight="true"

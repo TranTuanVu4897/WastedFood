@@ -26,20 +26,21 @@ import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
+import com.example.wastedfoodteam.utils.CommonFunction;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class SellerDetailProductFragment extends Fragment {
     //ui view
-    private ImageView iv_detail_product_icon;
+    private ImageView ivDetailProductIcon;
     private EditText name;
     private EditText originalPrice;
     private EditText sellPrice;
     private EditText openTime;
     private EditText closeTime;
     private EditText saleDate;
-    private Button btn_detail_product_add;
+    private Button btnDetailProductAdd;
     int id;
 
     CameraStorageFunction cameraStorageFunction;
@@ -51,18 +52,18 @@ public class SellerDetailProductFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_seller_detail_product, container, false);
         //unit ui
-        iv_detail_product_icon = view.findViewById(R.id.iv_detail_product_icon);
-        name = view.findViewById(R.id.editText_detail_product_name);
-        originalPrice = view.findViewById(R.id.editText_detail_product_originalPrice);
-        sellPrice = view.findViewById(R.id.editText_detail_product_sellPrice);
-        openTime = view.findViewById(R.id.editText_detail_product_openTime);
-        closeTime = view.findViewById(R.id.editText_detail_product_closeTime);
-        saleDate = view.findViewById(R.id.editText_detail_product_saleDate);
-        btn_detail_product_add = view.findViewById(R.id.btn_detail_product_add);
+        ivDetailProductIcon = view.findViewById(R.id.ivDetailProductIcon);
+        name = view.findViewById(R.id.etDetailProductName);
+        originalPrice = view.findViewById(R.id.etDetailProductOriginalPrice);
+        sellPrice = view.findViewById(R.id.etDetailProductSellPrice);
+        openTime = view.findViewById(R.id.etDetailProductOpenTime);
+        closeTime = view.findViewById(R.id.etDetailProductCloseTime);
+        saleDate = view.findViewById(R.id.etDetailProductSaleDate);
+        btnDetailProductAdd = view.findViewById(R.id.btnDetailProductAdd);
 
         //input data
         id = Variable.PRODUCT.getId();
-        Glide.with(getContext()).load(Variable.PRODUCT.getImage().isEmpty() ? Variable.noImageUrl : Variable.PRODUCT.getImage()).into(iv_detail_product_icon);
+        CommonFunction.setImageViewSrc(getContext(),Variable.PRODUCT.getImage(),ivDetailProductIcon);
         name.setText(Variable.PRODUCT.getName());
         originalPrice.setText(String.valueOf(Variable.PRODUCT.getOriginal_price()));
         sellPrice.setText(String.valueOf(Variable.PRODUCT.getSell_price()));
@@ -73,14 +74,14 @@ public class SellerDetailProductFragment extends Fragment {
 
         cameraStorageFunction = new CameraStorageFunction(getActivity(),getContext());
         //
-        iv_detail_product_icon.setOnClickListener(new View.OnClickListener() {
+        ivDetailProductIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cameraStorageFunction.showImagePickDialog();
             }
         });
 
-        btn_detail_product_add.setOnClickListener(new View.OnClickListener() {
+        btnDetailProductAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String urlGetData = Variable.IP_ADDRESS + "seller/updateProductByID.php";

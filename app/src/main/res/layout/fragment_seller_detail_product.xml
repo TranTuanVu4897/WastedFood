@@ -36,7 +36,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/iv_detail_product_icon"
+                    android:id="@+id/ivDetailProductIcon"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_gravity="center"
@@ -45,7 +45,7 @@
                     android:background="@drawable/useravatar" />
 
                 <EditText
-                    android:id="@+id/editText_detail_product_name"
+                    android:id="@+id/etDetailProductName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
@@ -54,7 +54,7 @@
                     android:textColorHint="#B6ADAD" />
 
                 <EditText
-                    android:id="@+id/editText_detail_product_originalPrice"
+                    android:id="@+id/etDetailProductOriginalPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
@@ -64,7 +64,7 @@
                     android:textColorHint="#B6ADAD" />
 
                 <EditText
-                    android:id="@+id/editText_detail_product_sellPrice"
+                    android:id="@+id/etDetailProductSellPrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
@@ -73,35 +73,35 @@
                     android:textColorHint="#B6ADAD" />
 
                 <EditText
-                    android:id="@+id/editText_detail_product_openTime"
+                    android:id="@+id/etDetailProductOpenTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/editTextQuantity"
+                    android:layout_below="@id/etQuantity"
                     android:inputType="datetime"
                     android:hint ="Thời gian bán"
                     android:padding="10dp"
                     />
 
                 <EditText
-                    android:id="@+id/editText_detail_product_closeTime"
+                    android:id="@+id/etDetailProductCloseTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/editTextQuantity"
+                    android:layout_below="@id/etQuantity"
                     android:inputType="datetime"
                     android:padding="10dp"
                     android:hint ="Thời gian đóng " />
 
                 <EditText
-                    android:id="@+id/editText_detail_product_saleDate"
+                    android:id="@+id/etDetailProductSaleDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/editTextQuantity"
+                    android:layout_below="@id/etQuantity"
                     android:inputType="datetime"
                     android:padding="10dp"
                     android:hint="Ngày bán" />
 
                 <Button
-                    android:id="@+id/btn_detail_product_add"
+                    android:id="@+id/btnDetailProductAdd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Thay đổi" />

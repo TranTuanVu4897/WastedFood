@@ -44,7 +44,7 @@ public class FragmentLoginPartner extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login_partner, container, false);
+        View view = inflater.inflate(R.layout.fragment_seller_login, container, false);
         etSDT = view.findViewById(R.id.etSdtPartnerFLP);
         etPass = view.findViewById(R.id.etPassPartnerFLP);
         btnSignIn = view.findViewById(R.id.btnSignInPartnerFLP);

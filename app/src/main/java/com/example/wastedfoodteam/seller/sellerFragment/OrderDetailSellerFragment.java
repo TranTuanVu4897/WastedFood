@@ -42,7 +42,7 @@ public class OrderDetailSellerFragment extends Fragment {
     OrderConfirmAdapter orderAdapter;
     OrderPaymentAdapter orderPaymentAdapter;
     OrderDoneAdapter orderDoneAdapter;
-    ImageView imageView;
+    ImageView ivProductImage;
     Product product;
 
     @Override
@@ -52,13 +52,13 @@ public class OrderDetailSellerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_order_detail_seller, container, false);
 
         lvOrderConfirm = view.findViewById(android.R.id.list);
-        lvOrderPayment = view.findViewById(R.id.lv_list_product_2);
-        lvOrderDone = view.findViewById(R.id.lv_list_product_3);
-        imageView = view.findViewById(R.id.iv_list_order_product_picture);
+        lvOrderPayment = view.findViewById(R.id.lvOrderPayment);
+        lvOrderDone = view.findViewById(R.id.lvOrderDone);
+        ivProductImage = view.findViewById(R.id.ivProductImage);
 
         product = Variable.PRODUCT;
 
-        CommonFunction.setImageViewSrc(getActivity(), product.getImage(), imageView);
+        CommonFunction.setImageViewSrc(getActivity(), product.getImage(), ivProductImage);
 
         arrOrder = new ArrayList<>();
         arrOrderPayment = new ArrayList<>();
@@ -74,15 +74,15 @@ public class OrderDetailSellerFragment extends Fragment {
 
         setListViewHeightBasedOnItems(lvOrderDone);
 //        getData("'wait for confirm'");
-        getData(Order.Status.BUYING);
-        getData(Order.Status.SUCCESS);
+        getData(Order.OrderStatus.BUYING);
+        getData(Order.OrderStatus.SUCCESS);
         return view;
     }
 
-    public void getData(final Order.Status status) {
+    public void getData(final Order.OrderStatus orderStatus) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        urlGetData = Variable.IP_ADDRESS + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() + "&product_id=" + Variable.PRODUCT.getId() + "&order_status=" + status;
+        urlGetData = Variable.IP_ADDRESS + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() + "&product_id=" + Variable.PRODUCT.getId() + "&order_status=" + orderStatus;
 
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
@@ -93,7 +93,7 @@ public class OrderDetailSellerFragment extends Fragment {
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
                             for (int i = 0; i < jsonOrders.length(); i++) {
-                                switch (status) {
+                                switch (orderStatus) {
                                     case BUYING:
                                         arrOrderPayment.add(gson.fromJson(jsonOrders.getString(i), SellerOrder.class));
                                         orderPaymentAdapter.notifyDataSetChanged();
@@ -103,12 +103,6 @@ public class OrderDetailSellerFragment extends Fragment {
                                         orderDoneAdapter.notifyDataSetChanged();
                                         break;
                                 }
-//                                if(status.equals("'wait for confirm'")){
-//                                    arrOrder.add((Order) gson.fromJson(jsonOrders.getString(i), Order.class));
-//                                    orderAdapter.notifyDataSetChanged();
-//                                }else if (status.equals(Order.Status.BUYING)){
-//                                }else if(status.equals(Order.Status.SUCCESS)){
-//                                }
 
                             }
                         } catch (JSONException e) {
