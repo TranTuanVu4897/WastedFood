@@ -35,6 +35,7 @@ import com.example.wastedfoodteam.seller.sellerAdapter.OrderAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderConfirmAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderDoneAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderPaymentAdapter;
+import com.example.wastedfoodteam.seller.sellerAdapter.SellerOrder;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -49,7 +50,7 @@ import java.util.Map;
 public class OrderDetailSellerFragment extends Fragment {
 
     ListView lvOrderConfirm,lvOrderPayment,lvOrderDone;
-    ArrayList<Order> arrOrder,arrOrderPayment,arrOrderDone;
+    ArrayList<SellerOrder> arrOrder,arrOrderPayment,arrOrderDone;
     Button editProduct,cancelProduct;
     OrderConfirmAdapter orderAdapter;
     OrderPaymentAdapter orderPaymentAdapter;
@@ -96,9 +97,9 @@ public class OrderDetailSellerFragment extends Fragment {
         });
         product = Variable.PRODUCT;
         Glide.with(view.getContext()).load(product.getImage().isEmpty() ? "https://i.pinimg.com/originals/95/ee/86/95ee8696f8ed1abb3767928c4d0daf65.jpg" : product.getImage()).into(imageView);
-        arrOrder = new ArrayList<Order>();
-        arrOrderPayment = new ArrayList<Order>();
-        arrOrderDone = new ArrayList<Order>();
+        arrOrder = new ArrayList<SellerOrder>();
+        arrOrderPayment = new ArrayList<SellerOrder>();
+        arrOrderDone = new ArrayList<SellerOrder>();
         orderAdapter = new OrderConfirmAdapter(getActivity().getApplicationContext(), R.layout.list_seller_confirm_order, arrOrder, getResources(),getActivity());
         orderPaymentAdapter = new OrderPaymentAdapter(getActivity().getApplicationContext(), R.layout.list_seller_payment_order, arrOrderPayment, getResources(),getActivity());
         orderDoneAdapter = new OrderDoneAdapter(getActivity().getApplicationContext(), R.layout.list_seller_done_order, arrOrderDone, getResources(),getActivity());
@@ -154,7 +155,7 @@ public class OrderDetailSellerFragment extends Fragment {
     public void getData(final Order.Status status) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        String urlGetData = Variable.ipAddress + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() + "&product_id=" + Variable.PRODUCT.getId() + "&order_status=" + status;
+        String urlGetData = Variable.IP_ADDRESS + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() + "&product_id=" + Variable.PRODUCT.getId() + "&order_status=" + status;
 
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {

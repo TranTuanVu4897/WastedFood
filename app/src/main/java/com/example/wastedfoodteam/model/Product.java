@@ -22,6 +22,25 @@ public class Product implements Serializable {
     Date sell_date;
     String status;
     boolean shippable;
+    Seller seller;
+
+    public Product(int id, int seller_id, String name, String image, Date start_time, Date end_time, double original_price, double sell_price, int original_quantity, int remain_quantity, String description, Date sell_date, String status, boolean shippable, Seller seller) {
+        this.id = id;
+        this.seller_id = seller_id;
+        this.name = name;
+        this.image = image;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.original_price = original_price;
+        this.sell_price = sell_price;
+        this.original_quantity = original_quantity;
+        this.remain_quantity = remain_quantity;
+        this.description = description;
+        this.sell_date = sell_date;
+        this.status = status;
+        this.shippable = shippable;
+        this.seller = seller;
+    }
 
     public Product(int id, int seller_id, String name, String image, Date start_time, Date end_time, double original_price, double sell_price, int original_quantity, int remain_quantity, String description, Date sell_date, String status, boolean shippable) {
         this.id = id;
@@ -153,5 +172,14 @@ public class Product implements Serializable {
         this.shippable = shippable;
     }
 
+    public Seller getSeller() {
+        return seller;
+    }
 
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
+
+    public Product() {
+    }
 }

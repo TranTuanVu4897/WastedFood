@@ -27,6 +27,8 @@ import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.seller.sellerFragment.ListOrderHistoryFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.OrderDetailSellerFragment;
+import com.example.wastedfoodteam.utils.CommonFunction;
+import com.example.wastedfoodteam.utils.SendNotificationPackage.SendNotif;
 import com.example.wastedfoodteam.utils.service.updateStatusForOrder;
 
 import java.util.HashMap;
@@ -36,9 +38,10 @@ import java.util.Map;
 public class OrderPaymentAdapter extends BaseAdapter {
     Context myContext;
     int myLayout;
-    List<Order> arrayOrder;
+    List<SellerOrder> arrayOrder;
+    SendNotif sendNotif;
     Product product;
-    Order order;
+    SellerOrder order;
     Resources resources;
     FragmentActivity myFragmentActivity;
 
@@ -48,7 +51,7 @@ public class OrderPaymentAdapter extends BaseAdapter {
         TextView tvDescription,tvQuantity,tvTotalCost;
     }
 
-    public OrderPaymentAdapter(Context context, int layout, List<Order> orderList , Resources resources , FragmentActivity fragmentActivity ){
+    public OrderPaymentAdapter(Context context, int layout, List<SellerOrder> orderList , Resources resources , FragmentActivity fragmentActivity ){
         myContext = context;
         myLayout = layout;
         arrayOrder = orderList;
@@ -93,7 +96,8 @@ public class OrderPaymentAdapter extends BaseAdapter {
 
         order = arrayOrder.get(position);
         product = Variable.PRODUCT;
-        Glide.with(convertView.getContext()).load(order.getImage().isEmpty() ? Variable.noImageUrl : order.getImage()).into(holder.ivBuyer);
+        CommonFunction.setImageViewSrc(myContext,order.getBuyer_avatar(),holder.ivBuyer);
+        //Glide.with(convertView.getContext()).load(order.getImage().isEmpty() ? Variable.noImageUrl : order.getImage()).into(holder.ivBuyer);
         holder.tvDescription.setText("Ghi chú: " + order.getBuyer_comment());
         holder.tvTotalCost.setText( "Thành tiền: " + String.valueOf(order.getTotal_cost()));
         holder.tvQuantity.setText("Số lượng: " + String.valueOf(order.getQuantity()));
@@ -102,7 +106,8 @@ public class OrderPaymentAdapter extends BaseAdapter {
             public void onClick(View v) {
                 //set status = done
                 //reload fragment
-                updateStatusForOrder.updateOrderStatus(Variable.ipAddress + "seller/updateStatusForOrderSeller.php","done", order.getId(),myContext);
+                sendNotif.notificationHandle(order.getBuyer_name());
+                updateStatusForOrder.updateOrderStatus(Variable.IP_ADDRESS + "seller/updateStatusForOrderSeller.php","done", order.getId(),myContext);
                 OrderDetailSellerFragment orderDetailSellerFragment = new OrderDetailSellerFragment();
                 myFragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, orderDetailSellerFragment, orderDetailSellerFragment.getTag()).commit();
             }

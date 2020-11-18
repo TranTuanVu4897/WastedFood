@@ -17,14 +17,15 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.seller.sellerFragment.OrderDetailSellerFragment;
+import com.example.wastedfoodteam.utils.CommonFunction;
 
 import java.util.List;
 
 public class OrderDoneAdapter extends BaseAdapter {
     Context myContext;
     int myLayout;
-    List<Order> arrayOrder;
-    Order order;
+    List<SellerOrder> arrayOrder;
+    SellerOrder order;
     FragmentActivity myFragmentActivity;
     Resources resources;
 
@@ -34,7 +35,7 @@ public class OrderDoneAdapter extends BaseAdapter {
         TextView tvDescription,tvQuantity,tvTotalCost;
     }
 
-    public OrderDoneAdapter(Context context, int layout, List<Order> orderList , Resources resources , FragmentActivity fragmentActivity){
+    public OrderDoneAdapter(Context context, int layout, List<SellerOrder> orderList , Resources resources , FragmentActivity fragmentActivity){
         myContext = context;
         myLayout = layout;
         arrayOrder = orderList;
@@ -76,8 +77,10 @@ public class OrderDoneAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
+
         order = arrayOrder.get(position);
-        Glide.with(convertView.getContext()).load(order.getImage().isEmpty() ? Variable.noImageUrl : order.getImage()).into(holder.ivBuyer);
+        CommonFunction.setImageViewSrc(myContext,order.getBuyer_avatar(),holder.ivBuyer);
+        //Glide.with(convertView.getContext()).load(order.getImage().isEmpty() ? Variable.noImageUrl : order.getImage()).into(holder.ivBuyer);
         holder.tvDescription.setText("Ghi chú: " + order.getBuyer_comment());
         holder.tvTotalCost.setText( "Thành tiền: " + String.valueOf(order.getTotal_cost()));
         holder.tvQuantity.setText("Số lượng: " + String.valueOf(order.getQuantity()));
