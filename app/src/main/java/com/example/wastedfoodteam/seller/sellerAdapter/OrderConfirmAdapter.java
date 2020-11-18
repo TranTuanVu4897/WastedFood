@@ -10,9 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
@@ -74,7 +72,7 @@ public class OrderConfirmAdapter extends BaseAdapter {
         }
 
         order = arrayOrder.get(position);
-        CommonFunction.setImageViewSrc(myContext,order.getImage(),holder.ivBuyer);
+        CommonFunction.setImageViewSrc(myContext,order.getBuyer_avatar(),holder.ivBuyer);
         holder.tvDescription.setText("Ghi chú: " + order.getBuyer_comment());
         holder.tvTotalCost.setText( "Thành tiền: " + String.valueOf(order.getTotal_cost()));
         holder.tvQuantity.setText("Số lượng: " + String.valueOf(order.getQuantity()));

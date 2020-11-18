@@ -57,7 +57,7 @@ public class ListOrderHistoryFragment extends ListFragment {
                             JSONArray jsonOrders = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             for (int i = 0; i < jsonOrders.length(); i++) {
-                                Order order = (Order) gson.fromJson(jsonOrders.getString(i), Order.class);
+//                                Order order = (Order) gson.fromJson(jsonOrders.getString(i), Order.class);
                                 arrOrder.add((Order) gson.fromJson(jsonOrders.getString(i), Order.class));
                                 orderAdapter.notifyDataSetChanged();
                             }

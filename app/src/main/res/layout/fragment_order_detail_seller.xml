@@ -68,13 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:textSize="25dp"
-            android:text="Đang chờ xác nhận"
-            >
-        </TextView>
+
         <com.example.wastedfoodteam.utils.service.NonScrollListView
             android:id="@android:id/list"
             android:layout_width="match_parent"
@@ -82,13 +76,12 @@
             android:layout_weight="1"
             android:nestedScrollingEnabled="false"
             />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:textSize="25dp"
             android:text="Đang chờ lấy hàng"
-            >
-        </TextView>
+            android:textSize="25dp"></TextView>
         <com.example.wastedfoodteam.utils.service.NonScrollListView
             android:id="@+id/lv_list_product_2"
             android:layout_width="match_parent"

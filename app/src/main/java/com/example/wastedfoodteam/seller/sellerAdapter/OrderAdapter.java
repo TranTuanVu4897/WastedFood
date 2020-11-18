@@ -2,19 +2,14 @@ package com.example.wastedfoodteam.seller.sellerAdapter;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.model.Order;
-import com.example.wastedfoodteam.model.Product;
-import com.google.gson.internal.$Gson$Preconditions;
 
 import java.util.List;
 
@@ -73,9 +68,9 @@ public class OrderAdapter extends BaseAdapter {
         }
 
         order = arrayOrder.get(position);
-        holder.tvNameBuyer.setText(order.getBuyerName());
+        holder.tvNameBuyer.setText(order.getBuyer_name());
         holder.tvTotalCost.setText(String.valueOf(order.getTotal_cost()));
-        holder.tvNameProduct.setText(String.valueOf(order.getNameProduct()));
+        holder.tvNameProduct.setText(String.valueOf(order.getName_product()));
         holder.tvQuantity.setText(String.valueOf(order.getQuantity()));
         return convertView;
     }

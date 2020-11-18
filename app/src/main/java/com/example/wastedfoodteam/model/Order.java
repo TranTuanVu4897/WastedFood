@@ -1,7 +1,5 @@
 package com.example.wastedfoodteam.model;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -12,16 +10,16 @@ import java.sql.Date;
 public class Order implements Serializable {
     int id;
     int buyer_id;
-    String buyerName;
-    String nameProduct;
+    String buyer_name;
+    String name_product;
     int product_id;
     int quantity;
     Status status;
     double total_cost;
     int buyer_rating;
     String buyer_comment;
+    String buyer_avatar;
     Product product;
-    String image;
 
     public Product getProduct() {
         return product;
@@ -95,34 +93,34 @@ public class Order implements Serializable {
         this.buyer_comment = buyer_comment;
     }
 
-    public String getBuyerName() {
-        return buyerName;
+    public String getBuyer_name() {
+        return buyer_name;
     }
 
-    public void setBuyerName(String buyerName) {
-        this.buyerName = buyerName;
+    public void setBuyer_name(String buyer_name) {
+        this.buyer_name = buyer_name;
     }
 
-    public String getNameProduct() {
-        return nameProduct;
+    public String getName_product() {
+        return name_product;
     }
 
-    public void setNameProduct(String nameProduct) {
-        this.nameProduct = nameProduct;
+    public void setName_product(String name_product) {
+        this.name_product = name_product;
     }
 
-    public String getImage() {
-        return image;
+    public String getBuyer_avatar() {
+        return buyer_avatar;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setBuyer_avatar(String buyer_avatar) {
+        this.buyer_avatar = buyer_avatar;
     }
 
     public Order() {
     }
 
-    public Order(int id, int buyer_id, int product_id, int quantity, Status status, double total_cost, int buyer_rating, String buyer_comment, Date modified_date , String image) {
+    public Order(int id, int buyer_id, int product_id, int quantity, Status status, double total_cost, int buyer_rating, String buyer_comment, Date modified_date , String buyer_avatar) {
         this.id = id;
         this.buyer_id = buyer_id;
         this.product_id = product_id;
@@ -131,7 +129,7 @@ public class Order implements Serializable {
         this.total_cost = total_cost;
         this.buyer_rating = buyer_rating;
         this.buyer_comment = buyer_comment;
-        this.image = image;
+        this.buyer_avatar = buyer_avatar;
     }
 
     public Order(int buyer_id, int product_id, int quantity, Status status, double total_cost) {

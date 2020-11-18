@@ -25,6 +25,7 @@ import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderConfirmAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderDoneAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderPaymentAdapter;
+import com.example.wastedfoodteam.utils.CommonFunction;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -35,8 +36,8 @@ import java.util.ArrayList;
 
 public class OrderDetailSellerFragment extends Fragment {
 
-    ListView lvOrderConfirm,lvOrderPayment,lvOrderDone;
-    ArrayList<Order> arrOrder,arrOrderPayment,arrOrderDone;
+    ListView lvOrderConfirm, lvOrderPayment, lvOrderDone;
+    ArrayList<Order> arrOrder, arrOrderPayment, arrOrderDone;
     String urlGetData;
     OrderConfirmAdapter orderAdapter;
     OrderPaymentAdapter orderPaymentAdapter;
@@ -49,29 +50,36 @@ public class OrderDetailSellerFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_order_detail_seller, container, false);
+
         lvOrderConfirm = view.findViewById(android.R.id.list);
         lvOrderPayment = view.findViewById(R.id.lv_list_product_2);
         lvOrderDone = view.findViewById(R.id.lv_list_product_3);
         imageView = view.findViewById(R.id.iv_list_order_product_picture);
+
         product = Variable.PRODUCT;
-        Glide.with(view.getContext()).load(product.getImage().isEmpty() ? "https://i.pinimg.com/originals/95/ee/86/95ee8696f8ed1abb3767928c4d0daf65.jpg" : product.getImage()).into(imageView);
-        arrOrder = new ArrayList<Order>();
-        arrOrderPayment = new ArrayList<Order>();
-        arrOrderDone = new ArrayList<Order>();
+
+        CommonFunction.setImageViewSrc(getActivity(), product.getImage(), imageView);
+
+        arrOrder = new ArrayList<>();
+        arrOrderPayment = new ArrayList<>();
+        arrOrderDone = new ArrayList<>();
+
         orderAdapter = new OrderConfirmAdapter(getActivity().getApplicationContext(), R.layout.list_seller_confirm_order, arrOrder, getResources());
         orderPaymentAdapter = new OrderPaymentAdapter(getActivity().getApplicationContext(), R.layout.list_seller_payment_order, arrOrderPayment, getResources());
         orderDoneAdapter = new OrderDoneAdapter(getActivity().getApplicationContext(), R.layout.list_seller_done_order, arrOrderDone, getResources());
+
         lvOrderConfirm.setAdapter(orderAdapter);
         lvOrderPayment.setAdapter(orderPaymentAdapter);
         lvOrderDone.setAdapter(orderDoneAdapter);
+
         setListViewHeightBasedOnItems(lvOrderDone);
-        getData("'wait for confirm'");
-        getData("'wait for payment'");
-        getData("'done'");
+//        getData("'wait for confirm'");
+        getData(Order.Status.BUYING);
+        getData(Order.Status.SUCCESS);
         return view;
     }
 
-    public void getData(final String status) {
+    public void getData(final Order.Status status) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         urlGetData = Variable.IP_ADDRESS + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() + "&product_id=" + Variable.PRODUCT.getId() + "&order_status=" + status;
@@ -83,17 +91,24 @@ public class OrderDetailSellerFragment extends Fragment {
                         try {
                             JSONArray jsonOrders = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+
                             for (int i = 0; i < jsonOrders.length(); i++) {
-                                if(status.equals("'wait for confirm'")){
-                                    arrOrder.add((Order) gson.fromJson(jsonOrders.getString(i), Order.class));
-                                    orderAdapter.notifyDataSetChanged();
-                                }else if (status.equals("'wait for payment'")){
-                                    arrOrderPayment.add((Order) gson.fromJson(jsonOrders.getString(i), Order.class));
-                                    orderPaymentAdapter.notifyDataSetChanged();
-                                }else if(status.equals("'done'")){
-                                    arrOrderDone.add((Order) gson.fromJson(jsonOrders.getString(i), Order.class));
-                                    orderDoneAdapter.notifyDataSetChanged();
+                                switch (status) {
+                                    case BUYING:
+                                        arrOrderPayment.add(gson.fromJson(jsonOrders.getString(i), Order.class));
+                                        orderPaymentAdapter.notifyDataSetChanged();
+                                        break;
+                                    case SUCCESS:
+                                        arrOrderDone.add(gson.fromJson(jsonOrders.getString(i), Order.class));
+                                        orderDoneAdapter.notifyDataSetChanged();
+                                        break;
                                 }
+//                                if(status.equals("'wait for confirm'")){
+//                                    arrOrder.add((Order) gson.fromJson(jsonOrders.getString(i), Order.class));
+//                                    orderAdapter.notifyDataSetChanged();
+//                                }else if (status.equals(Order.Status.BUYING)){
+//                                }else if(status.equals(Order.Status.SUCCESS)){
+//                                }
 
                             }
                         } catch (JSONException e) {
