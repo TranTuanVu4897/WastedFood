@@ -28,7 +28,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.UUID;
 
-public class CameraStorageFunction  {
+public class CameraStorageFunction {
     //permission constants
     public static final int CAMERA_REQUEST_CODE = 200;
     public static final int STORAGE_REQUEST_CODE = 300;
@@ -43,7 +43,6 @@ public class CameraStorageFunction  {
 
     //image pick uri
     private Uri image_uri;
-
     // instance for firebase storage and StorageReference
     FirebaseStorage storage;
     StorageReference storageReference;
@@ -52,7 +51,12 @@ public class CameraStorageFunction  {
     FragmentActivity myActivity;
     Context myContext;
 
-    public CameraStorageFunction(FragmentActivity activity, Context context){
+    public interface HandleUploadImage{
+        void onSuccess(String url);
+        void onError();
+    }
+
+    public CameraStorageFunction(FragmentActivity activity, Context context) {
         myActivity = activity;
         myContext = context;
         //init permission arrays
@@ -64,13 +68,13 @@ public class CameraStorageFunction  {
     }
 
 
-
     //start of for camera handle
     protected void pickFromGallery() {
         //intent to pick image from gallery
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        myActivity.startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE); ;
+        myActivity.startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE);
+
     }
 
     public void showImagePickDialog() {
@@ -114,7 +118,7 @@ public class CameraStorageFunction  {
         contentValues.put(MediaStore.Images.Media.DESCRIPTION, "Temp_Image_Description");
 
         image_uri = myActivity.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-        Log.i("CameraStorageFunction","image_uri :" + image_uri);
+        Log.i("CameraStorageFunction", "image_uri :" + image_uri);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
         myActivity.startActivityForResult(intent, IMAGE_PICK_CAMERA_CODE);
@@ -142,78 +146,59 @@ public class CameraStorageFunction  {
         ActivityCompat.requestPermissions(myActivity, cameraPermission, CAMERA_REQUEST_CODE);
     }
 
-    public  void onActivityResult(int requestCode, int resultCode, Intent data ) {
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == -1) {
             if (requestCode == IMAGE_PICK_GALLERY_CODE) {
-                Log.i("CameraStorageFunction","image pick gallery");
+                Log.i("CameraStorageFunction", "image pick gallery");
                 //image pick from gallery
 
                 //save picked image uri
                 image_uri = data.getData();
 
                 //image picked from camera
-                //imageView.setImageURI(image_uri);
+//                imageView.setImageURI(image_uri);
             } else if (requestCode == IMAGE_PICK_CAMERA_CODE) {
                 //image pick from camera
-                //imageView.setImageURI(image_uri);
+//                imageView.setImageURI(image_uri);
             }
         }
     }
 
     // UploadImage method
-    private void uploadImage() {
+    public void uploadImage(final HandleUploadImage handleUploadImage) {
         // Defining the child of storageReference
-        StorageReference ref
-                = storageReference
-                .child(
-                        "images/"
-                                + UUID.randomUUID().toString());
+        StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
 
         // adding listeners on upload
         // or failure of image
-        ref.putFile(image_uri)
-                .addOnSuccessListener(
-                        new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        ref.putFile(image_uri).addOnSuccessListener(
+                new OnSuccessListener<UploadTask.TaskSnapshot>() {
 
+                    @Override
+                    public void onSuccess(
+                            UploadTask.TaskSnapshot taskSnapshot) {
+                        // Image uploaded successfully
+                        Toast.makeText(myActivity, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
+                        taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
-                            public void onSuccess(
-                                    UploadTask.TaskSnapshot taskSnapshot) {
-
-                                // Image uploaded successfully
-                                Toast
-                                        .makeText(myActivity,
-                                                "Image Uploaded!!",
-                                                Toast.LENGTH_SHORT)
-                                        .show();
-                                taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        storage_location = uri.toString();
-                                        Toast
-                                                .makeText(myActivity,
-                                                        uri.toString(),
-                                                        Toast.LENGTH_LONG)
-                                                .show();
-                                    }
-                                });
+                            public void onSuccess(Uri uri) {
+                                storage_location = uri.toString();
+                                handleUploadImage.onSuccess(storage_location);
+                                Toast.makeText(myActivity, uri.toString(), Toast.LENGTH_LONG).show();
                             }
-                        })
-
+                        });
+                    }
+                })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
                         // Error, Image not uploaded
-                        Toast
-                                .makeText(myActivity,
-                                        "Failed " + e.getMessage(),
-                                        Toast.LENGTH_SHORT)
-                                .show();
+                        Toast.makeText(myActivity, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
-
-
 
 
 }

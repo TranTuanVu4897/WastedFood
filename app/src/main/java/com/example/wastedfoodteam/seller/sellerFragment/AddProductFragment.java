@@ -37,6 +37,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
+import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -55,6 +56,7 @@ public class AddProductFragment extends Fragment {
     private int seller_id;
     private String storage_location;
 
+    private CameraStorageFunction cameraStorageFunction;
     //ui view
     private ImageView ivProduct;
     private EditText etProductName,
@@ -145,6 +147,7 @@ public class AddProductFragment extends Fragment {
         cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
+        cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext());
         etOpenTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,7 +166,7 @@ public class AddProductFragment extends Fragment {
         ivProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showImagePickDialog();
+                cameraStorageFunction.showImagePickDialog();
             }
         });
 
@@ -189,7 +192,19 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                uploadImage();
+                cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
+                    @Override
+                    public void onSuccess(String url) {
+                        storage_location = url;
+                        String urlGetData = Variable.IP_ADDRESS + Variable.ADD_PRODUCT_SELLER;
+                        addProduct(urlGetData);
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
 
             }
         });
@@ -343,6 +358,8 @@ public class AddProductFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+
+
     // UploadImage method
     private void uploadImage() {
         // Defining the child of storageReference
@@ -361,8 +378,6 @@ public class AddProductFragment extends Fragment {
                     public void onSuccess(Uri uri) {
                         storage_location = uri.toString();
 
-                        String urlGetData = Variable.IP_ADDRESS + Variable.ADD_PRODUCT_SELLER;
-                        addProduct(urlGetData);
                         //Toast.makeText(getActivity(), uri.toString(), Toast.LENGTH_LONG).show();
                     }
                 });
