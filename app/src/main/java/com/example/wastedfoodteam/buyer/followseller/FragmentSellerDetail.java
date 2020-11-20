@@ -29,6 +29,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.BuyHomeActivity;
+import com.example.wastedfoodteam.buyer.buy.BuyerProduct;
 import com.example.wastedfoodteam.buyer.buy.FragmentDetailProduct;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
@@ -47,7 +48,7 @@ import java.util.Map;
 
 public class FragmentSellerDetail extends ListFragment {
     String urlGetData;
-    ArrayList<Product> arrProduct;
+    ArrayList<BuyerProduct> arrProduct;
     ProductAdapterOfSeller adapter;
     FragmentDetailProduct detailProduct;
     Bundle bundleDetail;
@@ -173,7 +174,7 @@ public class FragmentSellerDetail extends ListFragment {
                             JSONArray jsonProducts = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             for (int i = 0; i < jsonProducts.length(); i++) {
-                                arrProduct.add((Product) gson.fromJson(jsonProducts.getString(i), Product.class));
+                                arrProduct.add((BuyerProduct) gson.fromJson(jsonProducts.getString(i), BuyerProduct.class));
                                 adapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {
@@ -192,7 +193,7 @@ public class FragmentSellerDetail extends ListFragment {
 
     @Override
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
-        Product product = (Product) l.getAdapter().getItem(position);
+        BuyerProduct product = (BuyerProduct) l.getAdapter().getItem(position);
 
 
         //put bundle
