@@ -166,7 +166,7 @@ public class AddProductFragment extends Fragment {
         ivProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cameraStorageFunction.showImagePickDialog();
+                showImagePickDialog();
             }
         });
 
@@ -192,19 +192,20 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
-                    @Override
-                    public void onSuccess(String url) {
-                        storage_location = url;
-                        String urlGetData = Variable.IP_ADDRESS + Variable.ADD_PRODUCT_SELLER;
-                        addProduct(urlGetData);
-                    }
-
-                    @Override
-                    public void onError() {
-
-                    }
-                });
+//                cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
+//                    @Override
+//                    public void onSuccess(String url) {
+//                        storage_location = url;
+//                        String urlGetData = Variable.IP_ADDRESS + Variable.ADD_PRODUCT_SELLER;
+//                        addProduct(urlGetData);
+//                    }
+//
+//                    @Override
+//                    public void onError() {
+//
+//                    }
+//                });
+                uploadImage();
 
             }
         });
@@ -378,6 +379,8 @@ public class AddProductFragment extends Fragment {
                     public void onSuccess(Uri uri) {
                         storage_location = uri.toString();
 
+                        String urlGetData = Variable.IP_ADDRESS + Variable.ADD_PRODUCT_SELLER;
+                        addProduct(urlGetData);
                         //Toast.makeText(getActivity(), uri.toString(), Toast.LENGTH_LONG).show();
                     }
                 });
