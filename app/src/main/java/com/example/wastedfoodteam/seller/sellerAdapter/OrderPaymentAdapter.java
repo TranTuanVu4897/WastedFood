@@ -9,18 +9,41 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.fragment.app.FragmentActivity;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.global.Variable;
+import com.example.wastedfoodteam.model.Order;
+import com.example.wastedfoodteam.model.Product;
+import com.example.wastedfoodteam.seller.sellerFragment.ListOrderHistoryFragment;
+import com.example.wastedfoodteam.seller.sellerFragment.OrderDetailSellerFragment;
 import com.example.wastedfoodteam.utils.CommonFunction;
+import com.example.wastedfoodteam.utils.SendNotificationPackage.SendNotif;
+import com.example.wastedfoodteam.utils.service.updateStatusForOrder;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OrderPaymentAdapter extends BaseAdapter {
     Context myContext;
     int myLayout;
     List<SellerOrder> arrayOrder;
+    SendNotif sendNotif;
+    Product product;
     SellerOrder order;
     Resources resources;
+    FragmentActivity myFragmentActivity;
 
     private class ViewHolder {
         ImageView ivBuyer;
@@ -28,11 +51,12 @@ public class OrderPaymentAdapter extends BaseAdapter {
         TextView tvDescription, tvQuantity, tvTotalCost;
     }
 
-    public OrderPaymentAdapter(Context context, int layout, List<SellerOrder> orderList, Resources resources) {
+    public OrderPaymentAdapter(Context context, int layout, List<SellerOrder> orderList , Resources resources , FragmentActivity fragmentActivity ){
         myContext = context;
         myLayout = layout;
         arrayOrder = orderList;
         this.resources = resources;
+        myFragmentActivity = fragmentActivity;
     }
 
 
@@ -77,8 +101,12 @@ public class OrderPaymentAdapter extends BaseAdapter {
         holder.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //set status = wait for payment
+                //set status = done
                 //reload fragment
+                sendNotif.notificationHandle(order.getBuyer_name());
+                updateStatusForOrder.updateOrderStatus(Variable.IP_ADDRESS + "seller/updateStatusForOrderSeller.php","done", order.getId(),myContext);
+                OrderDetailSellerFragment orderDetailSellerFragment = new OrderDetailSellerFragment();
+                myFragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, orderDetailSellerFragment, orderDetailSellerFragment.getTag()).commit();
             }
         });
         holder.btnReject.setOnClickListener(new View.OnClickListener() {
@@ -91,4 +119,5 @@ public class OrderPaymentAdapter extends BaseAdapter {
         });
         return convertView;
     }
+
 }

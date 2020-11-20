@@ -26,6 +26,11 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.home.SellerHomeActivity;
 import com.example.wastedfoodteam.model.Seller;
+import com.example.wastedfoodteam.utils.SendNotificationPackage.SendNotif;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -49,7 +54,7 @@ public class FragmentLoginPartner extends Fragment {
         etPass = view.findViewById(R.id.etPassPartnerFLP);
         btnSignIn = view.findViewById(R.id.btnSignInPartnerFLP);
         btnBuyerOption = view.findViewById(R.id.btnBuyerOptionFLP);
-
+        Intent intent = new Intent(getActivity(), SellerHomeActivity.class);
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,9 +116,22 @@ public class FragmentLoginPartner extends Fragment {
                             JSONArray object = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             Seller seller = gson.fromJson(object.getString(0), Seller.class);
+
+                            final Intent intent = new Intent(getActivity(), SellerHomeActivity.class);//TODO change to seller activity
+
                             Variable.ACCOUNT_ID = seller.getId();
                             Variable.SELLER = seller;
-                            openSellerHome();
+                            //openSellerHome();
+
+                            FirebaseAuth.getInstance().signInWithEmailAndPassword(seller.getEmail(),seller.getPassword()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                @Override
+                                public void onSuccess(AuthResult authResult) {
+                                    Variable.fireBaseUID = authResult.getUser().getUid();
+                                    startActivity(intent);
+                                }
+                            });
+                            //TODO pass data through intent
+                            //startActivity(intent);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -135,11 +153,11 @@ public class FragmentLoginPartner extends Fragment {
     /**
      * move to fragment buyer
      */
-    public void addFragmentLoginPartner() {
+    public void addFragmentLoginPartner(){
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         FragmentLoginBuyer fragmentLoginBuyer = new FragmentLoginBuyer();
-        fragmentTransaction.replace(R.id.flFragmentLayoutAM, fragmentLoginBuyer);
+        fragmentTransaction.replace(R.id.flFragmentLayoutAM,fragmentLoginBuyer);
         fragmentTransaction.commit();
     }
 

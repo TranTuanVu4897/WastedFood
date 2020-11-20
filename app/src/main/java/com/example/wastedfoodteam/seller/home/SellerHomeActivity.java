@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
+import com.example.wastedfoodteam.seller.notification.NotificationFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.AddProductFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.ChangePasswordSellerFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.EditSellerFragment;
@@ -26,10 +27,30 @@ import com.example.wastedfoodteam.seller.sellerFragment.ListProductSellerFragmen
 import com.example.wastedfoodteam.seller.sellerFragment.SellerHomeFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.SendFeedbackSellerFragment;
 import com.example.wastedfoodteam.model.Seller;
+import com.example.wastedfoodteam.utils.SendNotificationPackage.APIService;
+import com.example.wastedfoodteam.utils.SendNotificationPackage.Client;
+import com.example.wastedfoodteam.utils.SendNotificationPackage.Data;
+import com.example.wastedfoodteam.utils.SendNotificationPackage.MyFireBaseMessagingService;
+import com.example.wastedfoodteam.utils.SendNotificationPackage.MyResponse;
+import com.example.wastedfoodteam.utils.SendNotificationPackage.NotificationSender;
+import com.example.wastedfoodteam.utils.SendNotificationPackage.SendNotif;
+import com.example.wastedfoodteam.utils.SendNotificationPackage.Token;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.installations.FirebaseInstallations;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SellerHomeActivity extends AppCompatActivity {
 
@@ -45,19 +66,16 @@ public class SellerHomeActivity extends AppCompatActivity {
 
     Seller seller;
 
-    String password;
-
-
-
-
-    // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
-    private ActionBarDrawerToggle drawerToggle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seller_home);
         seller = new Seller();
         Intent intent = new Intent();
+
+        final SendNotif sendNotif = new SendNotif();
+        sendNotif.UpdateToken();
+        sendNotif.notificationHandle(Variable.fireBaseUID);
 
         //get the header view
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -127,6 +145,10 @@ public class SellerHomeActivity extends AppCompatActivity {
                     ListOrderHistoryFragment listOrderHistoryFragment = new ListOrderHistoryFragment();
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_main,listOrderHistoryFragment,listOrderHistoryFragment.getTag()).commit();
+                }else if(id == R.id.item_nav_drawer_menu_alert){
+                    NotificationFragment notificationFragment = new NotificationFragment();
+                    FragmentManager manager = getSupportFragmentManager();
+                    manager.beginTransaction().replace(R.id.content_main,notificationFragment,notificationFragment.getTag()).commit();
                 }
                 DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
@@ -149,13 +171,6 @@ public class SellerHomeActivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
-
-
 }

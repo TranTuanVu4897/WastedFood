@@ -12,11 +12,11 @@ import java.sql.Time;
 
 
 public class Variable {
-    public static final String IP_ADDRESS = "http://192.168.3.4/wastedfoodphp/";//Vutt ip
+    //public static final String IP_ADDRESS = "http://192.168.3.4/wastedfoodphp/";//Vutt ip
 //    public static final String IP_ADDRESS = "http://10.22.178.239/wastedfoodphp/";//FPT University ip
 //    public static final String IP_ADDRESS = "http://192.168.1.46/wastedfoodphp/";//TungPT ip
-//    public static final String IP_ADDRESS = "http://192.168.1.10/wastedfoodphp/";//DucHC ip
-//    public static final String IP_ADDRESS ="http://192.168.156.2/wastedfoodphp/";//DucHC ip lan
+     public static final String IP_ADDRESS = "http://192.168.1.10/wastedfoodphp/";//DucHC ip
+   //public static final String IP_ADDRESS ="http://192.168.156.2/wastedfoodphp/";//DucHC ip lan
 //    public static final String IP_ADDRESS ="https://wasted-food-service.herokuapp.com/";//heroku server
 
     //other php variable
@@ -34,7 +34,7 @@ public class Variable {
     public static Account ACCOUNT;
     public static final String UPDATE_RATING = "order/buyerUpdateRating.php";
     public static final String ORDER_HISTORY = "order/buyerOrderHistory.php";
-
+    public static String fireBaseUID ;
     public static Seller SELLER;
     public static Buyer buyer;
     public static Product PRODUCT;

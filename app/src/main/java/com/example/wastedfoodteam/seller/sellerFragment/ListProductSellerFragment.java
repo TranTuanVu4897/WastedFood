@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -32,12 +34,15 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ListProductSellerFragment extends ListFragment {
 
     ArrayList<Product> arrProduct;
     ProductSellerAdapter adapter;
+    Product product;
     ListView lvProduct;
     TextView tv_total_product;
     int seller_id;
@@ -53,6 +58,7 @@ public class ListProductSellerFragment extends ListFragment {
         lvProduct = view.findViewById(android.R.id.list);
         arrProduct = new ArrayList<Product>();
         seller_id = Variable.ACCOUNT_ID;
+        product = Variable.PRODUCT;
         tv_total_product = view.findViewById(R.id.tv_total_product);
         String urlGetData = Variable.IP_ADDRESS + "seller/getListProductSeller.php?seller_id=" + seller_id;
         adapter = new ProductSellerAdapter(getActivity().getApplicationContext(), R.layout.list_seller_product, arrProduct, getResources());
@@ -77,6 +83,7 @@ public class ListProductSellerFragment extends ListFragment {
         });
         return view;
     }
+
 
     public void getData(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());

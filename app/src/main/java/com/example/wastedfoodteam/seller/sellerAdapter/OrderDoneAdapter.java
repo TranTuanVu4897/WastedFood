@@ -10,7 +10,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentActivity;
+
+import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.global.Variable;
+import com.example.wastedfoodteam.model.Order;
+import com.example.wastedfoodteam.seller.sellerFragment.OrderDetailSellerFragment;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
 import java.util.List;
@@ -20,6 +26,7 @@ public class OrderDoneAdapter extends BaseAdapter {
     int myLayout;
     List<SellerOrder> arrayOrder;
     SellerOrder order;
+    FragmentActivity myFragmentActivity;
     Resources resources;
 
     private class ViewHolder {
@@ -28,11 +35,12 @@ public class OrderDoneAdapter extends BaseAdapter {
         TextView tvDescription,tvQuantity,tvTotalCost;
     }
 
-    public OrderDoneAdapter(Context context, int layout, List<SellerOrder> orderList , Resources resources){
+    public OrderDoneAdapter(Context context, int layout, List<SellerOrder> orderList , Resources resources , FragmentActivity fragmentActivity){
         myContext = context;
         myLayout = layout;
         arrayOrder = orderList;
         this.resources = resources;
+        myFragmentActivity = fragmentActivity;
     }
 
 
@@ -69,16 +77,20 @@ public class OrderDoneAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
+
         order = arrayOrder.get(position);
         CommonFunction.setImageViewSrc(myContext,order.getBuyer_avatar(),holder.ivBuyer);
         holder.tvDescription.setText("Ghi chú: " + CommonFunction.getEmptyString(order.getBuyer_comment()));
         holder.tvTotalCost.setText( "Thành tiền: " + CommonFunction.getShortCurrency(order.getTotal_cost()));
+
         holder.tvQuantity.setText("Số lượng: " + String.valueOf(order.getQuantity()));
         holder.btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //set status = wait for payment
                 //reload fragment
+                OrderDetailSellerFragment orderDetailSellerFragment = new OrderDetailSellerFragment();
+                myFragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, orderDetailSellerFragment, orderDetailSellerFragment.getTag()).commit();
             }
         });
 

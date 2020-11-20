@@ -68,7 +68,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            style="@style/AppTheme"
+            android:textSize="25dp"
+            android:text="Đang chờ xác nhận"
+            >
+        </TextView>
+        <TextView
+            android:id="@+id/tv_order_detail_seller_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            style="@style/AppTheme"
+            android:textSize="13dp"
+            android:gravity="right"
+            android:text="Hiện không có đơn nào cần xác nhận"
+            >
+        </TextView>
         <com.example.wastedfoodteam.utils.service.NonScrollListView
             android:id="@android:id/list"
             android:layout_width="match_parent"
@@ -76,12 +93,24 @@
             android:layout_weight="1"
             android:nestedScrollingEnabled="false"
             />
-
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
+            style="@style/AppTheme"
+            android:textSize="25dp"
             android:text="Đang chờ lấy hàng"
-            android:textSize="25dp"></TextView>
+            >
+        </TextView>
+        <TextView
+            android:id="@+id/tv_order_detail_seller_payment"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            style="@style/AppTheme"
+            android:textSize="13dp"
+            android:gravity="right"
+            android:text="Hiện không có đơn nào cần xác nhận"
+            >
+        </TextView>
         <com.example.wastedfoodteam.utils.service.NonScrollListView
             android:id="@+id/lvOrderPayment"
             android:layout_width="match_parent"
@@ -91,9 +120,20 @@
             />
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
+            style="@style/AppTheme"
             android:textSize="25dp"
             android:text="Đã lấy hàng"
+            >
+        </TextView>
+        <TextView
+            android:id="@+id/tv_order_detail_seller_done"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            style="@style/AppTheme"
+            android:textSize="13dp"
+            android:gravity="right"
+            android:text="Hiện không có đơn nào cần xác nhận"
             >
         </TextView>
         <com.example.wastedfoodteam.utils.service.NonScrollListView

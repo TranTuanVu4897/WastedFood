@@ -1,30 +1,41 @@
 package com.example.wastedfoodteam.seller.sellerFragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Product;
-import com.example.wastedfoodteam.seller.sellerAdapter.SellerOrder;
+import com.example.wastedfoodteam.seller.sellerAdapter.OrderAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderConfirmAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderDoneAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderPaymentAdapter;
+import com.example.wastedfoodteam.seller.sellerAdapter.SellerOrder;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,24 +44,26 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OrderDetailSellerFragment extends Fragment {
 
-    ListView lvOrderConfirm, lvOrderPayment, lvOrderDone;
-    ArrayList<SellerOrder> arrOrder, arrOrderPayment, arrOrderDone;
-    String urlGetData;
+    ListView lvOrderConfirm,lvOrderPayment,lvOrderDone;
+    ArrayList<SellerOrder> arrOrder,arrOrderPayment,arrOrderDone;
+    Button editProduct,cancelProduct;
     OrderConfirmAdapter orderAdapter;
     OrderPaymentAdapter orderPaymentAdapter;
     OrderDoneAdapter orderDoneAdapter;
     ImageView ivProductImage;
     Product product;
+    TextView tvConfirmAlert,tvPaymentAlert,tvDoneAlert;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_order_detail_seller, container, false);
-
         lvOrderConfirm = view.findViewById(android.R.id.list);
         lvOrderPayment = view.findViewById(R.id.lvOrderPayment);
         lvOrderDone = view.findViewById(R.id.lvOrderDone);
@@ -69,20 +82,90 @@ public class OrderDetailSellerFragment extends Fragment {
         orderDoneAdapter = new OrderDoneAdapter(getActivity().getApplicationContext(), R.layout.list_seller_done_order, arrOrderDone, getResources());
 
         lvOrderConfirm.setAdapter(orderAdapter);
+      
+        editProduct = view.findViewById(R.id.btn_editProduct_edit);
+        cancelProduct = view.findViewById(R.id.btn_editProduct_stop);
+        tvConfirmAlert = view.findViewById(R.id.tv_order_detail_seller_confirm);
+        tvPaymentAlert = view.findViewById(R.id.tv_order_detail_seller_payment);
+        tvDoneAlert = view.findViewById(R.id.tv_order_detail_seller_done);
+        editProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SellerDetailProductFragment sellerDetailProductFragment = new SellerDetailProductFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace( R.id.content_main, sellerDetailProductFragment , "")//TODO check if this work
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        cancelProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(cancelProduct.getText().equals("NGỪNG BÁN")){
+                    updateProductStatus(Variable.IP_ADDRESS + "seller/setActiveForProduct.php","stop",product.getId());
+                    cancelProduct.setText("MỞ LẠI BÁN");
+                }else {
+                    updateProductStatus(Variable.IP_ADDRESS + "seller/setActiveForProduct.php","selling",product.getId());
+                    cancelProduct.setText("NGỪNG BÁN");
+                }
+            }
+        });
         lvOrderPayment.setAdapter(orderPaymentAdapter);
         lvOrderDone.setAdapter(orderDoneAdapter);
+        lvOrderConfirm.setAdapter(orderAdapter);
+        //setListViewHeightBasedOnItems(lvOrderDone);
+        //("'wait for confirm'");
+        //getData("'wait for payment'");
+        //getData("'done'");
+
 
         setListViewHeightBasedOnItems(lvOrderDone);
-//        getData("'wait for confirm'");
-        getData(Order.OrderStatus.BUYING);
-        getData(Order.OrderStatus.SUCCESS);
+
+        getData(Order.Status.BUYING);
+        getData(Order.Status.SUCCESS);
         return view;
     }
 
-    public void getData(final Order.OrderStatus orderStatus) {
+    //update product status
+    public void updateProductStatus(String url, final String status , final int id){
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if(response.trim().equals("Succesfully update")){
+                            Toast.makeText(getContext(),"Cập nhật thành công",Toast.LENGTH_SHORT).show();
+                            //TODO move back to home
+                        }else{
+                            Toast.makeText( getContext(),"Lỗi cập nhật",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getContext(),"Xảy ra lỗi, vui lòng thử lại",Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("seller_id", String.valueOf(product.getSeller_id()));
+                params.put("status",  status );
+                params.put("id" ,  String.valueOf(id) );
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+
+
+    public void getData(final Order.Status status) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        urlGetData = Variable.IP_ADDRESS + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() + "&product_id=" + Variable.PRODUCT.getId() + "&order_status=" + orderStatus;
+        String urlGetData = Variable.IP_ADDRESS + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() + "&product_id=" + Variable.PRODUCT.getId() + "&order_status=" + status;
+
 
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
