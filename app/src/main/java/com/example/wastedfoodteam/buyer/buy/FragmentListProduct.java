@@ -103,9 +103,9 @@ public class FragmentListProduct extends ListFragment {
                                 adapter.setProductList(arrProduct);
                                 adapter.notifyDataSetChanged();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        } catch (Exception e) {
                             Log.e("ListProduct", response);
+                            e.printStackTrace();
                         }
                     }
                 },

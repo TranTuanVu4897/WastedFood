@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.buyer.buy.BuyerProduct;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
@@ -18,10 +19,10 @@ import java.util.List;
 public class ProductAdapterOfSeller extends BaseAdapter {
     private Context context;
     private int layout;
-    private List<Product> productList;
+    private List<BuyerProduct> productList;
     Resources resources;
 
-    public ProductAdapterOfSeller(Context context, int layout, List<Product> productList, Resources resources) {
+    public ProductAdapterOfSeller(Context context, int layout, List<BuyerProduct> productList, Resources resources) {
         this.context = context;
         this.layout = layout;
         this.productList = productList;
