@@ -114,7 +114,7 @@ public class OrderConfirmAdapter extends BaseAdapter {
             public void onClick(View v) {
                 //set status = wait for payment
                 //reload fragment
-                updateStatusForOrder.updateOrderStatus(Variable.IP_ADDRESS + "seller/updateStatusForOrderSeller.php","wait for payment", order.getId(),myContext);
+                updateStatusForOrder.updateOrderStatus(Variable.IP_ADDRESS + "seller/updateStatusForOrderSeller.php",Order.Status.SUCCESS, order.getId(),myContext);
                 OrderDetailSellerFragment orderDetailSellerFragment = new OrderDetailSellerFragment();
                 myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, orderDetailSellerFragment, orderDetailSellerFragment.getTag()).commit();
                 //showNotification("Dữ liệu","Đã được thay đổi");

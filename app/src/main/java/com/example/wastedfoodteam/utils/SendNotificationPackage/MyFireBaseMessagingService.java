@@ -16,10 +16,15 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.wastedfoodteam.MainActivity;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.seller.home.SellerHomeActivity;
+import com.example.wastedfoodteam.seller.notification.NotificationFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.SellerHomeFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -55,11 +60,18 @@ public class MyFireBaseMessagingService extends FirebaseMessagingService {
             NotificationChannel channel=new NotificationChannel(CHANNEL_ID,CHANNEL_NAME,NotificationManager.IMPORTANCE_DEFAULT);
             manager.createNotificationChannel(channel);
         }
-        Intent resultIntent = new Intent(this,MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivities(this,1, new Intent[]{resultIntent},PendingIntent.FLAG_UPDATE_CURRENT);
 
+        PendingIntent pendingIntent;
+        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+            Intent resultIntent = new Intent(this, SellerHomeActivity.class);
+            resultIntent.putExtra("From", "notifyFrag");
+            pendingIntent = PendingIntent.getActivity(this, 1,  resultIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
+        }else {
+            Intent resultIntent = new Intent(this, MainActivity.class);
+             pendingIntent = PendingIntent.getActivity(this, 1, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
         Notification notification = new NotificationCompat.Builder(MyFireBaseMessagingService.this,CHANNEL_ID)
-                .setSmallIcon(R.drawable.com_facebook_button_icon)
+                .setSmallIcon(R.drawable.com_facebook_button_like_icon_selected)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(pendingIntent)

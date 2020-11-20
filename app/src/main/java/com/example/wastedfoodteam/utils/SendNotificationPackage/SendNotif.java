@@ -32,15 +32,14 @@ import retrofit2.Response;
 public class SendNotif {
     private APIService apiService ;
 
-    public void notificationHandle(String firebaseUID){
+    public void notificationHandle(String firebaseUID , final String title , final String message){
 
         FirebaseDatabase.getInstance().getReference().child("Tokens").child(firebaseUID).child("token").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String usertoken=dataSnapshot.getValue(String.class);
                 Log.i("notification",usertoken + " usertoken");
-                sendNotifications(usertoken, "toang den noi r","toang vk l");
-
+                sendNotifications(usertoken, title, message);
             }
 
             @Override

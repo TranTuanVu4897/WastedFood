@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.notification.NotificationFragment;
+import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.seller.sellerFragment.AddProductFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.ChangePasswordSellerFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.EditSellerFragment;
@@ -35,6 +38,8 @@ import com.example.wastedfoodteam.utils.SendNotificationPackage.MyResponse;
 import com.example.wastedfoodteam.utils.SendNotificationPackage.NotificationSender;
 import com.example.wastedfoodteam.utils.SendNotificationPackage.SendNotif;
 import com.example.wastedfoodteam.utils.SendNotificationPackage.Token;
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,11 +63,13 @@ public class SellerHomeActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
 
-    private FloatingActionButton btn_seller_home_fragment;
+    private NotificationUtil notificationUtil;
 
     private CircleImageView iv_nav_header_profile_image;
 
     private TextView tv_nav_header_user_name;
+
+    private BottomNavigationView navigation;
 
     Seller seller;
 
@@ -72,10 +79,10 @@ public class SellerHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_seller_home);
         seller = new Seller();
         Intent intent = new Intent();
+        notificationUtil = new NotificationUtil();
 
         final SendNotif sendNotif = new SendNotif();
         sendNotif.UpdateToken();
-        sendNotif.notificationHandle(Variable.fireBaseUID);
 
         //get the header view
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -101,7 +108,7 @@ public class SellerHomeActivity extends AppCompatActivity {
 
 
 
-        //button for seller add product
+        /*//button for seller add product
         btn_seller_home_fragment = (FloatingActionButton)  findViewById(R.id.fab);
         btn_seller_home_fragment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +117,7 @@ public class SellerHomeActivity extends AppCompatActivity {
                 FragmentManager manager = getSupportFragmentManager();
                 manager.beginTransaction().replace(R.id.content_main, addProductFragment, addProductFragment.getTag()).commit();
             }
-        });
+        });*/
 
         // Find our drawer view
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -156,12 +163,60 @@ public class SellerHomeActivity extends AppCompatActivity {
             }
         });
 
+        //bottom navigation
+        navigation = (BottomNavigationView) findViewById(R.id.bottom_nav_seller);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //set activity to home fragment
         SellerHomeFragment sellerHomeFragment = new SellerHomeFragment();
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.content_main, sellerHomeFragment, sellerHomeFragment.getTag()).commit();
 
+        notificationUtil.getTotalNotification(getApplicationContext(), Variable.SELLER.getId(),navigation);
+
+        //notification badge
+        if(Variable.TOTAL_NOTIFICATION > 0) {
+            BadgeDrawable badge = navigation.getOrCreateBadge(R.id.item_bottom_nav_menu_notification);
+            badge.setVisible(true);
+            badge.setNumber(Variable.TOTAL_NOTIFICATION);
+        }
+        String type = getIntent().getStringExtra("From");
+        if (type != null) {
+            switch (type) {
+                case "notifyFrag":
+                    NotificationFragment notificationFragment = new NotificationFragment();
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.content_main,notificationFragment,notificationFragment.getTag()).commit();
+            }
+        }
     }
+
+
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment fragment;
+            FragmentManager manager = getSupportFragmentManager();
+            switch (item.getItemId()) {
+                case R.id.item_bottom_nav_menu_home:
+                    SellerHomeFragment sellerHomeFragment = new SellerHomeFragment();
+                    manager.beginTransaction().replace(R.id.content_main, sellerHomeFragment, sellerHomeFragment.getTag()).commit();
+                    return true;
+                case R.id.item_bottom_nav_menu_add:
+                    AddProductFragment addProductFragment = new AddProductFragment();
+                    manager.beginTransaction().replace(R.id.content_main, addProductFragment, addProductFragment.getTag()).commit();
+                    return true;
+                case R.id.item_bottom_nav_menu_notification:
+                    NotificationFragment notificationFragment = new NotificationFragment();
+                    manager.beginTransaction().replace(R.id.content_main,notificationFragment,notificationFragment.getTag()).commit();
+                    notificationUtil.updateNotificationSeen(getApplicationContext(),Variable.SELLER.getId(),navigation);
+                    return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -173,4 +228,5 @@ public class SellerHomeActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

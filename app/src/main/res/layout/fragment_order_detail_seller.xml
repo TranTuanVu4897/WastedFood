@@ -57,42 +57,21 @@
         android:layout_height="wrap_content">
     </TextView>
 
-
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:fillViewport="true"
-        android:layout_height="fill_parent">
-
+        android:layout_gravity="fill_vertical"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:clickable="true"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            style="@style/AppTheme"
-            android:textSize="25dp"
-            android:text="Đang chờ xác nhận"
-            >
-        </TextView>
-        <TextView
-            android:id="@+id/tv_order_detail_seller_confirm"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            style="@style/AppTheme"
-            android:textSize="13dp"
-            android:gravity="right"
-            android:text="Hiện không có đơn nào cần xác nhận"
-            >
-        </TextView>
-        <com.example.wastedfoodteam.utils.service.NonScrollListView
-            android:id="@android:id/list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:nestedScrollingEnabled="false"
-            />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -112,7 +91,7 @@
             >
         </TextView>
         <com.example.wastedfoodteam.utils.service.NonScrollListView
-            android:id="@+id/lv_list_product_2"
+            android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -144,6 +123,7 @@
             />
     </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+    </FrameLayout>
 
 
 </LinearLayout>

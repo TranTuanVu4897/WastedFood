@@ -5,60 +5,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".seller.home.SellerHomeActivity">
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryOfHomeActivity">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp">
-
-            <ImageButton
-                android:id="@+id/information_tab_seller"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
                 android:background="@color/colorPrimaryOfHomeActivity"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_view_headline_24" />
+                android:layout_height="50dp">
 
-            <!--<de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ivAppIcon"
+                <ImageButton
+                    android:id="@+id/information_tab_seller"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@color/colorPrimaryOfHomeActivity"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_baseline_view_headline_24" />
+            </LinearLayout>
+
+
+
+            <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="130dp"
-                android:layout_gravity="center"
-                android:src="@drawable/home" />-->
-
+                android:layout_gravity="bottom|center"
+                app:srcCompat="@android:drawable/ic_input_add" />-->
         </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <include
         android:id="@+id/include"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+
+
         layout="@layout/content_main" />
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-"
-    <!--<com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="match_parent"
+        android:id="@+id/bottom_nav_seller"
+        android:theme="@style/AppThemeMaterial"
         android:layout_gravity="bottom"
+        app:itemTextColor="@color/colorWhite"
         android:background="@color/colorPrimaryOfHomeActivity"
         app:menu="@menu/bottom_nav_menu"
         android:layout_height="60dp">
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-    </com.google.android.material.bottomnavigation.BottomNavigationView>-->
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        app:srcCompat="@android:drawable/ic_input_add" />
-    
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

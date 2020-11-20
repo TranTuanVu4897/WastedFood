@@ -64,13 +64,11 @@ public class OrderDetailSellerFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_order_detail_seller, container, false);
-        lvOrderConfirm = view.findViewById(android.R.id.list);
-        lvOrderPayment = view.findViewById(R.id.lv_list_product_2);
+        lvOrderPayment = view.findViewById(android.R.id.list);
         lvOrderDone = view.findViewById(R.id.lv_list_product_3);
         imageView = view.findViewById(R.id.iv_list_order_product_picture);
         editProduct = view.findViewById(R.id.btn_editProduct_edit);
         cancelProduct = view.findViewById(R.id.btn_editProduct_stop);
-        tvConfirmAlert = view.findViewById(R.id.tv_order_detail_seller_confirm);
         tvPaymentAlert = view.findViewById(R.id.tv_order_detail_seller_payment);
         tvDoneAlert = view.findViewById(R.id.tv_order_detail_seller_done);
         editProduct.setOnClickListener(new View.OnClickListener() {
@@ -96,21 +94,13 @@ public class OrderDetailSellerFragment extends Fragment {
             }
         });
         product = Variable.PRODUCT;
-        Glide.with(view.getContext()).load(product.getImage().isEmpty() ? "https://i.pinimg.com/originals/95/ee/86/95ee8696f8ed1abb3767928c4d0daf65.jpg" : product.getImage()).into(imageView);
-        arrOrder = new ArrayList<SellerOrder>();
+        CommonFunction.setImageViewSrc(getContext(),product.getImage(),imageView);
         arrOrderPayment = new ArrayList<SellerOrder>();
         arrOrderDone = new ArrayList<SellerOrder>();
-        orderAdapter = new OrderConfirmAdapter(getActivity().getApplicationContext(), R.layout.list_seller_confirm_order, arrOrder, getResources(),getActivity());
         orderPaymentAdapter = new OrderPaymentAdapter(getActivity().getApplicationContext(), R.layout.list_seller_payment_order, arrOrderPayment, getResources(),getActivity());
         orderDoneAdapter = new OrderDoneAdapter(getActivity().getApplicationContext(), R.layout.list_seller_done_order, arrOrderDone, getResources(),getActivity());
         lvOrderPayment.setAdapter(orderPaymentAdapter);
         lvOrderDone.setAdapter(orderDoneAdapter);
-        lvOrderConfirm.setAdapter(orderAdapter);
-        //setListViewHeightBasedOnItems(lvOrderDone);
-        //("'wait for confirm'");
-        //getData("'wait for payment'");
-        //getData("'done'");
-
 
         getData(Order.Status.BUYING);
         getData(Order.Status.SUCCESS);
@@ -176,8 +166,11 @@ public class OrderDetailSellerFragment extends Fragment {
                                         orderDoneAdapter.notifyDataSetChanged();
                                         break;
                                 }
-
                             }
+                            if(arrOrderPayment.size()>0)
+                                tvPaymentAlert.setVisibility(View.INVISIBLE);
+                            if (arrOrderDone.size()>0)
+                                tvDoneAlert.setVisibility(View.INVISIBLE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -189,38 +182,5 @@ public class OrderDetailSellerFragment extends Fragment {
                     }
                 });
         requestQueue.add(getProductAround);
-    }
-
-    public static boolean setListViewHeightBasedOnItems(ListView listView) {
-
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter != null) {
-
-            int numberOfItems = listAdapter.getCount();
-
-            // Get total height of all items.
-            int totalItemsHeight = 0;
-            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
-                View item = listAdapter.getView(itemPos, null, listView);
-                item.measure(0, 0);
-                totalItemsHeight += item.getMeasuredHeight();
-            }
-
-            // Get total height of all item dividers.
-            int totalDividersHeight = listView.getDividerHeight() *
-                    (numberOfItems - 1);
-
-            // Set list height.
-            ViewGroup.LayoutParams params = listView.getLayoutParams();
-            params.height = totalItemsHeight + totalDividersHeight;
-            listView.setLayoutParams(params);
-            listView.requestLayout();
-
-            return true;
-
-        } else {
-            return false;
-        }
-
     }
 }

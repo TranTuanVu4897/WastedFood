@@ -17,14 +17,14 @@ public class Notification {
     private String buyer_name;
     private String product_name;
     private String product_image;
-
+    private Boolean seen;
 
 
     public Notification() {
 
     }
 
-    public Notification(int id, int sender_id, int receiver_id, String content, Date modified_date, int order_id, String seller_image, String buyer_image, String seller_name, String buyer_name, String product_name, String product_image) {
+    public Notification(int id, int sender_id, int receiver_id, String content, Date modified_date, int order_id, String seller_image, String buyer_image, String seller_name, String buyer_name, String product_name, String product_image , Boolean seen) {
         this.id = id;
         this.sender_id = sender_id;
         this.receiver_id = receiver_id;
@@ -37,6 +37,15 @@ public class Notification {
         this.buyer_name = buyer_name;
         this.product_name = product_name;
         this.product_image = product_image;
+        this.seen = seen;
+    }
+
+    public Boolean getSeen() {
+        return seen;
+    }
+
+    public void setSeen(Boolean seen) {
+        this.seen = seen;
     }
 
     public int getId() {
