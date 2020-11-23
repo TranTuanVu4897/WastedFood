@@ -12,11 +12,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.model.Order;
-import com.example.wastedfoodteam.seller.sellerFragment.OrderDetailSellerFragment;
+import com.example.wastedfoodteam.seller.sellerFragment.ProductDetailSellerFragment;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
 import java.util.List;
@@ -89,11 +86,9 @@ public class OrderDoneAdapter extends BaseAdapter {
             public void onClick(View v) {
                 //set status = wait for payment
                 //reload fragment
-                OrderDetailSellerFragment orderDetailSellerFragment = new OrderDetailSellerFragment();
-                myFragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, orderDetailSellerFragment, orderDetailSellerFragment.getTag()).commit();
+
             }
         });
-
         return convertView;
     }
 }

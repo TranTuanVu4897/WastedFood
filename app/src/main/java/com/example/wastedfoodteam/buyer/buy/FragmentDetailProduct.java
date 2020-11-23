@@ -30,7 +30,9 @@ import com.example.wastedfoodteam.buyer.order.FragmentOrderDetail;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.buyer.order.BuyerOrder;
 import com.example.wastedfoodteam.model.Order;
+import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.utils.CommonFunction;
+import com.example.wastedfoodteam.utils.SendNotificationPackage.SendNotif;
 import com.example.wastedfoodteam.utils.service.FollowResponseCallback;
 import com.example.wastedfoodteam.utils.service.FollowVolley;
 
@@ -215,7 +217,9 @@ public class FragmentDetailProduct extends Fragment {
             public void onResponse(String response) {
                 if (response.equalsIgnoreCase("SUCCESS")) {
                     Toast.makeText(getActivity().getApplicationContext(), "Thành công", Toast.LENGTH_LONG);
-                    //TODO send massage to seller
+                    //TODO send massage to seller đang fix cứng
+                    //TODO đang fix cứng
+
                     moveToFragmentOrderDetail();
                 } else if (response.equalsIgnoreCase("NOT ENOUGH QUANTITY")) {
                     Toast.makeText(getActivity().getApplicationContext(), "Số lượng còn lại không đủ", Toast.LENGTH_LONG);

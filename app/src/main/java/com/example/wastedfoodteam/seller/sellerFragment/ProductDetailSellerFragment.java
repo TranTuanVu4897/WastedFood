@@ -47,7 +47,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OrderDetailSellerFragment extends Fragment {
+public class ProductDetailSellerFragment extends Fragment {
 
     ListView lvOrderConfirm,lvOrderPayment,lvOrderDone;
     ArrayList<SellerOrder> arrOrder,arrOrderPayment,arrOrderDone;

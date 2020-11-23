@@ -23,8 +23,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.wastedfoodteam.MainActivity;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.buyer.BuyHomeActivity;
+import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.home.SellerHomeActivity;
 import com.example.wastedfoodteam.seller.notification.NotificationFragment;
+import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.seller.sellerFragment.SellerHomeFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -51,6 +54,7 @@ public class MyFireBaseMessagingService extends FirebaseMessagingService {
         };
 
     public void pushNotification(RemoteMessage remoteMessage){
+        NotificationUtil notificationUtil = new NotificationUtil();
         title=remoteMessage.getData().get("Title");
         message=remoteMessage.getData().get("Message");
         String CHANNEL_ID= getString(R.string.project_id);;
@@ -62,13 +66,19 @@ public class MyFireBaseMessagingService extends FirebaseMessagingService {
         }
 
         PendingIntent pendingIntent;
+        Intent resultIntent = new Intent(this, MainActivity.class);
+        pendingIntent = PendingIntent.getActivity(this, 1, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         if(FirebaseAuth.getInstance().getCurrentUser() != null) {
-            Intent resultIntent = new Intent(this, SellerHomeActivity.class);
-            resultIntent.putExtra("From", "notifyFrag");
-            pendingIntent = PendingIntent.getActivity(this, 1,  resultIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
-        }else {
-            Intent resultIntent = new Intent(this, MainActivity.class);
-             pendingIntent = PendingIntent.getActivity(this, 1, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            if(Variable.CURRENT_USER.equals("SELLER")) {
+                resultIntent = new Intent(this, SellerHomeActivity.class);
+                resultIntent.putExtra("From", "notifyFrag");
+                pendingIntent = PendingIntent.getActivity(this, 1, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                notificationUtil.getTotalNotification(getApplicationContext(), Variable.SELLER.getId(), Variable.bottomNavigationViewSeller);
+            }else if(Variable.CURRENT_USER.equals("BUYER")){
+                resultIntent = new Intent(this, BuyHomeActivity.class);
+                resultIntent.putExtra("From", "notifyFrag");
+                pendingIntent = PendingIntent.getActivity(this, 1, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            }
         }
         Notification notification = new NotificationCompat.Builder(MyFireBaseMessagingService.this,CHANNEL_ID)
                 .setSmallIcon(R.drawable.com_facebook_button_like_icon_selected)

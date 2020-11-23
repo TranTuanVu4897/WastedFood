@@ -24,8 +24,8 @@ public class SellerOrder extends Order {
         this.buyer_avatar = buyer_avatar;
     }
 
-    public SellerOrder(int id, int buyer_id, int product_id, int quantity, Status status, double total_cost, int buyer_rating, String buyer_comment, String buyer_name, String product_name, String product_image, String buyer_avatar) {
-        super(id, buyer_id, product_id, quantity, status, total_cost, buyer_rating, buyer_comment);
+    public SellerOrder(int id, int buyer_id, int product_id, int quantity, Status status, double total_cost, int buyer_rating, String buyer_comment, String buyer_name, String product_name, String product_image, String buyer_avatar , String firebase_UID) {
+        super(id, buyer_id, product_id, quantity, status, total_cost, buyer_rating, buyer_comment, firebase_UID);
         this.buyer_name = buyer_name;
         this.product_name = product_name;
         this.product_image = product_image;

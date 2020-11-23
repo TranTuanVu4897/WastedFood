@@ -80,7 +80,7 @@ public class SellerHomeActivity extends AppCompatActivity {
         seller = new Seller();
         Intent intent = new Intent();
         notificationUtil = new NotificationUtil();
-
+        Variable.CURRENT_USER = "SELLER";
         final SendNotif sendNotif = new SendNotif();
         sendNotif.UpdateToken();
 
@@ -105,19 +105,6 @@ public class SellerHomeActivity extends AppCompatActivity {
         //TODO đường dẫn ảnh firebase
         Glide.with(this).load(Variable.SELLER.getImage()).into(iv_nav_header_profile_image);
         tv_nav_header_user_name.setText(Variable.SELLER.getName());
-
-
-
-        /*//button for seller add product
-        btn_seller_home_fragment = (FloatingActionButton)  findViewById(R.id.fab);
-        btn_seller_home_fragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddProductFragment addProductFragment = new AddProductFragment();
-                FragmentManager manager = getSupportFragmentManager();
-                manager.beginTransaction().replace(R.id.content_main, addProductFragment, addProductFragment.getTag()).commit();
-            }
-        });*/
 
         // Find our drawer view
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -165,6 +152,7 @@ public class SellerHomeActivity extends AppCompatActivity {
 
         //bottom navigation
         navigation = (BottomNavigationView) findViewById(R.id.bottom_nav_seller);
+        Variable.bottomNavigationViewSeller = navigation;
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //set activity to home fragment
         SellerHomeFragment sellerHomeFragment = new SellerHomeFragment();

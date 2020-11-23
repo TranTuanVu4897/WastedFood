@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
@@ -27,6 +28,10 @@ import com.example.wastedfoodteam.buyer.infomation.FragmentEditInformationBuyer;
 import com.example.wastedfoodteam.buyer.order.FragmentOrderHistory;
 import com.example.wastedfoodteam.global.Variable;
 
+import com.example.wastedfoodteam.seller.notification.NotificationFragment;
+import com.example.wastedfoodteam.seller.notification.NotificationUtil;
+import com.example.wastedfoodteam.seller.sellerFragment.AddProductFragment;
+import com.example.wastedfoodteam.seller.sellerFragment.SellerHomeFragment;
 import com.example.wastedfoodteam.utils.FilterDialog;
 import com.example.wastedfoodteam.utils.GPSTracker;
 import com.facebook.login.LoginManager;
@@ -34,6 +39,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInApi;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -45,7 +52,9 @@ public class BuyHomeActivity extends AppCompatActivity {
     ImageView ivAppIcon;
     ImageButton ibUserInfo, ibFilter;
     FragmentListProduct fragmentListProduct;
+    NotificationUtil notificationUtil;
     GPSTracker gps;
+    private BottomNavigationView navigation;
     GoogleSignInClient mGoogleSignInClient;
     GoogleSignInApi mGoogleSignInApi;
 
@@ -70,6 +79,7 @@ public class BuyHomeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+
         //mapping
         ibUserInfo = findViewById(R.id.ibUserInfo);
         ibFilter = findViewById(R.id.ibFilter);
@@ -77,6 +87,8 @@ public class BuyHomeActivity extends AppCompatActivity {
         iBtnHome = findViewById(R.id.iBtnHome);
         iBtnFollow = findViewById(R.id.iBtnFollow);
         iBtnHistory = findViewById(R.id.iBtnHistory);
+        Variable.CURRENT_USER = "BUYER";
+        notificationUtil = new NotificationUtil();
 
         //get GPS
         gps = new GPSTracker(this);
@@ -174,10 +186,10 @@ public class BuyHomeActivity extends AppCompatActivity {
                 filterDialog.showFilterDialog(new FilterDialog.ModifyFilter() {
                     @Override
                     public void onClear() {
-                        Variable.startTime = Time.valueOf("11:00:00");
-                        Variable.endTime = Time.valueOf("22:00:00");
+                        Variable.startTime = null;
+                        Variable.endTime = null;
                         Variable.distance = "20";
-                        Variable.discount = "90";
+                        Variable.discount = null;
 
                         if (fragmentListProduct != null) {
                             changeListProductItem();
@@ -198,7 +210,66 @@ public class BuyHomeActivity extends AppCompatActivity {
 
         addFragmentListProduct();
 
+        //bottom navigation
+        navigation = (BottomNavigationView) findViewById(R.id.bottom_nav_buyer);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        notificationUtil.getTotalNotification(getApplicationContext(), Variable.ACCOUNT_ID ,navigation);
+        //notification badge
+        if(Variable.TOTAL_NOTIFICATION > 0) {
+            BadgeDrawable badge = navigation.getOrCreateBadge(R.id.item_bottom_nav_menu_notification);
+            badge.setVisible(true);
+            badge.setNumber(Variable.TOTAL_NOTIFICATION);
+        }
+        String type = getIntent().getStringExtra("From");
+        if (type != null) {
+            switch (type) {
+                case "notifyFrag":
+                    NotificationFragment notificationFragment = new NotificationFragment();
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.flSearchResultAH, notificationFragment, "")
+                            .addToBackStack(null)
+                            .commit();
+            }
+        }
+
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment fragment;
+            FragmentManager manager = getSupportFragmentManager();
+            switch (item.getItemId()) {
+                case R.id.item_bottom_nav_menu_buyer_home:
+                    addFragmentListProduct();
+                    return true;
+                case R.id.item_bottom_nav_menu_buyer_notification:
+                    NotificationFragment notificationFragment = new NotificationFragment();
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.flSearchResultAH, notificationFragment, "")
+                            .addToBackStack(null)
+                            .commit();
+                    notificationUtil.updateNotificationSeen(getApplicationContext(),Variable.ACCOUNT_ID,navigation);
+                    return true;
+                case R.id.item_bottom_nav_menu_buyer_history:
+                    FragmentOrderHistory fragmentOrderHistory = new FragmentOrderHistory();
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.flSearchResultAH, fragmentOrderHistory, "")
+                            .addToBackStack(null)
+                            .commit();
+                    return true;
+                case R.id.item_bottom_nav_menu_buyer_follow:
+                    addFragmentSellerFollow();
+                    return true;
+            }
+            return false;
+        }
+    };
 
     private void addFragmentListProduct() {
         fragmentListProduct = new FragmentListProduct();

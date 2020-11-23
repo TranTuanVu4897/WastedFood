@@ -39,7 +39,9 @@ public class SendNotif {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String usertoken=dataSnapshot.getValue(String.class);
                 Log.i("notification",usertoken + " usertoken");
+                //TODO fix cứng để test
                 sendNotifications(usertoken, title, message);
+                //sendNotifications("dmGJ1N4DQo73InJghjWnQw:APA91bEQkC05VFM6FCkFssrAeCZ5oGeJ0vQCe_AchmZgf4uxAQhTLfqbzZ3tN2yEcYANFyVsdyAKNsBXy_cdyN5h4g2FlHSr76IMNKpowdlHXTBfAjkTMHYOeCXk2483VLzPTmWyd12N", title, message);
             }
 
             @Override

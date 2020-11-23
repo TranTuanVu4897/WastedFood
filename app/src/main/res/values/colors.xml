@@ -12,4 +12,8 @@
     <color name="lightBlue">#0094FF</color>
     <color name="colorBlack">#000000</color>
     <color name="colorBackGroundOrder">#E8E7E7</color>
+
+    //home page UI
+    <color name="cardColor">#ffffff</color>
+    <color name="textCardColor">#3f3f3f</color>
 </resources>

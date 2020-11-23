@@ -68,7 +68,11 @@ public class NotificationUtil {
                             int totalNotification = new Integer(response);
                             Variable.TOTAL_NOTIFICATION = totalNotification;
                             if(Variable.TOTAL_NOTIFICATION > 0) {
-                                BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.item_bottom_nav_menu_notification);
+                                BadgeDrawable badge;
+                                if(Variable.CURRENT_USER.equals("BUYER"))
+                                    badge = bottomNavigationView.getOrCreateBadge(R.id.item_bottom_nav_menu_buyer_notification);
+                                else
+                                    badge = bottomNavigationView.getOrCreateBadge(R.id.item_bottom_nav_menu_notification);
                                 badge.setVisible(true);
                                 badge.setNumber(Variable.TOTAL_NOTIFICATION);
                             }
@@ -96,7 +100,11 @@ public class NotificationUtil {
                     public void onResponse(String response) {
                         if(response.trim().equals("Succesfully update")){
                             Toast.makeText(context,"Cập nhật thành công",Toast.LENGTH_SHORT).show();
-                            BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.item_bottom_nav_menu_notification);
+                            BadgeDrawable badge;
+                            if(Variable.CURRENT_USER.equals("SELLER"))
+                                badge = bottomNavigationView.getOrCreateBadge(R.id.item_bottom_nav_menu_notification);
+                            else
+                                badge = bottomNavigationView.getOrCreateBadge(R.id.item_bottom_nav_menu_buyer_notification);
                             Variable.TOTAL_NOTIFICATION = 0;
                             badge.setVisible(false);
                             badge.clearNumber();
