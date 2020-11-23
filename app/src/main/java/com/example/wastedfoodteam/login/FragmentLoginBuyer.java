@@ -43,7 +43,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -299,8 +301,15 @@ public class FragmentLoginBuyer extends Fragment {
 
                             Buyer buyer = gson.fromJson(object.getString(0), Buyer.class);
 
+                            final Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
 
-                            Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+                            FirebaseAuth.getInstance().signInWithEmailAndPassword(buyer.getEmail(),buyer.getPassword()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                @Override
+                                public void onSuccess(AuthResult authResult) {
+                                    Variable.fireBaseUID = authResult.getUser().getUid();
+                                    startActivity(intent);
+                                }
+                            });
 
                             Variable.ACCOUNT_ID = buyer.getId();
                             //TODO pass data through intent

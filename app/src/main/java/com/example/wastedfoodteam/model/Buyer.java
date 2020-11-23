@@ -17,8 +17,8 @@ public class Buyer extends Account{
     }
 
 
-    public Buyer(int id, int role_id, String username, String password, String phone, String third_party_id, String email, Date create_date, boolean is_active, String name, Date date_of_birth, String image, boolean gender) {
-        super(id, role_id, username, password, phone, third_party_id, email, create_date, is_active);
+    public Buyer(int id, int role_id, String username, String password, String phone, String third_party_id, String email, Date create_date, boolean is_active, String name, Date date_of_birth, String image, boolean gender , String firebaseUID) {
+        super(id, role_id, username, password, phone, third_party_id, email, create_date, is_active ,firebaseUID);
         this.name = name;
         this.date_of_birth = date_of_birth;
         this.image = image;

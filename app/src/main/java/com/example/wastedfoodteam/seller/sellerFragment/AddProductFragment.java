@@ -207,8 +207,6 @@ public class AddProductFragment extends Fragment {
                 addProduct(urlGetData);
             }
         });
-
-
         return view;
     }
 

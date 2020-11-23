@@ -7,16 +7,18 @@ import com.example.wastedfoodteam.model.Buyer;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.model.Seller;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.sql.Time;
 
 
 public class Variable {
     //public static final String IP_ADDRESS = "http://192.168.3.4/wastedfoodphp/";//Vutt ip
-    public static final String IP_ADDRESS = "http://10.22.178.239/wastedfoodphp/";//FPT University ip
+//    public static final String IP_ADDRESS = "http://10.22.178.239/wastedfoodphp/";//FPT University ip
 //    public static final String IP_ADDRESS = "http://192.168.1.46/wastedfoodphp/";//TungPT ip
      //public static final String IP_ADDRESS = "http://192.168.1.10/wastedfoodphp/";//DucHC ip
-//      public static final String IP_ADDRESS ="http://192.168.156.2/wastedfoodphp/";//DucHC ip lan
+      public static final String IP_ADDRESS ="http://192.168.156.2/wastedfoodphp/";//DucHC ip lan
+    //public static final String IP_ADDRESS ="http://192.168.1.113/wastedfoodphp/";//DucHC ip lan
 //    public static final String IP_ADDRESS ="https://wasted-food-service.herokuapp.com/";//heroku server
 
     //other php variable
@@ -39,6 +41,8 @@ public class Variable {
     public static Buyer buyer;
     public static Product PRODUCT;
     public static int ACCOUNT_ID;
+    public static String CURRENT_USER;
+    public static BottomNavigationView bottomNavigationViewSeller;
 
     public static int CHECK_LOGIN;
     public static int TOTAL_NOTIFICATION = 0;

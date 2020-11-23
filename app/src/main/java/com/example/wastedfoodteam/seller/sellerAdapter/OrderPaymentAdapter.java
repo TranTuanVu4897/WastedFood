@@ -9,33 +9,20 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.model.Notification;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
-import com.example.wastedfoodteam.seller.sellerFragment.ListOrderHistoryFragment;
-import com.example.wastedfoodteam.seller.sellerFragment.OrderDetailSellerFragment;
+import com.example.wastedfoodteam.seller.sellerFragment.ProductDetailSellerFragment;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.SendNotificationPackage.SendNotif;
 import com.example.wastedfoodteam.utils.service.updateStatusForOrder;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class OrderPaymentAdapter extends BaseAdapter {
     Context myContext;
@@ -112,9 +99,9 @@ public class OrderPaymentAdapter extends BaseAdapter {
                 updateStatusForOrder.updateOrderStatus(Variable.IP_ADDRESS + "seller/updateStatusForOrderSeller.php",Order.Status.SUCCESS, order.getId(),myContext);
                 String message = Variable.SELLER.getName() + " đã xác nhận thanh toán của bạn\r Cảm ơn bạn vì đã sử dụng dịch vụ của chúng tôi";
                 util.addNotification(myContext,Variable.SELLER.getId() , order.getBuyer_id(), message , order.getId() );
-                sendNotif.notificationHandle(Variable.fireBaseUID, "Wasted food app" , message);
-                OrderDetailSellerFragment orderDetailSellerFragment = new OrderDetailSellerFragment();
-                myFragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, orderDetailSellerFragment, orderDetailSellerFragment.getTag()).commit();
+                sendNotif.notificationHandle(order.getFirebase_UID(), "Wasted food app" , message);
+                ProductDetailSellerFragment productDetailSellerFragment = new ProductDetailSellerFragment();
+                myFragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, productDetailSellerFragment, productDetailSellerFragment.getTag()).commit();
             }
         });
         holder.btnReject.setOnClickListener(new View.OnClickListener() {
@@ -123,8 +110,8 @@ public class OrderPaymentAdapter extends BaseAdapter {
                 //set status = rejected
                 //set btnReject text to Đã từ chối set clickable = false
                 updateStatusForOrder.updateOrderStatus(Variable.IP_ADDRESS + "seller/updateStatusForOrderSeller.php",Order.Status.CANCEL, order.getId(),myContext);
-                OrderDetailSellerFragment orderDetailSellerFragment = new OrderDetailSellerFragment();
-                myFragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, orderDetailSellerFragment, orderDetailSellerFragment.getTag()).commit();
+                ProductDetailSellerFragment productDetailSellerFragment = new ProductDetailSellerFragment();
+                myFragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, productDetailSellerFragment, productDetailSellerFragment.getTag()).commit();
             }
         });
         return convertView;

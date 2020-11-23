@@ -78,8 +78,8 @@ public class Seller extends Account implements Serializable {
     public Seller() {
     }
 
-    public Seller(int id, int role_id, String username, String password, String phone, String third_party_id, String email, Date create_date, boolean is_active, String name, String image, String address, double latitude, double longitude, String description) {
-        super(id, role_id, username, password, phone, third_party_id, email, create_date, is_active);
+    public Seller(int id, int role_id, String username, String password, String phone, String third_party_id, String email, Date create_date, boolean is_active, String name, String image, String address, double latitude, double longitude, String description , String firebase_UID) {
+        super(id, role_id, username, password, phone, third_party_id, email, create_date, is_active ,firebase_UID);
         this.name = name;
         this.image = image;
         this.address = address;
@@ -92,8 +92,8 @@ public class Seller extends Account implements Serializable {
      * constructor for distance
      * @param distance
      */
-    public Seller(int id, int role_id, String username, String password, String phone, String third_party_id, String email, Date create_date, boolean is_active, String name, String image, String address, double latitude, double longitude, String description, long distance) {
-        super(id, role_id, username, password, phone, third_party_id, email, create_date, is_active);
+    public Seller(int id, int role_id, String username, String password, String phone, String third_party_id, String email, Date create_date, boolean is_active, String name, String image, String address, double latitude, double longitude, String description, long distance , String firebase_UID) {
+        super(id, role_id, username, password, phone, third_party_id, email, create_date, is_active,firebase_UID);
         this.name = name;
         this.image = image;
         this.address = address;

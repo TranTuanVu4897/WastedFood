@@ -6,24 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Notification;
-import com.example.wastedfoodteam.model.Order;
-import com.example.wastedfoodteam.model.Seller;
-import com.example.wastedfoodteam.seller.sellerAdapter.OrderConfirmAdapter;
-import com.example.wastedfoodteam.seller.sellerFragment.OrderDetailSellerFragment;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.service.TimeCount;
-import com.example.wastedfoodteam.utils.service.updateStatusForOrder;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 

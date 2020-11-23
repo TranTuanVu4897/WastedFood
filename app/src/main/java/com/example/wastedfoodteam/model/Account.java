@@ -13,6 +13,15 @@ public class Account implements Serializable {
     private String email;
     private Date create_date;
     private  boolean is_active;
+    private String firebase_UID;
+
+    public String getFirebase_UID() {
+        return firebase_UID;
+    }
+
+    public void setFirebase_UID(String firebase_UID) {
+        this.firebase_UID = firebase_UID;
+    }
 
     public int getId() {
         return id;
@@ -89,7 +98,7 @@ public class Account implements Serializable {
     public Account() {
     }
 
-    public Account(int id, int role_id, String username, String password, String phone, String third_party_id, String email, Date create_date, boolean is_active) {
+    public Account(int id, int role_id, String username, String password, String phone, String third_party_id, String email, Date create_date, boolean is_active , String firebase_UID) {
         this.id = id;
         this.role_id = role_id;
         this.username = username;

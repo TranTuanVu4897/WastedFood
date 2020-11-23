@@ -12,9 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -34,8 +32,6 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class ListProductSellerFragment extends ListFragment {
@@ -65,7 +61,7 @@ public class ListProductSellerFragment extends ListFragment {
         lvProduct.setAdapter(adapter);
         getData(urlGetData);
         //tv_total_product.setText(adapter.getCount() + " sản phẩm");
-        getTotalProduct(Variable.IP_ADDRESS + "seller/getTotalProduct.php");
+        getTotalProduct(Variable.IP_ADDRESS + "seller/getTotalProduct.php"+"?seller_id=" + Variable.SELLER.getId());
         lvProduct.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -153,10 +149,10 @@ public class ListProductSellerFragment extends ListFragment {
         Product product = (Product) l.getAdapter().getItem(position);
         Variable.PRODUCT = product;
 
-        OrderDetailSellerFragment orderDetailSellerFragment = new OrderDetailSellerFragment();
+        ProductDetailSellerFragment productDetailSellerFragment = new ProductDetailSellerFragment();
         //open seller detail product fragment
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace( R.id.content_main,orderDetailSellerFragment , "")//TODO check if this work
+                .replace( R.id.content_main, productDetailSellerFragment, "")//TODO check if this work
                 .addToBackStack(null)
                 .commit();
     }

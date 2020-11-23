@@ -16,6 +16,7 @@ public class Order implements Serializable {
     double total_cost;
     int buyer_rating;
     String buyer_comment;
+    String firebase_UID;
 
     public int getId() {
         return id;
@@ -81,6 +82,13 @@ public class Order implements Serializable {
         this.buyer_comment = buyer_comment;
     }
 
+    public String getFirebase_UID() {
+        return firebase_UID;
+    }
+
+    public void setFirebase_UID(String firebase_UID) {
+        this.firebase_UID = firebase_UID;
+    }
 
     public Order() {
     }
@@ -103,6 +111,18 @@ public class Order implements Serializable {
         this.total_cost = total_cost;
         this.buyer_rating = buyer_rating;
         this.buyer_comment = buyer_comment;
+    }
+
+    public Order(int id, int buyer_id, int product_id, int quantity, Status status, double total_cost, int buyer_rating, String buyer_comment , String firebase_UID) {
+        this.id = id;
+        this.buyer_id = buyer_id;
+        this.product_id = product_id;
+        this.quantity = quantity;
+        this.status = status;
+        this.total_cost = total_cost;
+        this.buyer_rating = buyer_rating;
+        this.buyer_comment = buyer_comment;
+        this.firebase_UID = firebase_UID;
     }
 
     public enum Status {

@@ -1,20 +1,13 @@
 package com.example.wastedfoodteam.seller.sellerAdapter;
 
-import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.res.Resources;
 
 import com.example.wastedfoodteam.model.Seller;
-import com.example.wastedfoodteam.seller.sellerFragment.AddProductFragment;
-import com.example.wastedfoodteam.seller.sellerFragment.OrderDetailSellerFragment;
+import com.example.wastedfoodteam.seller.sellerFragment.ProductDetailSellerFragment;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.service.updateStatusForOrder;
 
-import android.graphics.Color;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,25 +16,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 
-import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
-import java.util.Random;
 
 public class OrderConfirmAdapter extends BaseAdapter {
     Context myContext;
@@ -115,8 +98,8 @@ public class OrderConfirmAdapter extends BaseAdapter {
                 //set status = wait for payment
                 //reload fragment
                 updateStatusForOrder.updateOrderStatus(Variable.IP_ADDRESS + "seller/updateStatusForOrderSeller.php",Order.Status.SUCCESS, order.getId(),myContext);
-                OrderDetailSellerFragment orderDetailSellerFragment = new OrderDetailSellerFragment();
-                myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, orderDetailSellerFragment, orderDetailSellerFragment.getTag()).commit();
+                ProductDetailSellerFragment productDetailSellerFragment = new ProductDetailSellerFragment();
+                myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, productDetailSellerFragment, productDetailSellerFragment.getTag()).commit();
                 //showNotification("Dữ liệu","Đã được thay đổi");
             }
         });
