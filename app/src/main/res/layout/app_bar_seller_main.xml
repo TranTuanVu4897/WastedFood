@@ -21,6 +21,9 @@
             app:srcCompat="@drawable/ic_baseline_view_headline_24"
             />
     </com.google.android.material.appbar.AppBarLayout>
+
+
+
     <include
         android:id="@+id/include"
         android:layout_marginTop="50dp"

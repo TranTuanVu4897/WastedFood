@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:background="@color/colorAccent"
-        android:layout_height="100dp">
+        android:layout_height="200dp">
         <ImageView
             android:layout_width="match_parent"
             android:id="@+id/iv_list_order_product_picture"
@@ -26,6 +26,7 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="10dp"
             android:text="NGỪNG BÁN"
+            android:textStyle="bold"
             android:background="@drawable/custom_button"
             android:backgroundTint="@color/colorRed"
             android:textColor="@color/colorWhite"
@@ -37,6 +38,7 @@
         <Button
             android:id="@+id/btn_editProduct_edit"
             android:layout_width="wrap_content"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom|right"
@@ -53,7 +55,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:background="@color/colorLightGreen"
+        android:background="@drawable/gradient_seller_home"
         android:layout_height="wrap_content">
     </TextView>
 
@@ -70,13 +72,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:clickable="true"
+        android:paddingHorizontal="10dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
             style="@style/AppTheme"
-            android:textSize="25dp"
+            android:textStyle="bold"
+            android:textSize="32dp"
             android:text="Đang chờ lấy hàng"
             >
         </TextView>
@@ -85,7 +89,8 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             style="@style/AppTheme"
-            android:textSize="13dp"
+            android:textStyle="bold"
+            android:textSize="18dp"
             android:gravity="right"
             android:text="Hiện không có đơn nào cần xác nhận"
             >
@@ -100,8 +105,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
             style="@style/AppTheme"
-            android:textSize="25dp"
+            android:textSize="32dp"
             android:text="Đã lấy hàng"
             >
         </TextView>
@@ -109,8 +116,9 @@
             android:id="@+id/tv_order_detail_seller_done"
             android:layout_width="match_parent"
             android:layout_height="20dp"
+            android:textStyle="bold"
             style="@style/AppTheme"
-            android:textSize="13dp"
+            android:textSize="18dp"
             android:gravity="right"
             android:text="Hiện không có đơn nào cần xác nhận"
             >

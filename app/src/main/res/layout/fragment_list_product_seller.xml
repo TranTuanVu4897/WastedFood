@@ -19,6 +19,8 @@
             android:layout_width="match_parent"
             android:text="Danh sách các sản phẩm"
             android:textSize="25dp"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
             android:layout_weight="1"
             android:layout_height="wrap_content">
         </TextView>
@@ -34,6 +36,8 @@
         android:text="Sản phẩm"
         android:id="@+id/tv_total_product"
         android:textSize="15dp"
+        android:textColor="@color/colorBlack"
+        android:textStyle="bold"
         android:layout_marginLeft="10dp"
         android:layout_height="wrap_content">
     </TextView>
