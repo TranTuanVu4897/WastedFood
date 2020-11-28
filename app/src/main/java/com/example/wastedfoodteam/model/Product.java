@@ -20,10 +20,10 @@ public class Product implements Serializable {
     int remain_quantity;
     String description;
     Date sell_date;
-    String status;
+    ProductStatus status;
     boolean shippable;
 
-    public Product(int id, int seller_id, String name, String image, Date start_time, Date end_time, double original_price, double sell_price, int original_quantity, int remain_quantity, String description, Date sell_date, String status, boolean shippable) {
+    public Product(int id, int seller_id, String name, String image, Date start_time, Date end_time, double original_price, double sell_price, int original_quantity, int remain_quantity, String description, Date sell_date, ProductStatus status, boolean shippable) {
         this.id = id;
         this.seller_id = seller_id;
         this.name = name;
@@ -137,11 +137,11 @@ public class Product implements Serializable {
         this.sell_date = sell_date;
     }
 
-    public String getStatus() {
+    public ProductStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ProductStatus status) {
         this.status = status;
     }
 
@@ -155,5 +155,10 @@ public class Product implements Serializable {
 
 
     public Product() {
+    }
+
+    public enum ProductStatus {
+        SELLING,
+        CANCEL
     }
 }

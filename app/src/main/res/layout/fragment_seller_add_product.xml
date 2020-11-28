@@ -7,111 +7,253 @@
     android:orientation="vertical"
     android:weightSum="10">
 
-
-
-    <!-- Layout to contain contents of main body of screen (drawer will slide over this) -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="10">
+        android:background="#909090"
+        android:orientation="vertical">
+
+        <!--Toolbar-->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFDFD"
+            android:padding="15dp"
+            android:text="Thêm sản phẩm"
+            android:textSize="24sp" />
+        <!--FromToInputData-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="#FFFDFD"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivProduct"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/ic_launcher_background" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="8"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#FFFDFD"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tên sản phẩm" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="0/120" />
+            </FrameLayout>
+
+            <EditText
+                android:id="@+id/etProductName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập tên sản phẩm"
+                android:inputType="textPersonName"
+                android:padding="5dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#FFFDFD"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mô tả sản phẩm" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="0/3000" />
+            </FrameLayout>
+
+            <EditText
+                android:id="@+id/etDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nhập tên mô tả sản phẩm"
+                android:inputType="textPersonName"
+                android:padding="5dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#FFFDFD"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:gravity="center_vertical"
+                android:text="Giá gốc" />
+
+            <EditText
+                android:id="@+id/etOriginalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:hint="Thiết lập giá"
+                android:inputType="numberDecimal" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFDFD"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:gravity="center_vertical"
+                android:text="Giá bán" />
+
+            <EditText
+                android:id="@+id/etSellPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:hint="Thiết lập giá"
+                android:inputType="numberDecimal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="#FFFDFD"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:gravity="center_vertical"
+                android:text="Số lượng" />
+
+            <EditText
+                android:id="@+id/etQuantity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:hint="Nhập số lượng"
+                android:inputType="numberDecimal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#FFFDFD"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Thời gian bán" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFDFD"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:gravity="center_vertical"
+                    android:text="Bắt đầu" />
+
+                <EditText
+                    android:id="@+id/etOpenTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:gravity="end"
+                    android:hint="00:00"
+                    android:inputType="datetime"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                android:background="#FFFDFD"
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/iv_add_product_icon"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="2"
-                    android:background="@drawable/useravatar" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:gravity="center_vertical"
+                    android:text="Kết thúc" />
 
                 <EditText
-                    android:id="@+id/editText_add_product_name"
+                    android:id="@+id/etCloseTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="Tên:"
-                    android:paddingEnd="50dp"
-                    android:textColorHint="#B6ADAD" />
-
-                <EditText
-                    android:id="@+id/editText_add_product_originalPrice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
-                    android:layout_weight="2"
-                    android:hint="Giá bình thường :"
-                    android:paddingEnd="50dp"
-                    android:textColorHint="#B6ADAD" />
-
-                <EditText
-                    android:id="@+id/editText_add_product_sellPrice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="Giá sau khi giảm giá:"
-                    android:paddingEnd="50dp"
-                    android:textColorHint="#B6ADAD" />
-
-                <EditText
-                    android:id="@+id/editText_add_product_openTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/editTextQuantity"
-                    android:inputType="datetime"
-                    android:hint ="Thời gian bán"
-                    android:padding="10dp"
-                    />
-
-                <EditText
-                    android:id="@+id/editText_add_product_closeTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/editTextQuantity"
-                    android:inputType="datetime"
-                    android:padding="10dp"
-                    android:hint ="Thời gian đóng " />
-
-                <EditText
-                    android:id="@+id/editText_add_product_saleDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/editTextQuantity"
-                    android:inputType="datetime"
-                    android:padding="10dp"
-                    android:hint="Ngày bán" />
-
-                <Button
-                    android:id="@+id/btn_add_product_add"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Thay đổi" />
-
-
+                    android:layout_gravity="end"
+                    android:gravity="end"
+                    android:hint="23:59"
+                    android:inputType="datetime"/>
             </LinearLayout>
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+        <Button
+            android:id="@+id/btnAddProductAdd"
+            android:layout_width="200dp"
+            android:layout_height="45dp"
+            android:layout_centerInParent="true"
+            android:text="Thêm sản phẩm"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:drawableStart="@drawable/button_notification"/>
+
+
+
+    </LinearLayout>
 
 
 
