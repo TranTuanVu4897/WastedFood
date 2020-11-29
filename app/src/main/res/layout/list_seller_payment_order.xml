@@ -6,18 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:descendantFocusability="blocksDescendants"
-        android:layout_height="200dp"
-        android:orientation="vertical"
-        android:background="@color/colorBackGroundOrder"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="6dp"
         android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:descendantFocusability="blocksDescendants"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/colorBackGroundOrder"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp">
@@ -32,27 +40,29 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
+                android:paddingRight="10dp"
                 android:layout_height="60dp">
 
                 <Button
                     android:id="@+id/btn_list_seller_payment_confirm"
-                    android:layout_width="wrap_content"
                     android:layout_height="30dp"
-                    android:layout_centerInParent="true"
-                    android:layout_marginRight="15dp"
+                    android:layout_width="120dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="50dp"
                     android:layout_toLeftOf="@+id/btn_list_seller_confirm_reject"
                     android:background="@drawable/custom_button"
+                    android:textStyle="bold"
                     android:backgroundTint="#1DCC01"
                     android:text="ĐÃ THANH TOÁN"
                     android:textColor="@color/colorWhite"></Button>
                 <Button
-
                     android:id="@+id/btn_list_seller_payment_reject"
-                    android:layout_width="wrap_content"
+                    android:layout_width="120dp"
+                    android:layout_alignParentRight="true"
                     android:backgroundTint="@color/colorRed"
                     android:background="@drawable/custom_button"
                     android:layout_centerInParent="true"
-                    android:layout_alignParentRight="true"
+                    android:textStyle="bold"
                     android:textColor="@color/colorWhite"
                     android:text="HỦY GIAO DỊCH"
                     android:layout_height="30dp">
@@ -65,6 +75,8 @@
             android:id="@+id/tv_list_seller_payment_description"
             android:layout_width="match_parent"
             style="@style/AppTheme"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
             android:lines="4"
             android:maxLines="4"
             android:layout_height="60dp">
@@ -76,7 +88,10 @@
                 android:layout_margin="15dp"
                 android:id="@+id/tv_list_seller_payment_quantity"
                 android:text="123"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
                 style="@style/AppTheme"
+                android:textSize="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             </TextView>
@@ -87,10 +102,12 @@
                 style="@style/AppTheme"
                 android:layout_alignParentRight="true"
                 android:textStyle="bold"
+                android:textSize="21dp"
+                android:textColor="@color/colorBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             </TextView>
         </RelativeLayout>
     </LinearLayout>
-
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
