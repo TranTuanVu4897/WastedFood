@@ -11,71 +11,116 @@
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/tvNameSellerFSD"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Name Seller"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:background="@drawable/gradient_seller_home"/>
+            <ImageView
+                android:id="@+id/ivPhotoSellerFSD"
+                android:layout_width="match_parent"
+                android:layout_height="170dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right">
+
+                <Button
+                    android:id="@+id/btnReportFSD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Báo cáo" />
+
+                <ImageButton
+                    android:id="@+id/iBtnFollow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/followed" />
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent">
-                <ImageView
-                    android:id="@+id/ivPhotoSellerFSD"
-                    android:layout_width="match_parent"
-                    android:layout_height="170dp" />
-
+                android:layout_height="wrap_content">
                 <TextView
-                    android:id="@+id/tvNameSellerFSD"
-                    android:textStyle="bold"
+                    android:id="@+id/tvAddressFBGSD"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:text="Name Seller"
-                    android:textSize="25sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
-                    android:weightSum="5">
-                    <TextView
-                        android:id="@+id/tvAddressFSD"
-                        android:textSize="18dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
-
-                </LinearLayout>
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <Button
-        android:id="@+id/btnReportFSD"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Báo cáo"/>
-    <ImageButton
-        android:id="@+id/iBtnFollow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/followed"
-        android:layout_gravity="center"/>
-</LinearLayout>
-
-                <TextView
-                    android:id="@+id/tvDescriptionFSD"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:text="asdjasdahsjkdhashdjashjdhaskasdasdkjaskjdasjdklja"
-                    android:textSize="18dp" />
-                <ListView
-                    android:id="@android:id/list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:nestedScrollingEnabled="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:text="Thông tin cửa hàng"/>
+            <TextView
+                android:id="@+id/tvRatingFSD"
+                android:drawableLeft="@drawable/user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="#000"
+                android:text="Đánh giá"
+                android:textSize="18dp" />
+            <TextView
+                android:id="@+id/tvFollowFSD"
+                android:drawableLeft="@drawable/user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="#000"
+                android:text="Đánh giá"
+                android:textSize="18dp" />
+            <TextView
+                android:id="@+id/tvProductFSD"
+                android:drawableLeft="@drawable/user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="#000"
+                android:text="Đánh giá"
+                android:textSize="18dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:text="Các sản phẩm đang bán"/>
+
+            <ListView
+                android:id="@android:id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:nestedScrollingEnabled="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
 
 
     </ScrollView>

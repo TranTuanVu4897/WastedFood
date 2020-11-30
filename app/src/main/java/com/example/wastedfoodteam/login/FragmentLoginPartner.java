@@ -92,7 +92,7 @@ public class FragmentLoginPartner extends Fragment {
      * @param str
      * @return
      */
-    private String md5(String str) {
+    public String md5(String str) {
         String result = "";
         MessageDigest digest;
         try {
