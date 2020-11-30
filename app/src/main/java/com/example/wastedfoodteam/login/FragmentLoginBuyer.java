@@ -43,10 +43,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -62,6 +66,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.content.ContentValues.TAG;
 
 
 public class FragmentLoginBuyer extends Fragment {
@@ -151,11 +157,37 @@ public class FragmentLoginBuyer extends Fragment {
         return view;
     }
 
+    //TODO
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            resultGoogle(user.getUid());
+                            startActivity(new Intent(getActivity(), BuyHomeActivity.class));
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                        }
+
+                        // ...
+                    }
+                });
+
+    }
+
     /**
      * google sign in option
      */
     private void AddGoogleSignInOption() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         Variable.CHECK_LOGIN = 1;
@@ -179,16 +211,22 @@ public class FragmentLoginBuyer extends Fragment {
      * @param completedTask
      */
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try {
-            Variable.CHECK_LOGIN = 1;
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            resultGoogle();
-            startActivity(new Intent(getActivity(), BuyHomeActivity.class));
-        } catch (ApiException e) {
-            e.printStackTrace();
-            Log.w("TAG", "Failed code" + e.getStatusCode());
-            Log.d("Tag", e.getMessage());
-            Toast.makeText(getActivity(), "Failed Connect " + e.getStatusCode(), Toast.LENGTH_LONG).show();
+        Variable.CHECK_LOGIN = 1;
+        startActivity(new Intent(getActivity(), BuyHomeActivity.class));
+    }
+
+    private void resultGoogle(String firebase_UID) {
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
+        if (acct != null) {
+            String name = acct.getDisplayName();
+            String email = acct.getEmail();
+            String thirdPartyId = acct.getId();
+            Uri personPhoto = acct.getPhotoUrl();
+            String urlImage = personPhoto.toString();
+            String gender = "1";
+            String dob = "0000-00-00";
+            String urlInsert = Variable.IP_ADDRESS + "login/register3rdParty.php";
+            checkDataAndInsert3rdParty(urlInsert, email, thirdPartyId, name, urlImage, dob, gender,firebase_UID);
         }
     }
 
@@ -207,6 +245,8 @@ public class FragmentLoginBuyer extends Fragment {
             if (requestCode == RC_SIGN_IN) {
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
                 Variable.CHECK_LOGIN = 1;
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                firebaseAuthWithGoogle(account.getIdToken());
                 handleSignInResult(task);
             }
         } catch (Exception e) {
@@ -334,20 +374,7 @@ public class FragmentLoginBuyer extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    private void resultGoogle() {
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
-        if (acct != null) {
-            String name = acct.getDisplayName();
-            String email = acct.getEmail();
-            String thirdPartyId = acct.getId();
-            Uri personPhoto = acct.getPhotoUrl();
-            String urlImage = personPhoto.toString();
-            String gender = "1";
-            String dob = "0000-00-00";
-            String urlInsert = Variable.IP_ADDRESS + "login/register3rdParty.php";
-            checkDataAndInsert3rdParty(urlInsert, email, thirdPartyId, name, urlImage, dob, gender);
-        }
-    }
+
 
     private void resultFacebook() {
 
@@ -364,7 +391,8 @@ public class FragmentLoginBuyer extends Fragment {
                     String urlImage = "https://graph.facebook.com/" + thirdPartyId + "/picture?type=large";
                     String urlInsert = Variable.IP_ADDRESS + "login/register3rdParty.php";
 
-                    checkDataAndInsert3rdParty(urlInsert, email, thirdPartyId, name, urlImage, dob, gender);
+                    //TODO
+                    //checkDataAndInsert3rdParty(urlInsert, email, thirdPartyId, name, urlImage, dob, gender);
 
 
                 } catch (JSONException e) {
@@ -380,7 +408,7 @@ public class FragmentLoginBuyer extends Fragment {
     }
 
     // checking register 3rdparty
-    private void checkDataAndInsert3rdParty(String url, final String emailFB, final String thirdPartyIdFB, final String nameFB, final String urlImageFB, final String dobFB, final String genderFB) {
+    private void checkDataAndInsert3rdParty(String url, final String emailFB, final String thirdPartyIdFB, final String nameFB, final String urlImageFB, final String dobFB, final String genderFB,final String firebase_UID) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -420,6 +448,7 @@ public class FragmentLoginBuyer extends Fragment {
                 params.put("dob", dobFB);
                 params.put("gender", genderFB);
                 params.put("email", emailFB);
+                params.put("firebase_UID",firebase_UID);
                 return params;
             }
         };
