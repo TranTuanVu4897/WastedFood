@@ -28,6 +28,7 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Buyer;
+import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -45,6 +46,7 @@ public class FragmentEditInformationBuyer extends Fragment {
     ImageView ivAvatar;
     Button btUpdate, btCancel;
     String accountId;
+    CameraStorageFunction cameraStorageFunction;
     int lastSelectedYear;
     int lastSelectedMonth;
     int lastSelectedDayOfMonth;
@@ -70,6 +72,8 @@ public class FragmentEditInformationBuyer extends Fragment {
         this.lastSelectedMonth = c.get(Calendar.MONTH);
         this.lastSelectedDayOfMonth = c.get(Calendar.DAY_OF_MONTH);
 
+        cameraStorageFunction = new CameraStorageFunction(getActivity(),getContext(),ivAvatar);
+
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +97,13 @@ public class FragmentEditInformationBuyer extends Fragment {
                     gender = "1";
                 }
                 updateData(url, accountId, name, phone, urlImage, dob, gender);
+            }
+        });
+
+        ivAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+cameraStorageFunction.showImagePickDialog();
             }
         });
 
@@ -209,5 +220,11 @@ public class FragmentEditInformationBuyer extends Fragment {
         datePickerDialog = new DatePickerDialog(getActivity(),
                 dateSetListener, lastSelectedYear, lastSelectedMonth, lastSelectedDayOfMonth);
         datePickerDialog.show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        cameraStorageFunction.onActivityResult(requestCode,resultCode,data);
     }
 }

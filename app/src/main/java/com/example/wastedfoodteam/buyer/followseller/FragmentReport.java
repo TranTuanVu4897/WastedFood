@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Seller;
+import com.example.wastedfoodteam.utils.CameraStorageFunction;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,13 +35,10 @@ public class FragmentReport extends Fragment {
     TextView tvAccused;
     EditText etContent;
     Button btnCommit;
+    ImageView ivReport;
     Seller seller;
-    String accusedName;
-    String content ="";
-    String url;
-    String accusedId;
-    String reporterId;
-
+    String accusedName, content = "", url, accusedId, reporterId;
+    CameraStorageFunction cameraStorageFunction;
 
     @Nullable
     @Override
@@ -51,17 +50,25 @@ public class FragmentReport extends Fragment {
         //get param
         url = Variable.IP_ADDRESS + "FeedbackReport/report.php";
         accusedName = seller.getName();
-        reporterId = Variable.ACCOUNT_ID+"";
+        reporterId = Variable.ACCOUNT_ID + "";
         tvAccused.setText(seller.getName());
 
-        accusedId = seller.getId()+"";
+        cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), ivReport);
+
+        accusedId = seller.getId() + "";
         btnCommit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 content = etContent.getText().toString();
                 //TODO don't know get url image
-                insertData(url, reporterId, accusedId, content,"");
+                insertData(url, reporterId, accusedId, content, "");
 
+            }
+        });
+        ivReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cameraStorageFunction.showImagePickDialog();
             }
         });
         return view;
@@ -116,5 +123,12 @@ public class FragmentReport extends Fragment {
         tvAccused = view.findViewById(R.id.tvAccusedFR);
         etContent = view.findViewById(R.id.etContentFR);
         btnCommit = view.findViewById(R.id.btnCommitFR);
+        ivReport = view.findViewById(R.id.ivReport);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        cameraStorageFunction.onActivityResult(requestCode, resultCode, data);
     }
 }
