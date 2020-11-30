@@ -28,7 +28,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_weight="2"
                 android:drawableLeft="@drawable/user"
-                android:hint="Tên đăn nhập"
+                android:hint="Tên đăng nhập"
                 android:paddingEnd="50dp"
                 android:textColorHint="#B6ADAD" />
 
@@ -103,16 +103,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Buyer"
-            android:background="#4CAF50"/>
+            android:background="#4CAF50"
+            android:text="MUA HÀNG" />
 
         <Button
             android:id="@+id/btnPartnerOptionFLP"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Partner"
-            android:background="#87B675"/>
+            android:background="#87B675"
+            android:text="BÁN HÀNG" />
 
     </LinearLayout>
 
