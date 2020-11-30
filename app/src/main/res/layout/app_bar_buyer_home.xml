@@ -24,10 +24,11 @@
 
                 <ImageButton
                     android:id="@+id/ibUserInfo"
+                    android:layout_marginStart="3dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
+                    android:background="@drawable/item_background"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/button_user_information" />
 
@@ -59,7 +60,7 @@
                 android:theme="@style/AppThemeMaterial"
                 android:layout_gravity="bottom"
                 app:itemTextColor="@color/colorWhite"
-                android:background="@color/colorPrimaryOfHomeActivity"
+                android:background="@drawable/gradient_seller_home"
                 app:menu="@menu/bottom_nav_menu_buyer"
                 android:layout_height="60dp">
             </com.google.android.material.bottomnavigation.BottomNavigationView>
