@@ -57,6 +57,8 @@ public class FragmentDetailProduct extends Fragment {
     Button btnIncrease, btnDecrease, btnBuy;
     private FollowVolley followVolley;
 
+    NotificationUtil util;
+    SendNotif sendNotif;
     public FragmentDetailProduct() {
         orderQuantity = 1;
     }
@@ -219,6 +221,16 @@ public class FragmentDetailProduct extends Fragment {
                     Toast.makeText(getActivity().getApplicationContext(), "Thành công", Toast.LENGTH_LONG);
                     //TODO send massage to seller đang fix cứng
                     //TODO đang fix cứng
+                    util = new NotificationUtil();
+                    sendNotif = new SendNotif();
+
+                    //TODO
+                    //đổi thành order.getBuyerName,get đc seller name
+                    String message = "Khách hàng" + Variable.ACCOUNT_ID  + " đã đặt hàng sản phẩm " + product.getName() + " của bạn";
+                    util.addNotification(getContext(), Variable.ACCOUNT_ID ,  product.getSeller_id() , message , product.getId() );
+                    //phải thêm lấy firebase_UID của seller trong phần bên buyer TODO
+                    sendNotif.notificationHandle( "akCm4bi4ZjbV9jPSmkmURuXX5QR2", "Wasted food app" , message);
+
 
                     moveToFragmentOrderDetail();
                 } else if (response.equalsIgnoreCase("NOT ENOUGH QUANTITY")) {
