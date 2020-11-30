@@ -3,6 +3,7 @@ package com.example.wastedfoodteam.utils;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +13,7 @@ import com.example.wastedfoodteam.R;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -83,5 +85,17 @@ public class CommonFunction {
             tvQuantity.setText("Hết hàng");
             tvQuantity.setBackgroundColor(Color.RED);
         }
+    }
+
+    public static String getCurrentDate() {
+        Date currentTime = Calendar.getInstance().getTime();
+        return String.format("%d-%02d-%02d", currentTime.getYear(), currentTime.getMonth() + 1, currentTime.getDay());
+    }
+
+    public static boolean checkEmptyEditText(EditText editText){
+        if (editText.getText().toString().trim().length() > 0)
+            return true;
+
+        return false;
     }
 }

@@ -1,14 +1,11 @@
 package com.example.wastedfoodteam.seller.home;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,44 +15,27 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.wastedfoodteam.MainActivity;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.notification.NotificationFragment;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.seller.sellerFragment.AddProductFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.ChangePasswordSellerFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.EditSellerFragment;
-import com.example.wastedfoodteam.seller.sellerFragment.ListOrderHistoryFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.ListProductSellerFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.SellerHomeFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.SendFeedbackSellerFragment;
 import com.example.wastedfoodteam.model.Seller;
-import com.example.wastedfoodteam.utils.SendNotificationPackage.APIService;
-import com.example.wastedfoodteam.utils.SendNotificationPackage.Client;
-import com.example.wastedfoodteam.utils.SendNotificationPackage.Data;
-import com.example.wastedfoodteam.utils.SendNotificationPackage.MyFireBaseMessagingService;
-import com.example.wastedfoodteam.utils.SendNotificationPackage.MyResponse;
-import com.example.wastedfoodteam.utils.SendNotificationPackage.NotificationSender;
+import com.example.wastedfoodteam.utils.OTPFirebase.VerifyPhoneFragment;
 import com.example.wastedfoodteam.utils.SendNotificationPackage.SendNotif;
-import com.example.wastedfoodteam.utils.SendNotificationPackage.Token;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.installations.FirebaseInstallations;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SellerHomeActivity extends AppCompatActivity {
 
@@ -136,13 +116,19 @@ public class SellerHomeActivity extends AppCompatActivity {
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_main,listProductSellerFragment,listProductSellerFragment.getTag()).commit();
                 }else if(id == R.id.item_nav_drawer_menu_history){
-                    ListOrderHistoryFragment listOrderHistoryFragment = new ListOrderHistoryFragment();
+                    /*ListOrderHistoryFragment listOrderHistoryFragment = new ListOrderHistoryFragment();
                     FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.content_main,listOrderHistoryFragment,listOrderHistoryFragment.getTag()).commit();
+                    manager.beginTransaction().replace(R.id.content_main,listOrderHistoryFragment,listOrderHistoryFragment.getTag()).commit();*/
+                    VerifyPhoneFragment verifyPhoneFragment = new VerifyPhoneFragment();
+                    FragmentManager manager = getSupportFragmentManager();
+                    manager.beginTransaction().replace(R.id.content_main, verifyPhoneFragment, verifyPhoneFragment.getTag()).commit();
                 }else if(id == R.id.item_nav_drawer_menu_alert){
                     NotificationFragment notificationFragment = new NotificationFragment();
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_main,notificationFragment,notificationFragment.getTag()).commit();
+                }else if(id == R.id.item_nav_drawer_menu_logout){
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(SellerHomeActivity.this, MainActivity.class));
                 }
                 DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);

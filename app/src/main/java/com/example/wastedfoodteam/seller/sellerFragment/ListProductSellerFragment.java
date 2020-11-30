@@ -47,7 +47,7 @@ public class ListProductSellerFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.i("ListProductSellerFragment","Show the list view");
+        Log.i("ListProductSellerFragment", "Show the list view");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_product_seller, container, false);
         //mapping view
@@ -57,11 +57,11 @@ public class ListProductSellerFragment extends ListFragment {
         product = Variable.PRODUCT;
         tv_total_product = view.findViewById(R.id.tv_total_product);
         String urlGetData = Variable.IP_ADDRESS + "seller/getListProductSeller.php?seller_id=" + seller_id;
-        adapter = new ProductSellerAdapter( getActivity().getApplicationContext(), R.layout.list_seller_product , arrProduct, getResources());
+        adapter = new ProductSellerAdapter(getActivity().getApplicationContext(), R.layout.list_seller_product, arrProduct, getResources());
         lvProduct.setAdapter(adapter);
         getData(urlGetData);
         //tv_total_product.setText(adapter.getCount() + " sản phẩm");
-        getTotalProduct(Variable.IP_ADDRESS + "seller/getTotalProduct.php"+"?seller_id=" + Variable.SELLER.getId());
+        getTotalProduct(Variable.IP_ADDRESS + "seller/getTotalProduct.php" + "?seller_id=" + Variable.SELLER.getId());
         lvProduct.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -103,7 +103,7 @@ public class ListProductSellerFragment extends ListFragment {
                                         object.getInt("RemainQuantity"),
                                         object.getString("Description"),
                                         dateFormat.parse(object.getString("SellDate")),
-                                        object.getString("Status"),
+                                        Product.ProductStatus.valueOf(object.getString("Status")),
                                         false));
                             } catch (JSONException | ParseException e) {
                                 e.printStackTrace();
@@ -120,7 +120,7 @@ public class ListProductSellerFragment extends ListFragment {
         requestQueue.add(jsonArrayRequest);
     }
 
-    public void getTotalProduct(String url){
+    public void getTotalProduct(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest getProductAround = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -128,8 +128,8 @@ public class ListProductSellerFragment extends ListFragment {
                     public void onResponse(String response) {
                         try {
                             totalProduct = new Integer(response);
-                            tv_total_product.setText( totalProduct + " sản phẩm");
-                        }catch (Exception e){
+                            tv_total_product.setText(totalProduct + " sản phẩm");
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -145,14 +145,14 @@ public class ListProductSellerFragment extends ListFragment {
     @Override
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Log.i("ListProductSellerFragment","On item clicked");
+        Log.i("ListProductSellerFragment", "On item clicked");
         Product product = (Product) l.getAdapter().getItem(position);
         Variable.PRODUCT = product;
 
         ProductDetailSellerFragment productDetailSellerFragment = new ProductDetailSellerFragment();
         //open seller detail product fragment
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace( R.id.content_main, productDetailSellerFragment, "")//TODO check if this work
+                .replace(R.id.content_main, productDetailSellerFragment, "")//TODO check if this work
                 .addToBackStack(null)
                 .commit();
     }

@@ -68,6 +68,19 @@
                 android:background="#FFFFFF"
                 android:gravity="center"
                 android:text="Quên mật khẩu" />
+            <TextView
+                android:id="@+id/tvRegisterSeller"
+                style="text-decoration: underline;"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="10dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:clickable="true"
+                android:text="Đăng ký tài khoản" />
         </LinearLayout>
     </LinearLayout>
 

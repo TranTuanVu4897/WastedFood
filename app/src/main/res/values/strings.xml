@@ -42,4 +42,10 @@
         <item>90%</item>
         <item>Tất cả</item>
     </string-array>
+
+    <string name="register">REGISTER</string>
+    <string name="login_email_hint">Địa chỉ email</string>
+    <string name="login_password_hint">Mật khẩu</string>
+    <string name="login_name_hint">Tên người dùng</string>
+    <string name="login_mobile_number_hint">Số điện thoại</string>
 </resources>
