@@ -1,8 +1,11 @@
 package com.example.wastedfoodteam.login;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,8 +66,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
+
 
 public class FragmentLoginBuyer extends Fragment {
+    SharedPreferences sharedpreferences;
     GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN = 10002;
     EditText etSDT, etPass;
@@ -76,6 +82,8 @@ public class FragmentLoginBuyer extends Fragment {
     String urlGetData = "";
     int check = 0;
     private FirebaseAuth mAuth;
+    public static final String mypreference = "mypref";
+    public static final String idAccount = "ACCOUNT_ID";
 
     @Nullable
     @Override
@@ -89,6 +97,11 @@ public class FragmentLoginBuyer extends Fragment {
         btnSignInFacebook = view.findViewById(R.id.btnFacebookSignInFLB);
         btnPartnerOption = view.findViewById(R.id.btnPartnerOptionFLB);
         mAuth = FirebaseAuth.getInstance();
+        sharedpreferences = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+//        sharedpreferences = getApplicationContext().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+        if (sharedpreferences.contains(idAccount)) {
+            Variable.ACCOUNT_ID = sharedpreferences.getInt(idAccount, -1);
+        }
         handleSignInFacebook();
 
         //facebook option
@@ -150,6 +163,12 @@ public class FragmentLoginBuyer extends Fragment {
 
         return view;
     }
+    public void Save(int id) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putInt(idAccount, id);
+
+        editor.commit();
+    }
 
     /**
      * google sign in option
@@ -166,6 +185,7 @@ public class FragmentLoginBuyer extends Fragment {
      * Start Sign in Google flow
      */
     private void signInGoogle() {
+        Save(1);
         Date currentTime = Calendar.getInstance().getTime();
         Log.d("date:", currentTime.toString());
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -178,7 +198,7 @@ public class FragmentLoginBuyer extends Fragment {
      *
      * @param completedTask
      */
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+    private void handleSignInGoogle(Task<GoogleSignInAccount> completedTask) {
         try {
             Variable.CHECK_LOGIN = 1;
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
@@ -207,7 +227,7 @@ public class FragmentLoginBuyer extends Fragment {
             if (requestCode == RC_SIGN_IN) {
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
                 Variable.CHECK_LOGIN = 1;
-                handleSignInResult(task);
+                handleSignInGoogle(task);
             }
         } catch (Exception e) {
             Log.w("SignIn", "Code" + e.getStackTrace());
@@ -312,6 +332,7 @@ public class FragmentLoginBuyer extends Fragment {
                             });
 
                             Variable.ACCOUNT_ID = buyer.getId();
+
                             //TODO pass data through intent
                             startActivity(intent);
                         } catch (Exception e) {
@@ -380,7 +401,7 @@ public class FragmentLoginBuyer extends Fragment {
     }
 
     // checking register 3rdparty
-    private void checkDataAndInsert3rdParty(String url, final String emailFB, final String thirdPartyIdFB, final String nameFB, final String urlImageFB, final String dobFB, final String genderFB) {
+    private void checkDataAndInsert3rdParty(String url, final String email, final String thirdPartyId, final String name, final String urlImage, final String dob, final String gender) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -396,6 +417,7 @@ public class FragmentLoginBuyer extends Fragment {
 
                     Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
                     Variable.ACCOUNT_ID = buyer.getId();
+                    Save(Variable.ACCOUNT_ID);
                     //TODO pass data through intent
                     startActivity(intent);
                 } catch (Exception e) {
@@ -414,17 +436,18 @@ public class FragmentLoginBuyer extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("thirdPartyId", thirdPartyIdFB);
-                params.put("name", nameFB);
-                params.put("urlImage", urlImageFB);
-                params.put("dob", dobFB);
-                params.put("gender", genderFB);
-                params.put("email", emailFB);
+                params.put("thirdPartyId", thirdPartyId);
+                params.put("name", name);
+                params.put("urlImage", urlImage);
+                params.put("dob", dob);
+                params.put("gender", gender);
+                params.put("email", email);
                 return params;
             }
         };
         requestQueue.add(stringRequest);
     }
+
 
 
 }
