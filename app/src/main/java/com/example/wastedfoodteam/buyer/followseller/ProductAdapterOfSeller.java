@@ -72,7 +72,7 @@ public class ProductAdapterOfSeller extends BaseAdapter {
         holder.tvName.setText(product.getName() + "");
         holder.tvSellPrice.setText(CommonFunction.getCurrency(product.getSell_price()));
         holder.tvOriginalPrice.setText(CommonFunction.getCurrency(product.getOriginal_price()));
-        holder.tvDiscount.setText(CommonFunction.getDiscount(product.getSell_price(),product.getOriginal_price()));
+        holder.tvDiscount.setText("Sale " + CommonFunction.getDiscount(product.getSell_price(),product.getOriginal_price()));
         CommonFunction.setQuantityTextView(holder.tvQuantity,product.getRemain_quantity(),product.getOriginal_quantity());
         //get image from url
         CommonFunction.setImageViewSrc(context,product.getImage(),holder.ivProduct);

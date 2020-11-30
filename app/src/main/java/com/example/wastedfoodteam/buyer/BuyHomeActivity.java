@@ -16,7 +16,6 @@ import android.test.mock.MockPackageManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -31,9 +30,6 @@ import com.example.wastedfoodteam.global.Variable;
 
 import com.example.wastedfoodteam.seller.notification.NotificationFragment;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
-import com.example.wastedfoodteam.seller.sellerFragment.AddProductFragment;
-import com.example.wastedfoodteam.seller.sellerFragment.SellerHomeFragment;
-import com.example.wastedfoodteam.utils.FilterDialog;
 import com.example.wastedfoodteam.utils.GPSTracker;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -45,7 +41,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.sql.Time;
 import java.util.List;
 
 public class BuyHomeActivity extends AppCompatActivity {
@@ -259,11 +254,6 @@ public class BuyHomeActivity extends AppCompatActivity {
             Log.d("e: ", e.getMessage());
         }
 
-    }
-
-    private void changeListProductItem() {
-        fragmentListProduct.createNewArrayProduct();
-        fragmentListProduct.getData();
     }
 
     @Override

@@ -14,6 +14,7 @@ public class Seller extends Account implements Serializable {
     String address;
     double latitude;
     double longitude;
+    double rating;
     String description;
 
     //add for get date easier

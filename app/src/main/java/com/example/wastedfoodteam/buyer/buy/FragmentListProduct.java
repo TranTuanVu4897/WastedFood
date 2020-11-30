@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -22,14 +23,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.utils.FilterDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -40,8 +39,9 @@ public class FragmentListProduct extends ListFragment {
     ListView lvProduction;
     FragmentDetailProduct detailProduct;
     Bundle bundleDetail;
-ImageButton ibFilter;
+    ImageButton ibFilter;
     EditText etSearch;
+    Button btnNear, btnAll, btnFollowSeller;
 
     @Nullable
     @Override
@@ -55,6 +55,9 @@ ImageButton ibFilter;
         lvProduction = view.findViewById(android.R.id.list);
         etSearch = view.findViewById(R.id.etSearchBHA);
         ibFilter = view.findViewById(R.id.ibFilter);
+        btnNear = view.findViewById(R.id.btnNearProduct);
+        btnAll = view.findViewById(R.id.btnAllProduct);
+        btnFollowSeller = view.findViewById(R.id.btnFollowSellerProduct);
 
         //setup bundle
         bundleDetail = new Bundle();
@@ -63,7 +66,7 @@ ImageButton ibFilter;
 
         adapter = new ProductAdapter(getActivity().getApplicationContext(), R.layout.list_buyer_product_item, arrProduct, getResources());
         lvProduction.setAdapter(adapter);
-        getData();
+        getProduct();
 
         lvProduction.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -82,7 +85,6 @@ ImageButton ibFilter;
         });
 
 
-
         ibFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,17 +97,43 @@ ImageButton ibFilter;
                         Variable.distance = "20";
                         Variable.discount = null;
 
-
                         createNewArrayProduct();
-                        getData();
+                        getProduct();
                     }
 
                     @Override
                     public void onChange() {
                         createNewArrayProduct();
-                        getData();
+                        getProduct();
                     }
                 });
+            }
+        });
+
+        btnNear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Variable.distance = "20";
+                createNewArrayProduct();
+                getProduct();
+            }
+        });
+
+        btnAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Variable.distance = "";
+                createNewArrayProduct();
+                getProduct();
+            }
+        });
+
+        btnFollowSeller.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createNewArrayProduct();
+                getSellerFollowProduct();
+
             }
         });
 
@@ -113,10 +141,10 @@ ImageButton ibFilter;
     }
 
 
-    public void getData() {
+    public void getProduct() {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         //require edit latitude
-        urlGetData = urlGetData + "?lat=" + Variable.gps.getLatitude() + "&lng=" + Variable.gps.getLongitude()
+        urlGetData = Variable.IP_ADDRESS + Variable.SEARCH_PRODUCT + "?lat=" + Variable.gps.getLatitude() + "&lng=" + Variable.gps.getLongitude()
                 + "&distance=" + Variable.distance
                 + "&start_time=" + Variable.startTime + "&end_time=" + Variable.endTime
                 + "&discount=" + Variable.discount
@@ -130,7 +158,7 @@ ImageButton ibFilter;
                             JSONArray jsonProducts = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             for (int i = 0; i < jsonProducts.length(); i++) {
-                                arrProduct.add( gson.fromJson(jsonProducts.getString(i), BuyerProduct.class));
+                                arrProduct.add(gson.fromJson(jsonProducts.getString(i), BuyerProduct.class));
                                 adapter.setProductList(arrProduct);
                                 adapter.notifyDataSetChanged();
                             }
@@ -148,6 +176,44 @@ ImageButton ibFilter;
                 });
         requestQueue.add(getProductAround);
     }
+
+    public void getSellerFollowProduct() {
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        //require edit latitude
+        urlGetData = Variable.IP_ADDRESS + Variable.SEARCH_SELLER_FOLLOW_PRODUCT + "?lat=" + Variable.gps.getLatitude() + "&lng=" + Variable.gps.getLongitude()
+                + "&distance=" + Variable.distance
+                + "&start_time=" + Variable.startTime + "&end_time=" + Variable.endTime
+                + "&discount=" + Variable.discount
+                + "&search_text=" + etSearch.getText()
+                + "&buyer_id=" +Variable.ACCOUNT_ID;
+
+        StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray jsonProducts = new JSONArray(response);
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                            for (int i = 0; i < jsonProducts.length(); i++) {
+                                arrProduct.add(gson.fromJson(jsonProducts.getString(i), BuyerProduct.class));
+                                adapter.setProductList(arrProduct);
+                                adapter.notifyDataSetChanged();
+                            }
+                        } catch (Exception e) {
+                            Log.e("ListProduct", response);
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_LONG);
+                    }
+                });
+        requestQueue.add(getProductAround);
+    }
+
 
     @Override
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {

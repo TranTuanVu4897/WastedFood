@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,7 +33,6 @@ import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.buyer.buy.BuyerProduct;
 import com.example.wastedfoodteam.buyer.buy.FragmentDetailProduct;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.service.FollowResponseCallback;
@@ -63,7 +63,8 @@ public class FragmentSellerDetail extends ListFragment {
     String reporterId;
     TextView tvAccused;
     EditText etContent;
-    Button btnCommit, btnCancel, btnReport;
+    Button btnCommit, btnCancel;
+    ImageButton ibReport;
     CameraStorageFunction cameraStorageFunction;
     private final String GET_FOLLOW_INFORMATION_URL = Variable.IP_ADDRESS + Variable.GET_FOLLOW;
     private final String UPDATE_FOLLOW_URL = Variable.IP_ADDRESS + Variable.UPDATE_FOLLOW;
@@ -85,7 +86,7 @@ public class FragmentSellerDetail extends ListFragment {
 
 
         Glide.with(getActivity()).load(seller.getImage()).into(ivPhotoSeller);
-        btnReport.setOnClickListener(new View.OnClickListener() {
+        ibReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialogReport();
@@ -162,7 +163,7 @@ public class FragmentSellerDetail extends ListFragment {
         tvAddress = view.findViewById(R.id.tvAddressFSD);
         tvDescription = view.findViewById(R.id.tvDescriptionFSD);
         ivPhotoSeller = view.findViewById(R.id.ivPhotoSellerFSD);
-        btnReport = view.findViewById(R.id.btnReportFSD);
+        ibReport = view.findViewById(R.id.ibReport);
         ibFollow = view.findViewById(R.id.iBtnFollow);
     }
 

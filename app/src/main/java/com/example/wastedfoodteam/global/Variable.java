@@ -23,6 +23,7 @@ public class Variable {
 
     //other php variable
     public static final String SEARCH_PRODUCT = "search/getListProducts.php";
+    public static final String SEARCH_SELLER_FOLLOW_PRODUCT = "search/getListSellerFollowProducts.php";
 
     public static final String INSERT_NEW_ORDER = "order/buyerOrder.php";
 
