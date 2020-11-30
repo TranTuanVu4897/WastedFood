@@ -1,21 +1,15 @@
 package com.example.wastedfoodteam.seller.sellerFragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,12 +20,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Product;
-import com.example.wastedfoodteam.seller.sellerAdapter.OrderAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderConfirmAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderDoneAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderPaymentAdapter;
@@ -74,9 +66,9 @@ public class ProductDetailSellerFragment extends Fragment {
         editProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SellerDetailProductFragment sellerDetailProductFragment = new SellerDetailProductFragment();
+                EditProductSellerFragment editProductSellerFragment = new EditProductSellerFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace( R.id.content_main, sellerDetailProductFragment , "")//TODO check if this work
+                        .replace( R.id.content_main, editProductSellerFragment, "")//TODO check if this work
                         .addToBackStack(null)
                         .commit();
             }

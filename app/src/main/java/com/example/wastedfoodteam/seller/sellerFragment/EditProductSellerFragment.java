@@ -30,7 +30,7 @@ import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SellerDetailProductFragment extends Fragment {
+public class EditProductSellerFragment extends Fragment {
     //ui view
     private ImageView iv_detail_product_icon;
     private EditText name;

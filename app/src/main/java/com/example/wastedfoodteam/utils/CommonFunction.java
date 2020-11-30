@@ -3,6 +3,7 @@ package com.example.wastedfoodteam.utils;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -89,5 +90,12 @@ public class CommonFunction {
     public static String getCurrentDate() {
         Date currentTime = Calendar.getInstance().getTime();
         return String.format("%d-%02d-%02d", currentTime.getYear(), currentTime.getMonth() + 1, currentTime.getDay());
+    }
+
+    public static boolean checkEmptyEditText(EditText editText){
+        if (editText.getText().toString().trim().length() > 0)
+            return true;
+
+        return false;
     }
 }

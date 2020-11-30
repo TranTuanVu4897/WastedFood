@@ -15,8 +15,8 @@ import java.sql.Time;
 public class Variable {
     //public static final String IP_ADDRESS = "http://192.168.3.4/wastedfoodphp/";//Vutt ip
 //    public static final String IP_ADDRESS = "http://10.22.178.239/wastedfoodphp/";//FPT University ip
-    public static final String IP_ADDRESS = "http://192.168.1.253/wastedfoodphp/";//TungPT ip
-     //public static final String IP_ADDRESS = "http://192.168.1.10/wastedfoodphp/";//DucHC ip
+    //public static final String IP_ADDRESS = "http://192.168.1.253/wastedfoodphp/";//TungPT ip
+     public static final String IP_ADDRESS = "http://192.168.1.10/wastedfoodphp/";//DucHC ip
 //      public static final String IP_ADDRESS ="http://192.168.156.2/wastedfoodphp/";//DucHC ip lan
     //public static final String IP_ADDRESS ="http://192.168.1.113/wastedfoodphp/";//DucHC ip lan
 //    public static final String IP_ADDRESS ="https://wasted-food-service.herokuapp.com/";//heroku server
@@ -46,6 +46,8 @@ public class Variable {
 
     public static int CHECK_LOGIN;
     public static int TOTAL_NOTIFICATION = 0;
+
+    public static Seller RESISTER_SELLER;
 
     public static final String noImageUrl = "https://www.actbus.net/fleetwiki/images/8/84/Noimage.jpg";
     public static Time startTime = Time.valueOf("11:00:00"), endTime = Time.valueOf("22:00:00");

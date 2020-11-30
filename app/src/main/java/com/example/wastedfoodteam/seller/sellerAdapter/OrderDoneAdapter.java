@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.seller.sellerFragment.ProductDetailSellerFragment;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
 import java.util.List;
