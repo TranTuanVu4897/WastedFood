@@ -69,45 +69,6 @@
                 android:layout_height="60dp">
             </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <ImageButton
-                    android:id="@+id/iBtnHome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="0dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/button_home"
-                    app:layout_constraintBottom_toBottomOf="parent" />
-
-                <ImageButton
-                    android:id="@+id/iBtnNotification"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/button_notification" />
-
-                <ImageButton
-                    android:id="@+id/iBtnHistory"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/button_order_history" />
-
-                <ImageButton
-                    android:id="@+id/iBtnFollow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/button_follow_seller" />
-
-            </LinearLayout>
         </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 

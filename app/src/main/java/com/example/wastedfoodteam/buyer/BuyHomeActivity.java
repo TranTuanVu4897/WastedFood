@@ -50,7 +50,6 @@ import java.util.List;
 
 public class BuyHomeActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_PERMISSION = 2;
-    ImageButton iBtnHome, iBtnNotification, iBtnFollow, iBtnHistory;
     ImageView ivAppIcon;
     ImageButton ibUserInfo, ibFilter;
     FragmentListProduct fragmentListProduct;
@@ -85,10 +84,6 @@ public class BuyHomeActivity extends AppCompatActivity {
         //mapping
         ibUserInfo = findViewById(R.id.ibUserInfo);
         ibFilter = findViewById(R.id.ibFilter);
-        iBtnNotification = findViewById(R.id.iBtnNotification);
-        iBtnHome = findViewById(R.id.iBtnHome);
-        iBtnFollow = findViewById(R.id.iBtnFollow);
-        iBtnHistory = findViewById(R.id.iBtnHistory);
         Variable.CURRENT_USER = "BUYER";
         notificationUtil = new NotificationUtil();
 
@@ -155,31 +150,6 @@ public class BuyHomeActivity extends AppCompatActivity {
             }
         });
 
-        iBtnFollow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addFragmentSellerFollow();
-            }
-        });
-
-
-        iBtnHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentOrderHistory fragmentOrderHistory = new FragmentOrderHistory();
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.flSearchResultAH, fragmentOrderHistory, "")
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-        iBtnHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addFragmentListProduct();
-            }
-        });
 
         ibFilter.setOnClickListener(new View.OnClickListener() {
             @Override
