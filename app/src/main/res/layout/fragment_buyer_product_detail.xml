@@ -63,11 +63,14 @@
                     android:textColor="#33C600"
                     android:textSize="24dp" />
 
+
                 <TextView
+                    android:layout_gravity="center"
                     android:id="@+id/tvPriceOriginal"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="40,000 VND"
+                    android:foreground="@drawable/strike_through"
                     android:textAlignment="center" />
 
             </LinearLayout>
