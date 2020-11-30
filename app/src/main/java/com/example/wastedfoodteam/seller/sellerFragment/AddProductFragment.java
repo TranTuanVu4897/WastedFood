@@ -38,6 +38,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
+import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -78,7 +79,7 @@ public class AddProductFragment extends Fragment {
     private String[] storagePermission;
 
     //image pick uri
-    private Uri image_uri;
+//    private Uri image_uri;
 
     //
     private StorageTask uploadTask;
@@ -89,11 +90,7 @@ public class AddProductFragment extends Fragment {
     // instance for firebase storage and StorageReference
     FirebaseStorage storage;
     StorageReference storageReference;
-
-    String name, image, description, status;
-    double original_price, sell_price;
-    int original_quantity, remain_quantity;
-    String start_time, end_time, sell_date;
+    CameraStorageFunction cameraStorageFunction;
 
     final Calendar calendar = Calendar.getInstance();
 
@@ -137,6 +134,8 @@ public class AddProductFragment extends Fragment {
         cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
+        cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(),ivProduct);
+
         etOpenTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +154,8 @@ public class AddProductFragment extends Fragment {
         ivProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showImagePickDialog();
+                cameraStorageFunction.showImagePickDialog();
+//                showImagePickDialog();
             }
         });
 
@@ -181,20 +181,19 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-//                cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
-//                    @Override
-//                    public void onSuccess(String url) {
-//                        storage_location = url;
-//                        String urlGetData = Variable.IP_ADDRESS + Variable.ADD_PRODUCT_SELLER;
-//                        addProduct(urlGetData);
-//                    }
-//
-//                    @Override
-//                    public void onError() {
-//
-//                    }
-//                });
-                uploadImage();
+                cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
+                    @Override
+                    public void onSuccess(String url) {
+                        storage_location = url;
+                        String urlGetData = Variable.IP_ADDRESS + Variable.ADD_PRODUCT_SELLER;
+                        addProduct(urlGetData);
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
 
             }
         });
@@ -249,136 +248,12 @@ public class AddProductFragment extends Fragment {
     }
 
 
-    //start of for camera handle
-    private void pickFromGallery() {
-        //intent to pick image from gallery
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE);
-    }
-
-    private void showImagePickDialog() {
-        //display in dialog
-        String[] options = {"Camera", "Gallery"};
-        //dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Pick Image").setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //handle item clicks
-                if (which == 0) {
-                    //camera clicked
-                    if (checkCameraPermission()) {
-                        //permission granted
-                        pickFromCamera();
-                    } else {
-                        //permission not granted, request
-                        requestCameraPermission();
-                    }
-                } else {
-                    //gallery clicked
-                    if (checkStoragePermission()) {
-                        //permission granted
-                        pickFromGallery();
-                    } else {
-                        //permission not granted, request
-                        requestStoragePermission();
-                    }
-                }
-            }
-        }).show();
-    }
-
-    private void pickFromCamera() {
-        //intent to pick image from camera
-
-        //use media store to pick high/ori quality image
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(MediaStore.Images.Media.TITLE, "Temp_Image_Title");
-        contentValues.put(MediaStore.Images.Media.DESCRIPTION, "Temp_Image_Description");
-
-        image_uri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
-        startActivityForResult(intent, IMAGE_PICK_CAMERA_CODE);
-    }
-
-    private boolean checkStoragePermission() {
-        boolean result = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
-
-        return result; //return true/false
-    }
-
-    private void requestStoragePermission() {
-        ActivityCompat.requestPermissions(getActivity(), storagePermission, STORAGE_REQUEST_CODE);
-    }
-
-    private boolean checkCameraPermission() {
-        boolean resultCamera = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
-
-        boolean resultExternalStorage = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
-
-        return resultCamera && resultExternalStorage;
-    }
-
-    private void requestCameraPermission() {
-        ActivityCompat.requestPermissions(getActivity(), cameraPermission, CAMERA_REQUEST_CODE);
-    }
-
-    //end of for camera handle
-
     //handle image pick result
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == -1) {
-            if (requestCode == IMAGE_PICK_GALLERY_CODE) {
-                //image pick from gallery
-
-                //save picked image uri
-                image_uri = data.getData();
-
-                //image picked from camera
-                ivProduct.setImageURI(image_uri);
-            } else if (requestCode == IMAGE_PICK_CAMERA_CODE) {
-                //image pick from camera
-                ivProduct.setImageURI(image_uri);
-            }
-        }
+        cameraStorageFunction.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
-    }
 
-    // UploadImage method
-    private void uploadImage() {
-        // Defining the child of storageReference
-        StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
-
-        // adding listeners on upload
-        // or failure of image
-        ref.putFile(image_uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(
-                    UploadTask.TaskSnapshot taskSnapshot) {
-                // Image uploaded successfully
-                Toast.makeText(getActivity(), "Image Uploaded!!", Toast.LENGTH_SHORT).show();
-                taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        storage_location = uri.toString();
-
-                        String urlGetData = Variable.IP_ADDRESS + Variable.ADD_PRODUCT_SELLER;
-                        addProduct(urlGetData);
-                        //Toast.makeText(getActivity(), uri.toString(), Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                // Error, Image not uploaded
-                Toast.makeText(getActivity(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 
