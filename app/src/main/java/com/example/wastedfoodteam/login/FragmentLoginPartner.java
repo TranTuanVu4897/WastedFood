@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,7 +26,8 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.home.SellerHomeActivity;
 import com.example.wastedfoodteam.model.Seller;
-import com.example.wastedfoodteam.seller.register.RegisterSellerFragment;
+import com.example.wastedfoodteam.utils.SendNotificationPackage.SendNotif;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,7 +43,6 @@ import java.security.NoSuchAlgorithmException;
 public class FragmentLoginPartner extends Fragment {
     Button btnSignIn, btnBuyerOption;
     EditText etSDT, etPass;
-    TextView tvRegisterAccount;
     String urlGetData = "";
     String password = "";
 
@@ -55,7 +54,6 @@ public class FragmentLoginPartner extends Fragment {
         etPass = view.findViewById(R.id.etPassPartnerFLP);
         btnSignIn = view.findViewById(R.id.btnSignInPartnerFLP);
         btnBuyerOption = view.findViewById(R.id.btnBuyerOptionFLP);
-        tvRegisterAccount = view.findViewById(R.id.tvRegisterSeller);
         Intent intent = new Intent(getActivity(), SellerHomeActivity.class);
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,17 +61,6 @@ public class FragmentLoginPartner extends Fragment {
                 password = md5(etPass.getText().toString());
                 urlGetData = Variable.IP_ADDRESS + "login/sellerLogin.php?username=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
                 getData(urlGetData);
-            }
-        });
-
-        tvRegisterAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RegisterSellerFragment registerSellerFragment = new RegisterSellerFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.flFragmentLayoutAM,registerSellerFragment);
-                fragmentTransaction.commit();
             }
         });
 

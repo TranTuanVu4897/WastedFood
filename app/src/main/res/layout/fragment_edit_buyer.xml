@@ -90,7 +90,7 @@
                 android:paddingEnd="50dp"
                 android:textColorHint="#B6ADAD"
                 android:layout_marginBottom="30dp"
-                android:enabled="false"/>
+                android:editable="false"/>
 
             <EditText
                 android:id="@+id/etMailFEB"
