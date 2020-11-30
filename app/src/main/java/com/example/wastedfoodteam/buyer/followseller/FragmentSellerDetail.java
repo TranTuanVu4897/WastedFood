@@ -34,6 +34,7 @@ import com.example.wastedfoodteam.buyer.buy.FragmentDetailProduct;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.model.Seller;
+import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.service.FollowResponseCallback;
 import com.example.wastedfoodteam.utils.service.FollowVolley;
 import com.google.gson.Gson;
@@ -54,7 +55,7 @@ public class FragmentSellerDetail extends ListFragment {
     Bundle bundleDetail;
     Seller seller;
     TextView tvNameSeller, tvAddress, tvDescription;
-    ImageView ivPhotoSeller, ibFollow;
+    ImageView ivPhotoSeller, ibFollow, ivReport;
     ListView lvProduction;
     String content = "";
     String url;
@@ -63,6 +64,7 @@ public class FragmentSellerDetail extends ListFragment {
     TextView tvAccused;
     EditText etContent;
     Button btnCommit, btnCancel, btnReport;
+    CameraStorageFunction cameraStorageFunction;
     private final String GET_FOLLOW_INFORMATION_URL = Variable.IP_ADDRESS + Variable.GET_FOLLOW;
     private final String UPDATE_FOLLOW_URL = Variable.IP_ADDRESS + Variable.UPDATE_FOLLOW;
     private FollowVolley followVolley;
@@ -80,6 +82,7 @@ public class FragmentSellerDetail extends ListFragment {
         tvNameSeller.setText(seller.getName() + "");
         tvAddress.setText(seller.getAddress() + "");
         tvDescription.setText(seller.getDescription() + "");
+
 
         Glide.with(getActivity()).load(seller.getImage()).into(ivPhotoSeller);
         btnReport.setOnClickListener(new View.OnClickListener() {
@@ -210,14 +213,19 @@ public class FragmentSellerDetail extends ListFragment {
     }
 
     private void dialogReport() {
-        Dialog dialog = new Dialog(getActivity());
+        final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.dialog_report);
-        dialog.show();
         //mapping
         tvAccused = dialog.findViewById(R.id.tvAccusedDR);
         etContent = dialog.findViewById(R.id.etContentDR);
         btnCommit = dialog.findViewById(R.id.btnCommitDR);
         btnCancel = dialog.findViewById(R.id.btnCancelDR);
+        ivReport = dialog.findViewById(R.id.ivReport);
+
+        cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), ivReport);
+
+        tvAccused.setText(seller.getName());
+
         //set param
         url = Variable.IP_ADDRESS + "FeedbackReport/report.php";
         reporterId = Variable.ACCOUNT_ID + "";
@@ -230,7 +238,21 @@ public class FragmentSellerDetail extends ListFragment {
                 insertData(url, reporterId, accusedId, content, "");
             }
         });
-        tvAccused.setText(seller.getName());
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+        ivReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cameraStorageFunction.showImagePickDialog();
+            }
+        });
+
+        dialog.show();
     }
 
     private void insertData(final String url, final String reporter_id, final String accused_id, final String report_text, final String report_image) {
@@ -292,4 +314,9 @@ public class FragmentSellerDetail extends ListFragment {
         super.onPause();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        cameraStorageFunction.onActivityResult(requestCode, resultCode, data);
+    }
 }

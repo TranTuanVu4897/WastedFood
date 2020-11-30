@@ -14,14 +14,16 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 
 import java.sql.Time;
+import java.util.ArrayList;
 
 public class FilterDialog {
     private LayoutInflater inflater;
     private Context context;
 
     private Spinner spDistance;
-    private Spinner spSellTime;
+    private Spinner spStartTime;
     private Spinner spDiscount;
+    private Spinner spEndTime;
     private Button btnClear;
     private Button btnConfirm;
 
@@ -32,6 +34,7 @@ public class FilterDialog {
 
     public interface ModifyFilter {
         void onClear();
+
         void onChange();
     }
 
@@ -40,8 +43,9 @@ public class FilterDialog {
         View filterLayout = inflater.inflate(R.layout.dialog_buyer_filter, null);
 
         spDistance = filterLayout.findViewById(R.id.spDistance);
-        spSellTime = filterLayout.findViewById(R.id.spSellTime);
+        spStartTime = filterLayout.findViewById(R.id.spStartTime);
         spDiscount = filterLayout.findViewById(R.id.spDiscount);
+        spEndTime = filterLayout.findViewById(R.id.spEndTime);
         btnClear = filterLayout.findViewById(R.id.btnClear);
         btnConfirm = filterLayout.findViewById(R.id.btnConfirm);
 
@@ -60,7 +64,8 @@ public class FilterDialog {
         });
 
         setSpinnerDistance();
-        setSpinnerSellTime();
+        setSpinnerStartTime();
+        setSpinnerEndTime();
         setSpinnerDiscount();
 
         AlertDialog.Builder builderDialogRating = new AlertDialog.Builder(context);
@@ -97,22 +102,22 @@ public class FilterDialog {
         });
     }
 
-    private void setSpinnerSellTime() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
-                R.array.sell_time_array, android.R.layout.simple_spinner_item);
+    private void setSpinnerStartTime() {
+        String[] times = getTimeArray(0, 23);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, times);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spSellTime.setAdapter(adapter);
-        spSellTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spStartTime.setAdapter(adapter);
+        spStartTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getAdapter().getItem(position).toString();
-                if (item.equalsIgnoreCase("tất cả")) {
-                    Variable.endTime = null;
-                    Variable.startTime = null;
-                }else{
-                    Variable.startTime =  Time.valueOf(item.split("-")[0].replace("h","").trim() + ":00:00");
-                    Variable.endTime =  Time.valueOf(item.split("-")[1].replace("h","").trim() + ":00:00");
-                }
+                Variable.startTime = Time.valueOf(item.replace("h", "").trim() + ":00:00");
+
+                String[] times = getTimeArray(position + 1,23);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, times);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spEndTime.setAdapter(adapter);
+
             }
 
             @Override
@@ -120,6 +125,36 @@ public class FilterDialog {
 
             }
         });
+    }
+
+    private void setSpinnerEndTime() {
+        String[] times = getTimeArray(0, 23);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, times);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spEndTime.setAdapter(adapter);
+        spEndTime.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getAdapter().getItem(position).toString();
+
+                Variable.endTime = Time.valueOf(item.replace("h", "").trim() + ":00:00");
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+
+    private String[] getTimeArray(int start, int end) {
+        ArrayList<String> times = new ArrayList<>();
+        for (; start <= end; start++) {
+            times.add(start + "h");
+        }
+        return times.toArray(new String[0]);
     }
 
     private void setSpinnerDiscount() {
@@ -134,7 +169,7 @@ public class FilterDialog {
                 if (item.contains("%"))
                     Variable.discount = item.replace("%", "");
                 else
-                    Variable.discount = "";
+                    Variable.discount = "120";
             }
 
             @Override

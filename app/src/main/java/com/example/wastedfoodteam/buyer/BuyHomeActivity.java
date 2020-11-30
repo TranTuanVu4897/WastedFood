@@ -1,6 +1,7 @@
 package com.example.wastedfoodteam.buyer;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
@@ -45,12 +46,12 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.sql.Time;
+import java.util.List;
 
 public class BuyHomeActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_PERMISSION = 2;
-    ImageButton iBtnHome, iBtnNotification, iBtnFollow, iBtnHistory;
     ImageView ivAppIcon;
-    ImageButton ibUserInfo, ibFilter;
+    ImageButton ibUserInfo;
     FragmentListProduct fragmentListProduct;
     NotificationUtil notificationUtil;
     GPSTracker gps;
@@ -82,11 +83,6 @@ public class BuyHomeActivity extends AppCompatActivity {
 
         //mapping
         ibUserInfo = findViewById(R.id.ibUserInfo);
-        ibFilter = findViewById(R.id.ibFilter);
-        iBtnNotification = findViewById(R.id.iBtnNotification);
-        iBtnHome = findViewById(R.id.iBtnHome);
-        iBtnFollow = findViewById(R.id.iBtnFollow);
-        iBtnHistory = findViewById(R.id.iBtnHistory);
         Variable.CURRENT_USER = "BUYER";
         notificationUtil = new NotificationUtil();
 
@@ -94,8 +90,6 @@ public class BuyHomeActivity extends AppCompatActivity {
         gps = new GPSTracker(this);
         if (gps.canGetLocation()) {
             Variable.gps = gps.getLocation();
-            Toast.makeText(getApplicationContext(), "Your Location is - \nLat: "
-                    + gps.getLatitude() + "\nLong: " + gps.getLongitude(), Toast.LENGTH_LONG).show();
         } else {
             gps.showSettingAlert();
         }
@@ -121,7 +115,7 @@ public class BuyHomeActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                switch (id){
+                switch (id) {
                     case R.id.itemNavMenuBuyerInfor:
                         //nhớ này muốn sửa đoạn header của drawer navigation thì vào nav_header_buyer và sửa và xem menu thì vào nav_header_buyer
                         FragmentEditInformationBuyer fragment = new FragmentEditInformationBuyer();
@@ -153,69 +147,14 @@ public class BuyHomeActivity extends AppCompatActivity {
             }
         });
 
-        iBtnFollow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addFragmentSellerFollow();
-            }
-        });
-
-
-        iBtnHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentOrderHistory fragmentOrderHistory = new FragmentOrderHistory();
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.flSearchResultAH, fragmentOrderHistory, "")
-                        .addToBackStack(null)
-                        .commit();
-            }
-        });
-        iBtnHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addFragmentListProduct();
-            }
-        });
-
-        ibFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FilterDialog filterDialog = new FilterDialog(getLayoutInflater(), BuyHomeActivity.this);
-                filterDialog.showFilterDialog(new FilterDialog.ModifyFilter() {
-                    @Override
-                    public void onClear() {
-                        Variable.startTime = null;
-                        Variable.endTime = null;
-                        Variable.distance = "20";
-                        Variable.discount = null;
-
-                        if (fragmentListProduct != null) {
-                            changeListProductItem();
-                        }
-                    }
-
-                    @Override
-                    public void onChange() {
-                        if (fragmentListProduct != null) {
-                            changeListProductItem();
-                        }
-                    }
-
-
-                });
-            }
-        });
-
         addFragmentListProduct();
 
         //bottom navigation
         navigation = (BottomNavigationView) findViewById(R.id.bottom_nav_buyer);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        notificationUtil.getTotalNotification(getApplicationContext(), Variable.ACCOUNT_ID ,navigation);
+        notificationUtil.getTotalNotification(getApplicationContext(), Variable.ACCOUNT_ID, navigation);
         //notification badge
-        if(Variable.TOTAL_NOTIFICATION > 0) {
+        if (Variable.TOTAL_NOTIFICATION > 0) {
             BadgeDrawable badge = navigation.getOrCreateBadge(R.id.item_bottom_nav_menu_notification);
             badge.setVisible(true);
             badge.setNumber(Variable.TOTAL_NOTIFICATION);
@@ -253,7 +192,7 @@ public class BuyHomeActivity extends AppCompatActivity {
                             .replace(R.id.flSearchResultAH, notificationFragment, "")
                             .addToBackStack(null)
                             .commit();
-                    notificationUtil.updateNotificationSeen(getApplicationContext(),Variable.ACCOUNT_ID,navigation);
+                    notificationUtil.updateNotificationSeen(getApplicationContext(), Variable.ACCOUNT_ID, navigation);
                     return true;
                 case R.id.item_bottom_nav_menu_buyer_history:
                     FragmentOrderHistory fragmentOrderHistory = new FragmentOrderHistory();
@@ -327,4 +266,14 @@ public class BuyHomeActivity extends AppCompatActivity {
         fragmentListProduct.getData();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                fragment.onActivityResult(requestCode, resultCode, data);
+            }
+        }
+    }
 }

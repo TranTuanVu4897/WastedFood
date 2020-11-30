@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,7 +22,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
+import com.example.wastedfoodteam.utils.FilterDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -37,7 +40,7 @@ public class FragmentListProduct extends ListFragment {
     ListView lvProduction;
     FragmentDetailProduct detailProduct;
     Bundle bundleDetail;
-
+ImageButton ibFilter;
     EditText etSearch;
 
     @Nullable
@@ -51,6 +54,7 @@ public class FragmentListProduct extends ListFragment {
         //mapping view
         lvProduction = view.findViewById(android.R.id.list);
         etSearch = view.findViewById(R.id.etSearchBHA);
+        ibFilter = view.findViewById(R.id.ibFilter);
 
         //setup bundle
         bundleDetail = new Bundle();
@@ -77,6 +81,33 @@ public class FragmentListProduct extends ListFragment {
             }
         });
 
+
+
+        ibFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FilterDialog filterDialog = new FilterDialog(getLayoutInflater(), getActivity());
+                filterDialog.showFilterDialog(new FilterDialog.ModifyFilter() {
+                    @Override
+                    public void onClear() {
+                        Variable.startTime = null;
+                        Variable.endTime = null;
+                        Variable.distance = "20";
+                        Variable.discount = null;
+
+
+                        createNewArrayProduct();
+                        getData();
+                    }
+
+                    @Override
+                    public void onChange() {
+                        createNewArrayProduct();
+                        getData();
+                    }
+                });
+            }
+        });
 
         return view;
     }
