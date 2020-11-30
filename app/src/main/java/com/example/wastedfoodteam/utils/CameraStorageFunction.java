@@ -76,6 +76,13 @@ public class CameraStorageFunction {
         storageReference = storage.getReference();
     }
 
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
+    }
 
     //start of for camera handle
     protected void pickFromGallery() {
