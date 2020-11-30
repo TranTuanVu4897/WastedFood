@@ -49,7 +49,7 @@ public class EditProductSellerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_seller_detail_product, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_seller_detail_product, container, false);
         //unit ui
         iv_detail_product_icon = view.findViewById(R.id.iv_detail_product_icon);
         name = view.findViewById(R.id.editText_detail_product_name);
@@ -57,7 +57,7 @@ public class EditProductSellerFragment extends Fragment {
         sellPrice = view.findViewById(R.id.editText_detail_product_sellPrice);
         openTime = view.findViewById(R.id.editText_detail_product_openTime);
         closeTime = view.findViewById(R.id.editText_detail_product_closeTime);
-        saleDate = view.findViewById(R.id.editText_detail_product_saleDate);
+//        saleDate = view.findViewById(R.id.editText_detail_product_saleDate);
         btn_detail_product_add = view.findViewById(R.id.btn_detail_product_add);
 
         //input data
