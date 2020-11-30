@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -36,11 +36,22 @@
             android:textSize="20dp"
             android:layout_marginStart="5dp"/>
 
-        <Spinner
-            android:id="@+id/spSellTime"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"/>
+        <LinearLayout
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spStartTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="end"/>
+            <Spinner
+                android:id="@+id/spEndTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="end"/>
+        </LinearLayout>
     </TableRow>
 
     <TableRow android:layout_margin="10dp">

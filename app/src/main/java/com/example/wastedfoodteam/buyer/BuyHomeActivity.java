@@ -51,7 +51,7 @@ import java.util.List;
 public class BuyHomeActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_PERMISSION = 2;
     ImageView ivAppIcon;
-    ImageButton ibUserInfo, ibFilter;
+    ImageButton ibUserInfo;
     FragmentListProduct fragmentListProduct;
     NotificationUtil notificationUtil;
     GPSTracker gps;
@@ -83,7 +83,6 @@ public class BuyHomeActivity extends AppCompatActivity {
 
         //mapping
         ibUserInfo = findViewById(R.id.ibUserInfo);
-        ibFilter = findViewById(R.id.ibFilter);
         Variable.CURRENT_USER = "BUYER";
         notificationUtil = new NotificationUtil();
 
@@ -91,8 +90,6 @@ public class BuyHomeActivity extends AppCompatActivity {
         gps = new GPSTracker(this);
         if (gps.canGetLocation()) {
             Variable.gps = gps.getLocation();
-            Toast.makeText(getApplicationContext(), "Your Location is - \nLat: "
-                    + gps.getLatitude() + "\nLong: " + gps.getLongitude(), Toast.LENGTH_LONG).show();
         } else {
             gps.showSettingAlert();
         }
@@ -147,36 +144,6 @@ public class BuyHomeActivity extends AppCompatActivity {
                 DrawerLayout drawer = findViewById(R.id.drawer_layout_buyer);
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
-            }
-        });
-
-
-        ibFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FilterDialog filterDialog = new FilterDialog(getLayoutInflater(), BuyHomeActivity.this);
-                filterDialog.showFilterDialog(new FilterDialog.ModifyFilter() {
-                    @Override
-                    public void onClear() {
-                        Variable.startTime = null;
-                        Variable.endTime = null;
-                        Variable.distance = "20";
-                        Variable.discount = null;
-
-                        if (fragmentListProduct != null) {
-                            changeListProductItem();
-                        }
-                    }
-
-                    @Override
-                    public void onChange() {
-                        if (fragmentListProduct != null) {
-                            changeListProductItem();
-                        }
-                    }
-
-
-                });
             }
         });
 
