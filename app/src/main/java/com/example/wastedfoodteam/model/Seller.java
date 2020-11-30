@@ -103,4 +103,16 @@ public class Seller extends Account implements Serializable {
         this.description = description;
         this.distance = distance;
     }
+
+    public Seller(int id, int role_id, String username, String password, String phone, String third_party_id, String email, Date create_date, boolean is_active, String firebase_UID, String name, String image, String address, double latitude, double longitude, double rating, String description, long distance) {
+        super(id, role_id, username, password, phone, third_party_id, email, create_date, is_active, firebase_UID);
+        this.name = name;
+        this.image = image;
+        this.address = address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.rating = rating;
+        this.description = description;
+        this.distance = distance;
+    }
 }
