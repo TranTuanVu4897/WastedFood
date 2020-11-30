@@ -2,10 +2,9 @@
 
     <item
         android:id="@+id/item_bottom_nav_menu_buyer_home"
-        android:icon="@drawable/home"
+        android:icon="@drawable/button_home"
         android:iconTint="@color/colorWhite"
-        android:title="Trang chủ"
-        />
+        android:title="Trang chủ" />
 
     <item
         android:id="@+id/item_bottom_nav_menu_buyer_notification"
