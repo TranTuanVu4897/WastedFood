@@ -57,8 +57,8 @@ public class BuyHomeActivity extends AppCompatActivity {
     private BottomNavigationView navigation;
     GoogleSignInClient mGoogleSignInClient;
     GoogleSignInApi mGoogleSignInApi;
-TextView tv_nav_header_user_name;
-ImageView iv_nav_header_profile_image;
+    TextView tv_nav_header_buyer_user_name;
+    ImageView iv_nav_header_buyer_profile_image;
     private DrawerLayout drawerLayout;
 
     @Override
@@ -83,11 +83,7 @@ ImageView iv_nav_header_profile_image;
 
         //mapping
         ibUserInfo = findViewById(R.id.ibUserInfo);
-        tv_nav_header_user_name = findViewById(R.id.tv_nav_header_user_name);
-        iv_nav_header_profile_image = findViewById(R.id.iv_nav_header_profile_image);
 
-        tv_nav_header_user_name.setText(Variable.BUYER.getName());
-        CommonFunction.setImageViewSrc(this,Variable.BUYER.getImage(),iv_nav_header_profile_image);
 
         Variable.CURRENT_USER = "BUYER";
         notificationUtil = new NotificationUtil();
@@ -103,6 +99,12 @@ ImageView iv_nav_header_profile_image;
         //get the header view
         NavigationView navigationView = findViewById(R.id.nav_view_buyer);
         View headerView = navigationView.getHeaderView(0);
+
+        tv_nav_header_buyer_user_name = headerView.findViewById(R.id.tv_nav_header_buyer_user_name);
+        iv_nav_header_buyer_profile_image = headerView.findViewById(R.id.iv_nav_header_buyer_profile_image);
+
+        tv_nav_header_buyer_user_name.setText(Variable.BUYER.getName());
+        CommonFunction.setImageViewSrc(this, Variable.BUYER.getImage(), iv_nav_header_buyer_profile_image);
 
         // Find our drawer view
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_buyer);
@@ -169,7 +171,7 @@ ImageView iv_nav_header_profile_image;
         if (type != null) {
             switch (type) {
                 case "notifyFrag":
-                    NotificationFragment notificationFragment = new NotificationFragment(Variable.BUYER.getId()+"");
+                    NotificationFragment notificationFragment = new NotificationFragment(Variable.BUYER.getId() + "");
                     getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.flSearchResultAH, notificationFragment, "")
@@ -192,7 +194,7 @@ ImageView iv_nav_header_profile_image;
                     addFragmentListProduct();
                     return true;
                 case R.id.item_bottom_nav_menu_buyer_notification:
-                    NotificationFragment notificationFragment = new NotificationFragment(Variable.BUYER.getId()+"");
+                    NotificationFragment notificationFragment = new NotificationFragment(Variable.BUYER.getId() + "");
                     getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.flSearchResultAH, notificationFragment, "")
