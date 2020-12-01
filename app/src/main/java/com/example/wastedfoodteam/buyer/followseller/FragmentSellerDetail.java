@@ -152,7 +152,7 @@ public class FragmentSellerDetail extends ListFragment {
     }
 
     private void getSellerExtraInfo() {
-        SellerExtraVolley sellerExtraVolley = new SellerExtraVolley(getActivity(), Variable.IP_ADDRESS + "/getSellerExtraInfo.php");
+        SellerExtraVolley sellerExtraVolley = new SellerExtraVolley(getActivity(), Variable.IP_ADDRESS + "/follow/getSellerExtraInfo.php");
         sellerExtraVolley.setRequestGetSeller(new SellerResponseCallback() {
             @Override
             public void onSuccess(SellerExtraInfo seller) {
