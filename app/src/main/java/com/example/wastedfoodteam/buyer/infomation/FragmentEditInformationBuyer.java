@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.Validation.Validation;
 import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Buyer;
@@ -215,8 +216,10 @@ public class FragmentEditInformationBuyer extends Fragment {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
                 String date = year + "-" + month + "-" + dayOfMonth;
-                if (validateDate(date) == true) {
+                if (Validation.validateDate(date) == true) {
                     etDob.setText(date);
+                }else{
+                    Toast.makeText(getActivity(), "Bạn chọn hơn ngày hiện tại", Toast.LENGTH_LONG).show();
                 }
                 lastSelectedYear = year;
                 lastSelectedMonth = month - 1;
@@ -234,23 +237,5 @@ public class FragmentEditInformationBuyer extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         cameraStorageFunction.onActivityResult(requestCode, resultCode, data);
-    }
-
-    public Boolean validateDate(String date) {
-        try {
-            Calendar cal = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
-            Date strDate = sdf.parse(date);
-            if (new Date().after(strDate)) {
-                return true;
-            } else {
-                Toast.makeText(getActivity(), "Bạn chọn hơn ngày hiện tại", Toast.LENGTH_LONG).show();
-                return false;
-            }
-        } catch (Exception e) {
-            Log.d("Lỗi Date : ", date);
-            return false;
-        }
-
     }
 }

@@ -178,7 +178,7 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:hint="Nhập số lượng"
-                android:inputType="numberDecimal" />
+                android:inputType="number" />
         </LinearLayout>
 
         <LinearLayout
