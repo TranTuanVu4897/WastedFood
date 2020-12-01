@@ -48,4 +48,5 @@
     <string name="login_password_hint">Mật khẩu</string>
     <string name="login_name_hint">Tên người dùng</string>
     <string name="login_mobile_number_hint">Số điện thoại</string>
+    <string name="default_web_client_id" >89673767638-adjcn6mgai4g7qe4kl4i83t6i7dg5rpt.apps.googleusercontent.com</string>
 </resources>

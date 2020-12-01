@@ -1,7 +1,6 @@
 package com.example.wastedfoodteam.buyer.followseller;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,36 +8,33 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.ListFragment;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.buyer.buy.BuyerProduct;
 import com.example.wastedfoodteam.buyer.buy.FragmentDetailProduct;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
+import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.ReportDialog;
 import com.example.wastedfoodteam.utils.service.FollowResponseCallback;
 import com.example.wastedfoodteam.utils.service.FollowVolley;
+import com.example.wastedfoodteam.utils.service.SellerExtraVolley;
+import com.example.wastedfoodteam.utils.service.SellerResponseCallback;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -46,8 +42,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class FragmentSellerDetail extends ListFragment {
     String urlGetData;
@@ -56,20 +50,11 @@ public class FragmentSellerDetail extends ListFragment {
     FragmentDetailProduct detailProduct;
     Bundle bundleDetail;
     Seller seller;
-    TextView tvNameSeller, tvAddress, tvDescription;
-    ImageView ivPhotoSeller, ibFollow, ivReport;
+    TextView tvNameSeller, tvAddress, tvDescription, tvRatingFSD, tvFollowFSD, tvProductFSD;
+    ImageView ivPhotoSeller, ibFollow;
     ListView lvProduction;
-    String content = "";
-    String url;
-    String accusedId;
-    String reporterId;
-    TextView tvAccused;
-    EditText etContent;
-    Button btnCommit, btnCancel;
     ImageButton ibReport;
     CameraStorageFunction cameraStorageFunction;
-    private final String GET_FOLLOW_INFORMATION_URL = Variable.IP_ADDRESS + Variable.GET_FOLLOW;
-    private final String UPDATE_FOLLOW_URL = Variable.IP_ADDRESS + Variable.UPDATE_FOLLOW;
     private FollowVolley followVolley;
 
     @SuppressLint("ClickableViewAccessibility")
@@ -89,7 +74,7 @@ public class FragmentSellerDetail extends ListFragment {
 
         cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), null);
 
-        Glide.with(getActivity()).load(seller.getImage()).into(ivPhotoSeller);
+        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), seller.getImage(), ivPhotoSeller);
         ibReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +89,7 @@ public class FragmentSellerDetail extends ListFragment {
                 + "&lng=" + Variable.gps.getLongitude();
 
         followVolley = new FollowVolley(getActivity().getApplicationContext());
+        String GET_FOLLOW_INFORMATION_URL = Variable.IP_ADDRESS + Variable.GET_FOLLOW;
         followVolley.setRequestGetFollow(new FollowResponseCallback() {
             @Override
             public void onSuccess(String result) {
@@ -128,7 +114,8 @@ public class FragmentSellerDetail extends ListFragment {
         arrProduct = new ArrayList<>();
         adapter = new ProductAdapterOfSeller(getActivity().getApplicationContext(), R.layout.list_seller_product_item, arrProduct, getResources());
         lvProduction.setAdapter(adapter);
-        getData(urlGetData);
+        getListProduct(urlGetData);
+        getSellerExtraInfo();
 
         lvProduction.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint("ClickableViewAccessibility")
@@ -164,16 +151,30 @@ public class FragmentSellerDetail extends ListFragment {
         return view;
     }
 
+    private void getSellerExtraInfo() {
+        SellerExtraVolley sellerExtraVolley = new SellerExtraVolley(getActivity(), Variable.IP_ADDRESS + "/getSellerExtraInfo.php");
+        sellerExtraVolley.setRequestGetSeller(new SellerResponseCallback() {
+            @Override
+            public void onSuccess(SellerExtraInfo seller) {
+                tvFollowFSD.setText("Số người theo dõi: " + seller.follow_total);
+                tvProductFSD.setText("Số sản phẩm đã bán: " + seller.product_total);
+            }
+        }, seller.getId() + "");
+    }
+
     private void mapping(View view) {
         tvNameSeller = view.findViewById(R.id.tvNameSellerFSD);
         tvAddress = view.findViewById(R.id.tvAddressFSD);
         tvDescription = view.findViewById(R.id.tvDescriptionFSD);
+        tvRatingFSD = view.findViewById(R.id.tvRatingFSD);
+        tvFollowFSD = view.findViewById(R.id.tvFollowFSD);
+        tvProductFSD = view.findViewById(R.id.tvProductFSD);
         ivPhotoSeller = view.findViewById(R.id.ivPhotoSellerFSD);
         ibReport = view.findViewById(R.id.ibReport);
         ibFollow = view.findViewById(R.id.iBtnFollow);
     }
 
-    public void getData(String urlGetData) {
+    public void getListProduct(String urlGetData) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
@@ -223,6 +224,7 @@ public class FragmentSellerDetail extends ListFragment {
     public void onPause() {
         boolean isFollow = false;
         if (ibFollow.getTag().equals(R.drawable.followed)) isFollow = true;
+        String UPDATE_FOLLOW_URL = Variable.IP_ADDRESS + Variable.UPDATE_FOLLOW;
         followVolley.setRequestUpdateFollow(new FollowResponseCallback() {
             @Override
             public void onSuccess(String result) {

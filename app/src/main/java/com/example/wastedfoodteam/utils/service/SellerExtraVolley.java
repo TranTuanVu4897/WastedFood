@@ -10,10 +10,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.wastedfoodteam.buyer.followseller.SellerExtraInfo;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Seller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,12 +23,12 @@ import org.json.JSONException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SellerVolley {
+public class SellerExtraVolley {
     private Context context;
     private RequestQueue requestQueue;
     private String url;
 
-    public SellerVolley(Context context, String url) {
+    public SellerExtraVolley(Context context, String url) {
         this.context = context;
         this.url = url;
         this.requestQueue = Volley.newRequestQueue(context);
@@ -41,14 +43,11 @@ public class SellerVolley {
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONArray jsonSellers = new JSONArray(response);
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
-                    //TODO check if done
-                    Seller seller = gson.fromJson(jsonSellers.getString(0), Seller.class);
-                    //Variable.seller = seller;
+                    SellerExtraInfo seller = gson.fromJson(response, SellerExtraInfo.class);
                     callback.onSuccess(seller);
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -57,18 +56,7 @@ public class SellerVolley {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, "Error", Toast.LENGTH_LONG);
             }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                if (!id.isEmpty())
-                    params.put("id", id);
-                else
-                    params = super.getParams();
-                return params;
-            }
-
-        };
+        }) ;
         requestQueue.add(getBuyerRequest);
     }
 

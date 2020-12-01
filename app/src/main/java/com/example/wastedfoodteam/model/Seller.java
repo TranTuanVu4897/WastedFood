@@ -18,7 +18,7 @@ public class Seller extends Account implements Serializable {
     String description;
 
     //add for get date easier
-    long distance;
+    double distance;
 
     public String getName() {
         return name;
@@ -68,7 +68,7 @@ public class Seller extends Account implements Serializable {
         this.description = description;
     }
 
-    public long getDistance() {
+    public double getDistance() {
         return distance;
     }
 
@@ -93,7 +93,7 @@ public class Seller extends Account implements Serializable {
      * constructor for distance
      * @param distance
      */
-    public Seller(int id, int role_id, String username, String password, String phone, String third_party_id, String email, Date create_date, boolean is_active, String name, String image, String address, double latitude, double longitude, String description, long distance , String firebase_UID) {
+    public Seller(int id, int role_id, String username, String password, String phone, String third_party_id, String email, Date create_date, boolean is_active, String name, String image, String address, double latitude, double longitude, String description, double distance , String firebase_UID) {
         super(id, role_id, username, password, phone, third_party_id, email, create_date, is_active,firebase_UID);
         this.name = name;
         this.image = image;
@@ -104,7 +104,7 @@ public class Seller extends Account implements Serializable {
         this.distance = distance;
     }
 
-    public Seller(int id, int role_id, String username, String password, String phone, String third_party_id, String email, Date create_date, boolean is_active, String firebase_UID, String name, String image, String address, double latitude, double longitude, double rating, String description, long distance) {
+    public Seller(int id, int role_id, String username, String password, String phone, String third_party_id, String email, Date create_date, boolean is_active, String firebase_UID, String name, String image, String address, double latitude, double longitude, double rating, String description, double distance) {
         super(id, role_id, username, password, phone, third_party_id, email, create_date, is_active, firebase_UID);
         this.name = name;
         this.image = image;

@@ -10,7 +10,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.test.mock.MockPackageManager;
 import android.util.Log;
@@ -237,6 +239,10 @@ public class BuyHomeActivity extends AppCompatActivity {
 
     private void signOutFacebook() {
         LoginManager.getInstance().logOut();
+
+        SharedPreferences sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE);
+        sharedpreferences.edit().clear().apply();
+
         Toast.makeText(BuyHomeActivity.this, "Sign out Success", Toast.LENGTH_LONG).show();
         startActivity(new Intent(BuyHomeActivity.this, MainActivity.class));
     }
@@ -246,8 +252,12 @@ public class BuyHomeActivity extends AppCompatActivity {
             FirebaseAuth.getInstance().signOut();
             GoogleSignIn.getClient(
                     getApplicationContext(),
-                    new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+          new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
             ).signOut();
+
+            SharedPreferences sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE);
+            sharedpreferences.edit().clear().apply();
+
             startActivity(new Intent(BuyHomeActivity.this, MainActivity.class));
 
         } catch (Exception e) {
