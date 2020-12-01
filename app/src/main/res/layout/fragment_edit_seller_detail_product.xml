@@ -245,18 +245,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
             <Button
                 android:id="@+id/btn_detail_product_add"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:text="Lưu"
-                android:background="#0976CD"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:background="#0029FF"
                 android:layout_marginRight="10dp"/>
             <Button
                 android:id="@+id/btn_cancel_FSAP"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
                 android:text="Hủy"
                 android:background="#FF0303"/>
         </LinearLayout>
