@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wastedfoodteam.MainActivity;
@@ -32,6 +33,7 @@ import com.example.wastedfoodteam.global.Variable;
 
 import com.example.wastedfoodteam.seller.notification.NotificationFragment;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
+import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.GPSTracker;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -55,7 +57,8 @@ public class BuyHomeActivity extends AppCompatActivity {
     private BottomNavigationView navigation;
     GoogleSignInClient mGoogleSignInClient;
     GoogleSignInApi mGoogleSignInApi;
-
+TextView tv_nav_header_user_name;
+ImageView iv_nav_header_profile_image;
     private DrawerLayout drawerLayout;
 
     @Override
@@ -80,6 +83,12 @@ public class BuyHomeActivity extends AppCompatActivity {
 
         //mapping
         ibUserInfo = findViewById(R.id.ibUserInfo);
+        tv_nav_header_user_name = findViewById(R.id.tv_nav_header_user_name);
+        iv_nav_header_profile_image = findViewById(R.id.iv_nav_header_profile_image);
+
+        tv_nav_header_user_name.setText(Variable.BUYER.getName());
+        CommonFunction.setImageViewSrc(this,Variable.BUYER.getImage(),iv_nav_header_profile_image);
+
         Variable.CURRENT_USER = "BUYER";
         notificationUtil = new NotificationUtil();
 
