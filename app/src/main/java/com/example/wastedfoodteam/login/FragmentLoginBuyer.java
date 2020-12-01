@@ -1,5 +1,6 @@
 package com.example.wastedfoodteam.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -50,6 +51,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -69,7 +71,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
+
 
 
 public class FragmentLoginBuyer extends Fragment {
@@ -77,7 +79,6 @@ public class FragmentLoginBuyer extends Fragment {
     GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN = 10002;
     EditText etSDT, etPass;
-    TextView tvWarning;
     Button btnSignIn, btnPartnerOption, btnSignInGoogle;
     //    SignInButton btnSignInGoogle;
     LoginButton btnSignInFacebook;
@@ -85,6 +86,8 @@ public class FragmentLoginBuyer extends Fragment {
     String urlGetData = "";
     int check = 0;
     private FirebaseAuth mAuth;
+    public static final String mypreference = "mypref";
+    public static final String idAccount = "ACCOUNT_ID";
 
     @Nullable
     @Override
@@ -113,10 +116,8 @@ public class FragmentLoginBuyer extends Fragment {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                resultFacebook();
-                Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
-                Variable.CHECK_LOGIN = 2;
-                startActivity(intent);
+                handleFacebookAccessToken( loginResult.getAccessToken());
+
             }
 
             @Override
@@ -134,7 +135,6 @@ public class FragmentLoginBuyer extends Fragment {
         btnSignInGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tvWarning.setText("");
                 //To Do Check Phone
                 signInGoogle();
 
@@ -142,12 +142,12 @@ public class FragmentLoginBuyer extends Fragment {
         });
 
 
+
+
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (etSDT.getText().toString().length() != 10) {
-                    tvWarning.setText("SDT không hợp lệ");
-
                 } else {
                     Variable.CHECK_LOGIN = 0;
                     urlGetData = Variable.IP_ADDRESS + "login/buyerLogin.php?phone=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
@@ -171,6 +171,34 @@ public class FragmentLoginBuyer extends Fragment {
         editor.commit();
     }
 
+    private void handleFacebookAccessToken(AccessToken token) {
+        Log.d("fb", "handleFacebookAccessToken:" + token);
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("fb", "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            resultFacebook(user.getUid());
+                            Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+                            Variable.CHECK_LOGIN = 2;
+                            startActivity(intent);
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("fb", "signInWithCredential:failure", task.getException());
+
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
     //TODO
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
@@ -180,14 +208,14 @@ public class FragmentLoginBuyer extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
+                            Log.d("", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             resultGoogle(user.getUid());
                             startActivity(new Intent(getActivity(), BuyHomeActivity.class));
 
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Log.w("", "signInWithCredential:failure", task.getException());
                         }
 
                         // ...
@@ -204,7 +232,6 @@ public class FragmentLoginBuyer extends Fragment {
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-        Variable.CHECK_LOGIN = 1;
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
     }
 
@@ -389,23 +416,7 @@ public class FragmentLoginBuyer extends Fragment {
         );
         requestQueue.add(stringRequest);
     }
-
-    private void resultGoogle() {
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
-        if (acct != null) {
-            String name = acct.getDisplayName();
-            String email = acct.getEmail();
-            String thirdPartyId = acct.getId();
-            Uri personPhoto = acct.getPhotoUrl();
-            String urlImage = personPhoto.toString();
-            String gender = "1";
-            String dob = "0000-00-00";
-            String urlInsert = Variable.IP_ADDRESS + "login/register3rdParty.php";
-            checkDataAndInsert3rdParty(urlInsert, email, thirdPartyId, name, urlImage, dob, gender);
-        }
-    }
-
-    private void resultFacebook() {
+    private void resultFacebook(final String firebase_UID) {
 
         GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
             @Override
@@ -420,7 +431,7 @@ public class FragmentLoginBuyer extends Fragment {
                     String urlImage = "https://graph.facebook.com/" + thirdPartyId + "/picture?type=large";
                     String urlInsert = Variable.IP_ADDRESS + "login/register3rdParty.php";
 
-                    checkDataAndInsert3rdParty(urlInsert, email, thirdPartyId, name, urlImage, dob, gender);
+                    checkDataAndInsert3rdParty(urlInsert, email, thirdPartyId, name, urlImage, dob, gender, firebase_UID);
 
 
                 } catch (JSONException e) {
