@@ -235,7 +235,8 @@ public class FragmentDetailProduct extends Fragment {
                     String message = "Khách hàng" + Variable.buyer.getName()  + " đã đặt hàng sản phẩm " + product.getName() + " của bạn";
                     util.addNotification(getContext(), Variable.ACCOUNT_ID ,  product.getSeller_id() , message , product.getId() );
                     //phải thêm lấy firebase_UID của seller trong phần bên buyer TODO
-                    sendNotif.notificationHandle( "akCm4bi4ZjbV9jPSmkmURuXX5QR2", "Wasted food app" , message);
+                    //đã lấy
+                    sendNotif.notificationHandle( product.getSeller().getFirebase_UID(), "Wasted food app" , message);
 
 
                     moveToFragmentOrderDetail();
