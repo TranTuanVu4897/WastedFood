@@ -11,72 +11,244 @@
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvNameSellerFSD"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent">
-                <ImageView
-                    android:id="@+id/ivPhotoSellerFSD"
-                    android:layout_width="match_parent"
-                    android:layout_height="170dp" />
+                android:layout_height="50dp"
+                android:background="#04BBD6"
+                android:gravity="center"
+                android:text="Name Seller"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tvNameSellerFSD"
-                    android:textStyle="bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:text="Name Seller"
-                    android:textSize="25sp" />
+            <ImageView
+                android:id="@+id/ivPhotoSellerFSD"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/no_image" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:orientation="horizontal"
-                    android:weightSum="5">
-                    <TextView
-                        android:id="@+id/tvAddressFSD"
-                        android:textSize="18dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="40dp">
 
-                </LinearLayout>
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <Button
-        android:id="@+id/btnReportFSD"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Báo cáo"/>
-    <ImageButton
-        android:id="@+id/iBtnFollow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/followed"
-        android:layout_gravity="center"/>
-</LinearLayout>
+                <ImageButton
+                    android:id="@+id/ibReport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_angry_emoticon_square_face"
+                    android:text="Báo cáo" />
 
-                <TextView
-                    android:id="@+id/tvDescriptionFSD"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:text="asdjasdahsjkdhashdjashjdhaskasdasdkjaskjdasjdklja"
-                    android:textSize="18dp" />
-                <ListView
-                    android:id="@android:id/list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:nestedScrollingEnabled="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
+                <ImageButton
+                    android:id="@+id/iBtnFollow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/followed" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
+                <TableLayout
+                    android:id="@+id/tableLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+
+                    <TableRow android:layout_marginBottom="3dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/location" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvAddressFSD"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:maxWidth="250dp"
+                                android:text="KM29, Thạch thất hòa lạc"
+                                android:textAlignment="textStart"
+                                android:textColor="#0E9EEF"
+                                android:textSize="20dp" />
+                        </LinearLayout>
+                    </TableRow>
+
+                    <TableRow>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="10dp"
+                            android:src="@drawable/ic_distance" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvDistance"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:maxWidth="250dp"
+                                android:text="4,1 KM"
+                                android:textAlignment="textStart"
+                                android:textSize="16dp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </TableRow>
+
+
+                    <TextView
+                        android:id="@+id/tvDescriptionFSD"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:maxWidth="300dp"
+                        android:text="Một vài dòng mô tả của cửa hàng"
+                        android:textAlignment="center"
+                        android:textSize="20dp" />
+                </TableLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Thông tin cửa hàng"
+                android:textColor="#000"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp">
+
+
+                <TableRow>
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/ic_star" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvRatingFSD"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Đánh giá: "
+                            android:textColor="#000"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow>
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/ic_favourite" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:id="@+id/tvFollowFSD"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Số người theo dõi: "
+                            android:textColor="#000"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow>
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="10dp"
+                        android:src="@drawable/ic_product" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:id="@+id/tvProductFSD"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Số sản phẩm đã bán: "
+                            android:textColor="#000"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+                </TableRow>
+
+            </TableLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@drawable/strike_through" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Các sản phẩm đang bán"
+                android:textColor="#000"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@android:id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:nestedScrollingEnabled="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
 
     </ScrollView>
 </FrameLayout>

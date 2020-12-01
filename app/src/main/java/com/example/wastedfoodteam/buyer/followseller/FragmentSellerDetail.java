@@ -1,5 +1,6 @@
 package com.example.wastedfoodteam.buyer.followseller;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,8 +34,9 @@ import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.buyer.buy.BuyerProduct;
 import com.example.wastedfoodteam.buyer.buy.FragmentDetailProduct;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.model.Seller;
+import com.example.wastedfoodteam.utils.CameraStorageFunction;
+import com.example.wastedfoodteam.utils.ReportDialog;
 import com.example.wastedfoodteam.utils.service.FollowResponseCallback;
 import com.example.wastedfoodteam.utils.service.FollowVolley;
 import com.google.gson.Gson;
@@ -54,7 +57,7 @@ public class FragmentSellerDetail extends ListFragment {
     Bundle bundleDetail;
     Seller seller;
     TextView tvNameSeller, tvAddress, tvDescription;
-    ImageView ivPhotoSeller, ibFollow;
+    ImageView ivPhotoSeller, ibFollow, ivReport;
     ListView lvProduction;
     String content = "";
     String url;
@@ -62,11 +65,14 @@ public class FragmentSellerDetail extends ListFragment {
     String reporterId;
     TextView tvAccused;
     EditText etContent;
-    Button btnCommit, btnCancel, btnReport;
+    Button btnCommit, btnCancel;
+    ImageButton ibReport;
+    CameraStorageFunction cameraStorageFunction;
     private final String GET_FOLLOW_INFORMATION_URL = Variable.IP_ADDRESS + Variable.GET_FOLLOW;
     private final String UPDATE_FOLLOW_URL = Variable.IP_ADDRESS + Variable.UPDATE_FOLLOW;
     private FollowVolley followVolley;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -81,11 +87,14 @@ public class FragmentSellerDetail extends ListFragment {
         tvAddress.setText(seller.getAddress() + "");
         tvDescription.setText(seller.getDescription() + "");
 
+        cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), null);
+
         Glide.with(getActivity()).load(seller.getImage()).into(ivPhotoSeller);
-        btnReport.setOnClickListener(new View.OnClickListener() {
+        ibReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogReport();
+                ReportDialog reportDialog = new ReportDialog(getActivity(), getLayoutInflater(), seller, cameraStorageFunction);
+                reportDialog.displayReportDialog();
             }
         });
 
@@ -122,6 +131,7 @@ public class FragmentSellerDetail extends ListFragment {
         getData(urlGetData);
 
         lvProduction.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
@@ -159,7 +169,7 @@ public class FragmentSellerDetail extends ListFragment {
         tvAddress = view.findViewById(R.id.tvAddressFSD);
         tvDescription = view.findViewById(R.id.tvDescriptionFSD);
         ivPhotoSeller = view.findViewById(R.id.ivPhotoSellerFSD);
-        btnReport = view.findViewById(R.id.btnReportFSD);
+        ibReport = view.findViewById(R.id.ibReport);
         ibFollow = view.findViewById(R.id.iBtnFollow);
     }
 
@@ -209,76 +219,6 @@ public class FragmentSellerDetail extends ListFragment {
                 .commit();
     }
 
-    private void dialogReport() {
-        Dialog dialog = new Dialog(getActivity());
-        dialog.setContentView(R.layout.dialog_report);
-        dialog.show();
-        //mapping
-        tvAccused = dialog.findViewById(R.id.tvAccusedDR);
-        etContent = dialog.findViewById(R.id.etContentDR);
-        btnCommit = dialog.findViewById(R.id.btnCommitDR);
-        btnCancel = dialog.findViewById(R.id.btnCancelDR);
-        //set param
-        url = Variable.IP_ADDRESS + "FeedbackReport/report.php";
-        reporterId = Variable.ACCOUNT_ID + "";
-        accusedId = seller.getId() + "";
-        btnCommit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                content = etContent.getText().toString();
-                //TODO don't know get url image
-                insertData(url, reporterId, accusedId, content, "");
-            }
-        });
-        tvAccused.setText(seller.getName());
-    }
-
-    private void insertData(final String url, final String reporter_id, final String accused_id, final String report_text, final String report_image) {
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
-                switch (response) {
-                    case "ERROR":
-                        Toast.makeText(getActivity(), "ERROR", Toast.LENGTH_LONG).show();
-                        break;
-                    default:
-                        Toast.makeText(getActivity(), "OK Insert data", Toast.LENGTH_LONG).show();
-                        try {
-
-                            startActivity(intent);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break;
-
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "ERROR " + url, Toast.LENGTH_LONG).show();
-            }
-        }
-        ) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("reporter_id", reporter_id);
-                params.put("accused_id", accused_id);
-                params.put("report_text", report_text);
-                params.put("report_image", report_image);
-                return params;
-            }
-        };
-        requestQueue.add(stringRequest);
-
-    }
-
     @Override
     public void onPause() {
         boolean isFollow = false;
@@ -292,4 +232,9 @@ public class FragmentSellerDetail extends ListFragment {
         super.onPause();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        cameraStorageFunction.onActivityResult(requestCode, resultCode, data);
+    }
 }

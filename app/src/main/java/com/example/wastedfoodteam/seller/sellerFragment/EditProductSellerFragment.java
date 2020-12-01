@@ -49,7 +49,7 @@ public class EditProductSellerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_seller_detail_product, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_seller_detail_product, container, false);
         //unit ui
         iv_detail_product_icon = view.findViewById(R.id.iv_detail_product_icon);
         name = view.findViewById(R.id.editText_detail_product_name);
@@ -57,7 +57,7 @@ public class EditProductSellerFragment extends Fragment {
         sellPrice = view.findViewById(R.id.editText_detail_product_sellPrice);
         openTime = view.findViewById(R.id.editText_detail_product_openTime);
         closeTime = view.findViewById(R.id.editText_detail_product_closeTime);
-        saleDate = view.findViewById(R.id.editText_detail_product_saleDate);
+//        saleDate = view.findViewById(R.id.editText_detail_product_saleDate);
         btn_detail_product_add = view.findViewById(R.id.btn_detail_product_add);
 
         //input data
@@ -71,7 +71,7 @@ public class EditProductSellerFragment extends Fragment {
         saleDate.setText(String.valueOf(Variable.PRODUCT.getSell_date()));
 
 
-        cameraStorageFunction = new CameraStorageFunction(getActivity(),getContext());
+        cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), iv_detail_product_icon);
         //
         iv_detail_product_icon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,44 +92,44 @@ public class EditProductSellerFragment extends Fragment {
 
     //handle image pick result
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data ) {
-        Log.i("SellerDetailProductFragment","handle image pick");
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Log.i("SellerDetailProductFragment", "handle image pick");
         cameraStorageFunction.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data );
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     //update product data
-    private void updateProduct(String url){
+    private void updateProduct(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if(response.trim().equals("Successfully update")){
-                            Toast.makeText(getActivity(),"Cập nhật thành công",Toast.LENGTH_SHORT).show();
+                        if (response.trim().equals("Successfully update")) {
+                            Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                             //TODO move back to home
-                        }else{
-                            Toast.makeText(getActivity(),"Lỗi cập nhật",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), "Lỗi cập nhật", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(),"Xảy ra lỗi, vui lòng thử lại",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Xảy ra lỗi, vui lòng thử lại", Toast.LENGTH_SHORT).show();
                     }
                 }
-        ){
+        ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
+                Map<String, String> params = new HashMap<>();
                 params.put("id", String.valueOf(id));
-                params.put("seller_id",String.valueOf(Variable.SELLER.getId()));
-                params.put("name",name.getText().toString().trim());
+                params.put("seller_id", String.valueOf(Variable.SELLER.getId()));
+                params.put("name", name.getText().toString().trim());
                 params.put("originalPrice", originalPrice.getText().toString().trim());
-                params.put("sellPrice",sellPrice.getText().toString().trim());
-                params.put("openTime",openTime.getText().toString().trim());
-                params.put("closeTime",sellPrice.getText().toString().trim());
+                params.put("sellPrice", sellPrice.getText().toString().trim());
+                params.put("openTime", openTime.getText().toString().trim());
+                params.put("closeTime", sellPrice.getText().toString().trim());
                 return params;
             }
         };

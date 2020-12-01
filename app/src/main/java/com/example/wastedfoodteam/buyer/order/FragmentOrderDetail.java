@@ -49,8 +49,6 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
     private final static int MY_PERMISSIONS_REQUEST = 32;
     private BuyerOrder order;
     private TextView tvTitle, tvBuyQuantity;
-    NotificationUtil util;
-    SendNotif sendNotif;
     private ImageView ivProduct;
 
     public FragmentOrderDetail() {
@@ -70,15 +68,6 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
         tvBuyQuantity = view.findViewById(R.id.tvBuyQuantity);
         ivProduct = view.findViewById(R.id.ivProduct);
 
-        util = new NotificationUtil();
-        sendNotif = new SendNotif();
-
-        //TODO
-        //đổi thành order.getBuyerName,get đc seller name
-        String message = "Khách hàng" + order.getBuyer_id()  + " đã đặt hàng sản phẩm " + order.getProduct().getName() + " của bạn";
-        util.addNotification(getContext(), order.getBuyer_id() ,  2001 , message , order.getProduct_id() );
-        //phải thêm lấy firebase_UID của seller trong phần bên buyer TODO
-        sendNotif.notificationHandle( "akCm4bi4ZjbV9jPSmkmURuXX5QR2", "Wasted food app" , message);
 
         //set content
         CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), order.getProduct().getImage(), ivProduct);

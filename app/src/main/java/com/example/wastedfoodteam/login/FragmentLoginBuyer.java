@@ -1,8 +1,10 @@
 package com.example.wastedfoodteam.login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,10 +69,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static android.content.ContentValues.TAG;
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 
 
 public class FragmentLoginBuyer extends Fragment {
+    SharedPreferences sharedpreferences;
     GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN = 10002;
     EditText etSDT, etPass;
@@ -95,6 +98,11 @@ public class FragmentLoginBuyer extends Fragment {
         btnSignInFacebook = view.findViewById(R.id.btnFacebookSignInFLB);
         btnPartnerOption = view.findViewById(R.id.btnPartnerOptionFLB);
         mAuth = FirebaseAuth.getInstance();
+        sharedpreferences = getActivity().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+//        sharedpreferences = getApplicationContext().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+        if (sharedpreferences.contains(idAccount)) {
+            Variable.ACCOUNT_ID = sharedpreferences.getInt(idAccount, -1);
+        }
         handleSignInFacebook();
 
         //facebook option
@@ -156,6 +164,12 @@ public class FragmentLoginBuyer extends Fragment {
 
         return view;
     }
+    public void Save(int id) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putInt(idAccount, id);
+
+        editor.commit();
+    }
 
     //TODO
     private void firebaseAuthWithGoogle(String idToken) {
@@ -198,6 +212,7 @@ public class FragmentLoginBuyer extends Fragment {
      * Start Sign in Google flow
      */
     private void signInGoogle() {
+        Save(1);
         Date currentTime = Calendar.getInstance().getTime();
         Log.d("date:", currentTime.toString());
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -352,6 +367,7 @@ public class FragmentLoginBuyer extends Fragment {
                             });
 
                             Variable.ACCOUNT_ID = buyer.getId();
+
                             //TODO pass data through intent
                             startActivity(intent);
                         } catch (Exception e) {
@@ -374,7 +390,20 @@ public class FragmentLoginBuyer extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-
+    private void resultGoogle() {
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
+        if (acct != null) {
+            String name = acct.getDisplayName();
+            String email = acct.getEmail();
+            String thirdPartyId = acct.getId();
+            Uri personPhoto = acct.getPhotoUrl();
+            String urlImage = personPhoto.toString();
+            String gender = "1";
+            String dob = "0000-00-00";
+            String urlInsert = Variable.IP_ADDRESS + "login/register3rdParty.php";
+            checkDataAndInsert3rdParty(urlInsert, email, thirdPartyId, name, urlImage, dob, gender);
+        }
+    }
 
     private void resultFacebook() {
 
@@ -391,8 +420,7 @@ public class FragmentLoginBuyer extends Fragment {
                     String urlImage = "https://graph.facebook.com/" + thirdPartyId + "/picture?type=large";
                     String urlInsert = Variable.IP_ADDRESS + "login/register3rdParty.php";
 
-                    //TODO
-                    //checkDataAndInsert3rdParty(urlInsert, email, thirdPartyId, name, urlImage, dob, gender);
+                    checkDataAndInsert3rdParty(urlInsert, email, thirdPartyId, name, urlImage, dob, gender);
 
 
                 } catch (JSONException e) {
@@ -424,6 +452,7 @@ public class FragmentLoginBuyer extends Fragment {
 
                     Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
                     Variable.ACCOUNT_ID = buyer.getId();
+                    Save(Variable.ACCOUNT_ID);
                     //TODO pass data through intent
                     startActivity(intent);
                 } catch (Exception e) {
@@ -454,6 +483,7 @@ public class FragmentLoginBuyer extends Fragment {
         };
         requestQueue.add(stringRequest);
     }
+
 
 
 }

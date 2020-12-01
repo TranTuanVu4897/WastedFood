@@ -63,10 +63,13 @@
                     android:textColor="#33C600"
                     android:textSize="24dp" />
 
+
                 <TextView
                     android:id="@+id/tvPriceOriginal"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:foreground="@drawable/strike_through"
                     android:text="40,000 VND"
                     android:textAlignment="center" />
 
@@ -176,22 +179,51 @@
         android:id="@+id/btnDecrease"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:layout_marginTop="116dp"
         android:text="-"
-        app:layout_constraintBottom_toBottomOf="@+id/btnIncrease"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/tvBuyQuantity"
-        app:layout_constraintTop_toTopOf="@+id/btnIncrease"
+        app:layout_constraintHorizontal_bias="0.316"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnBuy"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:text="@string/order"
         android:layout_marginStart="30dp"
         android:background="#FF0000"
+        android:text="@string/order"
         android:textColor="#F9F9F9"
+        app:layout_constraintBottom_toBottomOf="@+id/btnDecrease"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.589"
+        app:layout_constraintStart_toEndOf="@+id/btnDecrease"
+        app:layout_constraintTop_toTopOf="@+id/btnDecrease"
+        app:layout_constraintVertical_bias="0.6" />
+
+    <Button
+        android:id="@+id/btnIncrease"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:text="+"
+        app:layout_constraintBottom_toBottomOf="@+id/btnDecrease"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tvBuyQuantity"
+        app:layout_constraintTop_toTopOf="@+id/btnDecrease"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tvBuyQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:gravity="center"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="1"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/btnDecrease"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -199,45 +231,18 @@
         app:layout_constraintTop_toTopOf="@+id/btnDecrease"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/btnIncrease"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:text="+"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.332"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
-        app:layout_constraintVertical_bias="0.747" />
-
-    <TextView
-        android:id="@+id/tvBuyQuantity"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:paddingEnd="5dp"
-        android:paddingStart="5dp"
-        android:text="1"
-        app:layout_constraintBottom_toBottomOf="@+id/btnIncrease"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/btnIncrease"
-        app:layout_constraintTop_toTopOf="@+id/btnIncrease" />
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SỐ LƯỢNG"
-        android:layout_marginEnd="5dp"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btnIncrease"
-        app:layout_constraintEnd_toStartOf="@+id/btnIncrease"
+        app:layout_constraintBottom_toBottomOf="@+id/btnDecrease"
+        app:layout_constraintEnd_toStartOf="@+id/btnDecrease"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnIncrease" />
+        app:layout_constraintTop_toTopOf="@+id/btnDecrease"
+        app:layout_constraintVertical_bias="0.375" />
 
     <ImageButton
         android:id="@+id/iBtnFollow"

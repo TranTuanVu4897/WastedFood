@@ -14,11 +14,20 @@
 
         <EditText
             android:id="@+id/etSearchBHA"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
             android:hint="Tìm kiếm" />
+        <ImageButton
+            android:id="@+id/ibFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/button_filter"
+            android:layout_marginEnd="10dp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

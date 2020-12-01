@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragmentBuyer"
     android:layout_width="match_parent"
@@ -7,13 +8,23 @@
     android:orientation="vertical"
     android:weightSum="10">
 
+    <View
+        android:id="@+id/bg_top_header"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:background="@drawable/ic_bg_topheader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="10"
         android:gravity="center"
         android:orientation="vertical"
-        >
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bg_top_header"
+        app:layout_constraintVertical_bias="0.45">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,79 +41,84 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="2"
-                android:background="@drawable/useravatar" />
+                app:srcCompat="@drawable/useravatar" />
 
             <EditText
                 android:id="@+id/etBuyerNameFEB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="2"
                 android:hint="Tên:"
+                android:maxLength="50"
                 android:paddingEnd="50dp"
-                android:textColorHint="#B6ADAD"
-                android:layout_marginBottom="10dp"
-                android:maxLength="50"/>
+                android:textColorHint="#B6ADAD" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="2"
                 android:text="Giới tính:"
-                android:textSize="18dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginBottom="10dp"/>
+                android:textSize="18dp" />
+
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="2"
-                android:layout_marginBottom="10dp">
+                android:orientation="horizontal">
+
                 <RadioButton
                     android:id="@+id/rbBoy"
-                    android:text="Nam"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="50dp"/>
+                    android:layout_marginRight="50dp"
+                    android:text="Nam" />
+
                 <RadioButton
                     android:id="@+id/rbGirl"
-                    android:text="Nữ"
-                    android:checked="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Nữ" />
             </RadioGroup>
 
             <EditText
                 android:id="@+id/etEditPhoneFEB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="2"
                 android:hint="Phone"
+                android:maxLength="10"
                 android:paddingEnd="50dp"
-                android:textColorHint="#B6ADAD"
-                android:layout_marginBottom="10dp"
-                android:maxLength="10"/>
+                android:textColorHint="#B6ADAD" />
+
             <EditText
                 android:id="@+id/etEditBuyerDateofBirth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
                 android:layout_weight="2"
+                android:editable="false"
                 android:hint="Ngày sinh:"
                 android:inputType=""
                 android:paddingEnd="50dp"
-                android:textColorHint="#B6ADAD"
-                android:layout_marginBottom="30dp"
-                android:enabled="false"/>
+                android:textColorHint="#B6ADAD" />
 
             <EditText
                 android:id="@+id/etMailFEB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
                 android:layout_weight="2"
+                android:enabled="false"
                 android:hint="Email: "
-                android:textSize="18dp"
                 android:paddingEnd="50dp"
                 android:textColorHint="#B6ADAD"
-                android:layout_marginBottom="30dp"
-                android:enabled="false"/>
+                android:textSize="18dp" />
 
 
             <LinearLayout
@@ -127,4 +143,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

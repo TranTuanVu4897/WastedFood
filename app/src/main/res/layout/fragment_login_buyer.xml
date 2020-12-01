@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="10">
+    android:weightSum="10"
+    android:background="@drawable/gradient_seller_home">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"
+        android:layout_weight="7"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -28,30 +29,7 @@
                 android:src="@drawable/ic_launcher_background"
                 />
 
-            <Button
-                android:id="@+id/btnGoogleSignInFLB"
-                style="@style/com_facebook_button_like"
-                android:layout_width="match_parent"
-                android:layout_height="28dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
-                android:layout_marginBottom="10dp"
-                android:background="#f00"
-                android:drawableLeft="@drawable/googleplus3"
-                android:text="Continue with Google"
-                android:textColor="#FDF8F8" />
-<!--            <com.google.android.gms.common.SignInButton-->
-<!--                android:id="@+id/sign_in_button"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content" />-->
 
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/btnFacebookSignInFLB"
-                android:layout_width="match_parent"
-                android:layout_height="61dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
-                android:layout_marginBottom="10dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -99,45 +77,44 @@
                 android:text="Đăng nhập"
                 android:layout_marginBottom="10dp"/>
 
-            <TextView
-                android:id="@+id/tvForgotPassBuyerFLB"
-                style="text-decoration: underline;"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginBottom="10dp"
-                android:background="#FFFFFF"
-                android:gravity="center"
-                android:text="Quên mật khẩu" />
         </LinearLayout>
-        <TextView
-            android:id="@+id/tvWarningFLB"
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="#FF0000"/>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2.5"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/btnGoogleSignInFLB"
+            style="@style/com_facebook_button_like"
+            android:layout_width="match_parent"
+            android:textStyle="bold"
+            android:layout_height="30dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="30dp"
+            android:paddingRight="40dp"
+            android:background="#f00"
+            android:drawableLeft="@drawable/googleplus3"
+            android:text="Continue with Google"
+            android:textColor="#FDF8F8" />
 
-        <TextView
-            android:id="@+id/tvCreateAccountFLB"
-            android:layout_width="wrap_content"
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/btnFacebookSignInFLB"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create new account" />
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="10dp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         android:orientation="horizontal"
         android:weightSum="2">
 
@@ -146,15 +123,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Buyer"
-            android:background="#72DC4B"/>
+            android:text="Mua hàng"
+            android:background="#87B675"/>
 
         <Button
             android:id="@+id/btnPartnerOptionFLB"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Partner"
+            android:text="Bán Hàng"
             android:background="#4CAF50"/>
 
     </LinearLayout>
