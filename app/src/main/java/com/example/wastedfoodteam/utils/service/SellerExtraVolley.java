@@ -45,9 +45,7 @@ public class SellerExtraVolley {
                 try {
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
-                    //TODO check if done
                     SellerExtraInfo seller = gson.fromJson(response, SellerExtraInfo.class);
-                    //Variable.seller = seller;
                     callback.onSuccess(seller);
                 } catch (Exception e) {
                     e.printStackTrace();

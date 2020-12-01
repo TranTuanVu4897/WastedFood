@@ -5,14 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +30,8 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Buyer;
+import com.example.wastedfoodteam.utils.service.BuyerResponseCallback;
+import com.example.wastedfoodteam.utils.service.BuyerVolley;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -219,7 +219,6 @@ public class FragmentLoginBuyer extends Fragment {
                             Log.w("", "signInWithCredential:failure", task.getException());
                         }
 
-                        // ...
                     }
                 });
 
@@ -240,7 +239,6 @@ public class FragmentLoginBuyer extends Fragment {
      * Start Sign in Google flow
      */
     private void signInGoogle() {
-        Save(1);
         Date currentTime = Calendar.getInstance().getTime();
         Log.d("date:", currentTime.toString());
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -271,6 +269,19 @@ public class FragmentLoginBuyer extends Fragment {
             String urlInsert = Variable.IP_ADDRESS + "login/register3rdParty.php";
             checkDataAndInsert3rdParty(urlInsert, email, thirdPartyId, name, urlImage, dob, gender,firebase_UID);
         }
+        getUserInformationBy3rdPartyId(acct.getId());
+    }
+
+    private void getUserInformationBy3rdPartyId(String thirdPartyId){
+
+        BuyerVolley buyerVolley = new BuyerVolley(getActivity(),Variable.IP_ADDRESS + "/information/getBuyerBy3rdPartyId.php");
+        buyerVolley.setRequestGetBuyerBy3rdId(new BuyerResponseCallback() {
+            @Override
+            public void onSuccess(Buyer result) {
+                Variable.ACCOUNT_ID = result.getId();
+                Variable.BUYER = result;
+            }
+        },thirdPartyId);
     }
 
     /**
@@ -464,7 +475,7 @@ public class FragmentLoginBuyer extends Fragment {
 
                     Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
                     Variable.ACCOUNT_ID = buyer.getId();
-                    Variable.buyer = buyer;
+                    Variable.BUYER = buyer;
                     Save(Variable.ACCOUNT_ID);
                     //TODO pass data through intent
                     startActivity(intent);

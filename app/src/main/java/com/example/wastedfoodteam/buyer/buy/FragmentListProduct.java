@@ -153,7 +153,7 @@ public class FragmentListProduct extends ListFragment {
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                     Buyer buyer = new Buyer();
                     buyer = gson.fromJson(object.getString(0), Buyer.class);
-                    Variable.buyer = buyer;
+                    Variable.BUYER = buyer;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

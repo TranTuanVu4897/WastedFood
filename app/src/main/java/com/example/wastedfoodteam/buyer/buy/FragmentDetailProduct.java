@@ -30,17 +30,12 @@ import com.example.wastedfoodteam.buyer.followseller.FragmentSellerDetail;
 import com.example.wastedfoodteam.buyer.order.FragmentOrderDetail;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.buyer.order.BuyerOrder;
-import com.example.wastedfoodteam.model.Buyer;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.SendNotificationPackage.SendNotif;
 import com.example.wastedfoodteam.utils.service.FollowResponseCallback;
 import com.example.wastedfoodteam.utils.service.FollowVolley;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import org.json.JSONArray;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -234,7 +229,7 @@ public class FragmentDetailProduct extends Fragment {
 
                     //TODO
                     //đổi thành order.getBuyerName,get đc seller name
-                    String message = "Khách hàng" + Variable.buyer.getName()  + " đã đặt hàng sản phẩm " + product.getName() + " của bạn";
+                    String message = "Khách hàng" + Variable.BUYER.getName()  + " đã đặt hàng sản phẩm " + product.getName() + " của bạn";
                     util.addNotification(getContext(), Variable.ACCOUNT_ID ,  product.getSeller_id() , message , product.getId() );
                     //phải thêm lấy firebase_UID của seller trong phần bên buyer TODO
                     //đã lấy
