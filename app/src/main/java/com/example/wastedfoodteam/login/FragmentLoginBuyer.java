@@ -167,9 +167,10 @@ public class FragmentLoginBuyer extends Fragment {
     public void Save(int id) {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.putInt(idAccount, id);
-
         editor.commit();
     }
+
+
 
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d("fb", "handleFacebookAccessToken:" + token);
@@ -463,6 +464,7 @@ public class FragmentLoginBuyer extends Fragment {
 
                     Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
                     Variable.ACCOUNT_ID = buyer.getId();
+                    Variable.buyer = buyer;
                     Save(Variable.ACCOUNT_ID);
                     //TODO pass data through intent
                     startActivity(intent);
