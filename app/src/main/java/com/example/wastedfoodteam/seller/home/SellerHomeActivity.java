@@ -29,6 +29,7 @@ import com.example.wastedfoodteam.seller.sellerFragment.ListProductSellerFragmen
 import com.example.wastedfoodteam.seller.sellerFragment.SellerHomeFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.SendFeedbackSellerFragment;
 import com.example.wastedfoodteam.model.Seller;
+import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.OTPFirebase.VerifyPhoneFragment;
 import com.example.wastedfoodteam.utils.SendNotificationPackage.SendNotif;
 import com.google.android.material.badge.BadgeDrawable;
@@ -85,8 +86,7 @@ public class SellerHomeActivity extends AppCompatActivity {
             }
         });
 
-        //TODO đường dẫn ảnh firebase
-        Glide.with(this).load(Variable.SELLER.getImage()).into(iv_nav_header_profile_image);
+        CommonFunction.setImageViewSrc(this,Variable.SELLER.getImage(),iv_nav_header_profile_image);
         tv_nav_header_user_name.setText(Variable.SELLER.getName());
 
         // Find our drawer view

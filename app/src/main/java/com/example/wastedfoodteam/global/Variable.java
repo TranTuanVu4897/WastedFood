@@ -49,7 +49,6 @@ public class Variable {
 
     public static Seller RESISTER_SELLER;
 
-    public static final String noImageUrl = "https://www.actbus.net/fleetwiki/images/8/84/Noimage.jpg";
     public static Time startTime = Time.valueOf("11:00:00"), endTime = Time.valueOf("22:00:00");
     public static String distance = "20", discount = "90";
 }

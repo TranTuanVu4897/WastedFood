@@ -60,6 +60,7 @@ public class FragmentDetailProduct extends Fragment {
 
     NotificationUtil util;
     SendNotif sendNotif;
+
     public FragmentDetailProduct() {
         orderQuantity = 1;
     }
@@ -72,13 +73,14 @@ public class FragmentDetailProduct extends Fragment {
         mappingViewWithVariable(view);
 
         //get bundle values
+        assert getArguments() != null;
         product = (BuyerProduct) getArguments().get("PRODUCT");
 
         CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), product.getSeller().getImage(), civSeller);
         //set content for views about product
         tvQuantity.setText("Còn: " + product.getRemain_quantity() + "/" + product.getOriginal_quantity());
-        tvPriceDiscount.setText(product.getSell_price() + "");
-        tvPriceOriginal.setText(product.getOriginal_price() + "");
+        tvPriceDiscount.setText(CommonFunction.getCurrency(product.getSell_price()));
+        tvPriceOriginal.setText(CommonFunction.getCurrency(product.getOriginal_price()));
         tvOpenTime.setText("Mở cửa từ: " + CommonFunction.getOpenClose(product.getStart_time(), product.getEnd_time()));
         tvDescription.setText(product.getDescription());
         tvBuyQuantity.setText(orderQuantity + "");
@@ -181,7 +183,7 @@ public class FragmentDetailProduct extends Fragment {
         ibFollow.setTag(resourceId);
     }
 
-    private boolean setDialogConfirmBuy() {
+    private void setDialogConfirmBuy() {
         final Dialog confirmDialog = new Dialog(getActivity());
         confirmDialog.setTitle("Xác nhận mua hàng");
         confirmDialog.setContentView(R.layout.dialog_buyer_confirm_buy);
@@ -196,7 +198,7 @@ public class FragmentDetailProduct extends Fragment {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnBuyOnClick(etMessage.getText().toString());
+                btnBuyOnClick(etMessage.getText().toString(), product);
                 confirmDialog.cancel();
             }
         });
@@ -207,13 +209,12 @@ public class FragmentDetailProduct extends Fragment {
             }
         });
 
-        return false;
     }
 
     /**
      * buy
      */
-    private void btnBuyOnClick(final String message) {
+    private void btnBuyOnClick(final String message, final BuyerProduct product) {
         RequestQueue requestInsertOrder = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest stringRequestInsert = new StringRequest(Request.Method.POST, UPDATE_ORDER_URL, new Response.Listener<String>() {
             @SuppressLint("ShowToast")
@@ -229,14 +230,15 @@ public class FragmentDetailProduct extends Fragment {
 
                     //TODO
                     //đổi thành order.getBuyerName,get đc seller name
-                    String message = "Khách hàng" + Variable.BUYER.getName()  + " đã đặt hàng sản phẩm " + product.getName() + " của bạn";
-                    util.addNotification(getContext(), Variable.BUYER.getId() ,  product.getSeller_id() , message , product.getId() );
+                    String message = "Khách hàng" + Variable.BUYER.getName() + " đã đặt hàng sản phẩm " + product.getName() + " của bạn";
+                    util.addNotification(getContext(), Variable.BUYER.getId(), product.getSeller_id(), message, product.getId());
                     //phải thêm lấy firebase_UID của seller trong phần bên buyer TODO
                     //đã lấy
-                    sendNotif.notificationHandle( product.getSeller().getFirebase_UID(), "Wasted food app" , message);
+                    sendNotif.notificationHandle(product.getSeller().getFirebase_UID(), "Wasted food app", message);
 
 
                     moveToFragmentOrderDetail();
+                    Log.i("Firebase_UID", product.getSeller().getFirebase_UID());
                 } else if (response.equalsIgnoreCase("NOT ENOUGH QUANTITY")) {
                     Toast.makeText(getActivity().getApplicationContext(), "Số lượng còn lại không đủ", Toast.LENGTH_LONG);
                 } else {
@@ -263,7 +265,6 @@ public class FragmentDetailProduct extends Fragment {
         };
         requestInsertOrder.add(stringRequestInsert);
     }
-
 
 
     /**

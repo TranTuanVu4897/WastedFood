@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
+import com.example.wastedfoodteam.utils.CommonFunction;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,7 +63,7 @@ public class EditProductSellerFragment extends Fragment {
 
         //input data
         id = Variable.PRODUCT.getId();
-        Glide.with(getContext()).load(Variable.PRODUCT.getImage().isEmpty() ? Variable.noImageUrl : Variable.PRODUCT.getImage()).into(iv_detail_product_icon);
+        CommonFunction.setImageViewSrc(getContext(),Variable.PRODUCT.getImage(),iv_detail_product_icon);
         name.setText(Variable.PRODUCT.getName());
         originalPrice.setText(String.valueOf(Variable.PRODUCT.getOriginal_price()));
         sellPrice.setText(String.valueOf(Variable.PRODUCT.getSell_price()));
