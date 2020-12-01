@@ -92,7 +92,7 @@ public class FragmentLoginBuyer extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login_buyer, container, false);
         etSDT = view.findViewById(R.id.etSdtBuyerFLB);
         etPass = view.findViewById(R.id.etPassBuyerFLB);
-        tvWarning = view.findViewById(R.id.tvWarningFLB);
+//        tvWarning = view.findViewById(R.id.tvWarningFLB);
         btnSignIn = view.findViewById(R.id.btnSignInBuyerFLB);
         btnSignInGoogle = view.findViewById(R.id.btnGoogleSignInFLB);
         btnSignInFacebook = view.findViewById(R.id.btnFacebookSignInFLB);
