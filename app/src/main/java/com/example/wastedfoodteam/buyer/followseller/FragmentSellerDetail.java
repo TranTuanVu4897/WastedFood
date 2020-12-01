@@ -103,7 +103,7 @@ public class FragmentSellerDetail extends ListFragment {
                 }
 
             }
-        }, GET_FOLLOW_INFORMATION_URL, Variable.ACCOUNT_ID, seller.getId());
+        }, GET_FOLLOW_INFORMATION_URL, Variable.BUYER.getId(), seller.getId());
 
 
         //mapping view
@@ -152,7 +152,7 @@ public class FragmentSellerDetail extends ListFragment {
     }
 
     private void getSellerExtraInfo() {
-        SellerExtraVolley sellerExtraVolley = new SellerExtraVolley(getActivity(), Variable.IP_ADDRESS + "/getSellerExtraInfo.php");
+        SellerExtraVolley sellerExtraVolley = new SellerExtraVolley(getActivity(), Variable.IP_ADDRESS + "/follow/getSellerExtraInfo.php");
         sellerExtraVolley.setRequestGetSeller(new SellerResponseCallback() {
             @Override
             public void onSuccess(SellerExtraInfo seller) {
@@ -230,7 +230,7 @@ public class FragmentSellerDetail extends ListFragment {
             public void onSuccess(String result) {
 
             }
-        }, UPDATE_FOLLOW_URL, Variable.ACCOUNT_ID, seller.getId(), isFollow);
+        }, UPDATE_FOLLOW_URL, Variable.BUYER.getId(), seller.getId(), isFollow);
         super.onPause();
     }
 

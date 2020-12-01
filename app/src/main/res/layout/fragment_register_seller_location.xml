@@ -1,99 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@drawable/gradient_seller_home"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_seller_home">
 
-    <TextView
-        style="@style/loginHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"
-        android:textSize="30dp"
-        android:layout_marginLeft="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Đăng ký" />
-
-
-
-
-    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        style="@style/loginCard"
-        android:layout_gravity="center"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="110dp"
-        android:layout_marginBottom="80dp"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:background="@color/whiteCardColor"
-        android:layout_height="match_parent"
-        android:elevation="5dp"
-        app:cardCornerRadius="29dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <TextView
+            style="@style/loginHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:text="Đăng ký"
+            android:textColor="@color/colorWhite"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            style="@style/loginCard"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="8dp"
-            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="110dp"
+            android:layout_marginBottom="80dp"
+            android:background="@color/whiteCardColor"
+            android:elevation="5dp"
+            app:cardCornerRadius="29dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLat"
-                style="@style/parent"
-                android:layout_marginTop="150dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <EditText
-                    android:id="@+id/et_seller_register_lat"
-                    style="@style/modifiedEditText"
-                    android:hint="Tọa độ X"
-                    android:inputType="numberDecimal"
-                    android:maxLines="1" />
-            </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLat"
+                    style="@style/parent"
+                    android:layout_marginTop="150dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLng"
-                style="@style/parent"
-                android:layout_marginTop="10dp">
+                    <EditText
+                        android:id="@+id/et_seller_register_lat"
+                        style="@style/modifiedEditText"
+                        android:hint="Tọa độ X"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/et_seller_register_lng"
-                    style="@style/modifiedEditText"
-                    android:hint="Tọa độ Y"
-                    android:inputType="numberDecimal"
-                    android:maxLines="1" />
-            </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLng"
+                    style="@style/parent"
+                    android:layout_marginTop="10dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputAddress"
-                style="@style/parent"
-                android:layout_marginTop="10dp">
+                    <EditText
+                        android:id="@+id/et_seller_register_lng"
+                        style="@style/modifiedEditText"
+                        android:hint="Tọa độ Y"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/et_seller_register_address"
-                    style="@style/modifiedEditText"
-                    android:hint="Địa chỉ"
-                    android:inputType="text"
-                    android:maxLines="1" />
-            </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputAddress"
+                    style="@style/parent"
+                    android:layout_marginTop="10dp">
 
-            <Button
-                android:id="@+id/btn_seller_register_phone_location_next"
-                style="@style/loginButton"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="40dp"
-                android:text="Hoàn tất đăng ký" />
+                    <EditText
+                        android:id="@+id/et_seller_register_address"
+                        style="@style/modifiedEditText"
+                        android:hint="Địa chỉ"
+                        android:inputType="text"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <Button
+                    android:id="@+id/btn_seller_register_phone_location_next"
+                    style="@style/loginButton"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="40dp"
+                    android:text="Hoàn tất đăng ký" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

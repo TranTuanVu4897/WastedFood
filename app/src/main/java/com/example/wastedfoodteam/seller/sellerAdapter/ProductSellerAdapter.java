@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
+import com.example.wastedfoodteam.utils.CommonFunction;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -98,7 +99,7 @@ public class ProductSellerAdapter extends BaseAdapter {
 
         holder.tvName.setText(product.getName());
         holder.tvSoldProduct.setText(product.getOriginal_quantity() - product.getRemain_quantity() + " ĐÃ BÁN");
-        Glide.with(convertView.getContext()).load(product.getImage().isEmpty() ? Variable.noImageUrl : product.getImage()).into(holder.ivImage);
+        CommonFunction.setImageViewSrc(convertView.getContext(),product.getImage(),holder.ivImage);
         long timeDifferent =  product.getSell_date().getTime() - Calendar.getInstance().getTime().getTime();
         if(timeDifferent > 0){
             long seconds = timeDifferent / 1000;

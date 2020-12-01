@@ -52,7 +52,7 @@ public class ChangePasswordSellerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_change_password_seller, container, false);
 
         //get from home seller
-        id = Variable.ACCOUNT_ID;
+        id = Variable.SELLER.getId();
         oldPassword = Variable.SELLER.getPassword();
 
         //ui view

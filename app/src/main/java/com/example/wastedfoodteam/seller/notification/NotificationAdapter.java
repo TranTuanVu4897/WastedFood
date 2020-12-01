@@ -72,7 +72,6 @@ public class NotificationAdapter extends BaseAdapter {
         notification = arrayNotification.get(position);
         timeCount = new TimeCount();
         CommonFunction.setImageViewSrc(myContext, notification.getBuyer_image(), holder.ivBuyer);
-        //Glide.with(convertView.getContext()).load(order.getImage().isEmpty() ? Variable.noImageUrl : order.getImage()).into(holder.ivBuyer);
         String time = timeCount.countTimeAgo(notification.getModified_date().getTime());
         holder.tvTime.setText(time);
         holder.tvContent.setText(notification.getContent());

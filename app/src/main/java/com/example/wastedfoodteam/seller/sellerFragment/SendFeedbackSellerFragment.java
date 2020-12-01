@@ -62,7 +62,7 @@ public class SendFeedbackSellerFragment extends Fragment {
         editText_sendFeedback_description.setMaxLines(5);
 
         //get data from home activity
-        id = Variable.ACCOUNT_ID;
+        id = Variable.SELLER.getId();
 
         //click send button handle
         btn_sendFeedback_send.setOnClickListener(new View.OnClickListener() {

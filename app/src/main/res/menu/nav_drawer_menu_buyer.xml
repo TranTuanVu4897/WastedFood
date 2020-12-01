@@ -6,14 +6,16 @@
         android:id="@+id/itemNavMenuBuyerInfor"
         android:title="Đổi Thông tin" />
     <item
-        android:title="Đổi mật khẩu" />
+        android:id="@+id/itemNavFollowSeller"
+        android:title="Nhà hàng yêu thích" />
     <item
-        android:title="Quản lý đơn hàng" />
+        android:id="@+id/itemNavOrderHistory"
+        android:title="Lịch sử mua hàng" />
     <item
-        android:title="Lịch sử giao dịch" />
-    <item
+        android:id="@+id/itemNavNotification"
         android:title="Thông báo" />
     <item
+        android:id="@+id/itemNavFeedBack"
         android:title="Phản hồi với chúng tôi" />
     <item
         android:id="@+id/itemNavLogout"

@@ -53,7 +53,7 @@ public class ListProductSellerFragment extends ListFragment {
         //mapping view
         lvProduct = view.findViewById(android.R.id.list);
         arrProduct = new ArrayList<Product>();
-        seller_id = Variable.ACCOUNT_ID;
+        seller_id = Variable.SELLER.getId();
         product = Variable.PRODUCT;
         tv_total_product = view.findViewById(R.id.tv_total_product);
         String urlGetData = Variable.IP_ADDRESS + "seller/getListProductSeller.php?seller_id=" + seller_id;

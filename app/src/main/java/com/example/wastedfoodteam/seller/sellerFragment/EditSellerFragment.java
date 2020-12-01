@@ -106,7 +106,7 @@ public class EditSellerFragment extends Fragment {
         iv_editSeller_avatar = view.findViewById(R.id.iv_editSeller_avatar);
 
 
-        id = Variable.ACCOUNT_ID;
+        id = Variable.SELLER.getId();
         getSeller(id);
 
 
