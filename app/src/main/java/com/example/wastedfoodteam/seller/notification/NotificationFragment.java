@@ -33,6 +33,11 @@ public class NotificationFragment extends ListFragment {
     ListView lvNotification;
     ArrayList<Notification> arrNotification;
     NotificationAdapter notificationAdapter;
+    String receiver_id;
+
+    public NotificationFragment(String receiver_id) {
+        this.receiver_id = receiver_id;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,7 +51,7 @@ public class NotificationFragment extends ListFragment {
         if(Variable.CURRENT_USER.equals("SELLER"))
             getNotificationDataSeller();
         else
-            getNotificationDataBuyer();
+            getNotificationDataBuyer(receiver_id);
         return view;
     }
 
@@ -87,9 +92,9 @@ public class NotificationFragment extends ListFragment {
         requestQueue.add(getProductAround);
     }
 
-    public void getNotificationDataBuyer() {
+    public void getNotificationDataBuyer(String receiver_id) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        String urlGetData = Variable.IP_ADDRESS + "notification/getListNotificationBuyer.php?receiver_id=" + Variable.ACCOUNT_ID;//TODO missing product id???
+        String urlGetData = Variable.IP_ADDRESS + "notification/getListNotificationBuyer.php?receiver_id=" + receiver_id;//TODO missing product id???
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
                     @Override

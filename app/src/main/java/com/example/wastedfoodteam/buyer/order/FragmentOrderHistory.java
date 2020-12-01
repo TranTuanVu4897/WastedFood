@@ -28,7 +28,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 public class FragmentOrderHistory extends ListFragment {
-  final  String urlGetData = Variable.IP_ADDRESS + Variable.ORDER_HISTORY + "?buyer_id=" + Variable.ACCOUNT_ID;
+  final  String urlGetData = Variable.IP_ADDRESS + Variable.ORDER_HISTORY + "?buyer_id=" + Variable.BUYER.getId();
     ArrayList<BuyerOrder> orderArrayList;
     OrderAdapter adapter;
     ListView lvOrder;

@@ -29,6 +29,7 @@ import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Buyer;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
+import com.example.wastedfoodteam.utils.CommonFunction;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -57,7 +58,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         View view = inflater.inflate(R.layout.fragment_buyer_edit, container, false);
         mapping(view);
 
-        accountId = Variable.ACCOUNT_ID + "";
+        accountId = Variable.BUYER.getId() + "";
         url = Variable.IP_ADDRESS + "information/informationBuyer.php?account_id=" + accountId;
         getData(url);
 
@@ -138,6 +139,7 @@ cameraStorageFunction.showImagePickDialog();
                     etDob.setText(buyer.getDate_of_birth() + "");
                     etMail.setText(buyer.getEmail());
                     etPhone.setText(buyer.getPhone());
+                    CommonFunction.setImageViewSrc(getActivity(),buyer.getImage(),ivAvatar);
                     if (buyer.isGender()) {
                         rbGirl.setChecked(true);
                     } else {

@@ -29,7 +29,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 public class FragmentListSellerFollow extends ListFragment {
-    final String urlGetData = Variable.IP_ADDRESS + "information/getListSellerFollow.php?buyer_id=" + Variable.ACCOUNT_ID;
+    final String urlGetData = Variable.IP_ADDRESS + "information/getListSellerFollow.php?buyer_id=" + Variable.BUYER.getId();
     SellerFollowAdapter adapter;
     ArrayList<Seller> listSellers;
     ListView lvSeller;

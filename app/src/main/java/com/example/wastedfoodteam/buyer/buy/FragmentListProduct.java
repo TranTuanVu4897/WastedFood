@@ -59,7 +59,6 @@ public class FragmentListProduct extends ListFragment {
         btnNear = view.findViewById(R.id.btnNearProduct);
         btnAll = view.findViewById(R.id.btnAllProduct);
         btnFollowSeller = view.findViewById(R.id.btnFollowSellerProduct);
-        getBuyerData();
         //setup bundle
         bundleDetail = new Bundle();
 
@@ -141,35 +140,6 @@ public class FragmentListProduct extends ListFragment {
         return view;
     }
 
-    private void getBuyerData() {
-        final String url = Variable.IP_ADDRESS + "information/informationBuyerFirebase.php?account_id=" + Variable.ACCOUNT_ID;
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();
-                try {
-                    JSONArray object = new JSONArray(response);
-                    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                    Buyer buyer = new Buyer();
-                    buyer = gson.fromJson(object.getString(0), Buyer.class);
-                    Variable.BUYER = buyer;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "lỗi kết nỗi" + url, Toast.LENGTH_LONG).show();
-
-            }
-        }
-        );
-        requestQueue.add(stringRequest);
-    }
-
-
     public void getProduct() {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         //require edit latitude
@@ -214,7 +184,7 @@ public class FragmentListProduct extends ListFragment {
                 + "&start_time=" + Variable.startTime + "&end_time=" + Variable.endTime
                 + "&discount=" + Variable.discount
                 + "&search_text=" + etSearch.getText()
-                + "&buyer_id=" +Variable.ACCOUNT_ID;
+                + "&buyer_id=" + Variable.BUYER.getId();
 
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {

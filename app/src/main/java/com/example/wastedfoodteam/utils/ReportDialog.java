@@ -71,7 +71,7 @@ public class ReportDialog {
             tvAccused.setText(((Buyer) account).getName());
 
         url = Variable.IP_ADDRESS + "FeedbackReport/report.php";
-        reporterId = Variable.ACCOUNT_ID + "";
+        reporterId = Variable.SELLER.getId() + "";
         accusedId = account.getId() + "";
 
         ivReport.setOnClickListener(new View.OnClickListener() {

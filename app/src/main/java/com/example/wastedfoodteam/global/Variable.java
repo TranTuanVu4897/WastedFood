@@ -40,7 +40,7 @@ public class Variable {
     public static Seller SELLER;
     public static Buyer BUYER;
     public static Product PRODUCT;
-    public static int ACCOUNT_ID;
+//    public static int ACCOUNT_ID;
     public static String CURRENT_USER;
     public static BottomNavigationView bottomNavigationViewSeller;
 

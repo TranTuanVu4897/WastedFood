@@ -95,7 +95,7 @@ public class FragmentDetailProduct extends Fragment {
                 }
 
             }
-        }, GET_FOLLOW_INFORMATION_URL, Variable.ACCOUNT_ID, product.getSeller_id());
+        }, GET_FOLLOW_INFORMATION_URL, Variable.BUYER.getId(), product.getSeller_id());
 
         //set image from url
         CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), product.getImage(), ivProduct);
@@ -230,7 +230,7 @@ public class FragmentDetailProduct extends Fragment {
                     //TODO
                     //đổi thành order.getBuyerName,get đc seller name
                     String message = "Khách hàng" + Variable.BUYER.getName()  + " đã đặt hàng sản phẩm " + product.getName() + " của bạn";
-                    util.addNotification(getContext(), Variable.ACCOUNT_ID ,  product.getSeller_id() , message , product.getId() );
+                    util.addNotification(getContext(), Variable.BUYER.getId() ,  product.getSeller_id() , message , product.getId() );
                     //phải thêm lấy firebase_UID của seller trong phần bên buyer TODO
                     //đã lấy
                     sendNotif.notificationHandle( product.getSeller().getFirebase_UID(), "Wasted food app" , message);
@@ -253,7 +253,7 @@ public class FragmentDetailProduct extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("buyer", Variable.ACCOUNT_ID + "");
+                params.put("buyer", Variable.BUYER.getId() + "");
                 params.put("product", product.getId() + "");
                 params.put("quantity", orderQuantity + "");
                 params.put("status", Order.Status.BUYING + "");
@@ -270,7 +270,7 @@ public class FragmentDetailProduct extends Fragment {
      * Open after buy
      */
     private void moveToFragmentOrderDetail() {
-        BuyerOrder order = new BuyerOrder(Variable.ACCOUNT_ID, product.getId(), orderQuantity, Order.Status.BUYING, orderQuantity * product.getSell_price());
+        BuyerOrder order = new BuyerOrder(Variable.BUYER.getId(), product.getId(), orderQuantity, Order.Status.BUYING, orderQuantity * product.getSell_price());
         order.setProduct(product);
         FragmentOrderDetail fragmentOrderDetail = new FragmentOrderDetail(order);
 
@@ -317,7 +317,7 @@ public class FragmentDetailProduct extends Fragment {
             public void onSuccess(String result) {
                 Log.w("FollowResult", result);
             }
-        }, UPDATE_FOLLOW_URL, Variable.ACCOUNT_ID, product.getSeller_id(), isImageButtonIsFollowed(ibFollow.getTag()));
+        }, UPDATE_FOLLOW_URL, Variable.BUYER.getId(), product.getSeller_id(), isImageButtonIsFollowed(ibFollow.getTag()));
         super.onPause();
     }
 }

@@ -126,7 +126,7 @@ public class SellerHomeActivity extends AppCompatActivity {
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_main, verifyPhoneFragment, verifyPhoneFragment.getTag()).commit();
                 }else if(id == R.id.item_nav_drawer_menu_alert){
-                    NotificationFragment notificationFragment = new NotificationFragment();
+                    NotificationFragment notificationFragment = new NotificationFragment(Variable.SELLER.getId()+"");
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_main,notificationFragment,notificationFragment.getTag()).commit();
                 }else if(id == R.id.item_nav_drawer_menu_logout){
@@ -160,7 +160,7 @@ public class SellerHomeActivity extends AppCompatActivity {
         if (type != null) {
             switch (type) {
                 case "notifyFrag":
-                    NotificationFragment notificationFragment = new NotificationFragment();
+                    NotificationFragment notificationFragment = new NotificationFragment(Variable.SELLER.getId()+"");
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     fragmentManager.beginTransaction().replace(R.id.content_main,notificationFragment,notificationFragment.getTag()).commit();
             }
@@ -186,7 +186,7 @@ public class SellerHomeActivity extends AppCompatActivity {
                     manager.beginTransaction().replace(R.id.content_main, addProductFragment, addProductFragment.getTag()).commit();
                     return true;
                 case R.id.item_bottom_nav_menu_notification:
-                    NotificationFragment notificationFragment = new NotificationFragment();
+                    NotificationFragment notificationFragment = new NotificationFragment(Variable.SELLER.getId()+"");
                     manager.beginTransaction().replace(R.id.content_main,notificationFragment,notificationFragment.getTag()).commit();
                     notificationUtil.updateNotificationSeen(getApplicationContext(),Variable.SELLER.getId(),navigation);
                     return true;

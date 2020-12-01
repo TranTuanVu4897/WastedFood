@@ -105,7 +105,7 @@ public class AddProductFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         //get seller id from seller home activity
-        seller_id = Variable.ACCOUNT_ID;
+        seller_id = Variable.SELLER.getId();
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_seller_add_product, container, false);

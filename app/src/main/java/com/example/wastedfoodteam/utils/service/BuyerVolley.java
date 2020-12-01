@@ -36,7 +36,7 @@ public class BuyerVolley {
 
     public void setRequestGetBuyerBy3rdId(final BuyerResponseCallback callback, String thirdPartyId) {
         url = url + "?thirdPartyID=" + thirdPartyId;
-            StringRequest getBuyerRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        StringRequest getBuyerRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {

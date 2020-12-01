@@ -120,7 +120,7 @@ public class BuyHomeActivity extends AppCompatActivity {
                         manager.beginTransaction().replace(R.id.flSearchResultAH, fragment, fragment.getTag()).commit();
                         break;
                     case R.id.itemNavLogout:
-                        Variable.ACCOUNT_ID = 0;
+                        Variable.BUYER = null;
                         switch (Variable.CHECK_LOGIN) {
                             case 2:
                                 finish();
@@ -149,7 +149,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         //bottom navigation
         navigation = (BottomNavigationView) findViewById(R.id.bottom_nav_buyer);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        notificationUtil.getTotalNotification(getApplicationContext(), Variable.ACCOUNT_ID, navigation);
+        notificationUtil.getTotalNotification(getApplicationContext(), Variable.BUYER.getId(), navigation);
         //notification badge
         if (Variable.TOTAL_NOTIFICATION > 0) {
             BadgeDrawable badge = navigation.getOrCreateBadge(R.id.item_bottom_nav_menu_notification);
@@ -160,7 +160,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         if (type != null) {
             switch (type) {
                 case "notifyFrag":
-                    NotificationFragment notificationFragment = new NotificationFragment();
+                    NotificationFragment notificationFragment = new NotificationFragment(Variable.BUYER.getId()+"");
                     getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.flSearchResultAH, notificationFragment, "")
@@ -183,13 +183,13 @@ public class BuyHomeActivity extends AppCompatActivity {
                     addFragmentListProduct();
                     return true;
                 case R.id.item_bottom_nav_menu_buyer_notification:
-                    NotificationFragment notificationFragment = new NotificationFragment();
+                    NotificationFragment notificationFragment = new NotificationFragment(Variable.BUYER.getId()+"");
                     getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.flSearchResultAH, notificationFragment, "")
                             .addToBackStack(null)
                             .commit();
-                    notificationUtil.updateNotificationSeen(getApplicationContext(), Variable.ACCOUNT_ID, navigation);
+                    notificationUtil.updateNotificationSeen(getApplicationContext(), Variable.BUYER.getId(), navigation);
                     return true;
                 case R.id.item_bottom_nav_menu_buyer_history:
                     FragmentOrderHistory fragmentOrderHistory = new FragmentOrderHistory();
@@ -252,7 +252,7 @@ public class BuyHomeActivity extends AppCompatActivity {
             FirebaseAuth.getInstance().signOut();
             GoogleSignIn.getClient(
                     getApplicationContext(),
-          new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+                    new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
             ).signOut();
 
             SharedPreferences sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE);

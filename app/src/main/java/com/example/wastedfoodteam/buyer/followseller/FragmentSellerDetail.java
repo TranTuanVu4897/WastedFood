@@ -103,7 +103,7 @@ public class FragmentSellerDetail extends ListFragment {
                 }
 
             }
-        }, GET_FOLLOW_INFORMATION_URL, Variable.ACCOUNT_ID, seller.getId());
+        }, GET_FOLLOW_INFORMATION_URL, Variable.BUYER.getId(), seller.getId());
 
 
         //mapping view
@@ -230,7 +230,7 @@ public class FragmentSellerDetail extends ListFragment {
             public void onSuccess(String result) {
 
             }
-        }, UPDATE_FOLLOW_URL, Variable.ACCOUNT_ID, seller.getId(), isFollow);
+        }, UPDATE_FOLLOW_URL, Variable.BUYER.getId(), seller.getId(), isFollow);
         super.onPause();
     }
 

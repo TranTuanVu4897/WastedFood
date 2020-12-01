@@ -133,7 +133,6 @@ public class FragmentLoginPartner extends Fragment {
 
                             final Intent intent = new Intent(getActivity(), SellerHomeActivity.class);//TODO change to seller activity
 
-                            Variable.ACCOUNT_ID = seller.getId();
                             Variable.SELLER = seller;
                             //openSellerHome();
 
