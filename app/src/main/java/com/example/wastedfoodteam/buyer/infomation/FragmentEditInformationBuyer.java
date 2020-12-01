@@ -3,6 +3,7 @@ package com.example.wastedfoodteam.buyer.infomation;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.Validation.Validation;
 import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Buyer;
@@ -35,7 +37,9 @@ import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,7 +77,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         this.lastSelectedMonth = c.get(Calendar.MONTH);
         this.lastSelectedDayOfMonth = c.get(Calendar.DAY_OF_MONTH);
 
-        cameraStorageFunction = new CameraStorageFunction(getActivity(),getContext(),ivAvatar);
+        cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), ivAvatar);
 
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +108,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         ivAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-cameraStorageFunction.showImagePickDialog();
+                cameraStorageFunction.showImagePickDialog();
             }
         });
 
@@ -212,10 +216,17 @@ cameraStorageFunction.showImagePickDialog();
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                etDob.setText(year + "-" + month + "-" + dayOfMonth);
+                month = month + 1;
+                String date = year + "-" + month + "-" + dayOfMonth;
+                if (Validation.validateDate(date) == true) {
+                    etDob.setText(date);
+                }else{
+                    Toast.makeText(getActivity(), "Bạn chọn hơn ngày hiện tại", Toast.LENGTH_LONG).show();
+                }
                 lastSelectedYear = year;
-                lastSelectedMonth = month;
+                lastSelectedMonth = month - 1;
                 lastSelectedDayOfMonth = dayOfMonth;
+
             }
         };
         DatePickerDialog datePickerDialog = null;
@@ -227,6 +238,6 @@ cameraStorageFunction.showImagePickDialog();
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        cameraStorageFunction.onActivityResult(requestCode,resultCode,data);
+        cameraStorageFunction.onActivityResult(requestCode, resultCode, data);
     }
 }
