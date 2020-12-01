@@ -3,6 +3,7 @@ package com.example.wastedfoodteam.buyer.infomation;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,9 @@ import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,7 +75,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         this.lastSelectedMonth = c.get(Calendar.MONTH);
         this.lastSelectedDayOfMonth = c.get(Calendar.DAY_OF_MONTH);
 
-        cameraStorageFunction = new CameraStorageFunction(getActivity(),getContext(),ivAvatar);
+        cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), ivAvatar);
 
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +106,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         ivAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-cameraStorageFunction.showImagePickDialog();
+                cameraStorageFunction.showImagePickDialog();
             }
         });
 
@@ -210,10 +213,15 @@ cameraStorageFunction.showImagePickDialog();
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                etDob.setText(year + "-" + month + "-" + dayOfMonth);
+                month = month + 1;
+                String date = year + "-" + month + "-" + dayOfMonth;
+                if (validateDate(date) == true) {
+                    etDob.setText(date);
+                }
                 lastSelectedYear = year;
-                lastSelectedMonth = month;
+                lastSelectedMonth = month - 1;
                 lastSelectedDayOfMonth = dayOfMonth;
+
             }
         };
         DatePickerDialog datePickerDialog = null;
@@ -225,6 +233,24 @@ cameraStorageFunction.showImagePickDialog();
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        cameraStorageFunction.onActivityResult(requestCode,resultCode,data);
+        cameraStorageFunction.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public Boolean validateDate(String date) {
+        try {
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+            Date strDate = sdf.parse(date);
+            if (new Date().after(strDate)) {
+                return true;
+            } else {
+                Toast.makeText(getActivity(), "Bạn chọn hơn ngày hiện tại", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        } catch (Exception e) {
+            Log.d("Lỗi Date : ", date);
+            return false;
+        }
+
     }
 }
