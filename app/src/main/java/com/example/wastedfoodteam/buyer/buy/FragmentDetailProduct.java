@@ -1,5 +1,6 @@
 package com.example.wastedfoodteam.buyer.buy;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -215,6 +216,7 @@ public class FragmentDetailProduct extends Fragment {
     private void btnBuyOnClick(final String message) {
         RequestQueue requestInsertOrder = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest stringRequestInsert = new StringRequest(Request.Method.POST, UPDATE_ORDER_URL, new Response.Listener<String>() {
+            @SuppressLint("ShowToast")
             @Override
             public void onResponse(String response) {
                 if (response.equalsIgnoreCase("SUCCESS")) {
@@ -238,10 +240,10 @@ public class FragmentDetailProduct extends Fragment {
                     Toast.makeText(getActivity().getApplicationContext(), "Số lượng còn lại không đủ", Toast.LENGTH_LONG);
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Có lỗi bất thường xảy ra", Toast.LENGTH_LONG);
-
                 }
             }
         }, new Response.ErrorListener() {
+            @SuppressLint("ShowToast")
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getActivity().getApplicationContext(), "Lỗi hệ thống: " + error.getMessage(), Toast.LENGTH_LONG);

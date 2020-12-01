@@ -108,5 +108,6 @@ public class Account implements Serializable {
         this.email = email;
         this.create_date = create_date;
         this.is_active = is_active;
+        this.firebase_UID = firebase_UID;
     }
 }
