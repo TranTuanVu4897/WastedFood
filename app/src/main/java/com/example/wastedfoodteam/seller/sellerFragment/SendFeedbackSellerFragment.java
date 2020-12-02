@@ -32,9 +32,19 @@ public class SendFeedbackSellerFragment extends Fragment {
     EditText editText_sendFeedback_description;
     Button btn_sendFeedback_send;
 
-    String title,description;
+    String title, description;
 
     int id;
+    HandleSendFeedBack handleSendFeedBack;
+
+    public SendFeedbackSellerFragment(HandleSendFeedBack handleSendFeedBack, int id) {
+        this.id = id;
+        this.handleSendFeedBack = handleSendFeedBack;
+    }
+
+    public interface HandleSendFeedBack {
+        void onSuccess();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +64,7 @@ public class SendFeedbackSellerFragment extends Fragment {
 
         //for multiline EditText
         //scroll for EditText
-        editText_sendFeedback_description.setScroller(new Scroller( getActivity().getApplicationContext()));
+        editText_sendFeedback_description.setScroller(new Scroller(getActivity().getApplicationContext()));
         editText_sendFeedback_description.setVerticalScrollBarEnabled(true);
 
         //Edit Text Line
@@ -62,7 +72,7 @@ public class SendFeedbackSellerFragment extends Fragment {
         editText_sendFeedback_description.setMaxLines(5);
 
         //get data from home activity
-        id = Variable.SELLER.getId();
+//        id = Variable.SELLER.getId();
 
         //click send button handle
         btn_sendFeedback_send.setOnClickListener(new View.OnClickListener() {
@@ -75,12 +85,12 @@ public class SendFeedbackSellerFragment extends Fragment {
         return view;
     }
 
-    private void ClearText(){
+    private void ClearText() {
         editText_sendFeedback_description.setText("");
         editText_sendFeedback_title.setText("");
     }
 
-    private void inputData(){
+    private void inputData() {
         title = editText_sendFeedback_title.getText().toString();
         description = editText_sendFeedback_description.getText().toString();
 
@@ -94,35 +104,36 @@ public class SendFeedbackSellerFragment extends Fragment {
     }
 
 
-
     //add feedback data
-    private void addFeedback(String url){
+    private void addFeedback(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if(response.trim().equals("Succesfully update")){
-                            Toast.makeText(getActivity(),"Cập nhật thành công",Toast.LENGTH_SHORT).show();
+                        if (response.trim().equals("Succesfully update")) {
+                            Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                             ClearText();
+
                             //TODO move back to home
-                        }else{
-                            Toast.makeText(getActivity(),"Lỗi cập nhật",Toast.LENGTH_SHORT).show();
+                            handleSendFeedBack.onSuccess();
+                        } else {
+                            Toast.makeText(getActivity(), "Lỗi cập nhật", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(),"Xảy ra lỗi, vui lòng thử lại",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Xảy ra lỗi, vui lòng thử lại", Toast.LENGTH_SHORT).show();
                     }
                 }
-        ){
+        ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
+                Map<String, String> params = new HashMap<>();
                 params.put("account_id", String.valueOf(id));
-                params.put("title",title);
+                params.put("title", title);
                 params.put("description", description);
                 return params;
             }

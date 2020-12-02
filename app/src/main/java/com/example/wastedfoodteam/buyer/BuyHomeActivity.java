@@ -33,6 +33,7 @@ import com.example.wastedfoodteam.global.Variable;
 
 import com.example.wastedfoodteam.seller.notification.NotificationFragment;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
+import com.example.wastedfoodteam.seller.sellerFragment.SendFeedbackSellerFragment;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.GPSTracker;
 import com.facebook.login.LoginManager;
@@ -122,7 +123,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
+                final int id = item.getItemId();
                 switch (id) {
                     case R.id.itemNavMenuBuyerInfor:
                         //nhớ này muốn sửa đoạn header của drawer navigation thì vào nav_header_buyer và sửa và xem menu thì vào nav_header_buyer
@@ -146,6 +147,37 @@ public class BuyHomeActivity extends AppCompatActivity {
                                 signOutGoogle();
                                 break;
                         }
+                        break;
+                    case R.id.itemNavFeedBack:
+                        SendFeedbackSellerFragment sendFeedbackSellerFragment = new SendFeedbackSellerFragment(new SendFeedbackSellerFragment.HandleSendFeedBack() {
+                            @Override
+                            public void onSuccess() {
+
+
+                            }
+                        }, Variable.BUYER.getId());
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.flSearchResultAH, sendFeedbackSellerFragment, sendFeedbackSellerFragment.getTag()).commit();
+                        break;
+                    case R.id.itemNavFollowSeller:
+                        addFragmentSellerFollow();
+                        break;
+                    case R.id.itemNavOrderHistory:
+                        FragmentOrderHistory fragmentOrderHistory = new FragmentOrderHistory();
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.flSearchResultAH, fragmentOrderHistory, "")
+                                .addToBackStack(null)
+                                .commit();
+                        break;
+                    case R.id.itemNavNotification:
+                        NotificationFragment notificationFragment = new NotificationFragment(Variable.BUYER.getId() + "");
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.flSearchResultAH, notificationFragment, "")
+                                .addToBackStack(null)
+                                .commit();
+                        notificationUtil.updateNotificationSeen(getApplicationContext(), Variable.BUYER.getId(), navigation);
                         break;
                 }
 
