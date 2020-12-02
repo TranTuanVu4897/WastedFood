@@ -52,13 +52,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <fragment
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    tools:context=".MapsActivity" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLat"
-                    style="@style/parent"
-                    android:layout_marginTop="150dp">
+                    style="@style/parent">
 
                     <EditText
-                        android:id="@+id/et_seller_register_lat"
+                        android:id="@+id/etLatitude"
                         style="@style/modifiedEditText"
                         android:hint="Tọa độ X"
                         android:inputType="numberDecimal"
@@ -71,7 +77,7 @@
                     android:layout_marginTop="10dp">
 
                     <EditText
-                        android:id="@+id/et_seller_register_lng"
+                        android:id="@+id/etLongitude"
                         style="@style/modifiedEditText"
                         android:hint="Tọa độ Y"
                         android:inputType="numberDecimal"
@@ -84,7 +90,7 @@
                     android:layout_marginTop="10dp">
 
                     <EditText
-                        android:id="@+id/et_seller_register_address"
+                        android:id="@+id/etAddress"
                         style="@style/modifiedEditText"
                         android:hint="Địa chỉ"
                         android:inputType="text"
@@ -92,7 +98,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
-                    android:id="@+id/btn_seller_register_phone_location_next"
+                    android:id="@+id/btnNext"
                     style="@style/loginButton"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="40dp"
