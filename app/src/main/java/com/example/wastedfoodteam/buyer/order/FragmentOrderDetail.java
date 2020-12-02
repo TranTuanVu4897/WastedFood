@@ -31,6 +31,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,7 +47,6 @@ import java.util.List;
 
 public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
-    private final static int MY_PERMISSIONS_REQUEST = 32;
     private BuyerOrder order;
     private TextView tvTitle, tvBuyQuantity;
     private ImageView ivProduct;
@@ -63,11 +63,7 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_buyer_order_detail, container, false);
 
-        //mapping
-        tvTitle = view.findViewById(R.id.tvProductName);
-        tvBuyQuantity = view.findViewById(R.id.tvBuyQuantity);
-        ivProduct = view.findViewById(R.id.ivProduct);
-
+        mappingViewWithVariables(view);
 
         //set content
         CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), order.getProduct().getImage(), ivProduct);
@@ -87,6 +83,12 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
         return view;
     }
 
+    private void mappingViewWithVariables(View view) {
+        tvTitle = view.findViewById(R.id.tvProductName);
+        tvBuyQuantity = view.findViewById(R.id.tvBuyQuantity);
+        ivProduct = view.findViewById(R.id.ivProduct);
+    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -95,15 +97,16 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
 
-        // Add a marker in fptUniversity and move the camera
-        LatLng fptUniversity = new LatLng(Variable.gps.getLatitude(), Variable.gps.getLongitude());
-        mMap.addMarker(new MarkerOptions().position(fptUniversity).title("Bạn ở đây"));
+        // Add a marker in currentPlace and move the camera
+        LatLng currentPlace = new LatLng(Variable.gps.getLatitude(), Variable.gps.getLongitude());
+        mMap.addMarker(new MarkerOptions().position(currentPlace).title("Bạn ở đây"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(order.getProduct().getSeller().getLatitude(), order.getProduct().getSeller().getLongitude())).title(order.getProduct().getSeller().getName()));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(fptUniversity, 16f));
-        new TaskDirectionRequest().execute(buildRequestUrl(fptUniversity, new LatLng(order.getProduct().getSeller().getLatitude(), order.getProduct().getSeller().getLongitude())));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPlace, 16f));
+        new TaskDirectionRequest().execute(buildRequestUrl(currentPlace, new LatLng(order.getProduct().getSeller().getLatitude(), order.getProduct().getSeller().getLongitude())));
     }
 
-    private String buildRequestUrl(LatLng origin, LatLng destination) {
+    @NotNull
+    private String buildRequestUrl(@NotNull LatLng origin, @NotNull LatLng destination) {
         String strOrigin = "origin=" + origin.latitude + "," + origin.longitude;
         String strDestination = "destination=" + destination.latitude + "," + destination.longitude;
         String sensor = "sensor=false";

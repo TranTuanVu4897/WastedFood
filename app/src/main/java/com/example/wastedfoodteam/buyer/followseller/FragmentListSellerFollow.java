@@ -1,6 +1,7 @@
 package com.example.wastedfoodteam.buyer.followseller;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,43 +45,46 @@ public class FragmentListSellerFollow extends ListFragment {
         listSellers = new ArrayList<>();
         adapter = new SellerFollowAdapter(getActivity().getApplicationContext(), R.layout.list_seller_follow_item, listSellers, getResources());
         lvSeller.setAdapter(adapter);
-        getData(urlGetData);
+        getListFollowSellerOfCurrentUser(urlGetData);
         return view;
     }
 
-    public void getData(final String urlGetData) {
-
+    public void getListFollowSellerOfCurrentUser(final String urlGetData) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
-        StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                // SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                try {
-                    JSONArray jsonProducts = new JSONArray(response);
-                    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                    for (int i = 0; i < jsonProducts.length(); i++) {
-                        listSellers.add((Seller) gson.fromJson(jsonProducts.getString(i), Seller.class));
-                        adapter.notifyDataSetChanged();
+        StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        setUpDataForAdapter(response);
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        },
+                },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(), "lỗi kết nỗi" + urlGetData, Toast.LENGTH_LONG).show();
+                        Log.e("Exception",error.getMessage());
+                        Toast.makeText(getActivity(), "Lỗi kết nỗi" + urlGetData, Toast.LENGTH_LONG).show();
                     }
                 });
         requestQueue.add(getProductAround);
     }
 
+    private void setUpDataForAdapter(String response) {
+        try {
+            JSONArray jsonProducts = new JSONArray(response);
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+            for (int i = 0; i < jsonProducts.length(); i++) {
+                listSellers.add((Seller) gson.fromJson(jsonProducts.getString(i), Seller.class));
+                adapter.notifyDataSetChanged();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
         Seller seller = (Seller) l.getAdapter().getItem(position);
-
 
         //put bundle
         bundleDetail = new Bundle();

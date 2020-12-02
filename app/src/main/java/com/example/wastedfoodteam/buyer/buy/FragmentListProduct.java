@@ -1,5 +1,6 @@
 package com.example.wastedfoodteam.buyer.buy;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,7 +35,7 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 
 public class FragmentListProduct extends ListFragment {
-    String urlGetData;
+    String urlGetData = getUrlForAllSeller();
     ArrayList<BuyerProduct> arrProduct;
     ProductAdapter adapter;
     ListView lvProduction;
@@ -49,16 +50,11 @@ public class FragmentListProduct extends ListFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_buyer_list_product, container, false);
         Log.i("FragmentListProduct", "Show the list view");
-        //set up url volley
-        urlGetData = Variable.IP_ADDRESS + Variable.SEARCH_PRODUCT;
+
 
         //mapping view
-        lvProduction = view.findViewById(android.R.id.list);
-        etSearch = view.findViewById(R.id.etSearchBHA);
-        ibFilter = view.findViewById(R.id.ibFilter);
-        btnNear = view.findViewById(R.id.btnNearProduct);
-        btnAll = view.findViewById(R.id.btnAllProduct);
-        btnFollowSeller = view.findViewById(R.id.btnFollowSellerProduct);
+        mappingViewToVariable(view);
+
         //setup bundle
         bundleDetail = new Bundle();
 
@@ -66,7 +62,7 @@ public class FragmentListProduct extends ListFragment {
 
         adapter = new ProductAdapter(getActivity().getApplicationContext(), R.layout.list_buyer_product_item, arrProduct, getResources());
         lvProduction.setAdapter(adapter);
-        getProduct();
+        getProduct(getUrlForAllSeller());
 
         lvProduction.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -98,13 +94,13 @@ public class FragmentListProduct extends ListFragment {
                         Variable.discount = null;
 
                         createNewArrayProduct();
-                        getProduct();
+                        getProduct(getUrlForAllSeller());
                     }
 
                     @Override
                     public void onChange() {
                         createNewArrayProduct();
-                        getProduct();
+                        getProduct(getUrlForAllSeller());
                     }
                 });
             }
@@ -115,7 +111,7 @@ public class FragmentListProduct extends ListFragment {
             public void onClick(View v) {
                 Variable.distance = "20";
                 createNewArrayProduct();
-                getProduct();
+                getProduct(getUrlForAllSeller());
             }
         });
 
@@ -124,7 +120,7 @@ public class FragmentListProduct extends ListFragment {
             public void onClick(View v) {
                 Variable.distance = "";
                 createNewArrayProduct();
-                getProduct();
+                getProduct(getUrlForAllSeller());
             }
         });
 
@@ -132,7 +128,7 @@ public class FragmentListProduct extends ListFragment {
             @Override
             public void onClick(View v) {
                 createNewArrayProduct();
-                getSellerFollowProduct();
+                getProduct(getUrlForFollowSeller());
 
             }
         });
@@ -140,77 +136,66 @@ public class FragmentListProduct extends ListFragment {
         return view;
     }
 
-    public void getProduct() {
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        //require edit latitude
-        urlGetData = Variable.IP_ADDRESS + Variable.SEARCH_PRODUCT + "?lat=" + Variable.gps.getLatitude() + "&lng=" + Variable.gps.getLongitude()
+    private String getUrlForAllSeller() {
+        return Variable.IP_ADDRESS + Variable.SEARCH_PRODUCT
+                + "?lat=" + Variable.gps.getLatitude() + "&lng=" + Variable.gps.getLongitude()
                 + "&distance=" + Variable.distance
                 + "&start_time=" + Variable.startTime + "&end_time=" + Variable.endTime
                 + "&discount=" + Variable.discount
                 + "&search_text=" + etSearch.getText();
-
-        StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONArray jsonProducts = new JSONArray(response);
-                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                            for (int i = 0; i < jsonProducts.length(); i++) {
-                                arrProduct.add(gson.fromJson(jsonProducts.getString(i), BuyerProduct.class));
-                                adapter.setProductList(arrProduct);
-                                adapter.notifyDataSetChanged();
-                            }
-                        } catch (Exception e) {
-                            Log.e("ListProduct", response);
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_LONG);
-                    }
-                });
-        requestQueue.add(getProductAround);
     }
-
-    public void getSellerFollowProduct() {
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        //require edit latitude
-        urlGetData = Variable.IP_ADDRESS + Variable.SEARCH_SELLER_FOLLOW_PRODUCT + "?lat=" + Variable.gps.getLatitude() + "&lng=" + Variable.gps.getLongitude()
+    private String getUrlForFollowSeller() {
+        return Variable.IP_ADDRESS + Variable.SEARCH_SELLER_FOLLOW_PRODUCT
+                + "?lat=" + Variable.gps.getLatitude() + "&lng=" + Variable.gps.getLongitude()
                 + "&distance=" + Variable.distance
                 + "&start_time=" + Variable.startTime + "&end_time=" + Variable.endTime
                 + "&discount=" + Variable.discount
                 + "&search_text=" + etSearch.getText()
                 + "&buyer_id=" + Variable.BUYER.getId();
+    }
 
-        StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
+    private void mappingViewToVariable(View view) {
+        lvProduction = view.findViewById(android.R.id.list);
+        etSearch = view.findViewById(R.id.etSearchBHA);
+        ibFilter = view.findViewById(R.id.ibFilter);
+        btnNear = view.findViewById(R.id.btnNearProduct);
+        btnAll = view.findViewById(R.id.btnAllProduct);
+        btnFollowSeller = view.findViewById(R.id.btnFollowSellerProduct);
+    }
+
+    public void getProduct(String url) {
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        StringRequest getProductAround = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONArray jsonProducts = new JSONArray(response);
-                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                            for (int i = 0; i < jsonProducts.length(); i++) {
-                                arrProduct.add(gson.fromJson(jsonProducts.getString(i), BuyerProduct.class));
-                                adapter.setProductList(arrProduct);
-                                adapter.notifyDataSetChanged();
-                            }
-                        } catch (Exception e) {
-                            Log.e("ListProduct", response);
-                            e.printStackTrace();
-                        }
+                        setUpDataForAdapter(response);
                     }
                 },
                 new Response.ErrorListener() {
+                    @SuppressLint("ShowToast")
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_LONG);
+                        Log.e("Exception",error.getMessage());
+                        Toast.makeText(getActivity(), "Có lỗi bất thường xảy ra, vui lòng thử lại.", Toast.LENGTH_LONG);
                     }
                 });
         requestQueue.add(getProductAround);
+    }
+
+    private void setUpDataForAdapter(String response) {
+        try {
+            JSONArray jsonProducts = new JSONArray(response);
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+            for (int i = 0; i < jsonProducts.length(); i++) {
+                arrProduct.add(gson.fromJson(jsonProducts.getString(i), BuyerProduct.class));
+                adapter.setProductList(arrProduct);
+                adapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            Log.e("ListProduct", response);
+            e.printStackTrace();
+        }
     }
 
 
@@ -223,7 +208,6 @@ public class FragmentListProduct extends ListFragment {
         bundleDetail.putSerializable("PRODUCT", product);
         detailProduct = new FragmentDetailProduct();
         detailProduct.setArguments(bundleDetail);
-
 
         //open detail product fragment
         getActivity().getSupportFragmentManager().beginTransaction()

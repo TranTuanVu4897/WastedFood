@@ -1,5 +1,6 @@
 package com.example.wastedfoodteam.buyer.followseller;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.buy.BuyerProduct;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.utils.CommonFunction;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -48,6 +51,7 @@ public class ProductAdapterOfSeller extends BaseAdapter {
         return productList.get(position).getId();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ProductAdapterOfSeller.ViewHolder holder;
@@ -56,13 +60,8 @@ public class ProductAdapterOfSeller extends BaseAdapter {
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(layout, null);
-            holder.tvName = convertView.findViewById(R.id.tvNameLSPI);
-            holder.ivProduct = convertView.findViewById(R.id.ivProductLSPI);
-            holder.tvDiscount = convertView.findViewById(R.id.tvDiscount);
-            holder.tvQuantity = convertView.findViewById(R.id.tvQuantity);
-            holder.tvOriginalPrice = convertView.findViewById(R.id.tvOriginalPrice);
-            holder.tvSellPrice = convertView.findViewById(R.id.tvSellPrice);
-            convertView.setTag(holder);
+
+            mappingViewWithHolderItem(holder, convertView);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
@@ -79,4 +78,16 @@ public class ProductAdapterOfSeller extends BaseAdapter {
 
         return convertView;
     }
+
+    private void mappingViewWithHolderItem(@NotNull ViewHolder holder, @NotNull View convertView) {
+        holder.tvName = convertView.findViewById(R.id.tvNameLSPI);
+        holder.ivProduct = convertView.findViewById(R.id.ivProductLSPI);
+        holder.tvDiscount = convertView.findViewById(R.id.tvDiscount);
+        holder.tvQuantity = convertView.findViewById(R.id.tvQuantity);
+        holder.tvOriginalPrice = convertView.findViewById(R.id.tvOriginalPrice);
+        holder.tvSellPrice = convertView.findViewById(R.id.tvSellPrice);
+        convertView.setTag(holder);
+    }
+
+
 }

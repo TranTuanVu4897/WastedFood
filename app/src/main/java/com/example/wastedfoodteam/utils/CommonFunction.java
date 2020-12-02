@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.model.Seller;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -97,5 +98,15 @@ public class CommonFunction {
             return true;
 
         return false;
+    }
+
+    public static String getStringDistance(Seller seller) {
+        String distance = "km";
+        try{
+            distance = seller.getDistance()+distance;
+        }catch (Exception e){
+            distance = "Không rõ";
+        }
+        return distance;
     }
 }

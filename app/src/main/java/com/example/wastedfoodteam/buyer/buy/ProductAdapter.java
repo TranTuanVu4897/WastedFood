@@ -13,6 +13,8 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class ProductAdapter extends BaseAdapter {
@@ -29,7 +31,7 @@ public class ProductAdapter extends BaseAdapter {
     }
 
     private class ViewHolder {
-        TextView tvName, tvDiscount, tvQuantity, tvOriginalPrice, tvSellPrice, tvOpenTime, tvDirect, tvRating;
+        TextView tvName, tvDiscount, tvQuantity, tvOriginalPrice, tvSellPrice, tvOpenTime, tvDistance, tvRating;
         ImageView ivProduct;
     }
 
@@ -62,25 +64,25 @@ public class ProductAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Product product = productList.get(position);
+        BuyerProduct product = productList.get(position);
 
         holder.tvName.setText(product.getName() + "");
         holder.tvSellPrice.setText(CommonFunction.getCurrency(product.getSell_price()));
         holder.tvOriginalPrice.setText(CommonFunction.getCurrency(product.getOriginal_price()));
         holder.tvOpenTime.setText(CommonFunction.getOpenClose(product.getStart_time(), product.getEnd_time()));
         holder.tvDiscount.setText(CommonFunction.getDiscount(product.getSell_price(), product.getOriginal_price()));
+        holder.tvDistance.setText(CommonFunction.getStringDistance(product.getSeller()));
         CommonFunction.setQuantityTextView(holder.tvQuantity, product.getRemain_quantity(), product.getOriginal_quantity());
-        //get image from url
         CommonFunction.setImageViewSrc(context, product.getImage(), holder.ivProduct);
 
         return convertView;
 
     }
 
-    private void mappingViewToHolder(ViewHolder holder, View convertView) {
+    private void mappingViewToHolder(@NotNull ViewHolder holder, @NotNull View convertView) {
         holder.tvName = convertView.findViewById(R.id.tvTitleLPI);
         holder.ivProduct = convertView.findViewById(R.id.ivProductLPI);
-        holder.tvDirect = convertView.findViewById(R.id.tvDistance);
+        holder.tvDistance = convertView.findViewById(R.id.tvDistance);
         holder.tvDiscount = convertView.findViewById(R.id.tvDiscount);
         holder.tvQuantity = convertView.findViewById(R.id.tvQuantity);
         holder.tvOpenTime = convertView.findViewById(R.id.tvOpenTime);

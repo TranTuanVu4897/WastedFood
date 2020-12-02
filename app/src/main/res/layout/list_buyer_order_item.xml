@@ -32,20 +32,6 @@
             tools:srcCompat="@drawable/no_image"></ImageView>
 
         <TextView
-            android:id="@+id/tvQuantity"
-            android:layout_width="131dp"
-            android:layout_height="wrap_content"
-            android:background="#6BF271"
-            android:text="Còn: 10/10"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="@+id/ivProductLPI"
-            app:layout_constraintEnd_toEndOf="@+id/ivProductLPI"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/ivProductLPI"
-            app:layout_constraintTop_toTopOf="@+id/ivProductLPI"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <TextView
             android:id="@+id/tvDiscount"
             android:layout_width="40dp"
             android:layout_height="38dp"

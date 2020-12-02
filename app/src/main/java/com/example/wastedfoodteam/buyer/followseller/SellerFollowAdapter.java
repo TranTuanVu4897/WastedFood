@@ -13,6 +13,8 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public class SellerFollowAdapter extends BaseAdapter {
@@ -54,22 +56,26 @@ public class SellerFollowAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(layout,null);
-            holder.tvNameSeller = convertView.findViewById(R.id.tvNameSellerFSFI);
-            holder.tvAddress = convertView.findViewById(R.id.tvAddress);
-            holder.ivSeller = convertView.findViewById(R.id.ivSellerLSFI);
-            holder.tvDirection = convertView.findViewById(R.id.tvDistance);
-            convertView.setTag(holder);
-        }
-        else {
+            convertView = inflater.inflate(layout, null);
+            mappingViewWithHolderItems(holder, convertView);
+
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
         Seller seller = sellerList.get(position);
 
         holder.tvNameSeller.setText(seller.getName());
         holder.tvAddress.setText(seller.getAddress());
-        holder.tvDirection.setText("2km");
-        CommonFunction.setImageViewSrc(context,seller.getImage(),holder.ivSeller);
+        holder.tvDirection.setText(CommonFunction.getStringDistance(seller) );
+        CommonFunction.setImageViewSrc(context, seller.getImage(), holder.ivSeller);
         return convertView;
+    }
+
+    private void mappingViewWithHolderItems(@NotNull ViewHolder holder, @NotNull View convertView) {
+        holder.tvNameSeller = convertView.findViewById(R.id.tvNameSellerFSFI);
+        holder.tvAddress = convertView.findViewById(R.id.tvAddress);
+        holder.ivSeller = convertView.findViewById(R.id.ivSellerLSFI);
+        holder.tvDirection = convertView.findViewById(R.id.tvDistance);
+        convertView.setTag(holder);
     }
 }

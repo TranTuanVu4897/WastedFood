@@ -1,9 +1,5 @@
 package com.example.wastedfoodteam.buyer.followseller;
 
-import com.example.wastedfoodteam.model.Seller;
-
-import java.sql.Date;
-
 public class SellerExtraInfo {
     String follow_total;
     String product_total;
