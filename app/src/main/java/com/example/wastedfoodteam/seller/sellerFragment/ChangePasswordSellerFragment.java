@@ -2,9 +2,11 @@ package com.example.wastedfoodteam.seller.sellerFragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -78,6 +85,24 @@ public class ChangePasswordSellerFragment extends Fragment {
                     //validate new password
                     //update password to db
                     String urlGetData = Variable.IP_ADDRESS + "seller/updatePasswordAccount.php";
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    String newPasswordFirebase =  newPassword;
+
+                    user.updatePassword(md5(newPassword)).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("firebase", "User password failure.");
+                        }
+                    })
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("firebase", "User password updated.");
+                                    }
+                                }
+
+                            });
                     updateSellerPassword(urlGetData);
                 }
             }

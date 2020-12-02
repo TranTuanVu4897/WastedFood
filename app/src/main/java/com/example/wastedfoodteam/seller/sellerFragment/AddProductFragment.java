@@ -203,8 +203,6 @@ public class AddProductFragment extends Fragment {
 
     //
     private void addProduct(String url) {
-        String timestamp = "" + System.currentTimeMillis();
-
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {

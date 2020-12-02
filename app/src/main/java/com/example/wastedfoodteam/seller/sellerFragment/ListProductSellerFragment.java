@@ -60,7 +60,6 @@ public class ListProductSellerFragment extends ListFragment {
         adapter = new ProductSellerAdapter(getActivity().getApplicationContext(), R.layout.list_seller_product, arrProduct, getResources());
         lvProduct.setAdapter(adapter);
         getData(urlGetData);
-        //tv_total_product.setText(adapter.getCount() + " sản phẩm");
         getTotalProduct(Variable.IP_ADDRESS + "seller/getTotalProduct.php" + "?seller_id=" + Variable.SELLER.getId());
         lvProduct.setOnTouchListener(new View.OnTouchListener() {
             @Override
