@@ -76,6 +76,18 @@ public class Seller extends Account implements Serializable {
         this.distance = distance;
     }
 
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
     public Seller() {
     }
 
