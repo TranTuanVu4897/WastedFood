@@ -50,14 +50,11 @@ import java.util.List;
 
 public class BuyHomeActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_PERMISSION = 2;
-    ImageView ivAppIcon;
     ImageButton ibUserInfo;
     FragmentListProduct fragmentListProduct;
     NotificationUtil notificationUtil;
     GPSTracker gps;
     private BottomNavigationView navigation;
-    GoogleSignInClient mGoogleSignInClient;
-    GoogleSignInApi mGoogleSignInApi;
     TextView tv_nav_header_buyer_user_name;
     ImageView iv_nav_header_buyer_profile_image;
     private DrawerLayout drawerLayout;
@@ -249,6 +246,8 @@ public class BuyHomeActivity extends AppCompatActivity {
             return false;
         }
     };
+
+
 
     private void addFragmentListProduct() {
         fragmentListProduct = new FragmentListProduct();

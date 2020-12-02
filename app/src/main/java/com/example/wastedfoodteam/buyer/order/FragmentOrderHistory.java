@@ -29,7 +29,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 public class FragmentOrderHistory extends ListFragment {
-  final  String urlGetData = Variable.IP_ADDRESS + Variable.ORDER_HISTORY + "?buyer_id=" + Variable.BUYER.getId();
+    final String urlGetData = Variable.IP_ADDRESS + Variable.ORDER_HISTORY + "?buyer_id=" + Variable.BUYER.getId();
     ArrayList<BuyerOrder> orderArrayList;
     OrderAdapter adapter;
     ListView lvOrder;
@@ -52,11 +52,11 @@ public class FragmentOrderHistory extends ListFragment {
         adapter = new OrderAdapter(getActivity().getApplicationContext(), R.layout.list_buyer_product_item, orderArrayList, getResources());
         lvOrder.setAdapter(adapter);
 
-        getData();
+        getListOrderHistory();
         return view;
     }
 
-    private void getData() {
+    private void getListOrderHistory() {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
@@ -68,7 +68,7 @@ public class FragmentOrderHistory extends ListFragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(),"Có lỗi bất thường xảy ra, vui lòng thử lại.", Toast.LENGTH_LONG);
+                        Toast.makeText(getActivity(), "Có lỗi bất thường xảy ra, vui lòng thử lại.", Toast.LENGTH_LONG);
                     }
                 });
         requestQueue.add(getProductAround);
@@ -82,11 +82,11 @@ public class FragmentOrderHistory extends ListFragment {
             Gson gson = gsonBuilder.create();
 
             for (int i = 0; i < jsonOrders.length(); i++) {
-                orderArrayList.add( gson.fromJson(jsonOrders.getString(i), BuyerOrder.class));
+                orderArrayList.add(gson.fromJson(jsonOrders.getString(i), BuyerOrder.class));
                 adapter.notifyDataSetChanged();
             }
         } catch (JSONException e) {
-            Log.e("StringResponse",response);
+            Log.e("StringResponse", response);
             e.printStackTrace();
         }
     }
