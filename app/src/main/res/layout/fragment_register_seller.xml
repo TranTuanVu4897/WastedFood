@@ -97,7 +97,7 @@
                     <EditText
                         android:id="@+id/et_seller_register_confirm_password"
                         style="@style/modifiedEditText"
-                        android:hint="@string/login_password_hint"
+                        android:hint="Nhập lại mật khẩu"
                         android:inputType="textPassword"
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>

@@ -94,6 +94,7 @@
                 android:hint="Phone"
                 android:maxLength="10"
                 android:paddingEnd="50dp"
+                android:inputType="number"
                 android:textColorHint="#B6ADAD" />
 
             <EditText

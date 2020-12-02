@@ -57,6 +57,7 @@ public class EditSellerFragment extends Fragment {
     EditText editText_editSeller_address;
     EditText editText_editSeller_description;
     EditText editText_editSeller_email;
+    EditText editText_editSeller_phoneNumber;
     Button btn_editSeller_edit;
     ImageView iv_editSeller_avatar;
 
@@ -102,19 +103,19 @@ public class EditSellerFragment extends Fragment {
         editText_editSeller_name = view.findViewById(R.id.editText_editSeller_name);
         editText_editSeller_address = view.findViewById(R.id.editText_editSeller_address);
         editText_editSeller_description = view.findViewById(R.id.editText_editSeller_description);
+        editText_editSeller_email = view.findViewById(R.id.editText_editSeller_email);
+        editText_editSeller_phoneNumber = view.findViewById(R.id.editText_editSeller_phoneNumber);
+
         btn_editSeller_edit = view.findViewById(R.id.btn_editSeller_edit1);
         iv_editSeller_avatar = view.findViewById(R.id.iv_editSeller_avatar);
-
-
         id = Variable.SELLER.getId();
         getSeller(id);
-
-
         //string get from edit text
         string_editSeller_name = editText_editSeller_name.getText().toString().trim();
         string_editSeller_address = editText_editSeller_address.getText().toString().trim();
         string_editSeller_description = editText_editSeller_description.getText().toString().trim();
-        //string_editSeller_email = editText_editSeller_email.getText().toString().trim();
+        editText_editSeller_email.setText(Variable.SELLER.getEmail());
+        editText_editSeller_phoneNumber.setText(Variable.SELLER.getPhone());
 
         //for multiline EditText
         //scroll for EditText

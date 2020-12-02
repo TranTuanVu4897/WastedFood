@@ -38,21 +38,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:paddingBottom="20dp"
-                android:text="Thông tin nhà hàng"
+                android:text="Chi tiết đơn hàng"
                 android:textColor="@color/colorWhite"
                 android:textSize="30dp"
                 android:textStyle="bold">
 
             </TextView>
-
-            <ImageView
-                android:id="@+id/iv_editSeller_avatar"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="2"
-                app:srcCompat="@drawable/useravatar" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputName"
@@ -60,10 +51,13 @@
                 android:layout_marginTop="20dp">
 
                 <EditText
-                    android:id="@+id/editText_editSeller_name"
+                    android:id="@+id/et_order_productName"
                     style="@style/modifiedEditText"
-                    android:hint="Tên nhà hàng:"
+                    android:hint="Tên sản phẩm:"
                     android:inputType="text"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:longClickable="false"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,9 +67,12 @@
                 android:layout_marginTop="20dp">
 
                 <EditText
-                    android:id="@+id/editText_editSeller_address"
+                    android:id="@+id/et_order_quantity"
                     style="@style/modifiedEditText"
-                    android:hint="Địa chỉ:"
+                    android:hint="Số lượng:"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:longClickable="false"
                     android:inputType="text"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -85,11 +82,12 @@
                 android:layout_marginTop="20dp">
 
                 <EditText
-                    android:id="@+id/editText_editSeller_email"
+                    android:id="@+id/et_order_total_cost"
                     style="@style/modifiedEditText"
+                    android:focusable="false"
                     android:clickable="false"
-                    android:editable="false"
-                    android:hint="Địa chỉ email:"
+                    android:longClickable="false"
+                    android:hint="Thành tiền:"
                     android:maxLines="1"
                     tools:ignore="Deprecated" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -99,12 +97,12 @@
                 android:layout_marginTop="20dp">
 
                 <EditText
-                    android:id="@+id/editText_editSeller_phoneNumber"
+                    android:id="@+id/et_order_buyer_name"
                     style="@style/modifiedEditText"
+                    android:focusable="false"
                     android:clickable="false"
-                    android:editable="false"
-                    android:hint="Số điện thoại:"
-                    android:inputType="phone"
+                    android:longClickable="false"
+                    android:hint="Tên khách hàng:"
                     android:maxLines="1"
                     tools:ignore="Deprecated" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -115,19 +113,22 @@
                 android:layout_marginTop="20dp">
 
                 <EditText
-                    android:id="@+id/editText_editSeller_description"
+                    android:id="@+id/et_order_description"
                     style="@style/modifiedEditText"
-                    android:hint="Mô tả:"
-                    android:inputType="text"
-                    android:maxLines="1" />
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:longClickable="false"
+                    android:hint="Ghi chú của khách hàng:"
+                    android:maxLines="1"
+                    tools:ignore="Deprecated" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/btn_editSeller_edit1"
+                android:id="@+id/btn_order_back"
                 style="@style/loginButton"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="40dp"
-                android:text="THAY ĐỔI" />
+                android:text="QUAY TRỞ LẠI" />
         </LinearLayout>
 
 

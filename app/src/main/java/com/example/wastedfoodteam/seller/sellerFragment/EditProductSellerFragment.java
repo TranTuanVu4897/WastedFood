@@ -39,7 +39,6 @@ public class EditProductSellerFragment extends Fragment {
     private EditText sellPrice;
     private EditText openTime;
     private EditText closeTime;
-    private EditText saleDate;
     private Button btn_detail_product_add;
     int id;
 
@@ -58,7 +57,7 @@ public class EditProductSellerFragment extends Fragment {
         sellPrice = view.findViewById(R.id.editText_detail_product_sellPrice);
         openTime = view.findViewById(R.id.editText_detail_product_openTime);
         closeTime = view.findViewById(R.id.editText_detail_product_closeTime);
-//        saleDate = view.findViewById(R.id.editText_detail_product_saleDate);
+
         btn_detail_product_add = view.findViewById(R.id.btn_detail_product_add);
 
         //input data
@@ -69,7 +68,7 @@ public class EditProductSellerFragment extends Fragment {
         sellPrice.setText(String.valueOf(Variable.PRODUCT.getSell_price()));
         openTime.setText(String.valueOf(Variable.PRODUCT.getStart_time()));
         closeTime.setText(String.valueOf(Variable.PRODUCT.getEnd_time()));
-        saleDate.setText(String.valueOf(Variable.PRODUCT.getSell_date()));
+
 
 
         cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), iv_detail_product_icon);

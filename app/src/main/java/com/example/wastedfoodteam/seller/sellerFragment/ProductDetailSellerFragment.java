@@ -2,8 +2,11 @@ package com.example.wastedfoodteam.seller.sellerFragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.ListFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +42,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProductDetailSellerFragment extends Fragment {
+public class ProductDetailSellerFragment extends ListFragment {
 
     ListView lvOrderConfirm,lvOrderPayment,lvOrderDone;
     ArrayList<SellerOrder> arrOrder,arrOrderPayment,arrOrderDone;
@@ -93,7 +96,6 @@ public class ProductDetailSellerFragment extends Fragment {
         orderDoneAdapter = new OrderDoneAdapter(getActivity().getApplicationContext(), R.layout.list_seller_done_order, arrOrderDone, getResources(),getActivity());
         lvOrderPayment.setAdapter(orderPaymentAdapter);
         lvOrderDone.setAdapter(orderDoneAdapter);
-
         getData(Order.Status.BUYING);
         getData(Order.Status.SUCCESS);
         return view;
