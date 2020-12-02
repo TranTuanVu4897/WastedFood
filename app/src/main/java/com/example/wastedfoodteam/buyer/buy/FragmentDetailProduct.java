@@ -76,14 +76,7 @@ public class FragmentDetailProduct extends Fragment {
         assert getArguments() != null;
         product = (BuyerProduct) getArguments().get("PRODUCT");
 
-        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), product.getSeller().getImage(), civSeller);
-        //set content for views about product
-        tvQuantity.setText("Còn: " + product.getRemain_quantity() + "/" + product.getOriginal_quantity());
-        tvPriceDiscount.setText(CommonFunction.getCurrency(product.getSell_price()));
-        tvPriceOriginal.setText(CommonFunction.getCurrency(product.getOriginal_price()));
-        tvOpenTime.setText("Mở cửa từ: " + CommonFunction.getOpenClose(product.getStart_time(), product.getEnd_time()));
-        tvDescription.setText(product.getDescription());
-        tvBuyQuantity.setText(orderQuantity + "");
+        setViewContent();
 
         //Set button follow
         followVolley = new FollowVolley(getActivity().getApplicationContext());
@@ -100,7 +93,6 @@ public class FragmentDetailProduct extends Fragment {
         }, GET_FOLLOW_INFORMATION_URL, Variable.BUYER.getId(), product.getSeller_id());
 
         //set image from url
-        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), product.getImage(), ivProduct);
 
         //set event
         btnDecrease.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +143,19 @@ public class FragmentDetailProduct extends Fragment {
         return view;
     }
 
+    @SuppressLint("SetTextI18n")
+    private void setViewContent() {
+        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), product.getSeller().getImage(), civSeller);
+        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), product.getImage(), ivProduct);
+        tvQuantity.setText("Còn: " + product.getRemain_quantity() + "/" + product.getOriginal_quantity());
+        tvPriceDiscount.setText(CommonFunction.getCurrency(product.getSell_price()));
+        tvPriceOriginal.setText(CommonFunction.getCurrency(product.getOriginal_price()));
+        tvOpenTime.setText("Mở cửa từ: " + CommonFunction.getOpenClose(product.getStart_time(), product.getEnd_time()));
+        tvDescription.setText(product.getDescription());
+        tvBuyQuantity.setText(orderQuantity + "");
+    }
+
+    @SuppressLint("SetTextI18n")
     private void btnIncreaseOnClick() {
         if (orderQuantity < product.getRemain_quantity()) {
             orderQuantity++;
@@ -158,6 +163,7 @@ public class FragmentDetailProduct extends Fragment {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void btnDecreaseOnclick() {
         if (orderQuantity > 0) {
             orderQuantity--;
@@ -183,6 +189,7 @@ public class FragmentDetailProduct extends Fragment {
         ibFollow.setTag(resourceId);
     }
 
+    @SuppressLint("SetTextI18n")
     private void setDialogConfirmBuy() {
         final Dialog confirmDialog = new Dialog(getActivity());
         confirmDialog.setTitle("Xác nhận mua hàng");
@@ -222,19 +229,16 @@ public class FragmentDetailProduct extends Fragment {
             public void onResponse(String response) {
                 if (response.equalsIgnoreCase("SUCCESS")) {
                     Toast.makeText(getActivity().getApplicationContext(), "Thành công", Toast.LENGTH_LONG);
-                    //TODO send massage to seller đang fix cứng
-                    //TODO đang fix cứng
                     util = new NotificationUtil();
                     sendNotif = new SendNotif();
 
+                    String sendMessage = "Khách hàng" + Variable.BUYER.getName() + " đã đặt hàng sản phẩm " + product.getName() + " của bạn";
 
-                    //TODO
-                    //đổi thành order.getBuyerName,get đc seller name
-                    String message = "Khách hàng" + Variable.BUYER.getName() + " đã đặt hàng sản phẩm " + product.getName() + " của bạn";
-                    util.addNotification(getContext(), Variable.BUYER.getId(), product.getSeller_id(), message, product.getId());
-                    //phải thêm lấy firebase_UID của seller trong phần bên buyer TODO
-                    //đã lấy
-                    sendNotif.notificationHandle(product.getSeller().getFirebase_UID(), "Wasted food app", message);
+                    if (message != null || !message.isEmpty())
+                        sendMessage = sendMessage + "/n Kèm với lời nhắn: " + message;
+
+                    util.addNotification(getContext(), Variable.BUYER.getId(), product.getSeller_id(), sendMessage, product.getId());
+                    sendNotif.notificationHandle(product.getSeller().getFirebase_UID(), "Wasted food app", sendMessage);
 
 
                     moveToFragmentOrderDetail();
