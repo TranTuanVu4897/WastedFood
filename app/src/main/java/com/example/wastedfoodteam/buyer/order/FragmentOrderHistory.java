@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -61,28 +62,33 @@ public class FragmentOrderHistory extends ListFragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONArray jsonOrders = new JSONArray(response);
-
-                            GsonBuilder gsonBuilder = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss");
-                            Gson gson = gsonBuilder.create();
-
-                            for (int i = 0; i < jsonOrders.length(); i++) {
-                                orderArrayList.add( gson.fromJson(jsonOrders.getString(i), BuyerOrder.class));
-                                adapter.notifyDataSetChanged();
-                            }
-                        } catch (JSONException e) {
-                            Log.e("StringResponse",response);
-                            e.printStackTrace();
-                        }
+                        setUpAdapterItems(response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity(),"Có lỗi bất thường xảy ra, vui lòng thử lại.", Toast.LENGTH_LONG);
                     }
                 });
         requestQueue.add(getProductAround);
+    }
+
+    private void setUpAdapterItems(String response) {
+        try {
+            JSONArray jsonOrders = new JSONArray(response);
+
+            GsonBuilder gsonBuilder = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss");
+            Gson gson = gsonBuilder.create();
+
+            for (int i = 0; i < jsonOrders.length(); i++) {
+                orderArrayList.add( gson.fromJson(jsonOrders.getString(i), BuyerOrder.class));
+                adapter.notifyDataSetChanged();
+            }
+        } catch (JSONException e) {
+            Log.e("StringResponse",response);
+            e.printStackTrace();
+        }
     }
 
     @Override
