@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.utils.OTPFirebase;
+package com.example.wastedfoodteam.seller.forgetPassword;
 
 import android.os.Bundle;
 
@@ -29,7 +29,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
-public class VerifyPhoneFragment extends Fragment {
+public class VerifyPhoneForgotPasswordFragment extends Fragment {
 
     String phoneNumber;
     private String verificationId;
@@ -53,8 +53,7 @@ public class VerifyPhoneFragment extends Fragment {
             }
         });
         phoneNumber=getArguments().getString("phone");
-        sendVerificationCode(phoneNumber);
-
+        sendVerificationCode("+84" + phoneNumber);
         return view;
     }
 
@@ -79,12 +78,14 @@ public class VerifyPhoneFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Variable.RESISTER_SELLER.setPhone(phoneNumber.substring(3));
-                            RegisterSellerLocationFragment registerSellerLocationFragment = new RegisterSellerLocationFragment();
+                            SellerChangePassword sellerChangePasswordFragment = new SellerChangePassword();
                             //open seller detail product fragment
                             FragmentManager fragmentManager = getFragmentManager();
+                            Bundle bundle = new Bundle();
+                            bundle.putString( "phoneNumber" ,phoneNumber);
+                            sellerChangePasswordFragment.setArguments(bundle);
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.flFragmentLayoutAM,registerSellerLocationFragment);
+                            fragmentTransaction.replace(R.id.flFragmentLayoutAM,sellerChangePasswordFragment);
                             fragmentTransaction.commit();
                         } else {
                             Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_LONG).show();

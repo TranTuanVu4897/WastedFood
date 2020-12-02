@@ -22,6 +22,8 @@ import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.notification.NotificationFragment;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
+import com.example.wastedfoodteam.seller.register.RegisterSellerLocationFragment;
+import com.example.wastedfoodteam.seller.register.RegisterSellerPhoneFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.AddProductFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.ChangePasswordSellerFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.EditSellerFragment;
@@ -73,7 +75,7 @@ public class SellerHomeActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
 
         //add to tab navigation header
-        iv_nav_header_profile_image = (CircleImageView) headerView.findViewById(R.id.iv_nav_header_profile_image);
+        iv_nav_header_profile_image = (CircleImageView ) headerView.findViewById(R.id.iv_nav_header_profile_image);
         tv_nav_header_user_name = headerView.findViewById(R.id.tv_nav_header_user_name);
 
         information_tab_seller = findViewById(R.id.information_tab_seller);
@@ -86,7 +88,7 @@ public class SellerHomeActivity extends AppCompatActivity {
             }
         });
 
-        CommonFunction.setImageViewSrc(this, Variable.SELLER.getImage(), iv_nav_header_profile_image);
+        CommonFunction.setImageViewSrc(this,Variable.SELLER.getImage(),iv_nav_header_profile_image);
         tv_nav_header_user_name.setText(Variable.SELLER.getName());
 
         // Find our drawer view
@@ -98,19 +100,19 @@ public class SellerHomeActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if (id == R.id.home) {
+                if(id == R.id.home){
                     SellerHomeFragment sellerHomeFragment = new SellerHomeFragment();
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_main, sellerHomeFragment, sellerHomeFragment.getTag()).commit();
-                } else if (id == R.id.item_nav_drawer_menu_information) {
+                } else if(id == R.id.item_nav_drawer_menu_information){
                     EditSellerFragment editSellerFragment = new EditSellerFragment();
                     FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.content_main, editSellerFragment, editSellerFragment.getTag()).commit();
-                } else if (id == R.id.item_nav_drawer_menu_change_password) {
+                    manager.beginTransaction().replace(R.id.content_main,editSellerFragment,editSellerFragment.getTag()).commit();
+                } else if(id == R.id.item_nav_drawer_menu_change_password){
                     ChangePasswordSellerFragment changePasswordSellerFragment = new ChangePasswordSellerFragment();
                     FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.content_main, changePasswordSellerFragment, changePasswordSellerFragment.getTag()).commit();
-                } else if (id == R.id.item_nav_drawer_menu_feedback) {
+                    manager.beginTransaction().replace(R.id.content_main,changePasswordSellerFragment,changePasswordSellerFragment.getTag()).commit();
+                }else if (id == R.id.item_nav_drawer_menu_feedback) {
                     SendFeedbackSellerFragment sendFeedbackSellerFragment = new SendFeedbackSellerFragment(new SendFeedbackSellerFragment.HandleSendFeedBack() {
                         @Override
                         public void onSuccess() {
@@ -119,19 +121,18 @@ public class SellerHomeActivity extends AppCompatActivity {
                     }, Variable.SELLER.getId());
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_main, sendFeedbackSellerFragment, sendFeedbackSellerFragment.getTag()).commit();
-                } else if (id == R.id.item_nav_drawer_menu_manager) {
+                }else if(id == R.id.item_nav_drawer_menu_manager){
                     ListProductSellerFragment listProductSellerFragment = new ListProductSellerFragment();
                     FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.content_main, listProductSellerFragment, listProductSellerFragment.getTag()).commit();
-                } else if (id == R.id.item_nav_drawer_menu_history) {
-                    VerifyPhoneFragment verifyPhoneFragment = new VerifyPhoneFragment();
+                    manager.beginTransaction().replace(R.id.content_main,listProductSellerFragment,listProductSellerFragment.getTag()).commit();
+                }else if(id == R.id.item_nav_drawer_menu_alert){
+                    RegisterSellerLocationFragment registerSellerLocationFragment = new RegisterSellerLocationFragment();
                     FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.content_main, verifyPhoneFragment, verifyPhoneFragment.getTag()).commit();
-                } else if (id == R.id.item_nav_drawer_menu_alert) {
-                    NotificationFragment notificationFragment = new NotificationFragment(Variable.SELLER.getId() + "");
+                    manager.beginTransaction().replace(R.id.content_main,registerSellerLocationFragment,registerSellerLocationFragment.getTag()).commit();
+                    /*NotificationFragment notificationFragment = new NotificationFragment(Variable.SELLER.getId()+"");
                     FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.content_main, notificationFragment, notificationFragment.getTag()).commit();
-                } else if (id == R.id.item_nav_drawer_menu_logout) {
+                    manager.beginTransaction().replace(R.id.content_main,notificationFragment,notificationFragment.getTag()).commit();*/
+                }else if(id == R.id.item_nav_drawer_menu_logout){
                     FirebaseAuth.getInstance().signOut();
                     startActivity(new Intent(SellerHomeActivity.this, MainActivity.class));
                 }
@@ -150,10 +151,10 @@ public class SellerHomeActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.content_main, sellerHomeFragment, sellerHomeFragment.getTag()).commit();
 
-        notificationUtil.getTotalNotification(getApplicationContext(), Variable.SELLER.getId(), navigation);
+        notificationUtil.getTotalNotification(getApplicationContext(), Variable.SELLER.getId(),navigation);
 
         //notification badge
-        if (Variable.TOTAL_NOTIFICATION > 0) {
+        if(Variable.TOTAL_NOTIFICATION > 0) {
             BadgeDrawable badge = navigation.getOrCreateBadge(R.id.item_bottom_nav_menu_notification);
             badge.setVisible(true);
             badge.setNumber(Variable.TOTAL_NOTIFICATION);
@@ -162,12 +163,13 @@ public class SellerHomeActivity extends AppCompatActivity {
         if (type != null) {
             switch (type) {
                 case "notifyFrag":
-                    NotificationFragment notificationFragment = new NotificationFragment(Variable.SELLER.getId() + "");
+                    NotificationFragment notificationFragment = new NotificationFragment(Variable.SELLER.getId()+"");
                     FragmentManager fragmentManager = getSupportFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.content_main, notificationFragment, notificationFragment.getTag()).commit();
+                    fragmentManager.beginTransaction().replace(R.id.content_main,notificationFragment,notificationFragment.getTag()).commit();
             }
         }
     }
+
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -187,9 +189,9 @@ public class SellerHomeActivity extends AppCompatActivity {
                     manager.beginTransaction().replace(R.id.content_main, addProductFragment, addProductFragment.getTag()).commit();
                     return true;
                 case R.id.item_bottom_nav_menu_notification:
-                    NotificationFragment notificationFragment = new NotificationFragment(Variable.SELLER.getId() + "");
-                    manager.beginTransaction().replace(R.id.content_main, notificationFragment, notificationFragment.getTag()).commit();
-                    notificationUtil.updateNotificationSeen(getApplicationContext(), Variable.SELLER.getId(), navigation);
+                    NotificationFragment notificationFragment = new NotificationFragment(Variable.SELLER.getId()+"");
+                    manager.beginTransaction().replace(R.id.content_main,notificationFragment,notificationFragment.getTag()).commit();
+                    notificationUtil.updateNotificationSeen(getApplicationContext(),Variable.SELLER.getId(),navigation);
                     return true;
             }
             return false;

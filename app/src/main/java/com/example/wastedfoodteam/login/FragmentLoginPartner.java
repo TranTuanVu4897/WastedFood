@@ -25,6 +25,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
+import com.example.wastedfoodteam.seller.forgetPassword.SellerForgetPasswordFragment;
 import com.example.wastedfoodteam.seller.home.SellerHomeActivity;
 import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.seller.register.RegisterSellerFragment;
@@ -46,7 +47,7 @@ public class FragmentLoginPartner extends Fragment {
     Button btnSignIn, btnBuyerOption;
     EditText etSDT, etPass;
     String urlGetData = "";
-    TextView tvRegisterAccount;
+    TextView tvRegisterAccount,tvForgotPassword;
     String password = "";
 
     @Nullable
@@ -58,6 +59,7 @@ public class FragmentLoginPartner extends Fragment {
         btnSignIn = view.findViewById(R.id.btnSignInPartnerFLP);
         btnBuyerOption = view.findViewById(R.id.btnBuyerOptionFLP);
         tvRegisterAccount = view.findViewById(R.id.tvRegisterSeller);
+        tvForgotPassword = view.findViewById(R.id.tvForgotPassPartnerFLP);
         Intent intent = new Intent(getActivity(), SellerHomeActivity.class);
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +67,17 @@ public class FragmentLoginPartner extends Fragment {
                 password = md5(etPass.getText().toString());
                 urlGetData = Variable.IP_ADDRESS + "login/sellerLogin.php?username=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
                 getData(urlGetData);
+            }
+        });
+
+        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SellerForgetPasswordFragment sellerForgetPasswordFragment = new SellerForgetPasswordFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.flFragmentLayoutAM,sellerForgetPasswordFragment);
+                fragmentTransaction.commit();
             }
         });
 
