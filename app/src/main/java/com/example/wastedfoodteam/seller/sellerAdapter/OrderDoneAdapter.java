@@ -2,17 +2,25 @@ package com.example.wastedfoodteam.seller.sellerAdapter;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.global.Variable;
+import com.example.wastedfoodteam.model.Product;
+import com.example.wastedfoodteam.seller.sellerFragment.ProductDetailSellerFragment;
+import com.example.wastedfoodteam.seller.sellerFragment.SellerOrderDetailFragment;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
 import java.util.List;
@@ -77,14 +85,18 @@ public class OrderDoneAdapter extends BaseAdapter {
         order = arrayOrder.get(position);
         CommonFunction.setImageViewSrc(myContext,order.getBuyer_avatar(),holder.ivBuyer);
         holder.tvDescription.setText("Ghi chú: " + order.getBuyer_comment());
-        holder.tvTotalCost.setText( "Thành tiền: " + String.valueOf(order.getTotal_cost()));
+        holder.tvTotalCost.setText("Thành tiền: " + String.valueOf(CommonFunction.getCurrency(order.getTotal_cost())));
         holder.tvQuantity.setText("Số lượng: " + String.valueOf(order.getQuantity()));
         holder.btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //set status = wait for payment
                 //reload fragment
-
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("order", order);
+                SellerOrderDetailFragment sellerOrderDetailFragment = new SellerOrderDetailFragment();
+                sellerOrderDetailFragment.setArguments(bundle);
+                myFragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, sellerOrderDetailFragment, sellerOrderDetailFragment.getTag()).commit();
             }
         });
         return convertView;

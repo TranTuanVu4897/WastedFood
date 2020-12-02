@@ -118,13 +118,6 @@ public class SellerHomeActivity extends AppCompatActivity {
                     ListProductSellerFragment listProductSellerFragment = new ListProductSellerFragment();
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_main,listProductSellerFragment,listProductSellerFragment.getTag()).commit();
-                }else if(id == R.id.item_nav_drawer_menu_history){
-                    /*ListOrderHistoryFragment listOrderHistoryFragment = new ListOrderHistoryFragment();
-                    FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.content_main,listOrderHistoryFragment,listOrderHistoryFragment.getTag()).commit();*/
-                    VerifyPhoneFragment verifyPhoneFragment = new VerifyPhoneFragment();
-                    FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.content_main, verifyPhoneFragment, verifyPhoneFragment.getTag()).commit();
                 }else if(id == R.id.item_nav_drawer_menu_alert){
                     NotificationFragment notificationFragment = new NotificationFragment(Variable.SELLER.getId()+"");
                     FragmentManager manager = getSupportFragmentManager();
