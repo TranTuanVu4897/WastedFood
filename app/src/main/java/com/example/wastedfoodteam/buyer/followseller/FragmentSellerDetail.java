@@ -51,9 +51,9 @@ public class FragmentSellerDetail extends ListFragment {
     Bundle bundleDetail;
     Seller seller;
     TextView tvNameSeller, tvAddress, tvDescription, tvRatingFSD, tvFollowFSD, tvProductFSD;
-    ImageView ivPhotoSeller, ibFollow;
+    ImageView ivPhotoSeller;
     ListView lvProduction;
-    ImageButton ibReport;
+    ImageButton ibReport,ibFollow;
     CameraStorageFunction cameraStorageFunction;
     private FollowVolley followVolley;
 
@@ -62,19 +62,15 @@ public class FragmentSellerDetail extends ListFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_buyer_get_seller_detail, container, false);
-        mapping(view);
+        mappingViewWithVariable(view);
         //set up url volley
-
 
         seller = (Seller) getArguments().get("SELLER");
 
-        tvNameSeller.setText(seller.getName() + "");
-        tvAddress.setText(seller.getAddress() + "");
-        tvDescription.setText(seller.getDescription() + "");
+        setViewContent();
 
         cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), null);
 
-        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), seller.getImage(), ivPhotoSeller);
         ibReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,27 +79,13 @@ public class FragmentSellerDetail extends ListFragment {
             }
         });
 
-        //list product
+        //set up url
         urlGetData = Variable.IP_ADDRESS + "search/getListProductsOfSeller.php?seller_id=" + seller.getId()
                 + "&lat=" + Variable.gps.getLatitude()
                 + "&lng=" + Variable.gps.getLongitude();
 
-        followVolley = new FollowVolley(getActivity().getApplicationContext());
-        String GET_FOLLOW_INFORMATION_URL = Variable.IP_ADDRESS + Variable.GET_FOLLOW;
-        followVolley.setRequestGetFollow(new FollowResponseCallback() {
-            @Override
-            public void onSuccess(String result) {
-
-                if (result.equalsIgnoreCase("TRUE")) {
-                    ibFollow.setImageResource(R.drawable.followed);
-                    ibFollow.setTag(R.drawable.followed);
-                } else {
-                    ibFollow.setTag(R.drawable.not_followed);
-                    ibFollow.setImageResource(R.drawable.not_followed);
-                }
-
-            }
-        }, GET_FOLLOW_INFORMATION_URL, Variable.BUYER.getId(), seller.getId());
+        followVolley = new FollowVolley(getActivity().getApplicationContext(),ibFollow);
+        followVolley.setRequestGetFollow(Variable.IP_ADDRESS + Variable.GET_FOLLOW, Variable.BUYER.getId(), seller.getId());
 
 
         //mapping view
@@ -137,18 +119,18 @@ public class FragmentSellerDetail extends ListFragment {
         ibFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ibFollow.getTag() != null)
-                    if (ibFollow.getTag().equals(R.drawable.followed)) {
-                        ibFollow.setImageResource(R.drawable.not_followed);
-                        ibFollow.setTag(R.drawable.not_followed);
-                    } else {
-                        ibFollow.setImageResource(R.drawable.followed);
-                        ibFollow.setTag(R.drawable.followed);
-                    }
+               followVolley.onIbFollowClick();
             }
         });
 
         return view;
+    }
+
+    private void setViewContent() {
+        tvNameSeller.setText(seller.getName() + "");
+        tvAddress.setText(seller.getAddress() + "");
+        tvDescription.setText(seller.getDescription() + "");
+        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), seller.getImage(), ivPhotoSeller);
     }
 
     private void getSellerExtraInfo() {
@@ -162,7 +144,7 @@ public class FragmentSellerDetail extends ListFragment {
         }, seller.getId() + "");
     }
 
-    private void mapping(View view) {
+    private void mappingViewWithVariable(View view) {
         tvNameSeller = view.findViewById(R.id.tvNameSellerFSD);
         tvAddress = view.findViewById(R.id.tvAddressFSD);
         tvDescription = view.findViewById(R.id.tvDescriptionFSD);
@@ -175,23 +157,13 @@ public class FragmentSellerDetail extends ListFragment {
     }
 
     public void getListProduct(String urlGetData) {
-
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONArray jsonProducts = new JSONArray(response);
-                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                            for (int i = 0; i < jsonProducts.length(); i++) {
-                                arrProduct.add((BuyerProduct) gson.fromJson(jsonProducts.getString(i), BuyerProduct.class));
-                                adapter.notifyDataSetChanged();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Log.e("ResponseString", response);
-                        }
+                        setUpItemsForAdapter(response);
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -202,16 +174,28 @@ public class FragmentSellerDetail extends ListFragment {
         requestQueue.add(getProductAround);
     }
 
+    private void setUpItemsForAdapter(String response) {
+        try {
+            JSONArray jsonProducts = new JSONArray(response);
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+            for (int i = 0; i < jsonProducts.length(); i++) {
+                arrProduct.add((BuyerProduct) gson.fromJson(jsonProducts.getString(i), BuyerProduct.class));
+                adapter.notifyDataSetChanged();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.e("ResponseString", response);
+        }
+    }
+
     @Override
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
         BuyerProduct product = (BuyerProduct) l.getAdapter().getItem(position);
-
 
         //put bundle
         bundleDetail.putSerializable("PRODUCT", product);
         detailProduct = new FragmentDetailProduct();
         detailProduct.setArguments(bundleDetail);
-
 
         //open detail product fragment
         getActivity().getSupportFragmentManager().beginTransaction()

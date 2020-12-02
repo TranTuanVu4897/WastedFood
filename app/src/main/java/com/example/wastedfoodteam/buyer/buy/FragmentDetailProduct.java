@@ -37,6 +37,8 @@ import com.example.wastedfoodteam.utils.SendNotificationPackage.SendNotif;
 import com.example.wastedfoodteam.utils.service.FollowResponseCallback;
 import com.example.wastedfoodteam.utils.service.FollowVolley;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,18 +81,8 @@ public class FragmentDetailProduct extends Fragment {
         setViewContent();
 
         //Set button follow
-        followVolley = new FollowVolley(getActivity().getApplicationContext());
-        followVolley.setRequestGetFollow(new FollowResponseCallback() {
-            @Override
-            public void onSuccess(String result) {
-                if (result.equalsIgnoreCase("TRUE")) {
-                    changeButtonFollowStatus(ibFollow, R.drawable.followed);
-                } else {
-                    changeButtonFollowStatus(ibFollow, R.drawable.not_followed);
-                }
-
-            }
-        }, GET_FOLLOW_INFORMATION_URL, Variable.BUYER.getId(), product.getSeller_id());
+        followVolley = new FollowVolley(getActivity().getApplicationContext(), ibFollow);
+        followVolley.setRequestGetFollow(GET_FOLLOW_INFORMATION_URL, Variable.BUYER.getId(), product.getSeller_id());
 
         //set image from url
 
@@ -120,7 +112,7 @@ public class FragmentDetailProduct extends Fragment {
         ibFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageButtonFollowOnClick(v);
+                followVolley.onIbFollowClick();
             }
         });
 
@@ -171,22 +163,8 @@ public class FragmentDetailProduct extends Fragment {
         }
     }
 
-    private void imageButtonFollowOnClick(View v) {
-        if (ibFollow.getTag() != null)
-            if (isImageButtonIsFollowed(ibFollow.getTag())) {
-                changeButtonFollowStatus(ibFollow, R.drawable.not_followed);
-            } else {
-                changeButtonFollowStatus(ibFollow, R.drawable.followed);
-            }
-    }
-
     private boolean isImageButtonIsFollowed(Object tag) {
         return tag.equals(R.drawable.followed);
-    }
-
-    private void changeButtonFollowStatus(ImageButton ibFollow, int resourceId) {
-        ibFollow.setImageResource(resourceId);
-        ibFollow.setTag(resourceId);
     }
 
     @SuppressLint("SetTextI18n")
@@ -232,14 +210,10 @@ public class FragmentDetailProduct extends Fragment {
                     util = new NotificationUtil();
                     sendNotif = new SendNotif();
 
-                    String sendMessage = "Khách hàng" + Variable.BUYER.getName() + " đã đặt hàng sản phẩm " + product.getName() + " của bạn";
-
-                    if (message != null || !message.isEmpty())
-                        sendMessage = sendMessage + "/n Kèm với lời nhắn: " + message;
+                    String sendMessage = setUpMessageForSend(product, message);
 
                     util.addNotification(getContext(), Variable.BUYER.getId(), product.getSeller_id(), sendMessage, product.getId());
                     sendNotif.notificationHandle(product.getSeller().getFirebase_UID(), "Wasted food app", sendMessage);
-
 
                     moveToFragmentOrderDetail();
                     Log.i("Firebase_UID", product.getSeller().getFirebase_UID());
@@ -268,6 +242,14 @@ public class FragmentDetailProduct extends Fragment {
             }
         };
         requestInsertOrder.add(stringRequestInsert);
+    }
+
+    private String setUpMessageForSend(@NotNull BuyerProduct product, String message) {
+        String sendMessage = "Khách hàng" + Variable.BUYER.getName() + " đã đặt hàng sản phẩm " + product.getName() + " của bạn";
+        if (message != null || !message.isEmpty())
+            sendMessage = sendMessage + "/n Kèm với lời nhắn: " + message;
+
+        return sendMessage;
     }
 
 
