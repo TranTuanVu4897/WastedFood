@@ -2,26 +2,26 @@ package com.example.wastedfoodteam.utils;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Seller;
 
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import org.jetbrains.annotations.NotNull;
+
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class CommonFunction {
 
     /**
      * set image view src from image url
+     *
      * @param context
      * @param src
      * @param imageView
@@ -35,6 +35,7 @@ public class CommonFunction {
 
     /**
      * set currency by double money input
+     *
      * @param money
      * @return
      */
@@ -44,6 +45,7 @@ public class CommonFunction {
 
     /**
      * set open close time string
+     *
      * @param start_time
      * @param end_time
      * @return
@@ -55,6 +57,7 @@ public class CommonFunction {
 
     /**
      * set discount string
+     *
      * @param sell_price
      * @param original_price
      * @return
@@ -65,6 +68,7 @@ public class CommonFunction {
 
     /**
      * set quantity string
+     *
      * @param remain_quantity
      * @param original_quantity
      * @return
@@ -75,6 +79,7 @@ public class CommonFunction {
 
     /**
      * set textview for out of stock
+     *
      * @param tvQuantity
      * @param remain_quantity
      * @param original_quantity
@@ -93,7 +98,7 @@ public class CommonFunction {
         return String.format("%d-%02d-%02d", currentTime.getYear(), currentTime.getMonth() + 1, currentTime.getDay());
     }
 
-    public static boolean checkEmptyEditText(EditText editText){
+    public static boolean checkEmptyEditText(EditText editText) {
         if (editText.getText().toString().trim().length() > 0)
             return true;
 
@@ -102,11 +107,43 @@ public class CommonFunction {
 
     public static String getStringDistance(Seller seller) {
         String distance = "km";
-        try{
-            distance = seller.getDistance()+distance;
-        }catch (Exception e){
+        try {
+            if (seller.getDistance() != 0)
+                distance = roundToTwoDecimal(seller.getDistance()) + distance;
+            else distance = roundToTwoDecimal(getDistanceBetweenTwoPlace(Variable.gps.getLatitude(),
+                    Variable.gps.getLongitude(),
+                    seller.getLatitude(),
+                    seller.getLongitude())) + distance;
+        } catch (Exception e) {
             distance = "Không rõ";
         }
         return distance;
+    }
+
+    private static double getDistanceBetweenTwoPlace(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1))
+                * Math.sin(deg2rad(lat2))
+                + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2))
+                * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        return (Math.round(dist));
+    }
+
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private static double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
+    }
+
+    @NotNull
+    private static String roundToTwoDecimal(double input) {
+        DecimalFormat df = new DecimalFormat("#.##");
+        return df.format(input);
     }
 }

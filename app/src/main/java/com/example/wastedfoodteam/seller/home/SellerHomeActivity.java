@@ -16,7 +16,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.wastedfoodteam.MainActivity;
+import com.example.wastedfoodteam.LoginActivity;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
@@ -134,7 +134,8 @@ public class SellerHomeActivity extends AppCompatActivity {
                     manager.beginTransaction().replace(R.id.content_main,notificationFragment,notificationFragment.getTag()).commit();*/
                 }else if(id == R.id.item_nav_drawer_menu_logout){
                     FirebaseAuth.getInstance().signOut();
-                    startActivity(new Intent(SellerHomeActivity.this, MainActivity.class));
+                    finish();
+                    startActivity(new Intent(SellerHomeActivity.this, LoginActivity.class));
                 }
                 DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);

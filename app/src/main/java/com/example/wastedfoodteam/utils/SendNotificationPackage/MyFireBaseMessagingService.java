@@ -21,7 +21,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.wastedfoodteam.MainActivity;
+import com.example.wastedfoodteam.LoginActivity;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
@@ -29,6 +29,7 @@ import com.example.wastedfoodteam.seller.home.SellerHomeActivity;
 import com.example.wastedfoodteam.seller.notification.NotificationFragment;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.seller.sellerFragment.SellerHomeFragment;
+import com.facebook.login.Login;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
@@ -66,7 +67,7 @@ public class MyFireBaseMessagingService extends FirebaseMessagingService {
         }
 
         PendingIntent pendingIntent;
-        Intent resultIntent = new Intent(this, MainActivity.class);
+        Intent resultIntent = new Intent(this, LoginActivity.class);
         pendingIntent = PendingIntent.getActivity(this, 1, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         if(FirebaseAuth.getInstance().getCurrentUser() != null) {
             if(Variable.CURRENT_USER.equals("SELLER")) {
@@ -98,7 +99,7 @@ public class MyFireBaseMessagingService extends FirebaseMessagingService {
 
 
     public void sendNotification(String messageBody) {
-        Intent intent = new Intent(MyFireBaseMessagingService.this, MainActivity.class);
+        Intent intent = new Intent(MyFireBaseMessagingService.this, Login.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 

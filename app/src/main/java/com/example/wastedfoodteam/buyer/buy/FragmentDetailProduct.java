@@ -56,7 +56,7 @@ public class FragmentDetailProduct extends Fragment {
     TextView tvPriceDiscount,
             tvOpenTime, tvPriceOriginal,
             tvDirect, tvDescription,
-            tvBuyQuantity, tvQuantity;
+            tvBuyQuantity, tvQuantity, tvDistance;
     Button btnIncrease, btnDecrease, btnBuy;
     private FollowVolley followVolley;
 
@@ -145,6 +145,7 @@ public class FragmentDetailProduct extends Fragment {
         tvOpenTime.setText("Mở cửa từ: " + CommonFunction.getOpenClose(product.getStart_time(), product.getEnd_time()));
         tvDescription.setText(product.getDescription());
         tvBuyQuantity.setText(orderQuantity + "");
+        tvDistance.setText(CommonFunction.getStringDistance(product.getSeller()));
     }
 
     @SuppressLint("SetTextI18n")
@@ -290,6 +291,7 @@ public class FragmentDetailProduct extends Fragment {
         tvDescription = view.findViewById(R.id.tvDescription);
         tvBuyQuantity = view.findViewById(R.id.tvBuyQuantity);
         tvOpenTime = view.findViewById(R.id.tvOpenTime);
+        tvDistance = view.findViewById(R.id.tvDistance);
 
         btnIncrease = view.findViewById(R.id.btnIncrease);
         btnDecrease = view.findViewById(R.id.btnDecrease);

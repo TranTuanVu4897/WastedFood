@@ -27,7 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.wastedfoodteam.MainActivity;
+import com.example.wastedfoodteam.LoginActivity;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.order.FragmentOrderDetail;
 import com.example.wastedfoodteam.global.Variable;
@@ -148,7 +148,7 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
                         seller.setFirebase_UID(user.getUid());
                         String url = Variable.IP_ADDRESS + "seller/registerSeller.php";
                         registerSellerData(url, seller.getName(), seller.getPassword(), seller.getPhone(), seller.getEmail(), seller.getLatitude() + "", seller.getLongitude() + "", seller.getAddress(), seller.getImage(), seller.getFirebase_UID(), seller.getDescription());
-                        final Intent intent = new Intent(getActivity(), MainActivity.class);//TODO change to seller activity
+                        final Intent intent = new Intent(getActivity(), LoginActivity.class);//TODO change to seller activity
                         startActivity(intent);
                         FragmentManager fragmentManager = getFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

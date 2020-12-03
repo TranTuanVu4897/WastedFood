@@ -1,8 +1,10 @@
 package com.example.wastedfoodteam.buyer.order;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -36,6 +38,7 @@ public class FragmentOrderHistory extends ListFragment {
     FragmentOrderDetail orderDetail;
     Bundle bundleDetail;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,7 +54,21 @@ public class FragmentOrderHistory extends ListFragment {
         orderArrayList = new ArrayList<>();
         adapter = new OrderAdapter(getActivity().getApplicationContext(), R.layout.list_buyer_product_item, orderArrayList, getResources());
         lvOrder.setAdapter(adapter);
-
+        lvOrder.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
         getListOrderHistory();
         return view;
     }
