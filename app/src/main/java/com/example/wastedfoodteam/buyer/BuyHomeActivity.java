@@ -23,7 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.wastedfoodteam.MainActivity;
+import com.example.wastedfoodteam.LoginActivity;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.buy.FragmentListProduct;
 import com.example.wastedfoodteam.buyer.followseller.FragmentListSellerFollow;
@@ -38,8 +38,6 @@ import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.GPSTracker;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInApi;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -137,7 +135,7 @@ public class BuyHomeActivity extends AppCompatActivity {
                                 break;
                             case 0:
                                 finish();
-                                startActivity(new Intent(BuyHomeActivity.this, MainActivity.class));
+                                startActivity(new Intent(BuyHomeActivity.this, LoginActivity.class));
                                 break;
                             case 1:
                                 finish();
@@ -286,7 +284,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         sharedpreferences.edit().clear().apply();
 
         Toast.makeText(BuyHomeActivity.this, "Sign out Success", Toast.LENGTH_LONG).show();
-        startActivity(new Intent(BuyHomeActivity.this, MainActivity.class));
+        startActivity(new Intent(BuyHomeActivity.this, LoginActivity.class));
     }
 
     private void signOutGoogle() {
@@ -300,7 +298,7 @@ public class BuyHomeActivity extends AppCompatActivity {
             SharedPreferences sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE);
             sharedpreferences.edit().clear().apply();
 
-            startActivity(new Intent(BuyHomeActivity.this, MainActivity.class));
+            startActivity(new Intent(BuyHomeActivity.this, LoginActivity.class));
 
         } catch (Exception e) {
             Log.d("e: ", e.getMessage());

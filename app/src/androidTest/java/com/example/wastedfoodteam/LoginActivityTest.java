@@ -15,13 +15,13 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
+public class LoginActivityTest {
 
-    MainActivity mainActivity = null;
+    LoginActivity loginActivity = null;
     FragmentLoginPartner fragmentLoginPartner = null;
     @Before
     public void setUp() throws Exception {
-        this.mainActivity = new MainActivity();
+        this.loginActivity = new LoginActivity();
         this.fragmentLoginPartner = new FragmentLoginPartner();
     }
 
