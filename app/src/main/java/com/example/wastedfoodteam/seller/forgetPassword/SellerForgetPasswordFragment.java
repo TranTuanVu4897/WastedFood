@@ -1,6 +1,5 @@
 package com.example.wastedfoodteam.seller.forgetPassword;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -20,10 +19,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.Validation.ApiCallback;
-import com.example.wastedfoodteam.Validation.Validation;
+import com.example.wastedfoodteam.utils.Validation.Validation;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.utils.OTPFirebase.VerifyPhoneFragment;
 import com.google.android.material.textfield.TextInputLayout;
 
 import static com.example.wastedfoodteam.utils.CommonFunction.checkEmptyEditText;

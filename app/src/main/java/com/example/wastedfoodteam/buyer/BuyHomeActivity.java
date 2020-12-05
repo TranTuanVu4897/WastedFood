@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -57,6 +58,7 @@ public class BuyHomeActivity extends AppCompatActivity {
     ImageView iv_nav_header_buyer_profile_image;
     private DrawerLayout drawerLayout;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +101,9 @@ public class BuyHomeActivity extends AppCompatActivity {
         tv_nav_header_buyer_user_name = headerView.findViewById(R.id.tv_nav_header_buyer_user_name);
         iv_nav_header_buyer_profile_image = headerView.findViewById(R.id.iv_nav_header_buyer_profile_image);
 
-        tv_nav_header_buyer_user_name.setText(Variable.BUYER.getName());
+        tv_nav_header_buyer_user_name.setText(Variable.BUYER.getName() + "");
+
+
         CommonFunction.setImageViewSrc(this, Variable.BUYER.getImage(), iv_nav_header_buyer_profile_image);
 
         // Find our drawer view
@@ -121,7 +125,6 @@ public class BuyHomeActivity extends AppCompatActivity {
                 final int id = item.getItemId();
                 switch (id) {
                     case R.id.itemNavMenuBuyerInfor:
-                        //nhớ này muốn sửa đoạn header của drawer navigation thì vào nav_header_buyer và sửa và xem menu thì vào nav_header_buyer
                         FragmentEditInformationBuyer fragment = new FragmentEditInformationBuyer();
                         FragmentManager manager = getSupportFragmentManager();
                         manager.beginTransaction().replace(R.id.flSearchResultAH, fragment, fragment.getTag()).commit();
@@ -246,7 +249,6 @@ public class BuyHomeActivity extends AppCompatActivity {
     };
 
 
-
     private void addFragmentListProduct() {
         fragmentListProduct = new FragmentListProduct();
         //add fragment search result
@@ -283,6 +285,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         SharedPreferences sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE);
         sharedpreferences.edit().clear().apply();
 
+        finishAndRemoveTask();
         Toast.makeText(BuyHomeActivity.this, "Sign out Success", Toast.LENGTH_LONG).show();
         startActivity(new Intent(BuyHomeActivity.this, LoginActivity.class));
     }
@@ -298,6 +301,7 @@ public class BuyHomeActivity extends AppCompatActivity {
             SharedPreferences sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE);
             sharedpreferences.edit().clear().apply();
 
+            finishAndRemoveTask();
             startActivity(new Intent(BuyHomeActivity.this, LoginActivity.class));
 
         } catch (Exception e) {

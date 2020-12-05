@@ -100,13 +100,13 @@ public class FragmentLoginBuyer extends Fragment {
         btnPartnerOption = view.findViewById(R.id.btnPartnerOptionFLB);
         mAuth = FirebaseAuth.getInstance();
         sharedpreferences = getActivity().getSharedPreferences(mPreference, Context.MODE_PRIVATE);
-//        sharedpreferences = getApplicationContext().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+
         if (sharedpreferences.contains(BUYER_JSON)) {
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
             String buyerJson = sharedpreferences.getString(BUYER_JSON, "");
             Variable.BUYER = gson.fromJson(buyerJson, Buyer.class);
         }
-
+Variable.BUYER = new Buyer();
         handleSignInFacebook();
 
         //facebook option
@@ -138,7 +138,6 @@ public class FragmentLoginBuyer extends Fragment {
             public void onClick(View v) {
                 //To Do Check Phone
                 signInGoogle();
-
             }
         });
 
@@ -165,7 +164,6 @@ public class FragmentLoginBuyer extends Fragment {
     }
 
     public void Save(Buyer buyer) {
-
         SharedPreferences.Editor editor = sharedpreferences.edit();
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         String buyerJson = gson.toJson(buyer);
@@ -197,7 +195,6 @@ public class FragmentLoginBuyer extends Fragment {
 
                         }
 
-                        // ...
                     }
                 });
     }
@@ -273,7 +270,7 @@ public class FragmentLoginBuyer extends Fragment {
 
     private void getUserInformationBy3rdPartyId(String thirdPartyId) {
 
-        BuyerVolley buyerVolley = new BuyerVolley(getActivity(), Variable.IP_ADDRESS + "/information/getBuyerBy3rdPartyId.php");
+        BuyerVolley buyerVolley = new BuyerVolley(getActivity(), Variable.IP_ADDRESS + "information/getBuyerBy3rdPartyId.php");
         buyerVolley.setRequestGetBuyerBy3rdId(new BuyerResponseCallback() {
             @Override
             public void onSuccess(Buyer result) {
@@ -282,6 +279,11 @@ public class FragmentLoginBuyer extends Fragment {
 
                 Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
                 startActivity(intent);
+            }
+
+            @Override
+            public void onError() {
+
             }
         }, thirdPartyId);
     }

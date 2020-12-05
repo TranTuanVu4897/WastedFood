@@ -4,4 +4,5 @@ import com.example.wastedfoodteam.model.Buyer;
 
 public interface BuyerResponseCallback {
     void onSuccess(Buyer result);
+    void onError();
 }

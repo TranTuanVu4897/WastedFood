@@ -1,28 +1,18 @@
-package com.example.wastedfoodteam.Validation;
+package com.example.wastedfoodteam.utils.Validation;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.model.Product;
-import com.example.wastedfoodteam.model.Seller;
-import com.example.wastedfoodteam.utils.CommonFunction;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.jetbrains.annotations.NotNull;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -40,7 +30,7 @@ public class Validation {
                     public void onResponse(String response) {
                         if (response == "notExist")
                             apiCallback.onResponse(false);
-                        else if (response.equals("exist")==true){
+                        else if (response.equals("exist")){
                             int a = 1;
                             apiCallback.onResponse(true);
                         }
@@ -72,6 +62,7 @@ public class Validation {
         return Pattern.compile("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$").matcher(string).matches();
     }
 
+    @NotNull
     public final static Boolean validateDate(String date) {
         try {
             Calendar cal = Calendar.getInstance();
