@@ -14,6 +14,7 @@ import com.example.wastedfoodteam.model.Seller;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -96,7 +97,7 @@ public class CommonFunction {
     @NotNull
     public static String getCurrentDate() {
         Date currentTime = Calendar.getInstance().getTime();
-        return String.format("%d-%02d-%02d", currentTime.getYear(), currentTime.getMonth() + 1, currentTime.getDay());
+        return new SimpleDateFormat("yyyy-MM-dd").format(currentTime);
     }
 
     public static boolean checkEmptyEditText(@NotNull EditText editText) {

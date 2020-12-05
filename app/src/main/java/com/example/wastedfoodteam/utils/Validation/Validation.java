@@ -47,7 +47,7 @@ public class Validation {
     }
 
     public final static boolean checkPhone(String string) {
-        return Pattern.compile("(84|0[3|5|7|8|9])+([0-9]{8})\\b").matcher(string).matches();
+        return Pattern.compile("^(84|0)+([3|5|7|8|9])+([0-9]{8})$").matcher(string).matches();
     }
 
     public final static boolean checkEmail(String string) {
