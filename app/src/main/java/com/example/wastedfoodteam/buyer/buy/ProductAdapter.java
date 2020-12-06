@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
@@ -71,7 +72,7 @@ public class ProductAdapter extends BaseAdapter {
         holder.tvOriginalPrice.setText(CommonFunction.getCurrency(product.getOriginal_price()));
         holder.tvOpenTime.setText(CommonFunction.getOpenClose(product.getStart_time(), product.getEnd_time()));
         holder.tvDiscount.setText(CommonFunction.getDiscount(product.getSell_price(), product.getOriginal_price()));
-        holder.tvDistance.setText(CommonFunction.getStringDistance(product.getSeller()));
+        holder.tvDistance.setText(CommonFunction.getStringDistance(product.getSeller(), Variable.gps));
         CommonFunction.setQuantityTextView(holder.tvQuantity, product.getRemain_quantity(), product.getOriginal_quantity());
         CommonFunction.setImageViewSrc(context, product.getImage(), holder.ivProduct);
 

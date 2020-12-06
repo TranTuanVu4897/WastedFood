@@ -145,7 +145,7 @@ public class FragmentDetailProduct extends Fragment {
         tvOpenTime.setText("Mở cửa từ: " + CommonFunction.getOpenClose(product.getStart_time(), product.getEnd_time()));
         tvDescription.setText(product.getDescription());
         tvBuyQuantity.setText(orderQuantity + "");
-        tvDistance.setText(CommonFunction.getStringDistance(product.getSeller()));
+        tvDistance.setText(CommonFunction.getStringDistance(product.getSeller(),Variable.gps));
     }
 
     @SuppressLint("SetTextI18n")

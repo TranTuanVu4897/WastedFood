@@ -151,7 +151,6 @@ public class BuyHomeActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess() {
 
-
                             }
                         }, Variable.BUYER.getId());
                         FragmentManager fragmentManager = getSupportFragmentManager();

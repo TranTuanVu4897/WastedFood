@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
@@ -66,7 +67,7 @@ public class SellerFollowAdapter extends BaseAdapter {
 
         holder.tvNameSeller.setText(seller.getName());
         holder.tvAddress.setText(seller.getAddress());
-        holder.tvDirection.setText(CommonFunction.getStringDistance(seller) );
+        holder.tvDirection.setText(CommonFunction.getStringDistance(seller, Variable.gps) );
         CommonFunction.setImageViewSrc(context, seller.getImage(), holder.ivSeller);
         return convertView;
     }

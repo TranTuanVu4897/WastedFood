@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
 import java.time.LocalDateTime;
@@ -66,7 +67,7 @@ public class OrderAdapter extends BaseAdapter {
         holder.tvName.setText(order.getProduct().getName() + "");
         holder.tvSellPrice.setText(CommonFunction.getCurrency(order.getTotal_cost()));
         holder.tvOpenTime.setText(CommonFunction.getOpenClose(order.getProduct().getStart_time(), order.getProduct().getEnd_time()));
-        holder.tvDistance.setText(CommonFunction.getStringDistance(order.getProduct().getSeller()));
+        holder.tvDistance.setText(CommonFunction.getStringDistance(order.getProduct().getSeller(), Variable.gps));
         holder.tvRating.setText(order.getProduct().getSeller().getRating() + "");
         //get image from url
         CommonFunction.setImageViewSrc(context, order.getProduct().getImage(), holder.ivProduct);

@@ -1,6 +1,8 @@
 package com.example.wastedfoodteam.utils;
 
 import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
 import android.widget.ImageView;
 
 import com.example.wastedfoodteam.model.Seller;
@@ -24,20 +26,27 @@ public class CommonFunctionTest {
     }
 
     @Test
-    public void testSetImageViewSrc() throws Exception {
-        CommonFunction.setImageViewSrc(mContext, "src", mImageView);
+    public void testGetCurrencyCorrect() throws Exception {
+        String result = CommonFunction.getCurrency(Double.valueOf(0));
+        Assert.assertEquals("0VND", result);
     }
 
     @Test
-    public void testGetCurrency() throws Exception {
+    public void testGetCurrencyCorrect2() throws Exception {
         String result = CommonFunction.getCurrency(Double.valueOf(0));
-        Assert.assertEquals("replaceMeWithExpectedResult", result);
+        Assert.assertEquals("1,000VND", result);
     }
 
     @Test
     public void testGetOpenClose() throws Exception {
         String result = CommonFunction.getOpenClose(new GregorianCalendar(2020, Calendar.DECEMBER, 5, 15, 43).getTime(), new GregorianCalendar(2020, Calendar.DECEMBER, 5, 15, 43).getTime());
         Assert.assertEquals("replaceMeWithExpectedResult", result);
+    }
+
+    @Test
+    public void testGetOpenCloseInputNull() throws Exception {
+        String result = CommonFunction.getOpenClose(null,null);
+        Assert.assertEquals("00.00 - 23.59", result);
     }
 
     @Test
@@ -71,7 +80,9 @@ public class CommonFunctionTest {
 
     @Test
     public void testGetStringDistance() throws Exception {
-        String result = CommonFunction.getStringDistance(new Seller(0, 0, "username", "password", "phone", "third_party_id", "email", null, true, "firebase_UID", null, null, null, 0d, 0d, 0d, null, 0d));
+        Seller seller = new Seller();
+        Location gps = new Location("");
+        String result = CommonFunction.getStringDistance(seller,gps);
         Assert.assertEquals("replaceMeWithExpectedResult", result);
     }
 }
