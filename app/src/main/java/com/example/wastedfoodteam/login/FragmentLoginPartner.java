@@ -134,9 +134,6 @@ public class FragmentLoginPartner extends Fragment {
                     case "not exist account":
                         Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO fix for suitable error
                         break;
-                    case "not match role":
-                        Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO fix for suitable error
-                        break;
                     default:
                         Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();//TODO get data
                         try {
@@ -156,8 +153,6 @@ public class FragmentLoginPartner extends Fragment {
                                     startActivity(intent);
                                 }
                             });
-                            //TODO pass data through intent
-                            //startActivity(intent);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

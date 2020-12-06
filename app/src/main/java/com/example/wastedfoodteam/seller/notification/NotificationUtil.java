@@ -31,7 +31,6 @@ public class NotificationUtil {
                     public void onResponse(String response) {
                         if (response.trim().equals("Succesfully update")) {
                             Toast.makeText(context, "Cập nhật thành công", Toast.LENGTH_SHORT);
-                            //TODO move back to home
                         } else {
                             Toast.makeText(context, "Lỗi cập nhật", Toast.LENGTH_SHORT);
                         }

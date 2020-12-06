@@ -15,19 +15,24 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.wastedfoodteam.MainActivity;
+import com.bumptech.glide.Glide;
+import com.example.wastedfoodteam.LoginActivity;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.notification.NotificationFragment;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.seller.register.RegisterSellerLocationFragment;
-import com.example.wastedfoodteam.seller.product.AddProductFragment;
+import com.example.wastedfoodteam.seller.register.RegisterSellerPhoneFragment;
+import com.example.wastedfoodteam.seller.sellerFragment.AddProductFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.ChangePasswordSellerFragment;
-import com.example.wastedfoodteam.seller.editSeller.EditSellerFragment;
-import com.example.wastedfoodteam.seller.product.ListProductSellerFragment;
+import com.example.wastedfoodteam.seller.sellerFragment.EditSellerFragment;
+import com.example.wastedfoodteam.seller.sellerFragment.ListProductSellerFragment;
+import com.example.wastedfoodteam.seller.sellerFragment.SellerHomeFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.SendFeedbackSellerFragment;
 import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.utils.CommonFunction;
+import com.example.wastedfoodteam.utils.OTPFirebase.VerifyPhoneFragment;
 import com.example.wastedfoodteam.utils.SendNotificationPackage.SendNotif;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -129,7 +134,8 @@ public class SellerHomeActivity extends AppCompatActivity {
                     manager.beginTransaction().replace(R.id.content_main,notificationFragment,notificationFragment.getTag()).commit();*/
                 }else if(id == R.id.item_nav_drawer_menu_logout){
                     FirebaseAuth.getInstance().signOut();
-                    startActivity(new Intent(SellerHomeActivity.this, MainActivity.class));
+                    finish();
+                    startActivity(new Intent(SellerHomeActivity.this, LoginActivity.class));
                 }
                 DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);

@@ -1,24 +1,18 @@
 package com.example.wastedfoodteam.login;
 
-import android.app.Activity;
-import android.widget.LinearLayout;
-
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.rule.ActivityTestRule;
 
-import com.example.wastedfoodteam.MainActivity;
+import com.example.wastedfoodteam.LoginActivity;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class FragmentLoginBuyerTest{
 
     @Rule
-    public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(LoginActivity.class);
     private FragmentLoginBuyer fragmentLoginBuyer = null;
     @Before
     public void setUp() throws Exception {

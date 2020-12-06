@@ -22,7 +22,7 @@ import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private FusedLocationProviderClient fusedLocationClient;
 

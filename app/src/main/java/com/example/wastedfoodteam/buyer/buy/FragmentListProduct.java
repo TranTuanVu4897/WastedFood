@@ -35,7 +35,6 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 
 public class FragmentListProduct extends ListFragment {
-    String urlGetData = getUrlForAllSeller();
     ArrayList<BuyerProduct> arrProduct;
     ProductAdapter adapter;
     ListView lvProduction;

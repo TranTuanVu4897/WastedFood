@@ -24,13 +24,13 @@
 
                 <ImageButton
                     android:id="@+id/ibUserInfo"
-                    android:layout_marginStart="3dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginStart="3dp"
                     android:background="@drawable/item_background"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/button_user_information" />
+                    android:src="@drawable/ic_baseline_view_headline_24"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/ivAppIcon"

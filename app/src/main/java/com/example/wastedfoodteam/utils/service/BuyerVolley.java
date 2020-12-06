@@ -53,6 +53,7 @@ public class BuyerVolley {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("ERROR", error.getMessage());
+                callback.onError();
             }
         });
         requestQueue.add(getBuyerRequest);

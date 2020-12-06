@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_nav_header_buyer_profile_image"
+            android:id="@+id/navHeaderImageViewUser"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="30dp"
@@ -31,7 +31,7 @@
             app:civ_border_width="2dp" />
 
         <TextView
-            android:id="@+id/tv_nav_header_buyer_user_name"
+            android:id="@+id/navHeaderTextViewUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"

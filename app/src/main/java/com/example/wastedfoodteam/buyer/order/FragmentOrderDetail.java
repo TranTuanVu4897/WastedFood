@@ -68,6 +68,7 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
         //set content
         CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), order.getProduct().getImage(), ivProduct);
         tvBuyQuantity.setText("Đã đặt trước: " + order.getQuantity() + " sản phẩm.");
+        tvTitle.setText("Sản phẩm: " + order.getProduct().getName());
 
         //show dialog
         if (order.getStatus() == Order.Status.SUCCESS && order.getBuyer_comment() == null) {

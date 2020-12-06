@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,7 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.wastedfoodteam.MainActivity;
+import com.example.wastedfoodteam.LoginActivity;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.buy.FragmentListProduct;
 import com.example.wastedfoodteam.buyer.followseller.FragmentListSellerFollow;
@@ -38,8 +39,6 @@ import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.GPSTracker;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInApi;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -53,56 +52,38 @@ public class BuyHomeActivity extends AppCompatActivity {
     ImageButton ibUserInfo;
     FragmentListProduct fragmentListProduct;
     NotificationUtil notificationUtil;
-    GPSTracker gps;
     private BottomNavigationView navigation;
-    TextView tv_nav_header_buyer_user_name;
-    ImageView iv_nav_header_buyer_profile_image;
+    TextView navHeaderTextViewUsername;
+    ImageView navHeaderImageViewUser;
     private DrawerLayout drawerLayout;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyer_home);
 
-        try {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                    != MockPackageManager.PERMISSION_GRANTED) {
-
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        REQUEST_CODE_PERMISSION);
-
-                finishAndRemoveTask();
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        checkGPSPermission();
 
         //mapping
         ibUserInfo = findViewById(R.id.ibUserInfo);
 
-
         Variable.CURRENT_USER = "BUYER";
         notificationUtil = new NotificationUtil();
 
-        //get GPS
-        gps = new GPSTracker(this);
-        if (gps.canGetLocation()) {
-            Variable.gps = gps.getLocation();
-        } else {
-            gps.showSettingAlert();
-        }
+        getGPSLocation();
 
         //get the header view
         NavigationView navigationView = findViewById(R.id.nav_view_buyer);
         View headerView = navigationView.getHeaderView(0);
 
-        tv_nav_header_buyer_user_name = headerView.findViewById(R.id.tv_nav_header_buyer_user_name);
-        iv_nav_header_buyer_profile_image = headerView.findViewById(R.id.iv_nav_header_buyer_profile_image);
+        navHeaderTextViewUsername = headerView.findViewById(R.id.navHeaderTextViewUsername);
+        navHeaderImageViewUser = headerView.findViewById(R.id.navHeaderImageViewUser);
 
-        tv_nav_header_buyer_user_name.setText(Variable.BUYER.getName());
-        CommonFunction.setImageViewSrc(this, Variable.BUYER.getImage(), iv_nav_header_buyer_profile_image);
+        navHeaderTextViewUsername.setText(Variable.BUYER.getName() + "");
+
+
+        CommonFunction.setImageViewSrc(this, Variable.BUYER.getImage(), navHeaderImageViewUser);
 
         // Find our drawer view
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_buyer);
@@ -123,10 +104,8 @@ public class BuyHomeActivity extends AppCompatActivity {
                 final int id = item.getItemId();
                 switch (id) {
                     case R.id.itemNavMenuBuyerInfor:
-                        //nhớ này muốn sửa đoạn header của drawer navigation thì vào nav_header_buyer và sửa và xem menu thì vào nav_header_buyer
-                        FragmentEditInformationBuyer fragment = new FragmentEditInformationBuyer();
-                        FragmentManager manager = getSupportFragmentManager();
-                        manager.beginTransaction().replace(R.id.flSearchResultAH, fragment, fragment.getTag()).commit();
+                        FragmentEditInformationBuyer fragmentEditInformationBuyer = new FragmentEditInformationBuyer();
+                        clearBackStackAndOpenFragment(fragmentEditInformationBuyer);
                         break;
                     case R.id.itemNavLogout:
                         Variable.BUYER = null;
@@ -137,7 +116,7 @@ public class BuyHomeActivity extends AppCompatActivity {
                                 break;
                             case 0:
                                 finish();
-                                startActivity(new Intent(BuyHomeActivity.this, MainActivity.class));
+                                startActivity(new Intent(BuyHomeActivity.this, LoginActivity.class));
                                 break;
                             case 1:
                                 finish();
@@ -150,30 +129,21 @@ public class BuyHomeActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess() {
 
-
                             }
                         }, Variable.BUYER.getId());
-                        FragmentManager fragmentManager = getSupportFragmentManager();
-                        fragmentManager.beginTransaction().replace(R.id.flSearchResultAH, sendFeedbackSellerFragment, sendFeedbackSellerFragment.getTag()).commit();
+                        clearBackStackAndOpenFragment(sendFeedbackSellerFragment);
                         break;
                     case R.id.itemNavFollowSeller:
-                        addFragmentSellerFollow();
+                        FragmentListSellerFollow fragmentListSellerFollow = new FragmentListSellerFollow();
+                        clearBackStackAndOpenFragment(fragmentListSellerFollow);
                         break;
                     case R.id.itemNavOrderHistory:
                         FragmentOrderHistory fragmentOrderHistory = new FragmentOrderHistory();
-                        getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.flSearchResultAH, fragmentOrderHistory, "")
-                                .addToBackStack(null)
-                                .commit();
+                        clearBackStackAndOpenFragment(fragmentOrderHistory);
                         break;
                     case R.id.itemNavNotification:
                         NotificationFragment notificationFragment = new NotificationFragment(Variable.BUYER.getId() + "");
-                        getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.flSearchResultAH, notificationFragment, "")
-                                .addToBackStack(null)
-                                .commit();
+                        clearBackStackAndOpenFragment(notificationFragment);
                         notificationUtil.updateNotificationSeen(getApplicationContext(), Variable.BUYER.getId(), navigation);
                         break;
                 }
@@ -211,42 +181,63 @@ public class BuyHomeActivity extends AppCompatActivity {
 
     }
 
+    private void getGPSLocation() {
+        GPSTracker gps = new GPSTracker(this);
+        if (gps.canGetLocation()) {
+            Variable.gps = gps.getLocation();
+        } else {
+            gps.showSettingAlert();
+        }
+    }
+
+    private void checkGPSPermission() {
+        try {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != MockPackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        REQUEST_CODE_PERMISSION);
+                finishAndRemoveTask();
+
+            }
+        } catch (Exception e) {
+            System.exit(1);
+        }
+    }
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment fragment;
-            FragmentManager manager = getSupportFragmentManager();
             switch (item.getItemId()) {
                 case R.id.item_bottom_nav_menu_buyer_home:
                     addFragmentListProduct();
                     return true;
                 case R.id.item_bottom_nav_menu_buyer_notification:
                     NotificationFragment notificationFragment = new NotificationFragment(Variable.BUYER.getId() + "");
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.flSearchResultAH, notificationFragment, "")
-                            .addToBackStack(null)
-                            .commit();
+                    clearBackStackAndOpenFragment(notificationFragment);
                     notificationUtil.updateNotificationSeen(getApplicationContext(), Variable.BUYER.getId(), navigation);
                     return true;
                 case R.id.item_bottom_nav_menu_buyer_history:
                     FragmentOrderHistory fragmentOrderHistory = new FragmentOrderHistory();
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.flSearchResultAH, fragmentOrderHistory, "")
-                            .addToBackStack(null)
-                            .commit();
+                    clearBackStackAndOpenFragment(fragmentOrderHistory);
                     return true;
                 case R.id.item_bottom_nav_menu_buyer_follow:
-                    addFragmentSellerFollow();
+                    FragmentListSellerFollow fragmentListSellerFollow = new FragmentListSellerFollow();
+                    clearBackStackAndOpenFragment(fragmentListSellerFollow);
                     return true;
             }
             return false;
         }
     };
 
+    private void clearBackStackAndOpenFragment(Fragment fragment) {
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.flSearchResultAH, fragment, "")
+                .addToBackStack(null)
+                .commit();
+    }
 
 
     private void addFragmentListProduct() {
@@ -257,13 +248,6 @@ public class BuyHomeActivity extends AppCompatActivity {
                 .replace(R.id.flSearchResultAH, fragmentListProduct, "")
                 .addToBackStack(null)
                 .commit();
-    }
-
-    public void addFragmentSellerFollow() {
-
-        FragmentListSellerFollow fragment = new FragmentListSellerFollow();
-        FragmentManager manager = getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.flSearchResultAH, fragment, fragment.getTag()).commit();
     }
 
     @Override
@@ -285,8 +269,9 @@ public class BuyHomeActivity extends AppCompatActivity {
         SharedPreferences sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE);
         sharedpreferences.edit().clear().apply();
 
+        finishAndRemoveTask();
         Toast.makeText(BuyHomeActivity.this, "Sign out Success", Toast.LENGTH_LONG).show();
-        startActivity(new Intent(BuyHomeActivity.this, MainActivity.class));
+        startActivity(new Intent(BuyHomeActivity.this, LoginActivity.class));
     }
 
     private void signOutGoogle() {
@@ -300,7 +285,8 @@ public class BuyHomeActivity extends AppCompatActivity {
             SharedPreferences sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE);
             sharedpreferences.edit().clear().apply();
 
-            startActivity(new Intent(BuyHomeActivity.this, MainActivity.class));
+            finishAndRemoveTask();
+            startActivity(new Intent(BuyHomeActivity.this, LoginActivity.class));
 
         } catch (Exception e) {
             Log.d("e: ", e.getMessage());
