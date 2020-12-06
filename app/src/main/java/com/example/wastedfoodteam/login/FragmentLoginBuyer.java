@@ -93,7 +93,6 @@ public class FragmentLoginBuyer extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login_buyer, container, false);
         etSDT = view.findViewById(R.id.etSdtBuyerFLB);
         etPass = view.findViewById(R.id.etPassBuyerFLB);
-//        tvWarning = view.findViewById(R.id.tvWarningFLB);
         btnSignIn = view.findViewById(R.id.btnSignInBuyerFLB);
         btnSignInGoogle = view.findViewById(R.id.btnGoogleSignInFLB);
         btnSignInFacebook = view.findViewById(R.id.btnFacebookSignInFLB);
@@ -106,7 +105,6 @@ public class FragmentLoginBuyer extends Fragment {
             String buyerJson = sharedpreferences.getString(BUYER_JSON, "");
             Variable.BUYER = gson.fromJson(buyerJson, Buyer.class);
         }
-Variable.BUYER = new Buyer();
         handleSignInFacebook();
 
         //facebook option
@@ -168,7 +166,7 @@ Variable.BUYER = new Buyer();
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         String buyerJson = gson.toJson(buyer);
         editor.putString(BUYER_JSON, buyerJson);
-        editor.commit();
+        editor.apply();
     }
 
 
