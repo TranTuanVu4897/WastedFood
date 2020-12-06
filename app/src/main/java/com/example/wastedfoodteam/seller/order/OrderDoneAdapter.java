@@ -1,26 +1,21 @@
-package com.example.wastedfoodteam.seller.sellerAdapter;
+package com.example.wastedfoodteam.seller.order;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.model.Product;
-import com.example.wastedfoodteam.seller.sellerFragment.ProductDetailSellerFragment;
-import com.example.wastedfoodteam.seller.sellerFragment.SellerOrderDetailFragment;
+import com.example.wastedfoodteam.seller.order.SellerOrderDetailFragment;
+import com.example.wastedfoodteam.seller.sellerAdapter.SellerOrder;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
 import java.util.List;

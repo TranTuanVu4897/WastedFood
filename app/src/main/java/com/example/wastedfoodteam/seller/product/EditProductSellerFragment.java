@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.seller.sellerFragment;
+package com.example.wastedfoodteam.seller.product;
 
 import android.content.Intent;
 import android.os.Bundle;

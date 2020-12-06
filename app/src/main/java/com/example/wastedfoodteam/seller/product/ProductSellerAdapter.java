@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.seller.sellerAdapter;
+package com.example.wastedfoodteam.seller.product;
 
 import android.content.Context;
 import android.content.res.Resources;

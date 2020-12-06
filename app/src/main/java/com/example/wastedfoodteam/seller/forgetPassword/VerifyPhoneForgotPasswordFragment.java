@@ -15,10 +15,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.login.FragmentLoginPartner;
-import com.example.wastedfoodteam.seller.register.RegisterSellerLocationFragment;
-import com.example.wastedfoodteam.seller.sellerFragment.SellerHomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;

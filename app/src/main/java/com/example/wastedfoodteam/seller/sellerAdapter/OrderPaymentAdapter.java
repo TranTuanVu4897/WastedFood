@@ -17,7 +17,7 @@ import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
-import com.example.wastedfoodteam.seller.sellerFragment.ProductDetailSellerFragment;
+import com.example.wastedfoodteam.seller.order.ProductOrderSellerFragment;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.SendNotificationPackage.SendNotif;
 import com.example.wastedfoodteam.utils.service.updateStatusForOrder;
@@ -99,8 +99,8 @@ public class OrderPaymentAdapter extends BaseAdapter {
                 String message = Variable.SELLER.getName() + " đã xác nhận thanh toán của bạn\r Cảm ơn bạn vì đã sử dụng dịch vụ của chúng tôi";
                 util.addNotification(myContext,Variable.SELLER.getId() , order.getBuyer_id(), message , order.getId() );
                 sendNotif.notificationHandle(order.getFirebase_UID(), "Wasted food app" , message);
-                ProductDetailSellerFragment productDetailSellerFragment = new ProductDetailSellerFragment();
-                myFragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, productDetailSellerFragment, productDetailSellerFragment.getTag()).commit();
+                ProductOrderSellerFragment productOrderSellerFragment = new ProductOrderSellerFragment();
+                myFragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, productOrderSellerFragment, productOrderSellerFragment.getTag()).commit();
             }
         });
         holder.btnReject.setOnClickListener(new View.OnClickListener() {
@@ -109,8 +109,8 @@ public class OrderPaymentAdapter extends BaseAdapter {
                 //set status = rejected
                 //set btnReject text to Đã từ chối set clickable = false
                 updateStatusForOrder.updateOrderStatus(Variable.IP_ADDRESS + "seller/updateStatusForOrderSeller.php",Order.Status.CANCEL, order.getId(),myContext);
-                ProductDetailSellerFragment productDetailSellerFragment = new ProductDetailSellerFragment();
-                myFragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, productDetailSellerFragment, productDetailSellerFragment.getTag()).commit();
+                ProductOrderSellerFragment productOrderSellerFragment = new ProductOrderSellerFragment();
+                myFragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, productOrderSellerFragment, productOrderSellerFragment.getTag()).commit();
             }
         });
         return convertView;

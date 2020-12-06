@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.seller.sellerFragment;
+package com.example.wastedfoodteam.seller.order;
 
 import android.os.Bundle;
 
@@ -12,8 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.model.Order;
+import com.example.wastedfoodteam.seller.order.ProductOrderSellerFragment;
 import com.example.wastedfoodteam.seller.sellerAdapter.SellerOrder;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
@@ -43,10 +42,10 @@ public class SellerOrderDetailFragment extends Fragment {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProductDetailSellerFragment productDetailSellerFragment = new ProductDetailSellerFragment();
+                ProductOrderSellerFragment productOrderSellerFragment = new ProductOrderSellerFragment();
                 //open seller detail product fragment
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_main, productDetailSellerFragment, "")//TODO check if this work
+                        .replace(R.id.content_main, productOrderSellerFragment, "")//TODO check if this work
                         .addToBackStack(null)
                         .commit();
             }

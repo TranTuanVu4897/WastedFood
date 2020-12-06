@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.seller.sellerAdapter;
+package com.example.wastedfoodteam.seller.order;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.seller.sellerAdapter.SellerOrder;
 
 import java.util.List;
 

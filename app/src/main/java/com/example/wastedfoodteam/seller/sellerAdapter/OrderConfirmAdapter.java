@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.example.wastedfoodteam.model.Seller;
-import com.example.wastedfoodteam.seller.sellerFragment.ProductDetailSellerFragment;
+import com.example.wastedfoodteam.seller.order.ProductOrderSellerFragment;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.service.updateStatusForOrder;
 
@@ -97,8 +97,8 @@ public class OrderConfirmAdapter extends BaseAdapter {
                 //set status = wait for payment
                 //reload fragment
                 updateStatusForOrder.updateOrderStatus(Variable.IP_ADDRESS + "seller/updateStatusForOrderSeller.php",Order.Status.SUCCESS, order.getId(),myContext);
-                ProductDetailSellerFragment productDetailSellerFragment = new ProductDetailSellerFragment();
-                myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, productDetailSellerFragment, productDetailSellerFragment.getTag()).commit();
+                ProductOrderSellerFragment productOrderSellerFragment = new ProductOrderSellerFragment();
+                myActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, productOrderSellerFragment, productOrderSellerFragment.getTag()).commit();
                 //showNotification("Dữ liệu","Đã được thay đổi");
             }
         });

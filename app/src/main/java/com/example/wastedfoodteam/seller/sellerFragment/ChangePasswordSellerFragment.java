@@ -23,6 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
+import com.example.wastedfoodteam.seller.home.SellerHomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -86,8 +87,6 @@ public class ChangePasswordSellerFragment extends Fragment {
                     //update password to db
                     String urlGetData = Variable.IP_ADDRESS + "seller/updatePasswordAccount.php";
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    String newPasswordFirebase =  newPassword;
-
                     user.updatePassword(md5(newPassword)).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {

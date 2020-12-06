@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.seller.sellerFragment;
+package com.example.wastedfoodteam.seller.home;
 
 import android.os.Bundle;
 
@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,13 +25,15 @@ import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SellerHomeFragment extends Fragment {
 
-
+    TextView tvTotalProductSelling,tvTotalProduct,tvOrderBuying,tvTotalOrderSuccess,tvTotalOrderCancel,tvTotalFollower;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSellerHome();
 
     }
 
@@ -39,11 +42,17 @@ public class SellerHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_seller_home, container, false);
+        tvTotalFollower = view.findViewById(R.id.tvTotalFollower);
+        tvOrderBuying = view.findViewById(R.id.tvOrderBuying);
+        tvTotalOrderCancel = view.findViewById(R.id.tvTotalOrderCancel);
+        tvTotalOrderSuccess = view.findViewById(R.id.tvTotalOrderSuccess);
+        tvTotalProduct = view.findViewById(R.id.tvTotalProduct);
+        tvTotalProductSelling = view.findViewById(R.id.tvTotalProductSelling);
          return  view;
     }
 
-    private void getSeller() {
-        String urlGetData = Variable.IP_ADDRESS + "seller/home/getHomePageSellerData.php";
+    private void getSellerHome() {
+        String urlGetData = Variable.IP_ADDRESS + "seller/getHomePageSellerData.php?seller_id=" + Variable.SELLER.getId();
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest getSellerRequestString = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
@@ -51,9 +60,14 @@ public class SellerHomeFragment extends Fragment {
                     public void onResponse(String response) {
 
                         try {
-                            JSONArray jsonSellers = new JSONArray(response);
-                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                            Seller seller = gson.fromJson(jsonSellers.getString(0), Seller.class);
+                            JSONObject jsonSellerHome = new JSONObject(response);
+
+                            /*tvTotalProductSelling.setText(jsonSellerHome.getString("totalProductSelling")) ;
+                            tvTotalFollower.setText(jsonSellerHome.getString("totalFollower")) ;
+                            tvOrderBuying.setText(jsonSellerHome.getString("totalOrderBuying")) ;
+                            tvTotalOrderCancel.setText(jsonSellerHome.getString("totalOrderCancel")) ;
+                            tvTotalOrderSuccess.setText(jsonSellerHome.getString("totalOrderSuccess")) ;
+                            tvTotalProduct.setText(jsonSellerHome.getString("totalProduct")) ;*/
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

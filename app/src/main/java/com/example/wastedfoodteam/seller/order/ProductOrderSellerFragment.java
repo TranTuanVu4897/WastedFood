@@ -1,12 +1,9 @@
-package com.example.wastedfoodteam.seller.sellerFragment;
+package com.example.wastedfoodteam.seller.order;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.ListFragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +24,8 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Product;
+import com.example.wastedfoodteam.seller.product.EditProductSellerFragment;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderConfirmAdapter;
-import com.example.wastedfoodteam.seller.sellerAdapter.OrderDoneAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderPaymentAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.SellerOrder;
 import com.example.wastedfoodteam.utils.CommonFunction;
@@ -42,7 +39,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProductDetailSellerFragment extends ListFragment {
+public class ProductOrderSellerFragment extends ListFragment {
 
     ListView lvOrderConfirm,lvOrderPayment,lvOrderDone;
     ArrayList<SellerOrder> arrOrder,arrOrderPayment,arrOrderDone;

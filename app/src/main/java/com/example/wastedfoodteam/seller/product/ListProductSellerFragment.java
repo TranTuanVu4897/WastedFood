@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.seller.sellerFragment;
+package com.example.wastedfoodteam.seller.product;
 
 import android.os.Bundle;
 
@@ -22,8 +22,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.seller.sellerAdapter.ProductSellerAdapter;
 import com.example.wastedfoodteam.model.Product;
+import com.example.wastedfoodteam.seller.order.ProductOrderSellerFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -148,10 +148,10 @@ public class ListProductSellerFragment extends ListFragment {
         Product product = (Product) l.getAdapter().getItem(position);
         Variable.PRODUCT = product;
 
-        ProductDetailSellerFragment productDetailSellerFragment = new ProductDetailSellerFragment();
+        ProductOrderSellerFragment productOrderSellerFragment = new ProductOrderSellerFragment();
         //open seller detail product fragment
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_main, productDetailSellerFragment, "")//TODO check if this work
+                .replace(R.id.content_main, productOrderSellerFragment, "")//TODO check if this work
                 .addToBackStack(null)
                 .commit();
     }
