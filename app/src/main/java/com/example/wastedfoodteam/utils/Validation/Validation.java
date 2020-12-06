@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 
 public class Validation {
 
-    public final static void checkPhoneExist(Context context, final ApiCallback apiCallback , String phone) {
+    public final static void checkPhoneExist(Context context, final ApiCallback apiCallback, String phone) {
 
         String urlGetData = Variable.IP_ADDRESS + "register/checkPhoneExist.php?phone=" + phone;
         RequestQueue requestQueue = Volley.newRequestQueue(context.getApplicationContext());
@@ -30,7 +30,7 @@ public class Validation {
                     public void onResponse(String response) {
                         if (response == "notExist")
                             apiCallback.onResponse(false);
-                        else if (response.equals("exist")){
+                        else if (response.equals("exist")) {
                             int a = 1;
                             apiCallback.onResponse(true);
                         }
@@ -47,19 +47,35 @@ public class Validation {
     }
 
     public final static boolean checkPhone(String string) {
-        return Pattern.compile("^(84|0)+([3|5|7|8|9])+([0-9]{8})$").matcher(string).matches();
+        try {
+            return Pattern.compile("^(84|0)([3|5|7|8|9])([0-9]{8})$").matcher(string).matches();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public final static boolean checkEmail(String string) {
-        return Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$").matcher(string).matches();
+        try {
+            return Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$").matcher(string).matches();
+        }catch (Exception e){
+            return false;
+        }
     }
 
     public final static boolean checkPassword(String string) {
-        return Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,16}$").matcher(string).matches();
+        try {
+            return Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d).{8,16}$").matcher(string).matches();
+        }catch ( Exception e){
+            return false;
+        }
     }
 
     public final static boolean checkName(String string) {
-        return Pattern.compile("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$").matcher(string).matches();
+        try{
+        return Pattern.compile("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$").matcher(string).matches();}
+        catch (Exception e){
+            return false;
+        }
     }
 
     @NotNull

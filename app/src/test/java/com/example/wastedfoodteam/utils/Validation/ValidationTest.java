@@ -22,7 +22,7 @@ public class ValidationTest {
         Assert.assertEquals(true, result);
     }
     @Test
-    public void testCheckPhoneNull() throws Exception {
+    public void testCheckPhoneNumberNull() throws Exception {
         boolean result = Validation.checkPhone(null);
         Assert.assertEquals(false, result);
     }
@@ -45,16 +45,27 @@ public class ValidationTest {
         boolean result = Validation.checkPhone("098460556");
         Assert.assertEquals(false, result);
     }
+    @Test
+    public void testCheckPhoneShorterThan9By84() throws Exception {
+        boolean result = Validation.checkPhone("8498460556");
+        Assert.assertEquals(false, result);
+    }
 
     @Test
-    public void testCheckPhoneLargerThan9() throws Exception {
+    public void testCheckPhoneLargerThan9s() throws Exception {
         boolean result = Validation.checkPhone("09846055688");
         Assert.assertEquals(false, result);
     }
 
     @Test
+    public void testCheckPhoneLargerThan9By84() throws Exception {
+        boolean result = Validation.checkPhone("849846055688");
+        Assert.assertEquals(false, result);
+    }
+
+    @Test
     public void testCheckPhoneContainSpecialCharacter() throws Exception {
-        boolean result = Validation.checkPhone("098460556*");
+        boolean result = Validation.checkPhone("@#$12456");
         Assert.assertEquals(false, result);
     }
 
@@ -65,13 +76,27 @@ public class ValidationTest {
     }
 
     @Test
-    public void testCheckEmailCorrect() throws Exception {
-        boolean result = Validation.checkEmail("sampleemail@gmail.com");
+    public void testCheckPhoneNotStart0or84() throws Exception {
+        boolean result = Validation.checkPhone("1984605568");
+        Assert.assertEquals(false, result);
+    }
+
+    //checkMail
+
+    @Test
+    public void testCheckEmailNormalCorrect() throws Exception {
+        boolean result = Validation.checkEmail("tungphamtp987@gmail.com");
         Assert.assertEquals(true, result);
     }
 
     @Test
-    public void testCheckEmailFailureNull() throws Exception {
+    public void testCheckEmailorganizationCorrect() throws Exception {
+        boolean result = Validation.checkEmail("tungptse05613@fpt.edu.vn");
+        Assert.assertEquals(true, result);
+    }
+
+    @Test
+    public void testCheckEmailFailureNulls() throws Exception {
         boolean result = Validation.checkEmail(null);
         Assert.assertEquals(false, result);
     }
@@ -83,20 +108,20 @@ public class ValidationTest {
     }
     @Test
     public void testCheckEmailFailureContainSpace() throws Exception {
-        boolean result = Validation.checkEmail("sample email@gmail.com");
+        boolean result = Validation.checkEmail("tung phamtp987@gmail.com");
         Assert.assertEquals(false, result);
     }
 
     @Test
     public void testCheckEmailFailure2() throws Exception {
-        boolean result = Validation.checkEmail("sampleemailgmail.com");
+        boolean result = Validation.checkEmail("tungphamtp987gmail.com");
         Assert.assertEquals(false, result);
     }
 
 
     @Test
     public void testCheckEmailFailure3() throws Exception {
-        boolean result = Validation.checkEmail("sampleemail@@gmail.com");
+        boolean result = Validation.checkEmail("tungphamtp987@@gmail.com");
         Assert.assertFalse(result);
     }
 
@@ -108,16 +133,18 @@ public class ValidationTest {
 
     @Test
     public void testCheckEmailFailure5() throws Exception {
-        boolean result = Validation.checkEmail("sampleemail@gmail");
+        boolean result = Validation.checkEmail("tungphamtp987@gmail");
         Assert.assertFalse(result);
     }
 
 
     @Test
     public void testCheckEmailContainSpecialCharacter() throws Exception {
-        boolean result = Validation.checkEmail("email!failure@gmail.com");
+        boolean result = Validation.checkEmail("tungphamtp987!@gmail.com");
         Assert.assertFalse(result);
     }
+
+    //check Pass
 
     @Test
     public void testCheckPasswordCorrect() throws Exception {
@@ -136,18 +163,18 @@ public class ValidationTest {
         Assert.assertTrue(result);
     }
     @Test
-    public void testCheckPasswordCorrect3() throws Exception {
+    public void testCheckPasswordCorrect3s() throws Exception {
         boolean result = Validation.checkPassword("test@1234");
         Assert.assertTrue(result);
     }
     @Test
-    public void testCheckPasswordCorrect4() throws Exception {
+    public void testCheckPasswordCorrect4s() throws Exception {
         boolean result = Validation.checkPassword("Test@1234");
         Assert.assertTrue(result);
     }
 
     @Test
-    public void testCheckPasswordFailureNull() throws Exception {
+    public void testCheckPasswordFailureNulls() throws Exception {
         boolean result = Validation.checkPassword(null);
         Assert.assertFalse(result);
     }
@@ -182,22 +209,60 @@ public class ValidationTest {
         Assert.assertFalse(result);
     }
 
+
+    //checkName
     @Test
     public void testCheckNameCorrect() throws Exception {
-        boolean result = Validation.checkName("string");
+        boolean result = Validation.checkName("a");
         Assert.assertTrue(result);
     }
 
     @Test
-    public void testCheckName() throws Exception {
-        boolean result = Validation.checkName("string");
+    public void testCheckNameCorrect2() throws Exception {
+        boolean result = Validation.checkName("abc abc");
+        Assert.assertTrue(result);
+    }
+
+    @Test
+    public void testCheckNameLager50() throws Exception {
+        boolean result = Validation.checkName("ádasdasda dasdasdasdasdasdasdasdasdasdasdasdasdas");
         Assert.assertFalse(result);
     }
 
     @Test
-    public void testValidateDate() throws Exception {
-        Boolean result = Validation.validateDate("date");
+    public void testCheckNameEmpty() throws Exception {
+        boolean result = Validation.checkName("");
+        Assert.assertFalse(result);
+    }
+
+    @Test
+    public void testCheckNameNull() throws Exception {
+        boolean result = Validation.checkName(null);
+        Assert.assertFalse(result);
+    }
+
+    @Test
+    public void testCheckNameSpecial() throws Exception {
+        boolean result = Validation.checkName("Tung@1101");
+        Assert.assertFalse(result);
+    }
+    //check Dob
+    @Test
+    public void testValidateDateCorrect() throws Exception {
+        Boolean result = Validation.validateDate("1998-11-01");
         Assert.assertEquals(Boolean.TRUE, result);
+    }
+
+    @Test
+    public void testValidateDateCurrentDate() throws Exception {
+        Boolean result = Validation.validateDate("2020-12-05");
+        Assert.assertEquals(Boolean.TRUE, result);
+    }
+
+    @Test
+    public void testValidateDateLagerCurrentDate() throws Exception {
+        Boolean result = Validation.validateDate("2021-11-01");
+        Assert.assertEquals(Boolean.FALSE, result);
     }
 }
 
