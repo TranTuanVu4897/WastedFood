@@ -28,7 +28,6 @@ import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.home.SellerHomeActivity;
 import com.example.wastedfoodteam.seller.notification.NotificationFragment;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
-import com.example.wastedfoodteam.seller.sellerFragment.SellerHomeFragment;
 import com.facebook.login.Login;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

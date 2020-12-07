@@ -52,7 +52,7 @@ public class SellerForgetPasswordFragment extends Fragment {
 
     private void checkPhoneAccountExist(final String phone , String account) {
 
-        String urlGetData = Variable.IP_ADDRESS + "register/checkPhoneExist.php?phone=" + phone +"&username=" + account;
+        String urlGetData = Variable.IP_ADDRESS + "register/checkUserNamePhoneExist.php?phone=" + phone +"&username=" + account;
         RequestQueue requestQueue = Volley.newRequestQueue( getActivity().getApplicationContext()   );
         StringRequest getSellerRequestString = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
