@@ -33,7 +33,7 @@ public class NotificationFragment extends ListFragment {
     ListView lvNotification;
     ArrayList<Notification> arrNotification;
     NotificationAdapter notificationAdapter;
-    String receiver_id;
+    final String receiver_id;
 
     public NotificationFragment(String receiver_id) {
         this.receiver_id = receiver_id;
@@ -74,8 +74,8 @@ public class NotificationFragment extends ListFragment {
                             JSONArray jsonOrders = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             for (int i = 0; i < jsonOrders.length(); i++) {
-                                Notification notification = (Notification) gson.fromJson(jsonOrders.getString(i), Notification.class);
-                                arrNotification.add((Notification) gson.fromJson(jsonOrders.getString(i), Notification.class));
+                                Notification notification = gson.fromJson(jsonOrders.getString(i), Notification.class);
+                                arrNotification.add(gson.fromJson(jsonOrders.getString(i), Notification.class));
                                 notificationAdapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {
@@ -103,8 +103,8 @@ public class NotificationFragment extends ListFragment {
                             JSONArray jsonOrders = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             for (int i = 0; i < jsonOrders.length(); i++) {
-                                Notification notification = (Notification) gson.fromJson(jsonOrders.getString(i), Notification.class);
-                                arrNotification.add((Notification) gson.fromJson(jsonOrders.getString(i), Notification.class));
+                                Notification notification = gson.fromJson(jsonOrders.getString(i), Notification.class);
+                                arrNotification.add(gson.fromJson(jsonOrders.getString(i), Notification.class));
                                 notificationAdapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {

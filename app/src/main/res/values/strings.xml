@@ -49,4 +49,9 @@
     <string name="login_name_hint">Tên người dùng</string>
     <string name="login_mobile_number_hint">Số điện thoại</string>
     <string name="default_web_client_id">89673767638-adjcn6mgai4g7qe4kl4i83t6i7dg5rpt.apps.googleusercontent.com</string>
+    <string name="product">Product</string>
+    <string name="avatar">Avatar</string>
+    <string name="buyer_avatar">BuyerAvatar</string>
+    <string name="seller_avatar">SellerAvatar</string>
+    <string name="menu">Menu</string>
 </resources>

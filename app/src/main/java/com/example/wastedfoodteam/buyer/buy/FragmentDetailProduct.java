@@ -47,8 +47,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class FragmentDetailProduct extends Fragment {
     private BuyerProduct product;
     private final String UPDATE_ORDER_URL = Variable.IP_ADDRESS + Variable.INSERT_NEW_ORDER;
-    private final String GET_FOLLOW_INFORMATION_URL = Variable.IP_ADDRESS + Variable.GET_FOLLOW;
-    private final String UPDATE_FOLLOW_URL = Variable.IP_ADDRESS + Variable.UPDATE_FOLLOW;
     private int orderQuantity;
     ImageButton ibFollow;
     ImageView ivProduct;
@@ -82,6 +80,7 @@ public class FragmentDetailProduct extends Fragment {
 
         //Set button follow
         followVolley = new FollowVolley(getActivity().getApplicationContext(), ibFollow);
+        String GET_FOLLOW_INFORMATION_URL = Variable.IP_ADDRESS + Variable.GET_FOLLOW;
         followVolley.setRequestGetFollow(GET_FOLLOW_INFORMATION_URL, Variable.BUYER.getId(), product.getSeller_id());
 
         //set image from url
@@ -232,7 +231,7 @@ public class FragmentDetailProduct extends Fragment {
             }
         }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("buyer", Variable.BUYER.getId() + "");
                 params.put("product", product.getId() + "");
@@ -301,6 +300,7 @@ public class FragmentDetailProduct extends Fragment {
 
     @Override
     public void onPause() {
+        String UPDATE_FOLLOW_URL = Variable.IP_ADDRESS + Variable.UPDATE_FOLLOW;
         followVolley.setRequestUpdateFollow(new FollowResponseCallback() {
             @Override
             public void onSuccess(String result) {

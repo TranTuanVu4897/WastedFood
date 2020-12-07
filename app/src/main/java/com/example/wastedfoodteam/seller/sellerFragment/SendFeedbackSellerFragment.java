@@ -34,8 +34,8 @@ public class SendFeedbackSellerFragment extends Fragment {
 
     String title, description;
 
-    int id;
-    HandleSendFeedBack handleSendFeedBack;
+    final int id;
+    final HandleSendFeedBack handleSendFeedBack;
 
     public SendFeedbackSellerFragment(HandleSendFeedBack handleSendFeedBack, int id) {
         this.id = id;
@@ -130,7 +130,7 @@ public class SendFeedbackSellerFragment extends Fragment {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("account_id", String.valueOf(id));
                 params.put("title", title);

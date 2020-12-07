@@ -36,24 +36,22 @@ public class CameraStorageFunction {
     public static final int IMAGE_PICK_CAMERA_CODE = 500;
 
     //permission array
-    private String[] cameraPermission;
-    private String[] storagePermission;
+    private final String[] cameraPermission;
+    private final String[] storagePermission;
 
     //image pick uri
     private Uri image_uri;
 
     // instance for firebase storage and StorageReference
-    FirebaseStorage storage;
-    StorageReference storageReference;
+    final FirebaseStorage storage;
+    final StorageReference storageReference;
     private String storage_location;
     ImageView imageView;
-    Activity myActivity;
-    Context myContext;
+    final Activity myActivity;
+    final Context myContext;
 
     public interface HandleUploadImage {
         void onSuccess(String url);
-
-        void onError();
     }
 
     public Uri getImage_uri() {
@@ -141,9 +139,7 @@ public class CameraStorageFunction {
     }
 
     private boolean checkStoragePermission() {
-        boolean result = ContextCompat.checkSelfPermission(myContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
-
-        return result; //return true/false
+        return ContextCompat.checkSelfPermission(myContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED); //return true/false
     }
 
     private void requestStoragePermission() {

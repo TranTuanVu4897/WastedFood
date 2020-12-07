@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragmentBuyer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:weightSum="10">
 
@@ -36,11 +36,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:paddingBottom="20dp"
                 android:text="Chi tiết đơn hàng"
                 android:textColor="@color/colorWhite"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:textStyle="bold">
 
             </TextView>

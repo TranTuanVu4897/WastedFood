@@ -21,14 +21,14 @@ import com.example.wastedfoodteam.utils.CommonFunction;
 import java.util.List;
 
 public class OrderDoneAdapter extends BaseAdapter {
-    Context myContext;
-    int myLayout;
-    List<SellerOrder> arrayOrder;
+    final Context myContext;
+    final int myLayout;
+    final List<SellerOrder> arrayOrder;
     SellerOrder order;
-    FragmentActivity myFragmentActivity;
-    Resources resources;
+    final FragmentActivity myFragmentActivity;
+    final Resources resources;
 
-    private class ViewHolder {
+    private static class ViewHolder {
         ImageView ivBuyer;
         Button btnDetail;
         TextView tvDescription,tvQuantity,tvTotalCost;
@@ -80,8 +80,8 @@ public class OrderDoneAdapter extends BaseAdapter {
         order = arrayOrder.get(position);
         CommonFunction.setImageViewSrc(myContext,order.getBuyer_avatar(),holder.ivBuyer);
         holder.tvDescription.setText("Ghi chú: " + order.getBuyer_comment());
-        holder.tvTotalCost.setText("Thành tiền: " + String.valueOf(CommonFunction.getCurrency(order.getTotal_cost())));
-        holder.tvQuantity.setText("Số lượng: " + String.valueOf(order.getQuantity()));
+        holder.tvTotalCost.setText("Thành tiền: " + CommonFunction.getCurrency(order.getTotal_cost()));
+        holder.tvQuantity.setText("Số lượng: " + order.getQuantity());
         holder.btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

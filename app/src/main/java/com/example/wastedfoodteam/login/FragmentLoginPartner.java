@@ -29,8 +29,6 @@ import com.example.wastedfoodteam.seller.forgetPassword.SellerForgetPasswordFrag
 import com.example.wastedfoodteam.seller.home.SellerHomeActivity;
 import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.seller.register.RegisterSellerFragment;
-import com.example.wastedfoodteam.utils.SendNotificationPackage.SendNotif;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -74,7 +72,7 @@ public class FragmentLoginPartner extends Fragment {
             @Override
             public void onClick(View v) {
                 SellerForgetPasswordFragment sellerForgetPasswordFragment = new SellerForgetPasswordFragment();
-                FragmentManager fragmentManager = getFragmentManager();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.flFragmentLayoutAM,sellerForgetPasswordFragment);
                 fragmentTransaction.commit();
@@ -91,7 +89,7 @@ public class FragmentLoginPartner extends Fragment {
             @Override
             public void onClick(View v) {
                 RegisterSellerFragment registerSellerFragment = new RegisterSellerFragment();
-                FragmentManager fragmentManager = getFragmentManager();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.flFragmentLayoutAM,registerSellerFragment);
                 fragmentTransaction.commit();
@@ -130,34 +128,30 @@ public class FragmentLoginPartner extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                switch (response) {
-                    case "not exist account":
-                        Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO fix for suitable error
-                        break;
-                    default:
-                        Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();//TODO get data
-                        try {
-                            JSONArray object = new JSONArray(response);
-                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-                            Seller seller = gson.fromJson(object.getString(0), Seller.class);
+                if ("not exist account".equals(response)) {
+                    Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO fix for suitable error
+                } else {
+                    Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();//TODO get data
+                    try {
+                        JSONArray object = new JSONArray(response);
+                        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                        Seller seller = gson.fromJson(object.getString(0), Seller.class);
 
-                            final Intent intent = new Intent(getActivity(), SellerHomeActivity.class);//TODO change to seller activity
+                        final Intent intent = new Intent(getActivity(), SellerHomeActivity.class);//TODO change to seller activity
 
-                            Variable.SELLER = seller;
-                            //openSellerHome();
+                        Variable.SELLER = seller;
+                        //openSellerHome();
 
-                            FirebaseAuth.getInstance().signInWithEmailAndPassword(seller.getEmail(),seller.getPassword()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                                @Override
-                                public void onSuccess(AuthResult authResult) {
-                                    Variable.fireBaseUID = authResult.getUser().getUid();
-                                    startActivity(intent);
-                                }
-                            });
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break;
-
+                        FirebaseAuth.getInstance().signInWithEmailAndPassword(seller.getEmail(), seller.getPassword()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                            @Override
+                            public void onSuccess(AuthResult authResult) {
+                                Variable.fireBaseUID = authResult.getUser().getUid();
+                                startActivity(intent);
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
             }
@@ -175,7 +169,7 @@ public class FragmentLoginPartner extends Fragment {
      * move to fragment buyer
      */
     public void addFragmentLoginPartner(){
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         FragmentLoginBuyer fragmentLoginBuyer = new FragmentLoginBuyer();
         fragmentTransaction.replace(R.id.flFragmentLayoutAM,fragmentLoginBuyer);

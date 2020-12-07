@@ -138,7 +138,7 @@ public class ChangePasswordSellerFragment extends Fragment {
                 }
         ){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<>();
                 params.put("id", String.valueOf(id));
                 params.put("password",md5(editText_change_password_new.getText().toString()));

@@ -17,7 +17,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
@@ -30,13 +29,13 @@ import java.util.List;
 import java.util.Map;
 
 public class ProductSellerAdapter extends BaseAdapter {
-    Context myContext;
-    int myLayout;
-    List<Product> arrayProduct;
+    final Context myContext;
+    final int myLayout;
+    final List<Product> arrayProduct;
     Product product;
-    Resources resources;
+    final Resources resources;
 
-    private class ViewHolder {
+    private static class ViewHolder {
         TextView tvName;
         ImageView ivImage;
         //Switch swOnOff;
@@ -145,7 +144,7 @@ public class ProductSellerAdapter extends BaseAdapter {
                 }
         ){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<>();
                 params.put("seller_id", String.valueOf(product.getSeller_id()));
                 params.put("status",  status );

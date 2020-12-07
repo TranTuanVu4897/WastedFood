@@ -79,9 +79,11 @@ public class Account implements Serializable {
         this.email = email;
     }
 
-    public Date getCreate_date() {
-        return create_date;
-    }
+// --Commented out by Inspection START (12/7/2020 11:31 PM):
+//    public Date getCreate_date() {
+//        return create_date;
+//    }
+// --Commented out by Inspection STOP (12/7/2020 11:31 PM)
 
     public void setCreate_date(Date create_date) {
         this.create_date = create_date;

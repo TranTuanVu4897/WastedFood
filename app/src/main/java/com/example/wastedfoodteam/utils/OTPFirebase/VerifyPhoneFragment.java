@@ -25,6 +25,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.concurrent.TimeUnit;
 
 public class VerifyPhoneFragment extends Fragment {
@@ -80,7 +82,7 @@ public class VerifyPhoneFragment extends Fragment {
                             Variable.RESISTER_SELLER.setPhone(phoneNumber.substring(3));
                             RegisterSellerLocationFragment registerSellerLocationFragment = new RegisterSellerLocationFragment();
                             //open seller detail product fragment
-                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                             fragmentTransaction.replace(R.id.flFragmentLayoutAM,registerSellerLocationFragment);
                             fragmentTransaction.commit();
@@ -92,11 +94,11 @@ public class VerifyPhoneFragment extends Fragment {
     }
 
 
-    private PhoneAuthProvider.OnVerificationStateChangedCallbacks
+    private final PhoneAuthProvider.OnVerificationStateChangedCallbacks
             mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
         @Override
-        public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+        public void onCodeSent(@NotNull String s, @NotNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             verificationId = s;
         }

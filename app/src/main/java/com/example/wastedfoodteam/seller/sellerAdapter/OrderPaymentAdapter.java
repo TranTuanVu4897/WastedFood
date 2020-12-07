@@ -25,17 +25,17 @@ import com.example.wastedfoodteam.utils.service.updateStatusForOrder;
 import java.util.List;
 
 public class OrderPaymentAdapter extends BaseAdapter {
-    Context myContext;
-    int myLayout;
-    List<SellerOrder> arrayOrder;
-    SendNotif sendNotif = new SendNotif();
+    final Context myContext;
+    final int myLayout;
+    final List<SellerOrder> arrayOrder;
+    final SendNotif sendNotif = new SendNotif();
     NotificationUtil util;
     Product product;
     SellerOrder order;
-    Resources resources;
-    FragmentActivity myFragmentActivity;
+    final Resources resources;
+    final FragmentActivity myFragmentActivity;
 
-    private class ViewHolder {
+    private static class ViewHolder {
         ImageView ivBuyer;
         Button btnConfirm,btnReject;
         TextView tvDescription,tvQuantity,tvTotalCost;
@@ -87,8 +87,8 @@ public class OrderPaymentAdapter extends BaseAdapter {
         product = Variable.PRODUCT;
         CommonFunction.setImageViewSrc(myContext,order.getBuyer_avatar(),holder.ivBuyer);
         holder.tvDescription.setText("Ghi chú: " + order.getBuyer_comment());
-        holder.tvTotalCost.setText( "Thành tiền: " + String.valueOf(CommonFunction.getCurrency(order.getTotal_cost())));
-        holder.tvQuantity.setText("Số lượng: " + String.valueOf(order.getQuantity()));
+        holder.tvTotalCost.setText( "Thành tiền: " + CommonFunction.getCurrency(order.getTotal_cost()));
+        holder.tvQuantity.setText("Số lượng: " + order.getQuantity());
         holder.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

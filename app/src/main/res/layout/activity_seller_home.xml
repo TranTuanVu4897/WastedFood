@@ -10,14 +10,6 @@
     >
 
 
-    <!-- This LinearLayout represents the contents of the screen  -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-    </LinearLayout>
-
-
     <include
         layout="@layout/app_bar_seller_main"
         android:layout_width="match_parent"

@@ -1,16 +1,14 @@
 package com.example.wastedfoodteam.utils;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +24,6 @@ import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Account;
 import com.example.wastedfoodteam.model.Buyer;
-import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Seller;
 
 import org.jetbrains.annotations.NotNull;
@@ -42,13 +39,12 @@ public class ReportDialog {
     String content = "";
 
     private ImageView ivReport;
-    private TextView tvAccused;
     private EditText etContent;
-    CameraStorageFunction cameraStorageFunction;
+    final CameraStorageFunction cameraStorageFunction;
 
-    Context context;
-    LayoutInflater inflater;
-    Account account;
+    final Context context;
+    final LayoutInflater inflater;
+    final Account account;
 
     public ReportDialog(Context context, LayoutInflater inflater, Account account, CameraStorageFunction cameraStorageFunction) {
         this.context = context;
@@ -59,9 +55,9 @@ public class ReportDialog {
 
 
     public void displayReportDialog() {
-        View ratingLayout = inflater.inflate(R.layout.dialog_report, null);
+        @SuppressLint("InflateParams") View ratingLayout = inflater.inflate(R.layout.dialog_report, null);
 
-        tvAccused = ratingLayout.findViewById(R.id.tvAccusedDR);
+        TextView tvAccused = ratingLayout.findViewById(R.id.tvAccusedDR);
         etContent = ratingLayout.findViewById(R.id.etContentDR);
         ivReport = ratingLayout.findViewById(R.id.ivReport);
 
@@ -116,18 +112,15 @@ public class ReportDialog {
             @Override
             public void onResponse(String response) {
                 Intent intent = new Intent(context, BuyHomeActivity.class);
-                switch (response) {
-                    case "ERROR":
-                        Toast.makeText(context, "ERROR", Toast.LENGTH_LONG).show();
-                        break;
-                    default:
-                        Toast.makeText(context, "OK Insert data", Toast.LENGTH_LONG).show();
-                        try {
-                            context.startActivity(intent);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break;
+                if ("ERROR".equals(response)) {
+                    Toast.makeText(context, "ERROR", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, "OK Insert data", Toast.LENGTH_LONG).show();
+                    try {
+                        context.startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
             }
@@ -139,7 +132,7 @@ public class ReportDialog {
         }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("reporter_id", reporter_id);
                 params.put("accused_id", accused_id);

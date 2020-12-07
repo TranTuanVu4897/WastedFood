@@ -1,36 +1,24 @@
 package com.example.wastedfoodteam.utils.SendNotificationPackage;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
-import android.graphics.Color;
-import android.os.Build;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
 
-import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.global.Variable;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
-import java.util.Random;
+import org.jetbrains.annotations.NotNull;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SendNotif {
-    private APIService apiService ;
 
     public void notificationHandle(String firebaseUID , final String title , final String message){
 
@@ -63,10 +51,10 @@ public class SendNotif {
     public void sendNotifications(String usertoken, String title, String message) {
         Data data = new Data(title, message);
         NotificationSender sender = new NotificationSender(data, usertoken);
-        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+        APIService apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
         apiService.sendNotifcation(sender).enqueue(new Callback<MyResponse>() {
             @Override
-            public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+            public void onResponse(@NotNull Call<MyResponse> call, @NotNull Response<MyResponse> response) {
                 if (response.code() == 200) {
                     if (response.body().success != 1) {
                         //failed
@@ -76,7 +64,7 @@ public class SendNotif {
             }
 
             @Override
-            public void onFailure(Call<MyResponse> call, Throwable t) {
+            public void onFailure(@NotNull Call<MyResponse> call, @NotNull Throwable t) {
                 Log.i("notification","failed");
             }
         });

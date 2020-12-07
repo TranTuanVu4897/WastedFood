@@ -1,6 +1,5 @@
 package com.example.wastedfoodteam.seller.register;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -22,7 +21,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Seller;
-import com.example.wastedfoodteam.seller.forgetPassword.VerifyPhoneForgotPasswordFragment;
 import com.example.wastedfoodteam.utils.Validation.Validation;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -33,7 +31,7 @@ public class RegisterSellerFragment extends Fragment {
     EditText etName, etEmail, etPassword, etConfirmPassword,etDescription;
     Button btnNext;
     TextInputLayout tilName,tilEmail,tilPassword,tilConfirmPassword,tilDescription;
-    private String pass = "pass";
+    private final String pass = "pass";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,7 +61,7 @@ public class RegisterSellerFragment extends Fragment {
                     Variable.RESISTER_SELLER.setPassword(etPassword.getText().toString().trim());
                     Variable.RESISTER_SELLER.setDescription(etDescription.getText().toString().trim());
                     RegisterSellerPhoneFragment registerSellerPhoneFragment = new RegisterSellerPhoneFragment();
-                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.flFragmentLayoutAM,registerSellerPhoneFragment);
                     fragmentTransaction.commit();
@@ -115,7 +113,7 @@ public class RegisterSellerFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
-                    if(etConfirmPassword.getText().toString().trim() != etPassword.getText().toString()){
+                    if(!etConfirmPassword.getText().toString().trim().equals(etPassword.getText().toString())){
                         tilConfirmPassword.setErrorEnabled(false);
                         tilConfirmPassword.setError(pass);
                     }else {
@@ -152,7 +150,7 @@ public class RegisterSellerFragment extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Boolean emailExist;
+                        boolean emailExist;
                         if(response.equals("exist")){
                             emailExist = true;
                         }else{

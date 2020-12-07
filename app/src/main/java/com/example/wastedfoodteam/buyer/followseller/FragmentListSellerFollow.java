@@ -92,7 +92,7 @@ public class FragmentListSellerFollow extends ListFragment {
             JSONArray jsonProducts = new JSONArray(response);
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
             for (int i = 0; i < jsonProducts.length(); i++) {
-                listSellers.add((Seller) gson.fromJson(jsonProducts.getString(i), Seller.class));
+                listSellers.add(gson.fromJson(jsonProducts.getString(i), Seller.class));
                 adapter.notifyDataSetChanged();
             }
         } catch (JSONException e) {

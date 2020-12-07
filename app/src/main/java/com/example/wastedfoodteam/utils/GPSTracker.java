@@ -14,7 +14,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
-import android.test.mock.MockPackageManager;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -34,7 +33,7 @@ public class GPSTracker extends Service implements LocationListener {
     double longitude;
 
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60;
     private static final int MY_PERMISSIONS_REQUEST = 1;
 
     protected LocationManager locationManager;
@@ -48,13 +47,11 @@ public class GPSTracker extends Service implements LocationListener {
     public Location getLocation() {
         try {
             locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-            requestPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+            requestPermission();
             isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             isNetWorkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-            if (!isGPSEnabled && !isNetWorkEnabled) {
-
-            } else {
+            if (!(!isGPSEnabled && !isNetWorkEnabled)){
                 canGetLocation = true;
 
                 if (isNetWorkEnabled) {
@@ -139,10 +136,10 @@ public class GPSTracker extends Service implements LocationListener {
     }
 
 
-    private void requestPermission(String permission) {
-        if (ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+    private void requestPermission() {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions((Activity) context,
-                    new String[]{permission},
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     MY_PERMISSIONS_REQUEST);
         }
     }

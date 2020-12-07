@@ -1,28 +1,18 @@
 package com.example.wastedfoodteam.seller.product;
 
 import android.Manifest;
-import android.app.DatePickerDialog;
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
-import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TimePicker;
@@ -40,17 +30,13 @@ import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.CommonFunction;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class AddProductFragment extends Fragment {
 
@@ -70,16 +56,6 @@ public class AddProductFragment extends Fragment {
     //image pick constants
     private static final int IMAGE_PICK_GALLERY_CODE = 400;
     private static final int IMAGE_PICK_CAMERA_CODE = 500;
-
-    //permission array
-    private String[] cameraPermission;
-    private String[] storagePermission;
-
-    //image pick uri
-//    private Uri image_uri;
-
-    //
-    private StorageTask uploadTask;
 
     //for time picker
     private int mHour, mMinute, mSecond, day, month, year;
@@ -129,8 +105,9 @@ public class AddProductFragment extends Fragment {
         mMinute = calendar.get(Calendar.MINUTE);
 
         //init permission arrays
-        cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        //permission array
+        String[] cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        String[] storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), ivProduct);
 
@@ -140,6 +117,7 @@ public class AddProductFragment extends Fragment {
                 // Launch Time Picker Dialog
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
                         new TimePickerDialog.OnTimeSetListener() {
+                            @SuppressLint("DefaultLocale")
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 etOpenTime.setText(String.format("%02d:%02d", hourOfDay, minute));
@@ -164,6 +142,7 @@ public class AddProductFragment extends Fragment {
                 // Launch Time Picker Dialog
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
 
+                    @SuppressLint("DefaultLocale")
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
@@ -187,10 +166,6 @@ public class AddProductFragment extends Fragment {
                         addProduct(urlGetData);
                     }
 
-                    @Override
-                    public void onError() {
-
-                    }
                 });
 
             }
@@ -207,22 +182,22 @@ public class AddProductFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         if (response.trim().equals("Succesfully update")) {
-                            Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_SHORT);
+                            Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                             //TODO move back to home
                         } else {
-                            Toast.makeText(getActivity(), "Lỗi cập nhật", Toast.LENGTH_SHORT);
+                            Toast.makeText(getActivity(), "Lỗi cập nhật", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(), "Xảy ra lỗi, vui lòng thử lại", Toast.LENGTH_SHORT);
+                        Toast.makeText(getActivity(), "Xảy ra lỗi, vui lòng thử lại", Toast.LENGTH_SHORT).show();
                     }
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("seller_id", String.valueOf(seller_id));
                 params.put("name", etProductName.getText().toString());

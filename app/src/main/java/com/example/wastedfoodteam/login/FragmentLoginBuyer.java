@@ -75,7 +75,7 @@ import java.util.Map;
 public class FragmentLoginBuyer extends Fragment {
     SharedPreferences sharedpreferences;
     GoogleSignInClient mGoogleSignInClient;
-    int RC_SIGN_IN = 10002;
+    final int RC_SIGN_IN = 10002;
     EditText etSDT, etPass;
     Button btnSignIn, btnPartnerOption, btnSignInGoogle;
     //    SignInButton btnSignInGoogle;
@@ -105,6 +105,8 @@ public class FragmentLoginBuyer extends Fragment {
             String buyerJson = sharedpreferences.getString(BUYER_JSON, "");
             Variable.BUYER = gson.fromJson(buyerJson, Buyer.class);
         }
+
+        Variable.BUYER = new Buyer();
         handleSignInFacebook();
 
         //facebook option
@@ -143,8 +145,7 @@ public class FragmentLoginBuyer extends Fragment {
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (etSDT.getText().toString().length() != 10) {
-                } else {
+                if (etSDT.getText().toString().length() == 10) {
                     Variable.CHECK_LOGIN = 0;
                     urlGetData = Variable.IP_ADDRESS + "login/buyerLogin.php?phone=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
                     getData(urlGetData);
@@ -197,7 +198,6 @@ public class FragmentLoginBuyer extends Fragment {
                 });
     }
 
-    //TODO
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
@@ -206,12 +206,12 @@ public class FragmentLoginBuyer extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("", "signInWithCredential:success");
+                            Log.d("gg", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             resultGoogle(user.getUid());
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w("", "signInWithCredential:failure", task.getException());
+                            Log.w("gg", "signInWithCredential:failure", task.getException());
                         }
 
                     }
@@ -279,10 +279,6 @@ public class FragmentLoginBuyer extends Fragment {
                 startActivity(intent);
             }
 
-            @Override
-            public void onError() {
-
-            }
         }, thirdPartyId);
     }
 
@@ -306,7 +302,7 @@ public class FragmentLoginBuyer extends Fragment {
                 firebaseAuthWithGoogle(account.getIdToken());
             }
         } catch (Exception e) {
-            Log.w("SignIn", "Code" + e.getStackTrace());
+            Log.e("SignIn", "Code" + Arrays.toString(e.getStackTrace()));
         }
     }
 
@@ -340,7 +336,7 @@ public class FragmentLoginBuyer extends Fragment {
      */
     public void addFragmentLoginPartner() {
 
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         FragmentLoginPartner fragmentLoginPartner = new FragmentLoginPartner();
         fragmentTransaction.replace(R.id.flFragmentLayoutAM, fragmentLoginPartner);
@@ -474,9 +470,7 @@ public class FragmentLoginBuyer extends Fragment {
 
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
-                    Buyer buyer = gson.fromJson(object.getString(0), Buyer.class);
-
-                    Variable.BUYER = buyer;
+                    Variable.BUYER = gson.fromJson(object.getString(0), Buyer.class);
                     Save(Variable.BUYER);
 
                     Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
@@ -495,7 +489,7 @@ public class FragmentLoginBuyer extends Fragment {
         }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("thirdPartyId", thirdPartyIdFB);
                 params.put("name", nameFB);

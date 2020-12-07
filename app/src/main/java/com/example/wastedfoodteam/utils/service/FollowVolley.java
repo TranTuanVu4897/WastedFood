@@ -2,7 +2,6 @@ package com.example.wastedfoodteam.utils.service;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 
 import com.android.volley.AuthFailureError;
@@ -13,22 +12,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.model.Seller;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class FollowVolley {
-    private Context context;
-    private RequestQueue requestQueue;
-    private ImageButton ibFollow;
+    private final RequestQueue requestQueue;
+    private final ImageButton ibFollow;
     public FollowVolley(Context context,ImageButton ibFollow) {
-        this.context = context;
         this.ibFollow = ibFollow;
         this.requestQueue = Volley.newRequestQueue(context);
 
@@ -70,7 +61,7 @@ public class FollowVolley {
             }
         }){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<>();
                 params.put("buyer_id",buyer + "");
                 params.put("seller_id",seller+"");

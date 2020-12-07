@@ -15,10 +15,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.LoginActivity;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.editSeller.EditSellerFragment;
 import com.example.wastedfoodteam.seller.notification.NotificationFragment;
@@ -26,12 +24,10 @@ import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.seller.product.AddProductFragment;
 import com.example.wastedfoodteam.seller.product.ListProductSellerFragment;
 import com.example.wastedfoodteam.seller.register.RegisterSellerLocationFragment;
-import com.example.wastedfoodteam.seller.register.RegisterSellerPhoneFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.ChangePasswordSellerFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.SendFeedbackSellerFragment;
 import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.utils.CommonFunction;
-import com.example.wastedfoodteam.utils.OTPFirebase.VerifyPhoneFragment;
 import com.example.wastedfoodteam.utils.SendNotificationPackage.SendNotif;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -44,15 +40,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SellerHomeActivity extends AppCompatActivity {
 
-    private ImageButton information_tab_seller;
-
     private DrawerLayout drawerLayout;
 
     private NotificationUtil notificationUtil;
-
-    private CircleImageView iv_nav_header_profile_image;
-
-    private TextView tv_nav_header_user_name;
 
     private BottomNavigationView navigation;
 
@@ -74,10 +64,10 @@ public class SellerHomeActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
 
         //add to tab navigation header
-        iv_nav_header_profile_image = (CircleImageView ) headerView.findViewById(R.id.iv_nav_header_profile_image);
-        tv_nav_header_user_name = headerView.findViewById(R.id.tv_nav_header_user_name);
+        CircleImageView iv_nav_header_profile_image = headerView.findViewById(R.id.iv_nav_header_profile_image);
+        TextView tv_nav_header_user_name = headerView.findViewById(R.id.tv_nav_header_user_name);
 
-        information_tab_seller = findViewById(R.id.information_tab_seller);
+        ImageButton information_tab_seller = findViewById(R.id.information_tab_seller);
 
         //button for open drawer layout
         information_tab_seller.setOnClickListener(new View.OnClickListener() {
@@ -87,14 +77,14 @@ public class SellerHomeActivity extends AppCompatActivity {
             }
         });
 
-        CommonFunction.setImageViewSrc(this,Variable.SELLER.getImage(),iv_nav_header_profile_image);
+        CommonFunction.setImageViewSrc(this,Variable.SELLER.getImage(), iv_nav_header_profile_image);
         tv_nav_header_user_name.setText(Variable.SELLER.getName());
 
         // Find our drawer view
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = findViewById(R.id.drawer_layout);
 
         //init navigation view
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -143,7 +133,7 @@ public class SellerHomeActivity extends AppCompatActivity {
         });
 
         //bottom navigation
-        navigation = (BottomNavigationView) findViewById(R.id.bottom_nav_seller);
+        navigation = findViewById(R.id.bottom_nav_seller);
         Variable.bottomNavigationViewSeller = navigation;
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //set activity to home fragment
@@ -161,18 +151,17 @@ public class SellerHomeActivity extends AppCompatActivity {
         }
         String type = getIntent().getStringExtra("From");
         if (type != null) {
-            switch (type) {
-                case "notifyFrag":
-                    NotificationFragment notificationFragment = new NotificationFragment(Variable.SELLER.getId()+"");
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.content_main,notificationFragment,notificationFragment.getTag()).commit();
+            if ("notifyFrag".equals(type)) {
+                NotificationFragment notificationFragment = new NotificationFragment(Variable.SELLER.getId() + "");
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.content_main, notificationFragment, notificationFragment.getTag()).commit();
             }
         }
     }
 
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
@@ -201,10 +190,9 @@ public class SellerHomeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            drawerLayout.openDrawer(GravityCompat.START);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

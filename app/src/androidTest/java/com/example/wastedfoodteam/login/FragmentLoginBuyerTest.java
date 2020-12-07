@@ -13,10 +13,10 @@ public class FragmentLoginBuyerTest{
 
     @Rule
     public ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(LoginActivity.class);
-    private FragmentLoginBuyer fragmentLoginBuyer = null;
+
     @Before
-    public void setUp() throws Exception {
-        fragmentLoginBuyer = new FragmentLoginBuyer();
+    public void setUp() {
+        FragmentLoginBuyer fragmentLoginBuyer = new FragmentLoginBuyer();
 
     }
     @Test
@@ -25,6 +25,6 @@ public class FragmentLoginBuyerTest{
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
     }
 }

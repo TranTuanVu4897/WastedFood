@@ -92,7 +92,7 @@ public class FragmentEditInformationBuyer extends Fragment {
                 //check information change
                 if (!buyer.getDate_of_birth().toString().equals(etDob.getText().toString()))
                     dob = etDob.getText().toString();
-                String gender = "";
+                String gender;
                 if (rbBoy.isChecked()) {
                     gender = "0";
                 } else {
@@ -169,20 +169,16 @@ public class FragmentEditInformationBuyer extends Fragment {
             @Override
             public void onResponse(String response) {
                 Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
-                switch (response) {
-                    case "failed":
-                        Toast.makeText(getActivity(), "failed", Toast.LENGTH_LONG).show();
-                        break;
-                    default:
-                        Toast.makeText(getActivity(), "OK Insert data", Toast.LENGTH_LONG).show();
-                        try {
+                if ("failed".equals(response)) {
+                    Toast.makeText(getActivity(), "failed", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(), "OK Insert data", Toast.LENGTH_LONG).show();
+                    try {
 
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break;
-
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
             }
@@ -195,7 +191,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("account_id", accountId);
                 params.put("name", name);
@@ -215,7 +211,7 @@ public class FragmentEditInformationBuyer extends Fragment {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
                 String date = year + "-" + month + "-" + dayOfMonth;
-                if (Validation.validateDate(date) == true) {
+                if (Validation.validateDate(date)) {
                     etDob.setText(date);
                 }else{
                     Toast.makeText(getActivity(), "Bạn chọn hơn ngày hiện tại", Toast.LENGTH_LONG).show();
@@ -226,7 +222,7 @@ public class FragmentEditInformationBuyer extends Fragment {
 
             }
         };
-        DatePickerDialog datePickerDialog = null;
+        DatePickerDialog datePickerDialog;
         datePickerDialog = new DatePickerDialog(getActivity(),
                 dateSetListener, lastSelectedYear, lastSelectedMonth, lastSelectedDayOfMonth);
         datePickerDialog.show();

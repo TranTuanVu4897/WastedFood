@@ -2,26 +2,22 @@ package com.example.wastedfoodteam.global;
 
 import android.location.Location;
 
-import com.example.wastedfoodteam.model.Account;
 import com.example.wastedfoodteam.model.Buyer;
-import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.model.Seller;
-import com.example.wastedfoodteam.model.Order;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.sql.Time;
 
 
 public class Variable {
-//    public static final String IP_ADDRESS = "http://192.168.3.4/wastedfoodphp/";//Vutt ip
+    public static final String IP_ADDRESS = "http://192.168.3.4/wastedfoodphp/";//Vutt ip
 //    public static final String IP_ADDRESS = "http://10.22.178.239/wastedfoodphp/";//FPT University ip
 //    public static final String IP_ADDRESS = "http://192.168.1.19/wastedfoodphp/";//TungPT ip
 //    public static final String IP_ADDRESS = "http://192.168.1.10/wastedfoodphp/";//DucHC ip
 //    public static final String IP_ADDRESS ="http://192.168.156.2/wastedfoodphp/";//DucHC ip lan
 //    public static final String IP_ADDRESS ="http://192.168.1.19/wastedfoodphp/";//DucHC ip lan
-    public static final String IP_ADDRESS ="https://wasted-food-service.herokuapp.com/";//heroku server
+//    public static final String IP_ADDRESS ="https://wasted-food-service.herokuapp.com/";//heroku server
 
     //other php variable
     public static final String SEARCH_PRODUCT = "search/getListProducts.php";

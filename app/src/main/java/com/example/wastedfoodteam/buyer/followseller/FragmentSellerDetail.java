@@ -126,6 +126,7 @@ public class FragmentSellerDetail extends ListFragment {
         return view;
     }
 
+    @SuppressLint("SetTextI18n")
     private void setViewContent() {
         tvNameSeller.setText(seller.getName() + "");
         tvAddress.setText(seller.getAddress() + "");
@@ -136,6 +137,7 @@ public class FragmentSellerDetail extends ListFragment {
     private void getSellerExtraInfo() {
         SellerExtraVolley sellerExtraVolley = new SellerExtraVolley(getActivity(), Variable.IP_ADDRESS + "follow/getSellerExtraInfo.php");
         sellerExtraVolley.setRequestGetSeller(new SellerResponseCallback() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onSuccess(SellerExtraInfo seller) {
                 tvFollowFSD.setText("Số người theo dõi: " + seller.follow_total);
@@ -179,7 +181,7 @@ public class FragmentSellerDetail extends ListFragment {
             JSONArray jsonProducts = new JSONArray(response);
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
             for (int i = 0; i < jsonProducts.length(); i++) {
-                arrProduct.add((BuyerProduct) gson.fromJson(jsonProducts.getString(i), BuyerProduct.class));
+                arrProduct.add(gson.fromJson(jsonProducts.getString(i), BuyerProduct.class));
                 adapter.notifyDataSetChanged();
             }
         } catch (JSONException e) {

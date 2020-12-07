@@ -18,6 +18,7 @@
 
 
         <ImageView
+            android:contentDescription="@string/product"
             android:id="@+id/ivProductLSPI"
             android:layout_width="100dp"
             android:layout_height="60dp"
@@ -38,10 +39,10 @@
             android:text="Còn: 10/10"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@+id/ivProductLSPI"
-            app:layout_constraintEnd_toEndOf="@+id/ivProductLPI"
+            app:layout_constraintEnd_toEndOf="@+id/ivProductLSPI"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/ivProductLSPI"
-            app:layout_constraintTop_toTopOf="@+id/ivProductLPI"
+            app:layout_constraintTop_toTopOf="@+id/ivProductLSPI"
             app:layout_constraintVertical_bias="1.0" />
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp">
             <ImageView
+                android:contentDescription="BuyerAvatar"
                 android:focusable="false"
                 android:clickable="false"
                 android:id="@+id/iv_list_seller_confirm_image"
@@ -40,8 +41,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_centerInParent="true"
-                    android:layout_marginRight="15dp"
-                    android:layout_toLeftOf="@+id/btn_list_seller_confirm_reject"
+                    android:layout_marginEnd="15dp"
+                    android:layout_toStartOf="@+id/btn_list_seller_confirm_reject"
                     android:background="@drawable/custom_button"
                     android:backgroundTint="#0029FF"
                     android:text="XÁC NHẬN"
@@ -52,7 +53,7 @@
                     android:backgroundTint="@color/colorRed"
                     android:background="@drawable/custom_button"
                     android:layout_centerInParent="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:textColor="@color/colorWhite"
                     android:text="TỪ CHỐI"
                     android:layout_height="30dp">
@@ -85,7 +86,7 @@
                 android:id="@+id/tv_list_seller_confirm_cost"
                 android:text="123"
                 style="@style/AppTheme"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">

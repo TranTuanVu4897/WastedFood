@@ -20,7 +20,7 @@ public class LoginActivityTest {
     LoginActivity loginActivity = null;
     FragmentLoginPartner fragmentLoginPartner = null;
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         this.loginActivity = new LoginActivity();
         this.fragmentLoginPartner = new FragmentLoginPartner();
     }
@@ -38,6 +38,6 @@ public class LoginActivityTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
     }
 }

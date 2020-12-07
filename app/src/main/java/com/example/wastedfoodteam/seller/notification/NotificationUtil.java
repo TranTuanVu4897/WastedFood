@@ -2,7 +2,6 @@ package com.example.wastedfoodteam.seller.notification;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -14,7 +13,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.model.Notification;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -30,21 +28,21 @@ public class NotificationUtil {
                     @Override
                     public void onResponse(String response) {
                         if (response.trim().equals("Succesfully update")) {
-                            Toast.makeText(context, "Cập nhật thành công", Toast.LENGTH_SHORT);
+                            Toast.makeText(context, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(context, "Lỗi cập nhật", Toast.LENGTH_SHORT);
+                            Toast.makeText(context, "Lỗi cập nhật", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, "Xảy ra lỗi, vui lòng thử lại", Toast.LENGTH_SHORT);
+                        Toast.makeText(context, "Xảy ra lỗi, vui lòng thử lại", Toast.LENGTH_SHORT).show();
                     }
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("sender_id", String.valueOf(sender_id));
                 params.put("receiver_id", String.valueOf(receiver_id));
@@ -64,8 +62,7 @@ public class NotificationUtil {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            int totalNotification = new Integer(response);
-                            Variable.TOTAL_NOTIFICATION = totalNotification;
+                            Variable.TOTAL_NOTIFICATION = new Integer(response);
                             if(Variable.TOTAL_NOTIFICATION > 0) {
                                 BadgeDrawable badge;
                                 if(Variable.CURRENT_USER.equals("BUYER"))
@@ -121,7 +118,7 @@ public class NotificationUtil {
                 }
         ){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<>();
                 params.put("receiver_id", String.valueOf(receiver_id));
                 return params;

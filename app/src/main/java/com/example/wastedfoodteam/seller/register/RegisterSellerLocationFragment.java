@@ -2,8 +2,6 @@ package com.example.wastedfoodteam.seller.register;
 
 import android.Manifest;
 import android.content.Intent;
-import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.test.mock.MockContext;
 import android.test.mock.MockPackageManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,7 +28,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.LoginActivity;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.buyer.order.FragmentOrderDetail;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.utils.GPSTracker;
@@ -40,7 +36,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -93,7 +88,7 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (mMap != null) {
-                    if (!isNullOrEmpty(etLng.getText().toString()))
+                    if (isNullOrEmpty(etLng.getText().toString()))
                         setMarker(Double.parseDouble(etLat.getText().toString()), Double.parseDouble(etLng.getText().toString()));
                 }
             }
@@ -102,7 +97,7 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (mMap != null) {
-                    if (!isNullOrEmpty(etLat.getText().toString()))
+                    if (isNullOrEmpty(etLat.getText().toString()))
                         setMarker(Double.parseDouble(etLat.getText().toString()), Double.parseDouble(etLng.getText().toString()));
                 }
             }
@@ -116,7 +111,7 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
     }
 
     private boolean isNullOrEmpty(String toString) {
-        return toString == null || toString.isEmpty();
+        return toString != null && !toString.isEmpty();
     }
 
     private void getGPSPermission() {
@@ -163,7 +158,7 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
                         registerSellerData(url, seller.getName(), seller.getPassword(), seller.getPhone(), seller.getEmail(), seller.getLatitude() + "", seller.getLongitude() + "", seller.getAddress(), seller.getImage(), seller.getFirebase_UID(), seller.getDescription());
                         final Intent intent = new Intent(getActivity(), LoginActivity.class);//TODO change to seller activity
                         startActivity(intent);
-                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         SuccessRegisFragment successRegisFragment = new SuccessRegisFragment();
                         fragmentTransaction.replace(R.id.flFragmentLayoutAM, successRegisFragment);
@@ -190,7 +185,7 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
         }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("name", name);
                 params.put("password", md5(password));

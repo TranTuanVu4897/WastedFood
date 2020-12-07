@@ -86,7 +86,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         CommonFunction.setImageViewSrc(this, Variable.BUYER.getImage(), navHeaderImageViewUser);
 
         // Find our drawer view
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_buyer);
+        drawerLayout = findViewById(R.id.drawer_layout_buyer);
 
         //or maybe u can use button instead
         ibUserInfo.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +97,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         });
 
         //init navigation view
-        navigationView = (NavigationView) findViewById(R.id.nav_view_buyer);
+        navigationView = findViewById(R.id.nav_view_buyer);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -157,7 +157,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         addFragmentListProduct();
 
         //bottom navigation
-        navigation = (BottomNavigationView) findViewById(R.id.bottom_nav_buyer);
+        navigation = findViewById(R.id.bottom_nav_buyer);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         notificationUtil.getTotalNotification(getApplicationContext(), Variable.BUYER.getId(), navigation);
         //notification badge
@@ -168,14 +168,13 @@ public class BuyHomeActivity extends AppCompatActivity {
         }
         String type = getIntent().getStringExtra("From");
         if (type != null) {
-            switch (type) {
-                case "notifyFrag":
-                    NotificationFragment notificationFragment = new NotificationFragment(Variable.BUYER.getId() + "");
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.flSearchResultAH, notificationFragment, "")
-                            .addToBackStack(null)
-                            .commit();
+            if ("notifyFrag".equals(type)) {
+                NotificationFragment notificationFragment = new NotificationFragment(Variable.BUYER.getId() + "");
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.flSearchResultAH, notificationFragment, "")
+                        .addToBackStack(null)
+                        .commit();
             }
         }
 
@@ -204,7 +203,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         }
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -253,10 +252,9 @@ public class BuyHomeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            drawerLayout.openDrawer(GravityCompat.START);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

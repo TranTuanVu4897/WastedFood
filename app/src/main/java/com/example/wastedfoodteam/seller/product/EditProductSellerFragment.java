@@ -22,7 +22,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
@@ -32,14 +31,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EditProductSellerFragment extends Fragment {
-    //ui view
-    private ImageView iv_detail_product_icon;
     private EditText name;
     private EditText originalPrice;
     private EditText sellPrice;
     private EditText openTime;
-    private EditText closeTime;
-    private Button btn_detail_product_add;
     int id;
 
     CameraStorageFunction cameraStorageFunction;
@@ -51,18 +46,19 @@ public class EditProductSellerFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_seller_detail_product, container, false);
         //unit ui
-        iv_detail_product_icon = view.findViewById(R.id.iv_detail_product_icon);
+        //ui view
+        ImageView iv_detail_product_icon = view.findViewById(R.id.iv_detail_product_icon);
         name = view.findViewById(R.id.editText_detail_product_name);
         originalPrice = view.findViewById(R.id.editText_detail_product_originalPrice);
         sellPrice = view.findViewById(R.id.editText_detail_product_sellPrice);
         openTime = view.findViewById(R.id.editText_detail_product_openTime);
-        closeTime = view.findViewById(R.id.editText_detail_product_closeTime);
+        EditText closeTime = view.findViewById(R.id.editText_detail_product_closeTime);
 
-        btn_detail_product_add = view.findViewById(R.id.btn_detail_product_add);
+        Button btn_detail_product_add = view.findViewById(R.id.btn_detail_product_add);
 
         //input data
         id = Variable.PRODUCT.getId();
-        CommonFunction.setImageViewSrc(getContext(),Variable.PRODUCT.getImage(),iv_detail_product_icon);
+        CommonFunction.setImageViewSrc(getContext(),Variable.PRODUCT.getImage(), iv_detail_product_icon);
         name.setText(Variable.PRODUCT.getName());
         originalPrice.setText(String.valueOf(Variable.PRODUCT.getOriginal_price()));
         sellPrice.setText(String.valueOf(Variable.PRODUCT.getSell_price()));
@@ -121,7 +117,7 @@ public class EditProductSellerFragment extends Fragment {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("id", String.valueOf(id));
                 params.put("seller_id", String.valueOf(Variable.SELLER.getId()));

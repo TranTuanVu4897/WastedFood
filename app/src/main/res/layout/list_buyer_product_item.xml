@@ -17,6 +17,7 @@
 
 
         <ImageView
+            android:contentDescription="@string/product"
             android:id="@+id/ivProductLPI"
             android:layout_width="100dp"
             android:layout_height="130dp"
@@ -123,7 +124,7 @@
                 android:gravity="center"
                 android:text="5.0"
                 android:textAlignment="center"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -137,7 +138,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:drawableLeft="@drawable/ic_icons8_clock"
                 android:gravity="center"
                 android:text="16.00 - 20.00"
                 android:textSize="18sp"
@@ -147,14 +147,14 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="1.0"
+                app:drawableStartCompat="@drawable/ic_icons8_clock" />
 
             <TextView
                 android:id="@+id/tvDistance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:drawableLeft="@drawable/location"
                 android:gravity="center"
                 android:text="2 km"
                 android:textSize="18sp"
@@ -163,7 +163,8 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="1.0"
+                app:drawableStartCompat="@drawable/location" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

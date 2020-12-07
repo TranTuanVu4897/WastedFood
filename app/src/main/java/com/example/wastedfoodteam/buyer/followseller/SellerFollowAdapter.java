@@ -19,10 +19,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class SellerFollowAdapter extends BaseAdapter {
-    private Context context;
-    private int layout;
-    private List<Seller> sellerList;
-    Resources resources;
+    private final Context context;
+    private final int layout;
+    private final List<Seller> sellerList;
+    final Resources resources;
 
     public SellerFollowAdapter(Context context, int layout, List<Seller> sellerList, Resources resources) {
         this.context = context;
@@ -46,7 +46,7 @@ public class SellerFollowAdapter extends BaseAdapter {
         return sellerList.get(position).getId();
     }
 
-    private class ViewHolder {
+    private static class ViewHolder {
         ImageView ivSeller;
         TextView tvNameSeller, tvDirection, tvAddress;
     }

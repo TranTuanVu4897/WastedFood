@@ -11,135 +11,135 @@ public class ValidationTest {
 //    }
 
     @Test
-    public void testCheckPhoneCorrect() throws Exception {
+    public void testCheckPhoneCorrect() {
         boolean result = Validation.checkPhone("0984605568");
-        Assert.assertEquals(true, result);
+        Assert.assertTrue(result);
     }
 
     @Test
-    public void testCheckPhoneCorrect2() throws Exception {
+    public void testCheckPhoneCorrect2() {
         boolean result = Validation.checkPhone("84984605568");
-        Assert.assertEquals(true, result);
+        Assert.assertTrue(result);
     }
     @Test
-    public void testCheckPhoneNumberNull() throws Exception {
+    public void testCheckPhoneNumberNull() {
         boolean result = Validation.checkPhone(null);
-        Assert.assertEquals(false, result);
+        Assert.assertFalse(result);
     }
 
     @Test
-    public void testCheckPhoneEmpty() throws Exception {
+    public void testCheckPhoneEmpty() {
         boolean result = Validation.checkPhone("");
-        Assert.assertEquals(false, result);
+        Assert.assertFalse(result);
     }
 
     @Test
-    public void testCheckPhoneContainSpace() throws Exception {
+    public void testCheckPhoneContainSpace() {
         boolean result = Validation.checkPhone("098460 5568");
-        Assert.assertEquals(false, result);
+        Assert.assertFalse(result);
     }
 
 
     @Test
-    public void testCheckPhoneShorterThan9() throws Exception {
+    public void testCheckPhoneShorterThan9() {
         boolean result = Validation.checkPhone("098460556");
-        Assert.assertEquals(false, result);
+        Assert.assertFalse(result);
     }
     @Test
-    public void testCheckPhoneShorterThan9By84() throws Exception {
+    public void testCheckPhoneShorterThan9By84() {
         boolean result = Validation.checkPhone("8498460556");
-        Assert.assertEquals(false, result);
+        Assert.assertFalse(result);
     }
 
     @Test
-    public void testCheckPhoneLargerThan9s() throws Exception {
+    public void testCheckPhoneLargerThan9s() {
         boolean result = Validation.checkPhone("09846055688");
-        Assert.assertEquals(false, result);
+        Assert.assertFalse(result);
     }
 
     @Test
-    public void testCheckPhoneLargerThan9By84() throws Exception {
+    public void testCheckPhoneLargerThan9By84() {
         boolean result = Validation.checkPhone("849846055688");
-        Assert.assertEquals(false, result);
+        Assert.assertFalse(result);
     }
 
     @Test
-    public void testCheckPhoneContainSpecialCharacter() throws Exception {
+    public void testCheckPhoneContainSpecialCharacter() {
         boolean result = Validation.checkPhone("@#$12456");
-        Assert.assertEquals(false, result);
+        Assert.assertFalse(result);
     }
 
     @Test
-    public void testCheckPhoneContainWordCharacter() throws Exception {
+    public void testCheckPhoneContainWordCharacter() {
         boolean result = Validation.checkPhone("098460556a");
-        Assert.assertEquals(false, result);
+        Assert.assertFalse(result);
     }
 
     @Test
-    public void testCheckPhoneNotStart0or84() throws Exception {
+    public void testCheckPhoneNotStart0or84() {
         boolean result = Validation.checkPhone("1984605568");
-        Assert.assertEquals(false, result);
+        Assert.assertFalse(result);
     }
 
     //checkMail
 
     @Test
-    public void testCheckEmailNormalCorrect() throws Exception {
+    public void testCheckEmailNormalCorrect() {
         boolean result = Validation.checkEmail("tungphamtp987@gmail.com");
-        Assert.assertEquals(true, result);
+        Assert.assertTrue(result);
     }
 
     @Test
-    public void testCheckEmailorganizationCorrect() throws Exception {
+    public void testCheckEmailorganizationCorrect() {
         boolean result = Validation.checkEmail("tungptse05613@fpt.edu.vn");
-        Assert.assertEquals(true, result);
+        Assert.assertTrue(result);
     }
 
     @Test
-    public void testCheckEmailFailureNulls() throws Exception {
+    public void testCheckEmailFailureNulls() {
         boolean result = Validation.checkEmail(null);
-        Assert.assertEquals(false, result);
+        Assert.assertFalse(result);
     }
 
     @Test
-    public void testCheckEmailFailureEmpty() throws Exception {
+    public void testCheckEmailFailureEmpty() {
         boolean result = Validation.checkEmail("");
-        Assert.assertEquals(false, result);
+        Assert.assertFalse(result);
     }
     @Test
-    public void testCheckEmailFailureContainSpace() throws Exception {
+    public void testCheckEmailFailureContainSpace() {
         boolean result = Validation.checkEmail("tung phamtp987@gmail.com");
-        Assert.assertEquals(false, result);
+        Assert.assertFalse(result);
     }
 
     @Test
-    public void testCheckEmailFailure2() throws Exception {
+    public void testCheckEmailFailure2() {
         boolean result = Validation.checkEmail("tungphamtp987gmail.com");
-        Assert.assertEquals(false, result);
+        Assert.assertFalse(result);
     }
 
 
     @Test
-    public void testCheckEmailFailure3() throws Exception {
+    public void testCheckEmailFailure3() {
         boolean result = Validation.checkEmail("tungphamtp987@@gmail.com");
         Assert.assertFalse(result);
     }
 
     @Test
-    public void testCheckEmailFailure4() throws Exception {
+    public void testCheckEmailFailure4() {
         boolean result = Validation.checkEmail("sampleemail@gmail.com.v");
         Assert.assertFalse(result);
     }
 
     @Test
-    public void testCheckEmailFailure5() throws Exception {
+    public void testCheckEmailFailure5() {
         boolean result = Validation.checkEmail("tungphamtp987@gmail");
         Assert.assertFalse(result);
     }
 
 
     @Test
-    public void testCheckEmailContainSpecialCharacter() throws Exception {
+    public void testCheckEmailContainSpecialCharacter() {
         boolean result = Validation.checkEmail("tungphamtp987!@gmail.com");
         Assert.assertFalse(result);
     }
@@ -147,64 +147,64 @@ public class ValidationTest {
     //check Pass
 
     @Test
-    public void testCheckPasswordCorrect() throws Exception {
+    public void testCheckPasswordCorrect() {
         boolean result = Validation.checkPassword("samplepass1");
         Assert.assertTrue(result);
     }
 
     @Test
-    public void testCheckPasswordCorrect1() throws Exception {
+    public void testCheckPasswordCorrect1() {
         boolean result = Validation.checkPassword("1234test");
         Assert.assertTrue(result);
     }
     @Test
-    public void testCheckPasswordCorrect2() throws Exception {
+    public void testCheckPasswordCorrect2() {
         boolean result = Validation.checkPassword("1234test1234test");
         Assert.assertTrue(result);
     }
     @Test
-    public void testCheckPasswordCorrect3s() throws Exception {
+    public void testCheckPasswordCorrect3s() {
         boolean result = Validation.checkPassword("test@1234");
         Assert.assertTrue(result);
     }
     @Test
-    public void testCheckPasswordCorrect4s() throws Exception {
+    public void testCheckPasswordCorrect4s() {
         boolean result = Validation.checkPassword("Test@1234");
         Assert.assertTrue(result);
     }
 
     @Test
-    public void testCheckPasswordFailureNulls() throws Exception {
+    public void testCheckPasswordFailureNulls() {
         boolean result = Validation.checkPassword(null);
         Assert.assertFalse(result);
     }
 
     @Test
-    public void testCheckPasswordFailureEmpty() throws Exception {
+    public void testCheckPasswordFailureEmpty() {
         boolean result = Validation.checkPassword("");
         Assert.assertFalse(result);
     }
 
     @Test
-    public void testCheckPasswordFailureInputSpace() throws Exception {
+    public void testCheckPasswordFailureInputSpace() {
         boolean result = Validation.checkPassword("test 1234");
         Assert.assertFalse(result);
     }
 
     @Test
-    public void testCheckPasswordFailureOnlyNum() throws Exception {
+    public void testCheckPasswordFailureOnlyNum() {
         boolean result = Validation.checkPassword("01234567");
         Assert.assertFalse(result);
     }
 
     @Test
-    public void testCheckPasswordFailureOnlyWord() throws Exception {
+    public void testCheckPasswordFailureOnlyWord() {
         boolean result = Validation.checkPassword("asdfghjk");
         Assert.assertFalse(result);
     }
 
     @Test
-    public void testCheckPasswordFailureOnlyLargerThan16() throws Exception {
+    public void testCheckPasswordFailureOnlyLargerThan16() {
         boolean result = Validation.checkPassword("asdfghjk012345678");
         Assert.assertFalse(result);
     }
@@ -212,55 +212,55 @@ public class ValidationTest {
 
     //checkName
     @Test
-    public void testCheckNameCorrect() throws Exception {
+    public void testCheckNameCorrect() {
         boolean result = Validation.checkName("a");
         Assert.assertTrue(result);
     }
 
     @Test
-    public void testCheckNameCorrect2() throws Exception {
+    public void testCheckNameCorrect2() {
         boolean result = Validation.checkName("abc abc");
         Assert.assertTrue(result);
     }
 
     @Test
-    public void testCheckNameLager50() throws Exception {
+    public void testCheckNameLager50() {
         boolean result = Validation.checkName("ádasdasda dasdasdasdasdasdasdasdasdasdasdasdasdas");
         Assert.assertFalse(result);
     }
 
     @Test
-    public void testCheckNameEmpty() throws Exception {
+    public void testCheckNameEmpty() {
         boolean result = Validation.checkName("");
         Assert.assertFalse(result);
     }
 
     @Test
-    public void testCheckNameNull() throws Exception {
+    public void testCheckNameNull() {
         boolean result = Validation.checkName(null);
         Assert.assertFalse(result);
     }
 
     @Test
-    public void testCheckNameSpecial() throws Exception {
+    public void testCheckNameSpecial() {
         boolean result = Validation.checkName("Tung@1101");
         Assert.assertFalse(result);
     }
     //check Dob
     @Test
-    public void testValidateDateCorrect() throws Exception {
+    public void testValidateDateCorrect() {
         Boolean result = Validation.validateDate("1998-11-01");
         Assert.assertEquals(Boolean.TRUE, result);
     }
 
     @Test
-    public void testValidateDateCurrentDate() throws Exception {
+    public void testValidateDateCurrentDate() {
         Boolean result = Validation.validateDate("2020-12-05");
         Assert.assertEquals(Boolean.TRUE, result);
     }
 
     @Test
-    public void testValidateDateLagerCurrentDate() throws Exception {
+    public void testValidateDateLagerCurrentDate() {
         Boolean result = Validation.validateDate("2021-11-01");
         Assert.assertEquals(Boolean.FALSE, result);
     }
