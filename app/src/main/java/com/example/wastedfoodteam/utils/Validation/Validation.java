@@ -1,5 +1,6 @@
 package com.example.wastedfoodteam.utils.Validation;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -10,6 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.global.Variable;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -94,5 +96,36 @@ public class Validation {
             return false;
         }
 
+    }
+
+    public static void checkPhoneExist(final String phone , final TextInputLayout tilPhone , Context context) {
+
+        String urlGetData = Variable.IP_ADDRESS + "register/checkPhoneExist.php?phone=" + phone ;
+        final RequestQueue requestQueue = Volley.newRequestQueue( context.getApplicationContext()  );
+        final StringRequest getSellerRequestString = new StringRequest(Request.Method.GET, urlGetData,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Boolean emailExist;
+                        if(response.equals("exist")){
+                            emailExist = true;
+                        }else{
+                            emailExist = false;
+                        }
+                        if(emailExist){
+                            tilPhone.setError("Số điện thoại đã tồn tại");
+                            tilPhone.setErrorEnabled(true);
+                        }else{
+                            tilPhone.setErrorEnabled(false);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        requestQueue.add(getSellerRequestString);
     }
 }
