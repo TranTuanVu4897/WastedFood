@@ -16,6 +16,7 @@
             android:id="@+id/information_tab_seller"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:contentDescription="Menu"
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/item_background"
             app:srcCompat="@drawable/ic_baseline_view_headline_24"

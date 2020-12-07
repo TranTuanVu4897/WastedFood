@@ -50,7 +50,7 @@
             android:background="@drawable/custom_button"
             android:backgroundTint="@color/colorBlue"
             android:text="CHỈNH SỬA"
-            android:textColor="@color/colorWhite"></Button>
+            android:textColor="@color/colorWhite"/>
     </RelativeLayout>
 
     <TextView

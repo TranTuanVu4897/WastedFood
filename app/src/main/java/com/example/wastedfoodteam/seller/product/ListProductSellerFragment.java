@@ -1,5 +1,6 @@
 package com.example.wastedfoodteam.seller.product;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -44,6 +45,7 @@ public class ListProductSellerFragment extends ListFragment {
     int seller_id;
     int totalProduct;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

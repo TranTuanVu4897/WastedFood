@@ -58,13 +58,10 @@ public class AddProductFragment extends Fragment {
     private String storage_location;
 
 
-    //ui view
-    private ImageView ivProduct;
     private EditText etProductName,
             etOriginalPrice, etSellPrice,
             etOpenTime, etCloseTime,
             etDescription, etQuantity;
-    private Button btnAddProductAdd;
 
     //permission constants
     private static final int CAMERA_REQUEST_CODE = 200;
@@ -115,7 +112,8 @@ public class AddProductFragment extends Fragment {
         storageReference = storage.getReference();
 
         //init ui view
-        ivProduct = view.findViewById(R.id.ivProduct);
+        //ui view
+        ImageView ivProduct = view.findViewById(R.id.ivProduct);
         etProductName = view.findViewById(R.id.etProductName);
         etOriginalPrice = view.findViewById(R.id.etOriginalPrice);
         etSellPrice = view.findViewById(R.id.etSellPrice);
@@ -123,7 +121,7 @@ public class AddProductFragment extends Fragment {
         etCloseTime = view.findViewById(R.id.etCloseTime);
         etDescription = view.findViewById(R.id.etDescription);
         etQuantity = view.findViewById(R.id.etQuantity);
-        btnAddProductAdd = view.findViewById(R.id.btnAddProductAdd);
+        Button btnAddProductAdd = view.findViewById(R.id.btnAddProductAdd);
 
 
         //Date picker handle
@@ -134,7 +132,7 @@ public class AddProductFragment extends Fragment {
         cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
-        cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(),ivProduct);
+        cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), ivProduct);
 
         etOpenTime.setOnClickListener(new View.OnClickListener() {
             @Override

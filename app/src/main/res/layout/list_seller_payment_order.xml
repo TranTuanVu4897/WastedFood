@@ -54,7 +54,7 @@
                     android:textStyle="bold"
                     android:backgroundTint="#1DCC01"
                     android:text="ĐÃ THANH TOÁN"
-                    android:textColor="@color/colorWhite"></Button>
+                    android:textColor="@color/colorWhite"/>
                 <Button
                     android:id="@+id/btn_list_seller_payment_reject"
                     android:layout_width="120dp"

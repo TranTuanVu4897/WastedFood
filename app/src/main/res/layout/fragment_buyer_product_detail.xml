@@ -159,8 +159,6 @@
                 </LinearLayout>
             </TableRow>
 
-            <TableRow></TableRow>
-
             <TextView
                 android:id="@+id/tvQuantity"
                 android:layout_width="match_parent"

@@ -44,6 +44,7 @@ public class FragmentListProduct extends ListFragment {
     EditText etSearch;
     Button btnNear, btnAll, btnFollowSeller;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

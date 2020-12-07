@@ -45,7 +45,7 @@
                     android:background="@drawable/custom_button"
                     android:backgroundTint="#0029FF"
                     android:text="XÁC NHẬN"
-                    android:textColor="@color/colorWhite"></Button>
+                    android:textColor="@color/colorWhite"/>
                 <Button
                     android:id="@+id/btn_list_seller_confirm_reject"
                     android:layout_width="wrap_content"

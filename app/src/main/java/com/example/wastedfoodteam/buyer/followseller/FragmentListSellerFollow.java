@@ -1,5 +1,6 @@
 package com.example.wastedfoodteam.buyer.followseller;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ public class FragmentListSellerFollow extends ListFragment {
     Bundle bundleDetail;
     FragmentSellerDetail restaurant;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
