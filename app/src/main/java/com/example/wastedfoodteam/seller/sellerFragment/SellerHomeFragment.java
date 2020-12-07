@@ -24,6 +24,7 @@ import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SellerHomeFragment extends Fragment {
 
@@ -39,7 +40,7 @@ public class SellerHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_seller_home, container, false);
-         return  view;
+        return view;
     }
 
     private void getSeller() {

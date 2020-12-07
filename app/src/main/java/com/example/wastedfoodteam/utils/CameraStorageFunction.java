@@ -64,7 +64,7 @@ public class CameraStorageFunction {
         this.image_uri = image_uri;
     }
 
-    public CameraStorageFunction(Activity activity, Context context,ImageView imageView) {
+    public CameraStorageFunction(Activity activity, Context context, ImageView imageView) {
         myActivity = activity;
         myContext = context;
         this.imageView = imageView;
@@ -182,39 +182,43 @@ public class CameraStorageFunction {
 
     // UploadImage method
     public void uploadImage(final HandleUploadImage handleUploadImage) {
-        // Defining the child of storageReference
-        StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
+        try {
+            // Defining the child of storageReference
+            StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
 
-        // adding listeners on upload
-        // or failure of image
-        ref.putFile(image_uri).addOnSuccessListener(
-                new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            // adding listeners on upload
+            // or failure of image
+            ref.putFile(image_uri).addOnSuccessListener(
+                    new OnSuccessListener<UploadTask.TaskSnapshot>() {
 
-                    @Override
-                    public void onSuccess(
-                            UploadTask.TaskSnapshot taskSnapshot) {
+                        @Override
+                        public void onSuccess(
+                                UploadTask.TaskSnapshot taskSnapshot) {
 
-                        // Image uploaded successfully
-                        Toast.makeText(myActivity, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
-                        taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                storage_location = uri.toString();
-                                handleUploadImage.onSuccess(storage_location);
-                                Toast.makeText(myActivity, uri.toString(), Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    }
-                })
+                            // Image uploaded successfully
+                            Toast.makeText(myActivity, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
+                            taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    storage_location = uri.toString();
+                                    handleUploadImage.onSuccess(storage_location);
+                                    Toast.makeText(myActivity, uri.toString(), Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    })
 
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
 
-                        // Error, Image not uploaded
-                        Toast.makeText(myActivity, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                            // Error, Image not uploaded
+                            Toast.makeText(myActivity, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } catch (Exception e) {
+            Log.e("CameraStorageFunction", e.getMessage());
+        }
     }
 
 

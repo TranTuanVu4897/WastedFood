@@ -72,10 +72,6 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
         mAuth = FirebaseAuth.getInstance();
         seller = Variable.RESISTER_SELLER;
 
-        SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
         getGPSPermission();
 
         btnComplete.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +102,12 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
                 }
             }
         });
+
+
+        SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
         return view;
     }
 
@@ -117,7 +119,7 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         REQUEST_CODE_PERMISSION);
 
-                getActivity().finishAndRemoveTask();
+                //getActivity().finishAndRemoveTask();
 
             } else getGPS();
         } catch (Exception e) {
@@ -134,6 +136,7 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
         } else {
             gps.showSettingAlert();
         }
+
     }
 
 
@@ -223,9 +226,10 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
         mMap.getUiSettings().setAllGesturesEnabled(true);
 
         // Add a marker in fptUniversity and move the camera
-        if (gps.canGetLocation()) {
-            setMarker(gps.getLatitude(), gps.getLongitude());
-        }
+        if (gps != null)
+            if (gps.canGetLocation()) {
+                setMarker(gps.getLatitude(), gps.getLongitude());
+            }
 
 
     }
