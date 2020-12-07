@@ -6,11 +6,13 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.test.mock.MockContext;
 import android.test.mock.MockPackageManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,6 +53,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class RegisterSellerLocationFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     private static final int REQUEST_CODE_PERMISSION = 2;
@@ -72,10 +75,6 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
         mAuth = FirebaseAuth.getInstance();
         seller = Variable.RESISTER_SELLER;
 
-        SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
         getGPSPermission();
 
         btnComplete.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +93,8 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (mMap != null) {
-                    setMarker(Double.parseDouble(etLat.getText().toString()), Double.parseDouble(etLng.getText().toString()));
+                    if (!isNullOrEmpty(etLng.getText().toString()))
+                        setMarker(Double.parseDouble(etLat.getText().toString()), Double.parseDouble(etLng.getText().toString()));
                 }
             }
         });
@@ -102,11 +102,21 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (mMap != null) {
-                    setMarker(Double.parseDouble(etLat.getText().toString()), Double.parseDouble(etLng.getText().toString()));
+                    if (!isNullOrEmpty(etLat.getText().toString()))
+                        setMarker(Double.parseDouble(etLat.getText().toString()), Double.parseDouble(etLng.getText().toString()));
                 }
             }
         });
+
+        SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
         return view;
+    }
+
+    private boolean isNullOrEmpty(String toString) {
+        return toString == null || toString.isEmpty();
     }
 
     private void getGPSPermission() {
@@ -117,7 +127,6 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         REQUEST_CODE_PERMISSION);
 
-                getActivity().finishAndRemoveTask();
 
             } else getGPS();
         } catch (Exception e) {
@@ -129,11 +138,15 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
     private void getGPS() {
         gps = new GPSTracker(getActivity());
         if (gps.canGetLocation()) {
-            etLat.setText(gps.getLatitude() + "");
-            etLng.setText(gps.getLongitude() + "");
+            refreshTextEditText(gps.getLatitude(), gps.getLongitude());
         } else {
             gps.showSettingAlert();
         }
+    }
+
+    private void refreshTextEditText(double latitude, double longitude) {
+        etLat.setText(latitude + "");
+        etLng.setText(longitude + "");
     }
 
 
@@ -221,21 +234,39 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setAllGesturesEnabled(true);
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                setMarker(latLng.latitude, latLng.longitude);
+            }
+        });
 
-        // Add a marker in fptUniversity and move the camera
-        if (gps.canGetLocation()) {
-            setMarker(gps.getLatitude(), gps.getLongitude());
-        }
+        setMarkerByGPS();
 
+    }
 
+    private void setMarkerByGPS() {
+        if (gps != null)
+            if (gps.canGetLocation()) {
+                setMarker(gps.getLatitude(), gps.getLongitude());
+            }
     }
 
     private void setMarker(double latitude, double longitude) {
         LatLng current = new LatLng(latitude, longitude);
-        MarkerOptions marker = new MarkerOptions().position(current).title("Bạn ở đây");
+        MarkerOptions marker = new MarkerOptions().position(current).title("Vị trí nhà hàng bạn?");
+        mMap.clear();
         mMap.addMarker(marker);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(current, 16f));
+        refreshTextEditText(latitude, longitude);
     }
 
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CODE_PERMISSION) {
+            getGPS();
+            setMarkerByGPS();
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }

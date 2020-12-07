@@ -24,11 +24,11 @@ import com.example.wastedfoodteam.seller.notification.NotificationFragment;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.seller.register.RegisterSellerLocationFragment;
 import com.example.wastedfoodteam.seller.register.RegisterSellerPhoneFragment;
-import com.example.wastedfoodteam.seller.sellerFragment.AddProductFragment;
+import com.example.wastedfoodteam.seller.product.AddProductFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.ChangePasswordSellerFragment;
-import com.example.wastedfoodteam.seller.sellerFragment.EditSellerFragment;
-import com.example.wastedfoodteam.seller.sellerFragment.ListProductSellerFragment;
-import com.example.wastedfoodteam.seller.sellerFragment.SellerHomeFragment;
+import com.example.wastedfoodteam.seller.editSeller.EditSellerFragment;
+import com.example.wastedfoodteam.seller.product.ListProductSellerFragment;
+import com.example.wastedfoodteam.seller.home.SellerHomeFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.SendFeedbackSellerFragment;
 import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.utils.CommonFunction;
@@ -217,6 +217,17 @@ public class SellerHomeActivity extends AppCompatActivity {
         if (fragments != null) {
             for (Fragment fragment : fragments) {
                 fragment.onActivityResult(requestCode, resultCode, data);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
             }
         }
     }
