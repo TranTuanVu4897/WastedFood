@@ -50,7 +50,6 @@
                     android:layout_width="120dp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="50dp"
-                    android:layout_toStartOf="@+id/btn_list_seller_confirm_reject"
                     android:background="@drawable/custom_button"
                     android:textStyle="bold"
                     android:backgroundTint="#1DCC01"

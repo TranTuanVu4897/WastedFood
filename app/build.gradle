@@ -1,10 +1,25 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 android {
+
+    signingConfigs {
+        wastedfood {
+            storeFile file('D:\\Work\\GitHub\\WastedFood\\wastedfood.jks')
+            storePassword '123456'
+            keyAlias 'wastedfood'
+            keyPassword '123456'
+        }
+    }
     compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    buildToolsVersion '29.0.3'
     useLibrary 'android.test.mock'
 
+//    lintOptions {
+//        checkReleaseBuilds false
+//        // Or, if you prefer, you can continue to check for errors in release builds,
+//        // but continue the build even when errors are found:
+//        abortOnError false
+//    }
     defaultConfig {
         applicationId "com.example.wastedfoodteam"
 
@@ -20,10 +35,12 @@ android {
             file("../secure.properties")?.withInputStream { secureProps.load(it) }
         }
         resValue "string", "maps_api_key", (secureProps.getProperty("MAPS_API_KEY") ?: "")
+        signingConfig signingConfigs.wastedfood
     }
 
     buildTypes {
         release {
+            debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

@@ -42,7 +42,7 @@
             android:layout_marginStart="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivProductLPI"
+            app:layout_constraintStart_toEndOf="@+id/ivSellerLSFI"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
