@@ -106,7 +106,6 @@ public class FragmentLoginBuyer extends Fragment {
             Variable.BUYER = gson.fromJson(buyerJson, Buyer.class);
         }
 
-        Variable.BUYER = new Buyer();
         handleSignInFacebook();
 
         //facebook option
@@ -186,6 +185,7 @@ public class FragmentLoginBuyer extends Fragment {
                             resultFacebook(user.getUid());
                             Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
                             Variable.CHECK_LOGIN = 2;
+                            getActivity().finishAndRemoveTask();
                             startActivity(intent);
 
                         } else {
@@ -276,6 +276,7 @@ public class FragmentLoginBuyer extends Fragment {
                 Save(Variable.BUYER);
 
                 Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+                getActivity().finishAndRemoveTask();
                 startActivity(intent);
             }
 
@@ -326,6 +327,7 @@ public class FragmentLoginBuyer extends Fragment {
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
             Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
             Variable.CHECK_LOGIN = 2;
+            getActivity().finishAndRemoveTask();
             startActivity(intent);
 
         }
@@ -474,6 +476,7 @@ public class FragmentLoginBuyer extends Fragment {
                     Save(Variable.BUYER);
 
                     Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+                    getActivity().finishAndRemoveTask();
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();

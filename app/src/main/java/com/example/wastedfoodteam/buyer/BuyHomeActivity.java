@@ -11,9 +11,12 @@ import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.test.mock.MockPackageManager;
 import android.util.Log;
@@ -49,6 +52,7 @@ import java.util.List;
 
 public class BuyHomeActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_PERMISSION = 2;
+    private static final String TAG_LIST_FRAGMENT = "ListProduct";
     ImageButton ibUserInfo;
     FragmentListProduct fragmentListProduct;
     NotificationUtil notificationUtil;
@@ -63,15 +67,14 @@ public class BuyHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyer_home);
 
-        checkGPSPermission();
-
+        if (checkGPSPermission()) {
+            setUpBuyerContent();
+        }
         //mapping
         ibUserInfo = findViewById(R.id.ibUserInfo);
 
         Variable.CURRENT_USER = "BUYER";
         notificationUtil = new NotificationUtil();
-
-        getGPSLocation();
 
         //get the header view
         NavigationView navigationView = findViewById(R.id.nav_view_buyer);
@@ -79,9 +82,7 @@ public class BuyHomeActivity extends AppCompatActivity {
 
         navHeaderTextViewUsername = headerView.findViewById(R.id.navHeaderTextViewUsername);
         navHeaderImageViewUser = headerView.findViewById(R.id.navHeaderImageViewUser);
-
         navHeaderTextViewUsername.setText(Variable.BUYER.getName() + "");
-
 
         CommonFunction.setImageViewSrc(this, Variable.BUYER.getImage(), navHeaderImageViewUser);
 
@@ -154,8 +155,6 @@ public class BuyHomeActivity extends AppCompatActivity {
             }
         });
 
-        addFragmentListProduct();
-
         //bottom navigation
         navigation = findViewById(R.id.bottom_nav_buyer);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -180,6 +179,11 @@ public class BuyHomeActivity extends AppCompatActivity {
 
     }
 
+    private void setUpBuyerContent() {
+        getGPSLocation();
+        addFragmentListProduct();
+    }
+
     private void getGPSLocation() {
         GPSTracker gps = new GPSTracker(this);
         if (gps.canGetLocation()) {
@@ -189,18 +193,14 @@ public class BuyHomeActivity extends AppCompatActivity {
         }
     }
 
-    private void checkGPSPermission() {
-        try {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                    != MockPackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        REQUEST_CODE_PERMISSION);
-                finishAndRemoveTask();
-
-            }
-        } catch (Exception e) {
-            System.exit(1);
+    private boolean checkGPSPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != MockPackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE_PERMISSION);
+            return false;
         }
+        return true;
     }
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -230,7 +230,6 @@ public class BuyHomeActivity extends AppCompatActivity {
     };
 
     private void clearBackStackAndOpenFragment(Fragment fragment) {
-        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.flSearchResultAH, fragment, "")
@@ -244,7 +243,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         //add fragment search result
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.flSearchResultAH, fragmentListProduct, "")
+                .replace(R.id.flSearchResultAH, fragmentListProduct, TAG_LIST_FRAGMENT)
                 .addToBackStack(null)
                 .commit();
     }
@@ -263,10 +262,8 @@ public class BuyHomeActivity extends AppCompatActivity {
 
     private void signOutFacebook() {
         LoginManager.getInstance().logOut();
-
         SharedPreferences sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE);
         sharedpreferences.edit().clear().apply();
-
         finishAndRemoveTask();
         Toast.makeText(BuyHomeActivity.this, "Sign out Success", Toast.LENGTH_LONG).show();
         startActivity(new Intent(BuyHomeActivity.this, LoginActivity.class));
@@ -279,10 +276,8 @@ public class BuyHomeActivity extends AppCompatActivity {
                     getApplicationContext(),
                     new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
             ).signOut();
-
             SharedPreferences sharedpreferences = getSharedPreferences("mypref", Context.MODE_PRIVATE);
             sharedpreferences.edit().clear().apply();
-
             finishAndRemoveTask();
             startActivity(new Intent(BuyHomeActivity.this, LoginActivity.class));
 
@@ -301,5 +296,52 @@ public class BuyHomeActivity extends AppCompatActivity {
                 fragment.onActivityResult(requestCode, resultCode, data);
             }
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CODE_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getGPSLocation();
+                addFragmentListProduct();
+            } else {
+                setRequestCodeResultDialog();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    private void setRequestCodeResultDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("Ứng dụng chỉ hoạt động được khi sử dụng GPS. Cấp quyền lại cho ứng dụng?")
+                .setTitle("Thông báo");
+        builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (checkGPSPermission()) setUpBuyerContent();
+            }
+        });
+        builder.setNegativeButton("Từ chối", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isListFragment()) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } else super.onBackPressed();
+    }
+
+    private boolean isListFragment() {
+        FragmentListProduct fragmentListProduct = (FragmentListProduct) getSupportFragmentManager().findFragmentByTag(TAG_LIST_FRAGMENT);
+        return fragmentListProduct != null && fragmentListProduct.isVisible();
     }
 }

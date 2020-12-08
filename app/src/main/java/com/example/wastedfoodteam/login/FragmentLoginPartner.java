@@ -45,7 +45,7 @@ public class FragmentLoginPartner extends Fragment {
     Button btnSignIn, btnBuyerOption;
     EditText etSDT, etPass;
     String urlGetData = "";
-    TextView tvRegisterAccount,tvForgotPassword;
+    TextView tvRegisterAccount, tvForgotPassword;
     String password = "";
 
     @Nullable
@@ -74,7 +74,7 @@ public class FragmentLoginPartner extends Fragment {
                 SellerForgetPasswordFragment sellerForgetPasswordFragment = new SellerForgetPasswordFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.flFragmentLayoutAM,sellerForgetPasswordFragment);
+                fragmentTransaction.replace(R.id.flFragmentLayoutAM, sellerForgetPasswordFragment);
                 fragmentTransaction.commit();
             }
         });
@@ -91,7 +91,7 @@ public class FragmentLoginPartner extends Fragment {
                 RegisterSellerFragment registerSellerFragment = new RegisterSellerFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.flFragmentLayoutAM,registerSellerFragment);
+                fragmentTransaction.replace(R.id.flFragmentLayoutAM, registerSellerFragment);
                 fragmentTransaction.commit();
             }
         });
@@ -168,11 +168,11 @@ public class FragmentLoginPartner extends Fragment {
     /**
      * move to fragment buyer
      */
-    public void addFragmentLoginPartner(){
+    public void addFragmentLoginPartner() {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         FragmentLoginBuyer fragmentLoginBuyer = new FragmentLoginBuyer();
-        fragmentTransaction.replace(R.id.flFragmentLayoutAM,fragmentLoginBuyer);
+        fragmentTransaction.replace(R.id.flFragmentLayoutAM, fragmentLoginBuyer);
         fragmentTransaction.commit();
     }
 
