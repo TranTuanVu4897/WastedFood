@@ -104,11 +104,6 @@ public class AddProductFragment extends Fragment {
         mHour = calendar.get(Calendar.HOUR_OF_DAY);
         mMinute = calendar.get(Calendar.MINUTE);
 
-        //init permission arrays
-        //permission array
-        String[] cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        String[] storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
         cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), ivProduct);
 
         etOpenTime.setOnClickListener(new View.OnClickListener() {
@@ -165,7 +160,6 @@ public class AddProductFragment extends Fragment {
                         String urlGetData = Variable.IP_ADDRESS + Variable.ADD_PRODUCT_SELLER;
                         addProduct(urlGetData);
                     }
-
                 });
 
             }

@@ -93,31 +93,4 @@ public class Validation {
         }
 
     }
-
-    public static void checkPhoneExist(final String phone , final TextInputLayout tilPhone , Context context) {
-
-        String urlGetData = Variable.IP_ADDRESS + "register/checkPhoneExist.php?phone=" + phone ;
-        final RequestQueue requestQueue = Volley.newRequestQueue( context.getApplicationContext()  );
-        final StringRequest getSellerRequestString = new StringRequest(Request.Method.GET, urlGetData,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        boolean emailExist;
-                        emailExist = response.equals("exist");
-                        if(emailExist){
-                            tilPhone.setError("Số điện thoại đã tồn tại");
-                            tilPhone.setErrorEnabled(true);
-                        }else{
-                            tilPhone.setErrorEnabled(false);
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-        requestQueue.add(getSellerRequestString);
-    }
 }

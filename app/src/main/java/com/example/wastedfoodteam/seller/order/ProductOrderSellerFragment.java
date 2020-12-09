@@ -49,7 +49,7 @@ public class ProductOrderSellerFragment extends ListFragment {
     OrderDoneAdapter orderDoneAdapter;
     ImageView imageView;
     Product product;
-    TextView tvConfirmAlert,tvPaymentAlert,tvDoneAlert;
+    TextView tvPaymentAlert,tvDoneAlert;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.wastedfoodteam.global.Variable;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -93,10 +94,10 @@ public class CameraStorageFunction {
 
     public void showImagePickDialog() {
         //display in dialog
-        String[] options = {"Camera", "Gallery"};
+        String[] options = {"Máy ảnh", "Kho điện thoại"};
         //dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(myContext);
-        builder.setTitle("Pick Image").setItems(options, new DialogInterface.OnClickListener() {
+        builder.setTitle("Chọn ảnh").setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //handle item clicks
@@ -183,6 +184,9 @@ public class CameraStorageFunction {
 
         // adding listeners on upload
         // or failure of image
+        if(image_uri == null){
+            image_uri = Variable.uri;
+        }
         ref.putFile(image_uri).addOnSuccessListener(
                 new OnSuccessListener<UploadTask.TaskSnapshot>() {
 

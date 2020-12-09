@@ -31,7 +31,7 @@ public class OrderDoneAdapter extends BaseAdapter {
     private static class ViewHolder {
         ImageView ivBuyer;
         Button btnDetail;
-        TextView tvDescription,tvQuantity,tvTotalCost;
+        TextView tvQuantity,tvTotalCost;
     }
 
     public OrderDoneAdapter(Context context, int layout, List<SellerOrder> orderList , Resources resources , FragmentActivity fragmentActivity){
@@ -66,7 +66,6 @@ public class OrderDoneAdapter extends BaseAdapter {
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(myLayout, null);
-            holder.tvDescription = convertView.findViewById(R.id.tv_list_seller_done_description);
             holder.tvQuantity = convertView.findViewById(R.id.tv_list_seller_done_quantity);
             holder.tvTotalCost = convertView.findViewById(R.id.tv_list_seller_done_cost);
             holder.btnDetail = convertView.findViewById(R.id.btn_list_seller_done_detail);
@@ -75,11 +74,8 @@ public class OrderDoneAdapter extends BaseAdapter {
         }else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-
         order = arrayOrder.get(position);
         CommonFunction.setImageViewSrc(myContext,order.getBuyer_avatar(),holder.ivBuyer);
-        holder.tvDescription.setText("Ghi chú: " + order.getBuyer_comment());
         holder.tvTotalCost.setText("Thành tiền: " + CommonFunction.getCurrency(order.getTotal_cost()));
         holder.tvQuantity.setText("Số lượng: " + order.getQuantity());
         holder.btnDetail.setOnClickListener(new View.OnClickListener() {

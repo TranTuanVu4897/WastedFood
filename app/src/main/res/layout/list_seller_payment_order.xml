@@ -70,17 +70,6 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <TextView
-            android:layout_margin="15dp"
-            android:id="@+id/tv_list_seller_payment_description"
-            android:layout_width="match_parent"
-            style="@style/AppTheme"
-            android:textStyle="bold"
-            android:textColor="@color/colorBlack"
-            android:lines="4"
-            android:maxLines="4"
-            android:layout_height="60dp">
-        </TextView>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

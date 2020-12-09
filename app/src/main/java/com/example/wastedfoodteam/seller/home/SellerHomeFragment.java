@@ -56,12 +56,12 @@ public class SellerHomeFragment extends Fragment {
                         try {
                             JSONObject jsonSellerHome = new JSONObject(response);
 
-                            /*tvTotalProductSelling.setText(jsonSellerHome.getString("totalProductSelling")) ;
-                            tvTotalFollower.setText(jsonSellerHome.getString("totalFollower")) ;
-                            tvOrderBuying.setText(jsonSellerHome.getString("totalOrderBuying")) ;
-                            tvTotalOrderCancel.setText(jsonSellerHome.getString("totalOrderCancel")) ;
-                            tvTotalOrderSuccess.setText(jsonSellerHome.getString("totalOrderSuccess")) ;
-                            tvTotalProduct.setText(jsonSellerHome.getString("totalProduct")) ;*/
+                            tvTotalProductSelling.setText(jsonSellerHome.getString("totalProductSelling") + " sản phẩm") ;
+                            tvTotalFollower.setText(jsonSellerHome.getString("totalFollower") + " người") ;
+                            tvOrderBuying.setText(jsonSellerHome.getString("totalOrderBuying") + " đơn hàng") ;
+                            tvTotalOrderCancel.setText(jsonSellerHome.getString("totalOrderCancel") + " đơn hàng") ;
+                            tvTotalOrderSuccess.setText(jsonSellerHome.getString("totalOrderSuccess") + " đơn hàng") ;
+                            tvTotalProduct.setText(jsonSellerHome.getString("totalProduct" + " sản phẩm")) ;
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

@@ -19,6 +19,7 @@ import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.register.RegisterSellerLocationFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +36,7 @@ public class VerifyPhoneFragment extends Fragment {
     private String verificationId;
     private FirebaseAuth mAuth;
     EditText editText;
+    TextInputLayout tilCode;
     Button button;
 
     @Override
@@ -44,19 +46,37 @@ public class VerifyPhoneFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_verify_phone, container, false);
         button = view.findViewById(R.id.buttonSignIn);
         editText = view.findViewById(R.id.editTextCode);
+        tilCode = view.findViewById(R.id.textInputVerifyPhone);
         mAuth = FirebaseAuth.getInstance();
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String code = editText.getText().toString().trim();
-                verifyCode(code);
+                editText.clearFocus();
+                button.requestFocus();
+            }
+        });
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    if(editText.getText().toString().trim().length()<6){
+                        tilCode.setError("Mã xác nhận phải có 6 ký tự");
+                    }else{
+                        tilCode.setError(null);
+                        String code = editText.getText().toString().trim();
+                        verifyCode(code);
+                    }
+                }
             }
         });
         phoneNumber=getArguments().getString("phone");
         sendVerificationCode(phoneNumber);
-
         return view;
     }
+
+
+
+
 
     private void sendVerificationCode(String number) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
