@@ -36,6 +36,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.wastedfoodteam.utils.Encode.md5;
+
 
 public class ChangePasswordSellerFragment extends Fragment {
 
@@ -150,18 +152,5 @@ public class ChangePasswordSellerFragment extends Fragment {
 
 
 
-    //hash the password for user security
-    private String md5(String str) {
-        String result = "";
-        MessageDigest digest;
-        try {
-            digest = MessageDigest.getInstance("MD5");
-            digest.update(str.getBytes());
-            BigInteger bigInteger = new BigInteger(1, digest.digest());
-            result = bigInteger.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+
 }

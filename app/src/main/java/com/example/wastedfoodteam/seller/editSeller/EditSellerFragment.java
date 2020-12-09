@@ -161,7 +161,6 @@ public class EditSellerFragment extends Fragment {
 
         //Modify in DB
         String urlGetData = Variable.IP_ADDRESS + "seller/sellerEdit.php";
-        //updateSeller("http://192.168.1.10/wastedfoodphp/seller/sellerEdit.php");
         updateSeller(urlGetData);
 
     }
