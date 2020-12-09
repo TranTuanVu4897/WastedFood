@@ -80,7 +80,6 @@ public class FragmentListSellerFollow extends ListFragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("Exception",error.getMessage());
                         Toast.makeText(getActivity(), "Lỗi kết nỗi" + urlGetData, Toast.LENGTH_LONG).show();
                     }
                 });

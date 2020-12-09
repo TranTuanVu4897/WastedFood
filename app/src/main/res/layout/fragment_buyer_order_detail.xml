@@ -35,44 +35,77 @@
         app:layout_constraintVertical_bias="0.0">
 
         <ImageView
-            android:contentDescription="@string/product"
             android:id="@+id/ivProduct"
-            android:layout_width="85dp"
-            android:layout_height="85dp"
-            android:layout_margin="20dp"
+            android:layout_width="105dp"
+            android:layout_height="105dp"
+            android:contentDescription="@string/product"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@drawable/no_image" />
 
         <TextView
-            android:id="@+id/tvBuyQuantity"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/tvDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="TextView"
+            android:layout_marginEnd="10dp"
+            android:drawableStart="@drawable/ic_distance"
+            android:gravity="center"
+            android:text="2km"
+            app:layout_constraintBottom_toBottomOf="@+id/ivProduct"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/ivProduct"
+            app:layout_constraintTop_toTopOf="@+id/ivProduct"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/tvSellerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="DINH TEA HOLA"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/ivProduct"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/ivProduct"
-            app:layout_constraintTop_toBottomOf="@+id/tvProductName"
+            app:layout_constraintTop_toTopOf="@+id/ivProduct"
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/tvProductName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="TextView"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Bánh mì trứng"
             app:layout_constraintBottom_toBottomOf="@+id/ivProduct"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/ivProduct"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.012" />
+            app:layout_constraintTop_toBottomOf="@+id/tvSellerName"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/tvSellPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="20,000VND"
+            android:layout_marginBottom="5dp"
+            android:textColor="#33C600"
+            app:layout_constraintBottom_toBottomOf="@+id/ivProduct"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/ivProduct"
+            app:layout_constraintTop_toBottomOf="@+id/tvSellerName"
+            app:layout_constraintVertical_bias="1.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
