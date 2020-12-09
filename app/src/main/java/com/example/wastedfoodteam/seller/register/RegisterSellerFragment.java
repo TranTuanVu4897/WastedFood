@@ -172,11 +172,7 @@ public class RegisterSellerFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         boolean emailExist;
-                        if(response.equals("exist")){
-                            emailExist = true;
-                        }else{
-                            emailExist = false;
-                        }
+                        emailExist = response.equals("exist");
                         if(emailExist){
                             tilEmail.setError("Địa chỉ email đã tồn tại");
                             bolEmail = false;

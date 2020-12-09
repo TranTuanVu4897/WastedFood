@@ -44,13 +44,15 @@ public class ReportDialog {
 
     final Context context;
     final LayoutInflater inflater;
-    final Account account;
+    final Account accused;
 
-    public ReportDialog(Context context, LayoutInflater inflater, Account account, CameraStorageFunction cameraStorageFunction) {
+
+    public ReportDialog(Context context, LayoutInflater inflater, Account accused, CameraStorageFunction cameraStorageFunction,String reporterId) {
         this.context = context;
         this.inflater = inflater;
-        this.account = account;
+        this.accused = accused;
         this.cameraStorageFunction = cameraStorageFunction;
+        this.reporterId = reporterId;
     }
 
 
@@ -61,14 +63,14 @@ public class ReportDialog {
         etContent = ratingLayout.findViewById(R.id.etContentDR);
         ivReport = ratingLayout.findViewById(R.id.ivReport);
 
-        if (account.getClass().equals(Seller.class))
-            tvAccused.setText(((Seller) account).getName());
+        if (accused.getClass().equals(Seller.class))
+            tvAccused.setText(((Seller) accused).getName());
         else
-            tvAccused.setText(((Buyer) account).getName());
+            tvAccused.setText(((Buyer) accused).getName());
 
         url = Variable.IP_ADDRESS + "FeedbackReport/report.php";
-        reporterId = Variable.SELLER.getId() + "";
-        accusedId = account.getId() + "";
+//        reporterId = Variable.SELLER.getId() + "";
+        accusedId = accused.getId() + "";
 
         ivReport.setOnClickListener(new View.OnClickListener() {
             @Override

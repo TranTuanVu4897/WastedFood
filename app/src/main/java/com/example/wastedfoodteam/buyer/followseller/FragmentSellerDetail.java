@@ -65,6 +65,7 @@ public class FragmentSellerDetail extends ListFragment {
         mappingViewWithVariable(view);
         //set up url volley
 
+        assert getArguments() != null;
         seller = (Seller) getArguments().get("SELLER");
 
         setViewContent();
@@ -74,7 +75,7 @@ public class FragmentSellerDetail extends ListFragment {
         ibReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ReportDialog reportDialog = new ReportDialog(getActivity(), getLayoutInflater(), seller, cameraStorageFunction);
+                ReportDialog reportDialog = new ReportDialog(getActivity(), getLayoutInflater(),seller, cameraStorageFunction,Variable.BUYER.getId()+"");
                 reportDialog.displayReportDialog();
             }
         });

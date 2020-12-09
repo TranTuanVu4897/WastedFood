@@ -53,7 +53,7 @@ public class MyFireBaseMessagingService extends FirebaseMessagingService {
         NotificationUtil notificationUtil = new NotificationUtil();
         title=remoteMessage.getData().get("Title");
         message=remoteMessage.getData().get("Message");
-        String CHANNEL_ID= getString(R.string.project_id);;
+        String CHANNEL_ID= getString(R.string.project_id);
         String CHANNEL_NAME="MESSAGE";
         NotificationManagerCompat manager=NotificationManagerCompat.from(MyFireBaseMessagingService.this);
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
