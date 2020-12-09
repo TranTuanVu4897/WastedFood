@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.utils.Validation;
+package com.example.wastedfoodteam.utils.validation;
 
 import org.junit.Assert;
 import org.junit.Test;

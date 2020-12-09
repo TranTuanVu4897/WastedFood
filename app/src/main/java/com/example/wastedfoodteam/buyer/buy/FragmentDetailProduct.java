@@ -18,7 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -33,7 +32,7 @@ import com.example.wastedfoodteam.buyer.order.BuyerOrder;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.utils.CommonFunction;
-import com.example.wastedfoodteam.utils.SendNotificationPackage.SendNotif;
+import com.example.wastedfoodteam.utils.notification.SendNotif;
 import com.example.wastedfoodteam.utils.service.FollowResponseCallback;
 import com.example.wastedfoodteam.utils.service.FollowVolley;
 
@@ -247,8 +246,7 @@ public class FragmentDetailProduct extends Fragment {
     private String setUpMessageForSend(@NotNull BuyerProduct product, String message) {
         String sendMessage = "Khách hàng" + Variable.BUYER.getName() + " đã đặt hàng sản phẩm " + product.getName() + " của bạn";
         if (message != null || !message.isEmpty())
-            sendMessage = sendMessage + "/n Kèm với lời nhắn: " + message;
-
+            sendMessage = sendMessage + "\nKèm với lời nhắn: " + message;
         return sendMessage;
     }
 

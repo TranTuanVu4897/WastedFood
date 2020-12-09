@@ -47,7 +47,7 @@ import java.util.List;
 public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     private BuyerOrder order;
-    private TextView tvTitle, tvBuyQuantity;
+    private TextView tvProductName, tvDistance, tvPrice, tvSellerName;
     private ImageView ivProduct;
 
     public FragmentOrderDetail() {
@@ -64,17 +64,11 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
         View view = inflater.inflate(R.layout.fragment_buyer_order_detail, container, false);
 
         mappingViewWithVariables(view);
-
-        //set content
-        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), order.getProduct().getImage(), ivProduct);
-        tvBuyQuantity.setText("Đã đặt trước: " + order.getQuantity() + " sản phẩm.");
-        tvTitle.setText("Sản phẩm: " + order.getProduct().getName());
+        setViewContent();
 
         //show dialog
-        if (order.getStatus() == Order.Status.SUCCESS && order.getBuyer_comment() == null) {
-            RatingDialog ratingDialog = new RatingDialog(getActivity(), getLayoutInflater(), order);
-            ratingDialog.displayRatingOrderDialog();
-        }
+        setRatingDialog();
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
@@ -84,10 +78,29 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
         return view;
     }
 
-    private void mappingViewWithVariables(View view) {
-        tvTitle = view.findViewById(R.id.tvProductName);
-        tvBuyQuantity = view.findViewById(R.id.tvBuyQuantity);
+    private void setRatingDialog() {
+        if (order.isNotRatingYet()) {
+            RatingDialog ratingDialog = new RatingDialog(getActivity(), getLayoutInflater(), order);
+            ratingDialog.displayRatingOrderDialog();
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setViewContent() {
+        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), order.getProduct().getImage(), ivProduct);
+        tvDistance.setText("Đã đặt trước: " + order.getQuantity() + " sản phẩm.");
+        tvProductName.setText("Sản phẩm: " + order.getProduct().getName());
+        tvSellerName.setText(order.getProduct().getSeller().getName());
+        tvDistance.setText(CommonFunction.getStringDistance(order.getProduct().getSeller(), Variable.gps));
+    }
+
+    private void mappingViewWithVariables(@NotNull View view) {
+        tvProductName = view.findViewById(R.id.tvProductName);
+        tvPrice = view.findViewById(R.id.tvSellPrice);
+        tvSellerName = view.findViewById(R.id.tvSellerName);
+        tvDistance = view.findViewById(R.id.tvDistance);
         ivProduct = view.findViewById(R.id.ivProduct);
+
     }
 
 
@@ -96,7 +109,6 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
-
 
         // Add a marker in currentPlace and move the camera
         LatLng currentPlace = new LatLng(Variable.gps.getLatitude(), Variable.gps.getLongitude());

@@ -47,8 +47,8 @@
 
             <TableRow>
 
-                <ImageView
-                    android:contentDescription="Discount"
+                <TextView
+                    android:text="10%"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -199,9 +199,8 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_marginStart="30dp"
-            android:background="#FF0000"
             android:text="@string/order"
-            android:textColor="#F9F9F9"
+            style="@style/redButton"
             app:layout_constraintBottom_toBottomOf="@+id/btnDecrease"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.589"
@@ -270,6 +269,9 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:src="@drawable/user"
+            app:civ_border_color="@color/colorBlack"
+            app:civ_fill_color="@color/whiteTextColor"
+            app:civ_border_width="2dp"
             app:layout_constraintBottom_toBottomOf="@+id/iBtnFollow"
             app:layout_constraintEnd_toEndOf="@+id/iBtnFollow"
             app:layout_constraintHorizontal_bias="0.9"

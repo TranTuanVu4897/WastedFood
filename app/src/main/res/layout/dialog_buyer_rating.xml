@@ -2,17 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#706F6F"
+    android:paddingBottom="10dp">
 
     <TextView
-        android:layout_width="match_parent"
+        android:background="@color/whiteTextColor"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="#08FF00"
         android:padding="8dp"
-        android:text="Đánh giá về sản phẩm"
+        android:text="Bạn đã thanh toán thành công"
         android:textAlignment="center"
-        android:textSize="30sp" />
+        android:textSize="28sp" />
 
     <RatingBar
         android:id="@+id/rbRating"
@@ -20,9 +22,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:rating="5"
-        android:stepSize="1" />
+        android:stepSize="1"
+        android:progressTint="@color/goldYellow"
+        android:secondaryProgressTint="#AA9713"
+        android:progressBackgroundTint="#5B510B"/>
 
     <EditText
+        android:background="@color/whiteCardColor"
         android:id="@+id/etRating"
         android:layout_width="327dp"
         android:layout_height="89dp"
@@ -30,7 +36,8 @@
         android:layout_marginTop="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
-        android:hint="Đánh giá" />
+        android:hint="Để lại lời đánh giá của bạn"
+        android:layout_gravity="center"/>
 
 
 </LinearLayout>

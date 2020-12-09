@@ -23,6 +23,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:background="#393939"
+        app:itemTextColor="@color/whiteTextColor"
         app:headerLayout="@layout/nav_header_buyer"
         app:menu="@menu/nav_drawer_menu_buyer"/>
 

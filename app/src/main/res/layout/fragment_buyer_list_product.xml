@@ -15,60 +15,69 @@
             android:id="@+id/etSearchBHA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_gravity="center"
             android:layout_weight="1"
             android:hint="Tìm kiếm" />
+
         <ImageButton
-            android:contentDescription="Filter"
             android:id="@+id/ibFilter"
+            android:background="@drawable/item_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/button_filter"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            android:contentDescription="Filter"
+            app:srcCompat="@drawable/button_filter" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:orientation="horizontal"
         android:paddingStart="10dp"
         android:paddingEnd="10dp">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:textAlignment="center"
-            android:layout_weight="1"
-            android:text="Gần đây"
-            android:id="@+id/btnNearProduct"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:textAlignment="center"
-            android:layout_weight="1"
-            android:text="Tất cả"
-            android:id="@+id/btnAllProduct"
-            android:layout_marginStart="20dp"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:textAlignment="center"
-            android:layout_weight="1"
-            android:id="@+id/btnFollowSellerProduct"
-            android:text="Yêu thích"
-            android:layout_marginStart="20dp"
-            />
-    </LinearLayout>
 
-        <ListView
-            android:id="@android:id/list"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/btnNearProduct"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:nestedScrollingEnabled="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:background="@drawable/button_positive"
+            android:text="Gần đây"
+            android:textAlignment="center"
+            android:textColor="@color/whiteTextColor" />
+
+        <Button
+            android:id="@+id/btnAllProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_negative"
+            android:text="Tất cả"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btnFollowSellerProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_negative"
+            android:text="Yêu thích"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:nestedScrollingEnabled="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </LinearLayout>

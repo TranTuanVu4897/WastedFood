@@ -8,62 +8,75 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
+            android:layout_height="match_parent">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:id="@+id/bg_top_header"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/ic_bg_topheader"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:background="@drawable/gradient_seller_home"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <ImageButton
-                    android:id="@+id/ibUserInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="3dp"
-                    android:contentDescription="@string/menu"
-                    android:background="@drawable/item_background"
-                    android:src="@drawable/ic_baseline_view_headline_24"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/ivAppIcon"
+                    <ImageButton
+                        android:id="@+id/ibUserInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="3dp"
+                        android:background="@drawable/item_background"
+                        android:contentDescription="@string/menu"
+                        android:src="@drawable/ic_baseline_view_headline_24"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivAppIcon"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="40dp"
+                        android:layout_weight="4"
+                        android:src="@drawable/no_image" />
+
+                </LinearLayout>
+
+
+                <FrameLayout
+                    android:id="@+id/flSearchResultAH"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="4"
-                    android:src="@drawable/home"
-                    android:layout_marginEnd="50dp"/>
+                    android:layout_weight="20"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/bottom_nav_buyer"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/gradient_seller_home"
+                    android:theme="@style/AppThemeMaterial"
+                    app:itemTextColor="@color/colorWhite"
+                    app:menu="@menu/bottom_nav_menu_buyer"/>
 
             </LinearLayout>
-
-
-            <FrameLayout
-                android:id="@+id/flSearchResultAH"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="20"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-            </FrameLayout>
-
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:layout_width="match_parent"
-                android:id="@+id/bottom_nav_buyer"
-                android:theme="@style/AppThemeMaterial"
-                android:layout_gravity="bottom"
-                app:itemTextColor="@color/colorWhite"
-                android:background="@drawable/gradient_seller_home"
-                app:menu="@menu/bottom_nav_menu_buyer"
-                android:layout_height="60dp">
-            </com.google.android.material.bottomnavigation.BottomNavigationView>
-
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
 

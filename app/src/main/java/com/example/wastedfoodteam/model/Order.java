@@ -89,6 +89,10 @@ public class Order implements Serializable {
         this.firebase_UID = firebase_UID;
     }
 
+    public boolean isNotRatingYet() {
+        return this.status == Order.Status.SUCCESS && this.buyer_comment == null;
+    }
+
     public Order() {
     }
 
@@ -112,7 +116,7 @@ public class Order implements Serializable {
         this.buyer_comment = buyer_comment;
     }
 
-    public Order(int id, int buyer_id, int product_id, int quantity, Status status, double total_cost, int buyer_rating, String buyer_comment , String firebase_UID) {
+    public Order(int id, int buyer_id, int product_id, int quantity, Status status, double total_cost, int buyer_rating, String buyer_comment, String firebase_UID) {
         this.id = id;
         this.buyer_id = buyer_id;
         this.product_id = product_id;

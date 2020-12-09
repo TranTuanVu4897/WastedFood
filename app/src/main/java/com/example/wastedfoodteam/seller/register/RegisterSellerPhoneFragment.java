@@ -1,6 +1,5 @@
 package com.example.wastedfoodteam.seller.register;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,8 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,11 +25,9 @@ import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
-import com.example.wastedfoodteam.utils.OTPFirebase.VerifyPhoneFragment;
-import com.example.wastedfoodteam.utils.Validation.Validation;
+import com.example.wastedfoodteam.utils.otp.VerifyPhoneFragment;
+import com.example.wastedfoodteam.utils.validation.Validation;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import static com.example.wastedfoodteam.utils.CommonFunction.checkEmptyEditText;
 
