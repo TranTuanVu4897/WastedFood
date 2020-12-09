@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,7 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Seller;
-import com.example.wastedfoodteam.utils.Validation.Validation;
+import com.example.wastedfoodteam.utils.validation.Validation;
 import com.google.android.material.textfield.TextInputLayout;
 
 import static com.example.wastedfoodteam.utils.CommonFunction.checkEmptyEditText;

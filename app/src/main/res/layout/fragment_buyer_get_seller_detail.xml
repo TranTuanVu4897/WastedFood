@@ -43,6 +43,8 @@
                 android:id="@+id/ibReport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@android:color/transparent"
                 android:contentDescription="Report"
                 android:src="@drawable/ic_angry_emoticon_square_face"
                 android:text="Báo cáo" />
@@ -52,6 +54,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:background="@android:color/transparent"
                 android:contentDescription="Follow"
                 android:src="@drawable/followed" />
         </LinearLayout>

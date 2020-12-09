@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.utils.SendNotificationPackage;
+package com.example.wastedfoodteam.utils.notification;
 
 public class Token {
     private String token;

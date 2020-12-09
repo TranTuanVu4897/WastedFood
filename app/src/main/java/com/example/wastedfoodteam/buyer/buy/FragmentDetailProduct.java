@@ -32,7 +32,7 @@ import com.example.wastedfoodteam.buyer.order.BuyerOrder;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.utils.CommonFunction;
-import com.example.wastedfoodteam.utils.SendNotificationPackage.SendNotif;
+import com.example.wastedfoodteam.utils.notification.SendNotif;
 import com.example.wastedfoodteam.utils.service.FollowResponseCallback;
 import com.example.wastedfoodteam.utils.service.FollowVolley;
 

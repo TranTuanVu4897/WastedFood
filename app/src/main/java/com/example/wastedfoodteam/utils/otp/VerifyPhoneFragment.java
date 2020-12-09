@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.utils.OTPFirebase;
+package com.example.wastedfoodteam.utils.otp;
 
 import android.os.Bundle;
 

@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.utils.SendNotificationPackage;
+package com.example.wastedfoodteam.utils.notification;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

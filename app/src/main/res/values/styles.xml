@@ -56,4 +56,15 @@
         <item name="android:textColor">@color/whiteTextColor</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="redButton" parent="viewParent">
+        <item name="android:background">@drawable/round_corner_background_red</item>
+        <item name="android:textColor">@color/whiteTextColor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="redButtonAlternative" parent="viewParent">
+        <item name="android:background">@drawable/round_corner_background_red_alternative</item>
+        <item name="android:textColor">#FF0000</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

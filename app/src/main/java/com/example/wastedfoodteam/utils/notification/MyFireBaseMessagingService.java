@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.utils.SendNotificationPackage;
+package com.example.wastedfoodteam.utils.notification;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;

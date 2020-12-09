@@ -65,7 +65,7 @@
         </activity>
 
         <service
-            android:name=".utils.SendNotificationPackage.MyFireBaseMessagingService"
+            android:name=".utils.notification.MyFireBaseMessagingService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
