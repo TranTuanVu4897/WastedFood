@@ -13,7 +13,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -26,8 +25,6 @@ import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.seller.product.EditProductSellerFragment;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderConfirmAdapter;
-import com.example.wastedfoodteam.seller.sellerAdapter.OrderPaymentAdapter;
-import com.example.wastedfoodteam.seller.sellerAdapter.SellerOrder;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

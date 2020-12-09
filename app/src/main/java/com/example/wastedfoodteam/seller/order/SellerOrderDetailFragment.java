@@ -12,8 +12,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.seller.order.ProductOrderSellerFragment;
-import com.example.wastedfoodteam.seller.sellerAdapter.SellerOrder;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
 public class SellerOrderDetailFragment extends Fragment {

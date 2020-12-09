@@ -153,16 +153,15 @@ public class EditSellerFragment extends Fragment {
     }
 
     private void inputData() {
-        //Get Data In Edit Text
-
-
-        //Validate
-        //TODO Do it later
-
-        //Modify in DB
-        String urlGetData = Variable.IP_ADDRESS + "seller/sellerEdit.php";
-        updateSeller(urlGetData);
-
+        cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
+            @Override
+            public void onSuccess(String url) {
+                //TODO
+                storage_location = url;
+                String urlGetData = Variable.IP_ADDRESS + "seller/sellerEdit.php";
+                updateSeller(urlGetData);
+            }
+        });
     }
 
 
@@ -184,6 +183,9 @@ public class EditSellerFragment extends Fragment {
                     public void onResponse(String response) {
                         if(response.trim().equals("Succesfully update")){
                             Toast.makeText(getActivity(),"Cập nhật thành công",Toast.LENGTH_SHORT).show();
+                            Variable.SELLER.setName(editText_editSeller_name.getText().toString().trim());
+                            Variable.SELLER.setAddress(editText_editSeller_address.getText().toString().trim());
+                            Variable.SELLER.setDescription(editText_editSeller_description.getText().toString().trim());
                             //TODO move back to home
                         }else{
                             Toast.makeText(getActivity(),"Lỗi cập nhật",Toast.LENGTH_SHORT).show();

@@ -5,6 +5,7 @@ import android.content.res.Resources;
 
 import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.seller.order.ProductOrderSellerFragment;
+import com.example.wastedfoodteam.seller.order.SellerOrder;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.service.updateStatusForOrder;
 

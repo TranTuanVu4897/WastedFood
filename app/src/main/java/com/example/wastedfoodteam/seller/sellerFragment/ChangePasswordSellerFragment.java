@@ -108,7 +108,6 @@ public class ChangePasswordSellerFragment extends Fragment {
                 }
             }
         });
-
         return view;
     }
 
