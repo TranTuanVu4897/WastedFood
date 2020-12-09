@@ -22,6 +22,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Notification;
+import com.example.wastedfoodteam.seller.order.ProductOrderSellerFragment;
+import com.example.wastedfoodteam.seller.order.SellerOrderDetailFragment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
