@@ -6,11 +6,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,11 +33,13 @@ public class RegisterSellerFragment extends Fragment {
     EditText etName, etEmail, etPassword, etConfirmPassword,etDescription;
     Button btnNext;
     TextInputLayout tilName,tilEmail,tilPassword,tilConfirmPassword,tilDescription;
-    private final String pass = "pass";
+    String errName,errEmail,errPassword,errConfirmPassword,errDescription,pass;
+    Boolean bolName,bolEmail,bolPassword,bolConfirmPassword,bolDescription;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register_seller, container, false);
         etName = view.findViewById(R.id.et_seller_register_name);
@@ -51,10 +55,12 @@ public class RegisterSellerFragment extends Fragment {
         tilConfirmPassword = view.findViewById(R.id.textInputConfirmPassword);
         tilDescription = view.findViewById(R.id.textInputDescription);
         btnNext = view.findViewById(R.id.btn_seller_register_next);
+        stringSetUp();
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(tilName.getError().equals(pass)&&tilEmail.getError().equals(pass)&&tilPassword.getError().equals(pass) && tilConfirmPassword.getError().equals(pass)  && tilDescription.getError().equals(pass)){
+                try{
+                if(bolName == true && bolEmail == true && bolPassword == true && bolConfirmPassword==true  && bolDescription==true){
                     Variable.RESISTER_SELLER = new Seller();
                     Variable.RESISTER_SELLER.setName(etName.getText().toString().trim());
                     Variable.RESISTER_SELLER.setEmail(etEmail.getText().toString().trim());
@@ -65,19 +71,23 @@ public class RegisterSellerFragment extends Fragment {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.flFragmentLayoutAM,registerSellerPhoneFragment);
                     fragmentTransaction.commit();
+                }else{
+                    //Yêu cầu fill thông tin
                 }
-            }
-        });
+            }catch (Exception e){
+                    Log.e("Error","RegisterSellerFragment");
+                }
+        }});
         etName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
                     if(checkEmptyEditText(etName)){
-                        tilName.setErrorEnabled(false);
-                        tilName.setError(pass);
+                        bolName = true;
+                        tilName.setError(null);
                     }else {
                         tilName.setError("Tên người dùng không được để trống");
-                        tilName.setErrorEnabled(true);
+                        bolName = false;
                     }
                 }
             }
@@ -87,11 +97,11 @@ public class RegisterSellerFragment extends Fragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
                     if(Validation.checkPassword(etPassword.getText().toString().trim())){
-                        tilPassword.setErrorEnabled(false);
-                        tilName.setError(pass);
+                        bolPassword = true;
+                        tilPassword.setError(null);
                     }else {
-                        tilPassword.setError("Địa chỉ email không hợp lệ");
-                        tilPassword.setErrorEnabled(true);
+                        tilPassword.setError("Mật khẩu không hợp lệ");
+                        bolPassword = false;
                     }
                 }
             }
@@ -104,7 +114,7 @@ public class RegisterSellerFragment extends Fragment {
                        checkEmailExist(etEmail.getText().toString().trim());
                     }else {
                         tilEmail.setError("Địa chỉ email không hợp lệ");
-                        tilEmail.setErrorEnabled(true);
+                        bolEmail = false;
                     }
                 }
             }
@@ -113,13 +123,12 @@ public class RegisterSellerFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
-                    if(!etConfirmPassword.getText().toString().trim().equals(etPassword.getText().toString())){
-                        tilConfirmPassword.setErrorEnabled(false);
-                        tilConfirmPassword.setError(pass);
+                    if(etConfirmPassword.getText().toString().trim().equals(etPassword.getText().toString())){
+                        bolConfirmPassword = true;
+                        tilConfirmPassword.setError(null);
                     }else {
                         tilConfirmPassword.setError("Mật khẩu xác nhận và mật khẩu phải giống nhau");
-                        tilConfirmPassword.setErrorEnabled(true);
-
+                        bolConfirmPassword = false;
                     }
                 }
             }
@@ -128,13 +137,12 @@ public class RegisterSellerFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
-                    if(etDescription.getText().toString().trim().length() > 100){
-                        tilDescription.setErrorEnabled(false);
-                        tilDescription.setError(pass);
+                    if(etDescription.getText().toString().trim().length() <= 100){
+                        bolDescription = true;
+                        tilDescription.setError(null);
                     }else {
                         tilDescription.setError("Ghi chú không được vượt quá 100 ký tự");
-                        tilDescription.setErrorEnabled(true);
-
+                        bolDescription = false;
                     }
                 }
             }
@@ -142,9 +150,22 @@ public class RegisterSellerFragment extends Fragment {
         return view;
     }
 
+    private void stringSetUp(){
+        errName = "Tên tài khoản không được để trống";
+        errPassword = "Mật khẩu không được để trống";
+        errEmail = "Địa chỉ email không được để trống";
+        errConfirmPassword = "Mật khẩu xác nhận không được để trống";
+        pass = "pass";
+        bolConfirmPassword = false;
+        bolDescription = true;
+        bolEmail = false;
+        bolName = false;
+        bolPassword = false;
+    }
+
     private  void checkEmailExist(final String email) {
 
-        String urlGetData = Variable.IP_ADDRESS + "register/checkEmailExist.php?email=" + email ;
+        String urlGetData = Variable.IP_ADDRESS + "register/checkEmailExist.php?emailUser=" + email ;
         final RequestQueue requestQueue = Volley.newRequestQueue( getActivity().getApplicationContext());
         final StringRequest getSellerRequestString = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
@@ -158,10 +179,10 @@ public class RegisterSellerFragment extends Fragment {
                         }
                         if(emailExist){
                             tilEmail.setError("Địa chỉ email đã tồn tại");
-                            tilEmail.setErrorEnabled(true);
+                            bolEmail = false;
                         }else{
-                            tilEmail.setErrorEnabled(false);
-                            tilEmail.setError(pass);
+                            tilEmail.setError(null);
+                            bolEmail = true;
                         }
                     }
                 },

@@ -58,7 +58,7 @@
                     android:layout_height="150dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="50dp"
-                    android:background="@drawable/useravatar"
+                    android:src="@drawable/useravatar"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:background="#FFFDFD"
             android:padding="15dp"
-            android:text="Thêm sản phẩm"
+            android:text="Chỉnh sửa sản phẩm"
             android:textSize="24sp" />
         <!--FromToInputData-->
         <LinearLayout

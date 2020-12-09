@@ -157,6 +157,4 @@ public class ListProductSellerFragment extends ListFragment {
                 .addToBackStack(null)
                 .commit();
     }
-
-
 }

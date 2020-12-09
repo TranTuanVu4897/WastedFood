@@ -8,8 +8,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:descendantFocusability="blocksDescendants"
-        android:layout_height="200dp"
         android:orientation="vertical"
         android:background="@color/colorBackGroundOrder"
         android:layout_marginTop="30dp"
@@ -48,15 +48,6 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <TextView
-            android:layout_margin="15dp"
-            android:id="@+id/tv_list_seller_done_description"
-            android:layout_width="match_parent"
-            android:lines="4"
-            android:maxLines="4"
-            style="@style/AppTheme"
-            android:layout_height="60dp">
-        </TextView>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
