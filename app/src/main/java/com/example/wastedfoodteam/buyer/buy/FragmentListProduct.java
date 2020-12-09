@@ -29,9 +29,11 @@ import com.example.wastedfoodteam.utils.FilterDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class FragmentListProduct extends ListFragment {
     ArrayList<BuyerProduct> arrProduct;
@@ -49,7 +51,6 @@ public class FragmentListProduct extends ListFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_buyer_list_product, container, false);
         Log.i("FragmentListProduct", "Show the list view");
-
 
         //mapping view
         mappingViewToVariable(view);
@@ -109,8 +110,8 @@ public class FragmentListProduct extends ListFragment {
             @Override
             public void onClick(View v) {
                 Variable.distance = "20";
-                createNewArrayProduct();
-                getProduct(getUrlForAllSeller());
+                btnSimpleFilterHandle((Button) v, getUrlForAllSeller());
+
             }
         });
 
@@ -118,21 +119,26 @@ public class FragmentListProduct extends ListFragment {
             @Override
             public void onClick(View v) {
                 Variable.distance = "";
-                createNewArrayProduct();
-                getProduct(getUrlForAllSeller());
+                btnSimpleFilterHandle((Button) v, getUrlForAllSeller());
             }
         });
 
         btnFollowSeller.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createNewArrayProduct();
-                getProduct(getUrlForFollowSeller());
-
+                Variable.distance = "";
+                btnSimpleFilterHandle((Button) v, getUrlForFollowSeller());
             }
         });
 
         return view;
+    }
+
+    private void btnSimpleFilterHandle(Button btn, String url) {
+        createNewArrayProduct();
+        getProduct(url);
+        resetStatusButton();
+        setPositiveButton(btn);
     }
 
     private String getUrlForAllSeller() {
@@ -143,6 +149,7 @@ public class FragmentListProduct extends ListFragment {
                 + "&discount=" + Variable.discount
                 + "&search_text=" + etSearch.getText();
     }
+
     private String getUrlForFollowSeller() {
         return Variable.IP_ADDRESS + Variable.SEARCH_SELLER_FOLLOW_PRODUCT
                 + "?lat=" + Variable.gps.getLatitude() + "&lng=" + Variable.gps.getLongitude()
@@ -175,7 +182,6 @@ public class FragmentListProduct extends ListFragment {
                     @SuppressLint("ShowToast")
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("Exception",error.getMessage());
                         Toast.makeText(getActivity(), "Có lỗi bất thường xảy ra, vui lòng thử lại.", Toast.LENGTH_LONG);
                     }
                 });
@@ -226,6 +232,22 @@ public class FragmentListProduct extends ListFragment {
 
     private void setUpArrayProduct() {
         if (arrProduct == null) createNewArrayProduct();
+    }
+
+    private void resetStatusButton() {
+        setNegativeButton(btnAll);
+        setNegativeButton(btnNear);
+        setNegativeButton(btnFollowSeller);
+    }
+
+    private void setNegativeButton(@NotNull Button btn) {
+        btn.setBackgroundResource(R.drawable.button_negative);
+        btn.setTextColor(getResources().getColor(R.color.colorBlack, null));
+    }
+
+    private void setPositiveButton(@NotNull Button btn) {
+        btn.setBackgroundResource(R.drawable.button_positive);
+        btn.setTextColor(getResources().getColor(R.color.colorWhite, null));
     }
 
 

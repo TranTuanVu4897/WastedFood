@@ -247,8 +247,7 @@ public class FragmentDetailProduct extends Fragment {
     private String setUpMessageForSend(@NotNull BuyerProduct product, String message) {
         String sendMessage = "Khách hàng" + Variable.BUYER.getName() + " đã đặt hàng sản phẩm " + product.getName() + " của bạn";
         if (message != null || !message.isEmpty())
-            sendMessage = sendMessage + "/n Kèm với lời nhắn: " + message;
-
+            sendMessage = sendMessage + "\nKèm với lời nhắn: " + message;
         return sendMessage;
     }
 
