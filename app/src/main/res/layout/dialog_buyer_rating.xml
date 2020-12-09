@@ -12,7 +12,7 @@
         android:padding="8dp"
         android:text="Đánh giá về sản phẩm"
         android:textAlignment="center"
-        android:textSize="30dp" />
+        android:textSize="30sp" />
 
     <RatingBar
         android:id="@+id/rbRating"

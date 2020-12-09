@@ -17,15 +17,14 @@ import java.sql.Time;
 import java.util.ArrayList;
 
 public class FilterDialog {
-    private LayoutInflater inflater;
-    private Context context;
+    private static final int END_TIME = 23;
+    private final LayoutInflater inflater;
+    private final Context context;
 
     private Spinner spDistance;
     private Spinner spStartTime;
     private Spinner spDiscount;
     private Spinner spEndTime;
-    private Button btnClear;
-    private Button btnConfirm;
 
     public FilterDialog(LayoutInflater inflater, Context context) {
         this.inflater = inflater;
@@ -46,8 +45,8 @@ public class FilterDialog {
         spStartTime = filterLayout.findViewById(R.id.spStartTime);
         spDiscount = filterLayout.findViewById(R.id.spDiscount);
         spEndTime = filterLayout.findViewById(R.id.spEndTime);
-        btnClear = filterLayout.findViewById(R.id.btnClear);
-        btnConfirm = filterLayout.findViewById(R.id.btnConfirm);
+        Button btnClear = filterLayout.findViewById(R.id.btnClear);
+        Button btnConfirm = filterLayout.findViewById(R.id.btnConfirm);
 
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +102,7 @@ public class FilterDialog {
     }
 
     private void setSpinnerStartTime() {
-        String[] times = getTimeArray(0, 23);
+        String[] times = getTimeArray(0);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, times);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spStartTime.setAdapter(adapter);
@@ -113,7 +112,7 @@ public class FilterDialog {
                 String item = parent.getAdapter().getItem(position).toString();
                 Variable.startTime = Time.valueOf(item.replace("h", "").trim() + ":00:00");
 
-                String[] times = getTimeArray(position + 1,23);
+                String[] times = getTimeArray(position + 1);
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, times);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spEndTime.setAdapter(adapter);
@@ -128,7 +127,7 @@ public class FilterDialog {
     }
 
     private void setSpinnerEndTime() {
-        String[] times = getTimeArray(0, 23);
+        String[] times = getTimeArray(0);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, times);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spEndTime.setAdapter(adapter);
@@ -149,9 +148,9 @@ public class FilterDialog {
     }
 
 
-    private String[] getTimeArray(int start, int end) {
+    private String[] getTimeArray(int start) {
         ArrayList<String> times = new ArrayList<>();
-        for (; start <= end; start++) {
+        for (; start <= END_TIME; start++) {
             times.add(start + "h");
         }
         return times.toArray(new String[0]);

@@ -21,17 +21,17 @@ import com.example.wastedfoodteam.utils.CommonFunction;
 import java.util.List;
 
 public class OrderDoneAdapter extends BaseAdapter {
-    Context myContext;
-    int myLayout;
-    List<SellerOrder> arrayOrder;
+    final Context myContext;
+    final int myLayout;
+    final List<SellerOrder> arrayOrder;
     SellerOrder order;
-    FragmentActivity myFragmentActivity;
-    Resources resources;
+    final FragmentActivity myFragmentActivity;
+    final Resources resources;
 
-    private class ViewHolder {
+    private static class ViewHolder {
         ImageView ivBuyer;
         Button btnDetail;
-        TextView tvDescription,tvQuantity,tvTotalCost;
+        TextView tvQuantity,tvTotalCost;
     }
 
     public OrderDoneAdapter(Context context, int layout, List<SellerOrder> orderList , Resources resources , FragmentActivity fragmentActivity){
@@ -66,7 +66,6 @@ public class OrderDoneAdapter extends BaseAdapter {
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(myLayout, null);
-            holder.tvDescription = convertView.findViewById(R.id.tv_list_seller_done_description);
             holder.tvQuantity = convertView.findViewById(R.id.tv_list_seller_done_quantity);
             holder.tvTotalCost = convertView.findViewById(R.id.tv_list_seller_done_cost);
             holder.btnDetail = convertView.findViewById(R.id.btn_list_seller_done_detail);
@@ -75,13 +74,10 @@ public class OrderDoneAdapter extends BaseAdapter {
         }else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-
         order = arrayOrder.get(position);
         CommonFunction.setImageViewSrc(myContext,order.getBuyer_avatar(),holder.ivBuyer);
-        holder.tvDescription.setText("Ghi chú: " + order.getBuyer_comment());
-        holder.tvTotalCost.setText("Thành tiền: " + String.valueOf(CommonFunction.getCurrency(order.getTotal_cost())));
-        holder.tvQuantity.setText("Số lượng: " + String.valueOf(order.getQuantity()));
+        holder.tvTotalCost.setText("Thành tiền: " + CommonFunction.getCurrency(order.getTotal_cost()));
+        holder.tvQuantity.setText("Số lượng: " + order.getQuantity());
         holder.btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

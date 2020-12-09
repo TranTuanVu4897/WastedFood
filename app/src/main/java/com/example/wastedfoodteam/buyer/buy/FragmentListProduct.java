@@ -25,7 +25,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.model.Buyer;
 import com.example.wastedfoodteam.utils.FilterDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -44,6 +43,7 @@ public class FragmentListProduct extends ListFragment {
     EditText etSearch;
     Button btnNear, btnAll, btnFollowSeller;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

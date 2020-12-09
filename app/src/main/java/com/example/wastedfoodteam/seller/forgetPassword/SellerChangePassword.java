@@ -33,9 +33,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -107,7 +104,7 @@ public class SellerChangePassword extends Fragment {
                         if(response.trim().equals("Succesfully update")){
                             Toast.makeText(getActivity(),"Đổi mật khẩu thành công",Toast.LENGTH_SHORT).show();
                             SellerHomeFragment sellerHomeFragment = new SellerHomeFragment();
-                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                             fragmentTransaction.replace(R.id.flFragmentLayoutAM,sellerHomeFragment);
                             fragmentTransaction.commit();
@@ -124,7 +121,7 @@ public class SellerChangePassword extends Fragment {
                 }
         ){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<>();
                 params.put("phone", phone );
                 params.put("password",md5(etPassword.getText().toString().trim()));
@@ -136,7 +133,7 @@ public class SellerChangePassword extends Fragment {
 
     public boolean validatePassword(){
         boolean flag = true;
-        if(strPassword!=strConfirmPassword){
+        if(!strPassword.equals(strConfirmPassword)){
             tilConfirmPass.setError("Mật khẩu xác nhận với mật khẩu không giống nhau");
             tilConfirmPass.setErrorEnabled(true);
             flag = false;

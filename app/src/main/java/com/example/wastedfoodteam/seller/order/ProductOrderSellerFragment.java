@@ -49,7 +49,7 @@ public class ProductOrderSellerFragment extends ListFragment {
     OrderDoneAdapter orderDoneAdapter;
     ImageView imageView;
     Product product;
-    TextView tvConfirmAlert,tvPaymentAlert,tvDoneAlert;
+    TextView tvPaymentAlert,tvDoneAlert;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,8 +87,8 @@ public class ProductOrderSellerFragment extends ListFragment {
         });
         product = Variable.PRODUCT;
         CommonFunction.setImageViewSrc(getContext(),product.getImage(),imageView);
-        arrOrderPayment = new ArrayList<SellerOrder>();
-        arrOrderDone = new ArrayList<SellerOrder>();
+        arrOrderPayment = new ArrayList<>();
+        arrOrderDone = new ArrayList<>();
         orderPaymentAdapter = new OrderPaymentAdapter(getActivity().getApplicationContext(), R.layout.list_seller_payment_order, arrOrderPayment, getResources(),getActivity());
         orderDoneAdapter = new OrderDoneAdapter(getActivity().getApplicationContext(), R.layout.list_seller_done_order, arrOrderDone, getResources(),getActivity());
         lvOrderPayment.setAdapter(orderPaymentAdapter);
@@ -121,7 +121,7 @@ public class ProductOrderSellerFragment extends ListFragment {
                 }
         ){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<>();
                 params.put("seller_id", String.valueOf(product.getSeller_id()));
                 params.put("status",  status );

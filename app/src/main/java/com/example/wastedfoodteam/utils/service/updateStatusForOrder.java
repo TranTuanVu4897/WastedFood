@@ -39,7 +39,7 @@ public class updateStatusForOrder {
                 }
         ){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<>();
                 params.put("status",  status.name());
                 params.put("id" ,  String.valueOf(id) );

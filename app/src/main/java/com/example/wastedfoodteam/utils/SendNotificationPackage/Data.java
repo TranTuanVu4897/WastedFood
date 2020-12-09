@@ -1,7 +1,5 @@
 package com.example.wastedfoodteam.utils.SendNotificationPackage;
 
-import androidx.fragment.app.FragmentActivity;
-
 public class Data {
     private String Title;
     private String Message;

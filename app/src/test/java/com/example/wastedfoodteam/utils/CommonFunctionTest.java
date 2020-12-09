@@ -2,7 +2,6 @@ package com.example.wastedfoodteam.utils;
 
 import android.content.Context;
 import android.location.Location;
-import android.location.LocationManager;
 import android.widget.ImageView;
 
 import com.example.wastedfoodteam.model.Seller;
@@ -26,60 +25,60 @@ public class CommonFunctionTest {
     }
 
     @Test
-    public void testGetCurrencyCorrect() throws Exception {
-        String result = CommonFunction.getCurrency(Double.valueOf(0));
+    public void testGetCurrencyCorrect() {
+        String result = CommonFunction.getCurrency((double) 0);
         Assert.assertEquals("0VND", result);
     }
 
     @Test
-    public void testGetCurrencyCorrect2() throws Exception {
-        String result = CommonFunction.getCurrency(Double.valueOf(0));
+    public void testGetCurrencyCorrect2() {
+        String result = CommonFunction.getCurrency((double) 0);
         Assert.assertEquals("1,000VND", result);
     }
 
     @Test
-    public void testGetOpenClose() throws Exception {
+    public void testGetOpenClose() {
         String result = CommonFunction.getOpenClose(new GregorianCalendar(2020, Calendar.DECEMBER, 5, 15, 43).getTime(), new GregorianCalendar(2020, Calendar.DECEMBER, 5, 15, 43).getTime());
         Assert.assertEquals("replaceMeWithExpectedResult", result);
     }
 
     @Test
-    public void testGetOpenCloseInputNull() throws Exception {
+    public void testGetOpenCloseInputNull() {
         String result = CommonFunction.getOpenClose(null,null);
         Assert.assertEquals("00.00 - 23.59", result);
     }
 
     @Test
-    public void testGetDiscount() throws Exception {
+    public void testGetDiscount() {
         String result = CommonFunction.getDiscount(0d, 0d);
         Assert.assertEquals("replaceMeWithExpectedResult", result);
     }
 
     @Test
-    public void testGetQuantity() throws Exception {
+    public void testGetQuantity() {
         String result = CommonFunction.getQuantity(0, 0);
         Assert.assertEquals("replaceMeWithExpectedResult", result);
     }
 
     @Test
-    public void testSetQuantityTextView() throws Exception {
+    public void testSetQuantityTextView() {
         CommonFunction.setQuantityTextView(null, 0, 0);
     }
 
     @Test
-    public void testGetCurrentDate() throws Exception {
+    public void testGetCurrentDate() {
         String result = CommonFunction.getCurrentDate();
         Assert.assertEquals("replaceMeWithExpectedResult", result);
     }
 
     @Test
-    public void testCheckEmptyEditText() throws Exception {
+    public void testCheckEmptyEditText() {
         boolean result = CommonFunction.checkEmptyEditText(null);
-        Assert.assertEquals(true, result);
+        Assert.assertTrue(result);
     }
 
     @Test
-    public void testGetStringDistance() throws Exception {
+    public void testGetStringDistance() {
         Seller seller = new Seller();
         Location gps = new Location("");
         String result = CommonFunction.getStringDistance(seller,gps);

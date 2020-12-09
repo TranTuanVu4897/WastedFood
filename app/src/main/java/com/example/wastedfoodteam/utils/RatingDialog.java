@@ -1,5 +1,6 @@
 package com.example.wastedfoodteam.utils;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,9 +29,9 @@ public class RatingDialog {
     private RatingBar rbRating;
     private EditText etRating;
     final private String urlUpdateRating = Variable.IP_ADDRESS + Variable.UPDATE_RATING;
-    Context context;
-    LayoutInflater inflater;
-    Order order;
+    final Context context;
+    final LayoutInflater inflater;
+    final Order order;
 
     public RatingDialog(Context context, LayoutInflater inflater, Order order) {
         this.context = context;
@@ -39,7 +40,7 @@ public class RatingDialog {
     }
 
     public void displayRatingOrderDialog() {
-        View ratingLayout = inflater.inflate(R.layout.dialog_buyer_rating, null);
+        @SuppressLint("InflateParams") View ratingLayout = inflater.inflate(R.layout.dialog_buyer_rating, null);
         rbRating = ratingLayout.findViewById(R.id.rbRating);
         etRating = ratingLayout.findViewById(R.id.etRating);
         AlertDialog.Builder builderDialogRating = setUpDialogBuilder(ratingLayout);
@@ -76,14 +77,14 @@ public class RatingDialog {
             @Override
             public void onResponse(String response) {
                 if (response.equalsIgnoreCase("SUCCESS")) {
-                    Toast.makeText(context.getApplicationContext(), "Thành công", Toast.LENGTH_LONG);
+                    Toast.makeText(context.getApplicationContext(), "Thành công", Toast.LENGTH_LONG).show();
                     dialog.cancel();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context.getApplicationContext(), "Lỗi hệ thống: " + error.getMessage(), Toast.LENGTH_LONG);
+                Toast.makeText(context.getApplicationContext(), "Lỗi hệ thống: " + error.getMessage(), Toast.LENGTH_LONG).show();
             }
         }) {
             @Override

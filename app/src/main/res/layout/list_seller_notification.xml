@@ -27,6 +27,7 @@
             android:orientation="horizontal"
             >
             <ImageView
+                android:contentDescription="@string/product"
                 android:focusable="false"
                 android:clickable="false"
                 android:id="@+id/iv_notification_seller_buyer_image"

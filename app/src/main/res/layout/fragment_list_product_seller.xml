@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
@@ -18,13 +17,14 @@
         <TextView
             android:layout_width="match_parent"
             android:text="Danh sách các sản phẩm"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:textColor="@color/colorBlack"
             android:textStyle="bold"
             android:layout_weight="1"
             android:layout_height="wrap_content">
         </TextView>
         <ImageView
+            android:contentDescription="Search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_baseline_search_24">
@@ -35,10 +35,10 @@
         android:layout_width="match_parent"
         android:text="Sản phẩm"
         android:id="@+id/tv_total_product"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:textColor="@color/colorBlack"
         android:textStyle="bold"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_height="wrap_content">
     </TextView>
 

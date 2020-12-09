@@ -20,10 +20,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class ProductAdapterOfSeller extends BaseAdapter {
-    private Context context;
-    private int layout;
-    private List<BuyerProduct> productList;
-    Resources resources;
+    private final Context context;
+    private final int layout;
+    private final List<BuyerProduct> productList;
+    final Resources resources;
 
     public ProductAdapterOfSeller(Context context, int layout, List<BuyerProduct> productList, Resources resources) {
         this.context = context;
@@ -32,7 +32,7 @@ public class ProductAdapterOfSeller extends BaseAdapter {
         this.resources = resources;
     }
 
-    private class ViewHolder {
+    private static class ViewHolder {
         TextView tvName,tvDiscount,tvQuantity,tvOriginalPrice,tvSellPrice;
         ImageView ivProduct;
     }

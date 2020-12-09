@@ -58,11 +58,7 @@ public class SellerForgetPasswordFragment extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if(response.equals("exist")){
-                            phoneExist = true;
-                        }else{
-                            phoneExist = false;
-                        }
+                        phoneExist = response.equals("exist");
                         if(validateInformation()){
                             if(phoneExist){
                                 tilUsername.setErrorEnabled(false);
@@ -70,7 +66,7 @@ public class SellerForgetPasswordFragment extends Fragment {
                                 bundle.putString("phone", phone);
                                 VerifyPhoneForgotPasswordFragment verifyPhoneForgotPasswordFragment=new VerifyPhoneForgotPasswordFragment();
                                 verifyPhoneForgotPasswordFragment.setArguments(bundle);
-                                FragmentManager fragmentManager = getFragmentManager();
+                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                 fragmentTransaction.replace(R.id.flFragmentLayoutAM,verifyPhoneForgotPasswordFragment);
                                 fragmentTransaction.commit();

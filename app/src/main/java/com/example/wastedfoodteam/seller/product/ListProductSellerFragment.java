@@ -1,5 +1,6 @@
 package com.example.wastedfoodteam.seller.product;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -44,6 +45,7 @@ public class ListProductSellerFragment extends ListFragment {
     int seller_id;
     int totalProduct;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class ListProductSellerFragment extends ListFragment {
         View view = inflater.inflate(R.layout.fragment_list_product_seller, container, false);
         //mapping view
         lvProduct = view.findViewById(android.R.id.list);
-        arrProduct = new ArrayList<Product>();
+        arrProduct = new ArrayList<>();
         seller_id = Variable.SELLER.getId();
         product = Variable.PRODUCT;
         tv_total_product = view.findViewById(R.id.tv_total_product);
@@ -86,7 +88,7 @@ public class ListProductSellerFragment extends ListFragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 JSONObject object = response.getJSONObject(i);
@@ -123,10 +125,11 @@ public class ListProductSellerFragment extends ListFragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest getProductAround = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onResponse(String response) {
                         try {
-                            totalProduct = new Integer(response);
+                            totalProduct = Integer.parseInt(response);
                             tv_total_product.setText(totalProduct + " sản phẩm");
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -145,8 +148,7 @@ public class ListProductSellerFragment extends ListFragment {
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         Log.i("ListProductSellerFragment", "On item clicked");
-        Product product = (Product) l.getAdapter().getItem(position);
-        Variable.PRODUCT = product;
+        Variable.PRODUCT = (Product) l.getAdapter().getItem(position);
 
         ProductOrderSellerFragment productOrderSellerFragment = new ProductOrderSellerFragment();
         //open seller detail product fragment
@@ -155,6 +157,4 @@ public class ListProductSellerFragment extends ListFragment {
                 .addToBackStack(null)
                 .commit();
     }
-
-
 }

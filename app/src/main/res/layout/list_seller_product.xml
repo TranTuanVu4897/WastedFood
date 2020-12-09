@@ -34,6 +34,7 @@
             android:layout_height="150dp"
             android:orientation="vertical">
             <ImageView
+                android:contentDescription="@string/product"
                 android:focusable="false"
                 android:clickable="false"
                 android:id="@+id/iv_list_seller_image"
@@ -97,11 +98,11 @@
                 android:textColor="@color/colorBlack"
                 android:textStyle="bold"
                 android:lines="2"
-                android:drawableLeft="@drawable/ic_icons8_clock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:text="TextView" />
+                android:text="TextView"
+                app:drawableStartCompat="@drawable/ic_icons8_clock" />
         </LinearLayout>
     </LinearLayout>
     </androidx.cardview.widget.CardView>

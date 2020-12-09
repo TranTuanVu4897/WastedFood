@@ -1,5 +1,6 @@
 package com.example.wastedfoodteam.buyer.order;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,13 +17,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.utils.DirectionParser;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.RatingDialog;
-import com.example.wastedfoodteam.utils.SendNotificationPackage.SendNotif;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -58,6 +57,7 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
         this.order = order;
     }
 
+    @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -142,8 +142,8 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
             InputStreamReader reader = new InputStreamReader(inputStream);
             BufferedReader bufferedReader = new BufferedReader(reader);
 
-            StringBuffer stringBuffer = new StringBuffer();
-            String line = "";
+            StringBuilder stringBuffer = new StringBuilder();
+            String line;
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuffer.append(line);
             }
@@ -191,7 +191,7 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
         @Override
         protected List<List<HashMap<String, String>>> doInBackground(String... jsonString) {
             List<List<HashMap<String, String>>> routes = null;
-            JSONObject jsonObject = null;
+            JSONObject jsonObject;
 
             try {
                 jsonObject = new JSONObject(jsonString[0]);
@@ -206,11 +206,11 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
         @Override
         protected void onPostExecute(List<List<HashMap<String, String>>> lists) {
             super.onPostExecute(lists);
-            ArrayList points = null;
+            ArrayList<LatLng> points;
             PolylineOptions polylineOptions = null;
 
             for (List<HashMap<String, String>> path : lists) {
-                points = new ArrayList();
+                points = new ArrayList<>();
                 polylineOptions = new PolylineOptions();
 
                 for (HashMap<String, String> point : path) {

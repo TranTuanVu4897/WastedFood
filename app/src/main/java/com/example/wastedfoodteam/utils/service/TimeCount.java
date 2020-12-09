@@ -1,7 +1,5 @@
 package com.example.wastedfoodteam.utils.service;
 
-import android.widget.TextView;
-
 import java.util.Calendar;
 
 public class TimeCount {

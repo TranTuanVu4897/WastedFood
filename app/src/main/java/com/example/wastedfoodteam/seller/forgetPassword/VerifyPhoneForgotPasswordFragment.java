@@ -23,6 +23,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.concurrent.TimeUnit;
 
 public class VerifyPhoneForgotPasswordFragment extends Fragment {
@@ -76,7 +78,7 @@ public class VerifyPhoneForgotPasswordFragment extends Fragment {
                         if (task.isSuccessful()) {
                             SellerChangePassword sellerChangePasswordFragment = new SellerChangePassword();
                             //open seller detail product fragment
-                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                             Bundle bundle = new Bundle();
                             bundle.putString( "phoneNumber" ,phoneNumber);
                             sellerChangePasswordFragment.setArguments(bundle);
@@ -91,11 +93,11 @@ public class VerifyPhoneForgotPasswordFragment extends Fragment {
     }
 
 
-    private PhoneAuthProvider.OnVerificationStateChangedCallbacks
+    private final PhoneAuthProvider.OnVerificationStateChangedCallbacks
             mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
         @Override
-        public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+        public void onCodeSent(@NotNull String s, @NotNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             verificationId = s;
         }

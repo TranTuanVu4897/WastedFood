@@ -1,5 +1,6 @@
 package com.example.wastedfoodteam.buyer.order;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
@@ -13,14 +14,13 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class OrderAdapter extends BaseAdapter {
-    private Context context;
-    private int layout;
-    private List<BuyerOrder> orderList;
-    Resources resources;
+    private final Context context;
+    private final int layout;
+    private final List<BuyerOrder> orderList;
+    final Resources resources;
 
     public OrderAdapter(Context context, int layout, List<BuyerOrder> orderList, Resources resources) {
         this.context = context;
@@ -29,7 +29,7 @@ public class OrderAdapter extends BaseAdapter {
         this.resources = resources;
     }
 
-    private class ViewHolder {
+    private static class ViewHolder {
         TextView tvName, tvDiscount, tvOriginalPrice, tvSellPrice, tvOpenTime, tvDistance, tvRating;
         ImageView ivProduct;
     }
@@ -49,6 +49,7 @@ public class OrderAdapter extends BaseAdapter {
         return orderList.get(position).getId();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
@@ -64,7 +65,7 @@ public class OrderAdapter extends BaseAdapter {
         }
 
         BuyerOrder order = orderList.get(position);
-        holder.tvName.setText(order.getProduct().getName() + "");
+        holder.tvName.setText(order.getProduct().getName());
         holder.tvSellPrice.setText(CommonFunction.getCurrency(order.getTotal_cost()));
         holder.tvOpenTime.setText(CommonFunction.getOpenClose(order.getProduct().getStart_time(), order.getProduct().getEnd_time()));
         holder.tvDistance.setText(CommonFunction.getStringDistance(order.getProduct().getSeller(), Variable.gps));

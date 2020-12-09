@@ -19,15 +19,15 @@ import com.example.wastedfoodteam.utils.service.TimeCount;
 import java.util.List;
 
 public class NotificationAdapter extends BaseAdapter {
-    Context myContext;
-    int myLayout;
-    FragmentActivity myActivity;
-    List<Notification> arrayNotification;
+    final Context myContext;
+    final int myLayout;
+    final FragmentActivity myActivity;
+    final List<Notification> arrayNotification;
     Notification notification;
-    Resources resources;
+    final Resources resources;
     TimeCount timeCount;
 
-    private class ViewHolder {
+    private static class ViewHolder {
         ImageView ivBuyer;
         TextView tvContent, tvTime;
     }

@@ -3,7 +3,6 @@ package com.example.wastedfoodteam.utils.service;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -11,21 +10,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.buyer.followseller.SellerExtraInfo;
-import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.model.Seller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class SellerExtraVolley {
-    private Context context;
-    private RequestQueue requestQueue;
+    private final Context context;
+    private final RequestQueue requestQueue;
     private String url;
 
     public SellerExtraVolley(Context context, String url) {
@@ -54,7 +44,7 @@ public class SellerExtraVolley {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "Error", Toast.LENGTH_LONG);
+                Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
             }
         }) ;
         requestQueue.add(getBuyerRequest);

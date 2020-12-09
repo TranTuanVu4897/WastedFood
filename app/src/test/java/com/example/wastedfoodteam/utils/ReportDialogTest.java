@@ -40,7 +40,7 @@ public class ReportDialogTest {
     }
 
     @Test
-    public void testDisplayReportDialog() throws Exception {
+    public void testDisplayReportDialog() {
         when(cameraStorageFunction.getImage_uri()).thenReturn(null);
         when(account.getId()).thenReturn(0);
 

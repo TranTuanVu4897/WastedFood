@@ -21,6 +21,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
+import com.example.wastedfoodteam.utils.CommonFunction;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,12 +32,14 @@ public class SendFeedbackSellerFragment extends Fragment {
     //ui view
     EditText editText_sendFeedback_title;
     EditText editText_sendFeedback_description;
+    TextInputLayout tilTitle,tilDescription;
     Button btn_sendFeedback_send;
 
     String title, description;
 
-    int id;
-    HandleSendFeedBack handleSendFeedBack;
+    final int id;
+    final HandleSendFeedBack handleSendFeedBack;
+    Boolean bolTitle = false,bolDescription = false;
 
     public SendFeedbackSellerFragment(HandleSendFeedBack handleSendFeedBack, int id) {
         this.id = id;
@@ -61,6 +65,8 @@ public class SendFeedbackSellerFragment extends Fragment {
         editText_sendFeedback_title = view.findViewById(R.id.editText_sendFeedback_title);
         editText_sendFeedback_description = view.findViewById(R.id.editText_sendFeedback_description);
         btn_sendFeedback_send = view.findViewById(R.id.btn_sendFeedback_send);
+        tilDescription = view.findViewById(R.id.textInputFeedbackDescription);
+        tilTitle = view.findViewById(R.id.textInputFeedbackTitle);
 
         //for multiline EditText
         //scroll for EditText
@@ -81,26 +87,54 @@ public class SendFeedbackSellerFragment extends Fragment {
                 inputData();
             }
         });
-
+        editText_sendFeedback_title.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    if(CommonFunction.checkEmptyEditText(editText_sendFeedback_title)){
+                       bolTitle = true;
+                        tilTitle.setError(null);
+                    }else{
+                        bolTitle = false;
+                        tilTitle.setError("Tiêu đề không được để trống");
+                    }
+                }
+            }
+        });
+        editText_sendFeedback_description.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    if(editText_sendFeedback_description.getText().toString().trim().length() > 200){
+                        bolDescription = false;
+                        tilDescription.setError("Ghi chú không được quá 200 ký tự");
+                    }else{
+                        bolDescription = true;
+                        tilDescription.setError(null);
+                    }
+                }
+            }
+        });
         return view;
     }
 
-    private void ClearText() {
+    private void clearText() {
         editText_sendFeedback_description.setText("");
         editText_sendFeedback_title.setText("");
     }
 
     private void inputData() {
-        title = editText_sendFeedback_title.getText().toString();
-        description = editText_sendFeedback_description.getText().toString();
-
+        title = editText_sendFeedback_title.getText().toString().trim();
+        description = editText_sendFeedback_description.getText().toString().trim();
         //validate data
-        //TODO
-
-        //add to db
         String urlGetData = Variable.IP_ADDRESS + "seller/sellerFeedback.php";
-        addFeedback(urlGetData);
+        editText_sendFeedback_description.clearFocus();
+        editText_sendFeedback_title.clearFocus();
+        btn_sendFeedback_send.requestFocus();
 
+        if( bolDescription && bolTitle ) {
+            addFeedback(urlGetData);
+        }
     }
 
 
@@ -113,7 +147,7 @@ public class SendFeedbackSellerFragment extends Fragment {
                     public void onResponse(String response) {
                         if (response.trim().equals("Succesfully update")) {
                             Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
-                            ClearText();
+                            clearText();
 
                             //TODO move back to home
                             handleSendFeedBack.onSuccess();
@@ -130,7 +164,7 @@ public class SendFeedbackSellerFragment extends Fragment {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("account_id", String.valueOf(id));
                 params.put("title", title);

@@ -15,8 +15,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
-import static org.mockito.Mockito.*;
-
 public class OrderAdapterTest {
     @Mock
     Context context;
@@ -33,27 +31,27 @@ public class OrderAdapterTest {
     }
 
     @Test
-    public void testGetCount() throws Exception {
+    public void testGetCount() {
         int result = orderAdapter.getCount();
         Assert.assertEquals(0, result);
     }
 
     @Test
-    public void testGetItem() throws Exception {
+    public void testGetItem() {
         Object result = orderAdapter.getItem(0);
         Assert.assertEquals("replaceMeWithExpectedResult", result);
     }
 
     @Test
-    public void testGetItemId() throws Exception {
+    public void testGetItemId() {
         long result = orderAdapter.getItemId(0);
         Assert.assertEquals(0L, result);
     }
 
     @Test
-    public void testGetView() throws Exception {
+    public void testGetView() {
         View result = orderAdapter.getView(0, null, null);
-        Assert.assertEquals(null, result);
+        Assert.assertNull(result);
     }
 }
 

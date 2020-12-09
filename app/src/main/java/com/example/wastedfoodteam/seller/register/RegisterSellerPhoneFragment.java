@@ -1,6 +1,5 @@
 package com.example.wastedfoodteam.seller.register;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,8 +29,7 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.OTPFirebase.VerifyPhoneFragment;
-import com.google.android.material.badge.BadgeDrawable;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.wastedfoodteam.utils.Validation.Validation;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -42,8 +42,7 @@ public class RegisterSellerPhoneFragment extends Fragment {
     TextInputLayout tilPhone;
     Button btnNext;
     ImageView ivSeller;
-    FirebaseStorage storage;
-    StorageReference storageReference;
+    Boolean bolPhone = false;
     private String storage_location;
     CameraStorageFunction cameraStorageFunction;
     @Override
@@ -56,34 +55,28 @@ public class RegisterSellerPhoneFragment extends Fragment {
         ivSeller = view.findViewById(R.id.iv_seller_register_phone);
         btnNext = view.findViewById(R.id.btn_seller_register_phone_next);
         cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(),ivSeller);
+
+        etPhone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    if(checkEmptyEditText(etPhone) && Validation.checkPhone(etPhone.getText().toString())){
+                        checkPhoneExist(etPhone.getText().toString().trim());
+                    }else {
+                        tilPhone.setError("Số điện thoại không hợp lệ");
+                        bolPhone = false;
+                    }
+                }
+            }
+        });
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validatePhone()==true){
-                    cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
-                        @Override
-                        public void onSuccess(String url) {
-                            storage_location = url;
-                            String phoneNumber = "+" + 84 + etPhone.getText().toString().trim();
-                            Variable.RESISTER_SELLER.setImage(storage_location);
-                            Bundle bundle=new Bundle();
-                            bundle.putString("phone", phoneNumber);
-                            VerifyPhoneFragment verifyPhoneFragment=new VerifyPhoneFragment();
-                            verifyPhoneFragment.setArguments(bundle);
-                            FragmentManager fragmentManager = getFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.flFragmentLayoutAM,verifyPhoneFragment);
-                            fragmentTransaction.commit();
-                        }
-
-                        @Override
-                        public void onError() {
-
-                        }
-                    });
-
-
-
+                try {
+                    etPhone.clearFocus();
+                    btnNext.requestFocus();
+                }catch (Exception e){
+                    Log.e("ERROR",e + "");
                 }
             }
         });
@@ -104,15 +97,50 @@ public class RegisterSellerPhoneFragment extends Fragment {
 
     }
 
-    private boolean validatePhone(){
-        boolean flag = true;
-        if(checkEmptyEditText(etPhone) && etPhone.getText().toString().trim().length() == 10 && etPhone.getText().toString().trim().charAt(0) == '0'){
-            tilPhone.setErrorEnabled(false);
-        }else {
-            tilPhone.setError("Số điện thoại không hợp lệ");
-            tilPhone.setErrorEnabled(true);
-            flag = false;
-        }
-        return flag;
+    private void checkPhoneExist(final String phone ) {
+        String urlGetData = Variable.IP_ADDRESS + "register/checkPhoneExist.php?phone=" + phone ;
+        final RequestQueue requestQueue = Volley.newRequestQueue( getActivity().getApplicationContext()  );
+        final StringRequest getSellerRequestString = new StringRequest(Request.Method.GET, urlGetData,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        boolean emailExist;
+                        emailExist = response.equals("exist");
+                        if(emailExist){
+                            tilPhone.setError("Số điện thoại đã tồn tại");
+                            bolPhone = false;
+                        }else{
+                            tilPhone.setError(null);
+                            bolPhone = true;
+                            cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
+                                @Override
+                                public void onSuccess(String url) {
+                                    storage_location = url;
+                                    String phoneNumber = "+" + 84 + etPhone.getText().toString().trim();
+                                    if (storage_location != null) {
+                                        Variable.RESISTER_SELLER.setImage(storage_location);
+                                    } else {
+                                        Variable.RESISTER_SELLER.setImage("");
+                                    }
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("phone", phoneNumber);
+                                    VerifyPhoneFragment verifyPhoneFragment = new VerifyPhoneFragment();
+                                    verifyPhoneFragment.setArguments(bundle);
+                                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                    fragmentTransaction.replace(R.id.flFragmentLayoutAM, verifyPhoneFragment);
+                                    fragmentTransaction.commit();
+                                }
+                            });
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        requestQueue.add(getSellerRequestString);
     }
 }

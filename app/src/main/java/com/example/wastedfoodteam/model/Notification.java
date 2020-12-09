@@ -1,7 +1,5 @@
 package com.example.wastedfoodteam.model;
 
-import com.example.wastedfoodteam.utils.SendNotificationPackage.Data;
-
 import java.util.Date;
 
 public class Notification {

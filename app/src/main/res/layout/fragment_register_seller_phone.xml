@@ -5,9 +5,8 @@
     android:background="@drawable/gradient_seller_home">
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
 
         <TextView
@@ -18,7 +17,7 @@
             android:layout_marginTop="30dp"
             android:text="Đăng ký"
             android:textColor="@color/colorWhite"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -53,12 +52,13 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
+                    android:contentDescription="Avatar"
                     android:id="@+id/iv_seller_register_phone"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="50dp"
-                    android:background="@drawable/useravatar"
+                    android:src="@drawable/useravatar"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

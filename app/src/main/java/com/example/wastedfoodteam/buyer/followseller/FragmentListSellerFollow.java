@@ -1,5 +1,6 @@
 package com.example.wastedfoodteam.buyer.followseller;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ public class FragmentListSellerFollow extends ListFragment {
     Bundle bundleDetail;
     FragmentSellerDetail restaurant;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -90,7 +92,7 @@ public class FragmentListSellerFollow extends ListFragment {
             JSONArray jsonProducts = new JSONArray(response);
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
             for (int i = 0; i < jsonProducts.length(); i++) {
-                listSellers.add((Seller) gson.fromJson(jsonProducts.getString(i), Seller.class));
+                listSellers.add(gson.fromJson(jsonProducts.getString(i), Seller.class));
                 adapter.notifyDataSetChanged();
             }
         } catch (JSONException e) {

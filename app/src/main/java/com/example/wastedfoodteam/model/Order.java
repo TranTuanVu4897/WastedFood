@@ -1,7 +1,6 @@
 package com.example.wastedfoodteam.model;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 /**
  * Order class

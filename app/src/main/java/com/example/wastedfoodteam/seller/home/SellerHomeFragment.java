@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -18,12 +17,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.model.Seller;
-import com.example.wastedfoodteam.utils.CommonFunction;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -62,12 +56,12 @@ public class SellerHomeFragment extends Fragment {
                         try {
                             JSONObject jsonSellerHome = new JSONObject(response);
 
-                            /*tvTotalProductSelling.setText(jsonSellerHome.getString("totalProductSelling")) ;
-                            tvTotalFollower.setText(jsonSellerHome.getString("totalFollower")) ;
-                            tvOrderBuying.setText(jsonSellerHome.getString("totalOrderBuying")) ;
-                            tvTotalOrderCancel.setText(jsonSellerHome.getString("totalOrderCancel")) ;
-                            tvTotalOrderSuccess.setText(jsonSellerHome.getString("totalOrderSuccess")) ;
-                            tvTotalProduct.setText(jsonSellerHome.getString("totalProduct")) ;*/
+                            tvTotalProductSelling.setText(jsonSellerHome.getString("totalProductSelling") + " sản phẩm") ;
+                            tvTotalFollower.setText(jsonSellerHome.getString("totalFollower") + " người") ;
+                            tvOrderBuying.setText(jsonSellerHome.getString("totalOrderBuying") + " đơn hàng") ;
+                            tvTotalOrderCancel.setText(jsonSellerHome.getString("totalOrderCancel") + " đơn hàng") ;
+                            tvTotalOrderSuccess.setText(jsonSellerHome.getString("totalOrderSuccess") + " đơn hàng") ;
+                            tvTotalProduct.setText(jsonSellerHome.getString("totalProduct" + " sản phẩm")) ;
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

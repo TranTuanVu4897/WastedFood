@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.wastedfoodteam.global.Variable;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -36,24 +37,22 @@ public class CameraStorageFunction {
     public static final int IMAGE_PICK_CAMERA_CODE = 500;
 
     //permission array
-    private String[] cameraPermission;
-    private String[] storagePermission;
+    private final String[] cameraPermission;
+    private final String[] storagePermission;
 
     //image pick uri
     private Uri image_uri;
 
     // instance for firebase storage and StorageReference
-    FirebaseStorage storage;
-    StorageReference storageReference;
+    final FirebaseStorage storage;
+    final StorageReference storageReference;
     private String storage_location;
     ImageView imageView;
-    Activity myActivity;
-    Context myContext;
+    final Activity myActivity;
+    final Context myContext;
 
     public interface HandleUploadImage {
         void onSuccess(String url);
-
-        void onError();
     }
 
     public Uri getImage_uri() {
@@ -95,10 +94,10 @@ public class CameraStorageFunction {
 
     public void showImagePickDialog() {
         //display in dialog
-        String[] options = {"Camera", "Gallery"};
+        String[] options = {"Máy ảnh", "Kho điện thoại"};
         //dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(myContext);
-        builder.setTitle("Pick Image").setItems(options, new DialogInterface.OnClickListener() {
+        builder.setTitle("Chọn ảnh").setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //handle item clicks
@@ -141,9 +140,7 @@ public class CameraStorageFunction {
     }
 
     private boolean checkStoragePermission() {
-        boolean result = ContextCompat.checkSelfPermission(myContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
-
-        return result; //return true/false
+        return ContextCompat.checkSelfPermission(myContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED); //return true/false
     }
 
     private void requestStoragePermission() {
@@ -172,10 +169,10 @@ public class CameraStorageFunction {
                 image_uri = data.getData();
 
                 //image picked from camera
-                imageView.setImageURI(image_uri);
+                CommonFunction.setImageViewSrc(myContext,image_uri.toString(),imageView);
             } else if (requestCode == IMAGE_PICK_CAMERA_CODE) {
                 //image pick from camera
-                imageView.setImageURI(image_uri);
+                CommonFunction.setImageViewSrc(myContext,image_uri.toString(),imageView);
             }
         }
     }
@@ -187,6 +184,9 @@ public class CameraStorageFunction {
 
         // adding listeners on upload
         // or failure of image
+        if(image_uri == null){
+            image_uri = Variable.uri;
+        }
         ref.putFile(image_uri).addOnSuccessListener(
                 new OnSuccessListener<UploadTask.TaskSnapshot>() {
 

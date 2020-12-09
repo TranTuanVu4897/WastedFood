@@ -30,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp">
             <ImageView
+                android:contentDescription="@string/buyer_avatar"
                 android:focusable="false"
                 android:clickable="false"
                 android:id="@+id/iv_list_seller_payment_image"
@@ -40,7 +41,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
-                android:paddingRight="10dp"
+                android:paddingEnd="10dp"
                 android:layout_height="60dp">
 
                 <Button
@@ -48,17 +49,16 @@
                     android:layout_height="30dp"
                     android:layout_width="120dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="50dp"
-                    android:layout_toLeftOf="@+id/btn_list_seller_confirm_reject"
+                    android:layout_marginStart="50dp"
                     android:background="@drawable/custom_button"
                     android:textStyle="bold"
                     android:backgroundTint="#1DCC01"
                     android:text="ĐÃ THANH TOÁN"
-                    android:textColor="@color/colorWhite"></Button>
+                    android:textColor="@color/colorWhite"/>
                 <Button
                     android:id="@+id/btn_list_seller_payment_reject"
                     android:layout_width="120dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:backgroundTint="@color/colorRed"
                     android:background="@drawable/custom_button"
                     android:layout_centerInParent="true"
@@ -70,17 +70,6 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <TextView
-            android:layout_margin="15dp"
-            android:id="@+id/tv_list_seller_payment_description"
-            android:layout_width="match_parent"
-            style="@style/AppTheme"
-            android:textStyle="bold"
-            android:textColor="@color/colorBlack"
-            android:lines="4"
-            android:maxLines="4"
-            android:layout_height="60dp">
-        </TextView>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -91,7 +80,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/colorBlack"
                 style="@style/AppTheme"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             </TextView>
@@ -100,9 +89,9 @@
                 android:id="@+id/tv_list_seller_payment_cost"
                 android:text="123"
                 style="@style/AppTheme"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:textStyle="bold"
-                android:textSize="21dp"
+                android:textSize="21sp"
                 android:textColor="@color/colorBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">

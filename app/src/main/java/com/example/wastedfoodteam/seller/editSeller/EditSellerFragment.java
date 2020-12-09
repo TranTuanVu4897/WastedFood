@@ -1,20 +1,11 @@
 package com.example.wastedfoodteam.seller.editSeller;
 
-import android.Manifest;
-import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,11 +114,7 @@ public class EditSellerFragment extends Fragment {
             public void onClick(View v) {
                 //Flow
                 //input data -> validate -> add to db
-                try {
-                    inputData();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                inputData();
             }
         });
         return view;
@@ -165,7 +152,7 @@ public class EditSellerFragment extends Fragment {
         requestQueue.add(getSellerRequestString);
     }
 
-    private void inputData() throws ParseException {
+    private void inputData() {
         //Get Data In Edit Text
 
 
@@ -212,7 +199,7 @@ public class EditSellerFragment extends Fragment {
                 }
         ){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<>();
                 params.put("id", String.valueOf(id));
                 params.put("username",editText_editSeller_name.getText().toString().trim());

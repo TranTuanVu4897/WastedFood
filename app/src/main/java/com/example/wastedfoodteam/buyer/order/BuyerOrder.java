@@ -3,8 +3,6 @@ package com.example.wastedfoodteam.buyer.order;
 import com.example.wastedfoodteam.buyer.buy.BuyerProduct;
 import com.example.wastedfoodteam.model.Order;
 
-import java.sql.Date;
-
 public class BuyerOrder extends Order {
     private BuyerProduct product;
 

@@ -1,5 +1,6 @@
 package com.example.wastedfoodteam.seller.notification;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,6 +8,7 @@ import androidx.fragment.app.ListFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -20,6 +22,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Notification;
+import com.example.wastedfoodteam.seller.order.ProductOrderSellerFragment;
+import com.example.wastedfoodteam.seller.order.SellerOrderDetailFragment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -33,12 +37,13 @@ public class NotificationFragment extends ListFragment {
     ListView lvNotification;
     ArrayList<Notification> arrNotification;
     NotificationAdapter notificationAdapter;
-    String receiver_id;
+    final String receiver_id;
 
     public NotificationFragment(String receiver_id) {
         this.receiver_id = receiver_id;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,15 +57,30 @@ public class NotificationFragment extends ListFragment {
             getNotificationDataSeller();
         else
             getNotificationDataBuyer(receiver_id);
+
+        lvNotification.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
         return view;
+
     }
 
     @Override
     public void onListItemClick(@NonNull ListView l, @NonNull View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
         Notification notification = (Notification) l.getAdapter().getItem(position);
-
-
+        super.onListItemClick(l, v, position, id);
     }
 
     public void getNotificationDataSeller() {
@@ -74,8 +94,8 @@ public class NotificationFragment extends ListFragment {
                             JSONArray jsonOrders = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             for (int i = 0; i < jsonOrders.length(); i++) {
-                                Notification notification = (Notification) gson.fromJson(jsonOrders.getString(i), Notification.class);
-                                arrNotification.add((Notification) gson.fromJson(jsonOrders.getString(i), Notification.class));
+                                Notification notification = gson.fromJson(jsonOrders.getString(i), Notification.class);
+                                arrNotification.add(gson.fromJson(jsonOrders.getString(i), Notification.class));
                                 notificationAdapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {
@@ -103,8 +123,8 @@ public class NotificationFragment extends ListFragment {
                             JSONArray jsonOrders = new JSONArray(response);
                             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                             for (int i = 0; i < jsonOrders.length(); i++) {
-                                Notification notification = (Notification) gson.fromJson(jsonOrders.getString(i), Notification.class);
-                                arrNotification.add((Notification) gson.fromJson(jsonOrders.getString(i), Notification.class));
+                                Notification notification = gson.fromJson(jsonOrders.getString(i), Notification.class);
+                                arrNotification.add(gson.fromJson(jsonOrders.getString(i), Notification.class));
                                 notificationAdapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {

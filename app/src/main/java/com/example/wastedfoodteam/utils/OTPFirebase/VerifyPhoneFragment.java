@@ -19,11 +19,14 @@ import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.register.RegisterSellerLocationFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
 
@@ -33,6 +36,7 @@ public class VerifyPhoneFragment extends Fragment {
     private String verificationId;
     private FirebaseAuth mAuth;
     EditText editText;
+    TextInputLayout tilCode;
     Button button;
 
     @Override
@@ -42,19 +46,37 @@ public class VerifyPhoneFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_verify_phone, container, false);
         button = view.findViewById(R.id.buttonSignIn);
         editText = view.findViewById(R.id.editTextCode);
+        tilCode = view.findViewById(R.id.textInputVerifyPhone);
         mAuth = FirebaseAuth.getInstance();
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String code = editText.getText().toString().trim();
-                verifyCode(code);
+                editText.clearFocus();
+                button.requestFocus();
+            }
+        });
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    if(editText.getText().toString().trim().length()<6){
+                        tilCode.setError("Mã xác nhận phải có 6 ký tự");
+                    }else{
+                        tilCode.setError(null);
+                        String code = editText.getText().toString().trim();
+                        verifyCode(code);
+                    }
+                }
             }
         });
         phoneNumber=getArguments().getString("phone");
         sendVerificationCode(phoneNumber);
-
         return view;
     }
+
+
+
+
 
     private void sendVerificationCode(String number) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -80,7 +102,7 @@ public class VerifyPhoneFragment extends Fragment {
                             Variable.RESISTER_SELLER.setPhone(phoneNumber.substring(3));
                             RegisterSellerLocationFragment registerSellerLocationFragment = new RegisterSellerLocationFragment();
                             //open seller detail product fragment
-                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                             fragmentTransaction.replace(R.id.flFragmentLayoutAM,registerSellerLocationFragment);
                             fragmentTransaction.commit();
@@ -92,11 +114,11 @@ public class VerifyPhoneFragment extends Fragment {
     }
 
 
-    private PhoneAuthProvider.OnVerificationStateChangedCallbacks
+    private final PhoneAuthProvider.OnVerificationStateChangedCallbacks
             mCallBack = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
         @Override
-        public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+        public void onCodeSent(@NotNull String s, @NotNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             verificationId = s;
         }

@@ -27,17 +27,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
 
 public class OrderConfirmAdapter extends BaseAdapter {
-    Context myContext;
-    int myLayout;
-    FragmentActivity myActivity;
-    List<SellerOrder> arrayOrder;
+    final Context myContext;
+    final int myLayout;
+    final FragmentActivity myActivity;
+    final List<SellerOrder> arrayOrder;
     SellerOrder order;
     Seller seller;
-    Resources resources;
+    final Resources resources;
     FirebaseDatabase database;
     DatabaseReference reference;
 
-    private class ViewHolder {
+    private static class ViewHolder {
         ImageView ivBuyer;
         Button btnConfirm,btnReject;
         TextView tvDescription,tvQuantity,tvTotalCost;
@@ -89,8 +89,8 @@ public class OrderConfirmAdapter extends BaseAdapter {
 
         CommonFunction.setImageViewSrc(myContext,order.getBuyer_avatar(),holder.ivBuyer);
         holder.tvDescription.setText("Ghi chú: " + order.getBuyer_comment());
-        holder.tvTotalCost.setText( "Thành tiền: " + String.valueOf(CommonFunction.getCurrency(order.getTotal_cost())));
-        holder.tvQuantity.setText("Số lượng: " + String.valueOf(order.getQuantity()));
+        holder.tvTotalCost.setText( "Thành tiền: " + CommonFunction.getCurrency(order.getTotal_cost()));
+        holder.tvQuantity.setText("Số lượng: " + order.getQuantity());
         holder.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

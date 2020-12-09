@@ -11,15 +11,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Seller;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -47,6 +43,7 @@ public class CommonFunction {
      * @param money
      * @return
      */
+    @SuppressLint("DefaultLocale")
     @NotNull
     public static String getCurrency(Double money) {
         return String.format("%,.0f", money) + " VND";
@@ -62,7 +59,7 @@ public class CommonFunction {
     @NotNull
     public static String getOpenClose(Date start_time, Date end_time) {
         try {
-            SimpleDateFormat getHourAndMinute = new SimpleDateFormat("hh.mm");
+             SimpleDateFormat getHourAndMinute = new SimpleDateFormat("hh.mm");
             return getHourAndMinute.format(start_time) + " - "
                     + getHourAndMinute.format(end_time);
         } catch (Exception e) {
@@ -77,6 +74,7 @@ public class CommonFunction {
      * @param original_price
      * @return
      */
+    @SuppressLint("DefaultLocale")
     @NotNull
     public static String getDiscount(double sell_price, double original_price) {
         try {
@@ -114,8 +112,8 @@ public class CommonFunction {
             if (isOutOfStock(remain_quantity)) {
                 tvQuantity.setBackgroundColor(Color.RED);
             }
-        } catch (Exception ignored) {
-            Log.e("CommonFunction", ignored.getMessage());
+        } catch (Exception e) {
+            Log.e("CommonFunction", e.getMessage());
         }
     }
 
