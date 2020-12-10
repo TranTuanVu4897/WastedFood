@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -199,7 +200,7 @@ public class AddProductFragment extends Fragment {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError{
+            protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("seller_id", String.valueOf(seller_id));
                 params.put("name", etProductName.getText().toString());

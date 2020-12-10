@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 
 public class FragmentListSellerFollow extends ListFragment {
     final String urlGetData = Variable.IP_ADDRESS + "information/getListSellerFollow.php?buyer_id=" + Variable.BUYER.getId();
+    TextView tvEmpty;
     SellerFollowAdapter adapter;
     ArrayList<Seller> listSellers;
     ListView lvSeller;
@@ -44,6 +46,9 @@ public class FragmentListSellerFollow extends ListFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_seller_follow, container, false);
         lvSeller = view.findViewById(android.R.id.list);
+        tvEmpty = view.findViewById(android.R.id.empty);
+        lvSeller.setEmptyView(tvEmpty);
+
         listSellers = new ArrayList<>();
         adapter = new SellerFollowAdapter(getActivity().getApplicationContext(), R.layout.list_seller_follow_item, listSellers, getResources());
         lvSeller.setAdapter(adapter);

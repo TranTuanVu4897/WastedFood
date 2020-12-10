@@ -110,7 +110,7 @@ public class FilterDialog {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getAdapter().getItem(position).toString();
-                Variable.startTime = Time.valueOf(item.replace("h", "").trim() + ":00:00");
+                Variable.startTime = Time.valueOf(item.replace("h", "").trim() + ":00:00").toString();
 
                 String[] times = getTimeArray(position + 1);
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, times);
@@ -135,8 +135,7 @@ public class FilterDialog {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getAdapter().getItem(position).toString();
-
-                Variable.endTime = Time.valueOf(item.replace("h", "").trim() + ":00:00");
+                Variable.endTime = Time.valueOf(item.replace("h", "").trim() + ":00:00").toString();
 
             }
 

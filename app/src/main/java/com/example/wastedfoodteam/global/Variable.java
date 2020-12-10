@@ -47,6 +47,6 @@ public class Variable {
     public static Seller RESISTER_SELLER;
     public static Uri uri;
 
-    public static Time startTime = Time.valueOf("00:00:00"), endTime = Time.valueOf("23:59:59");
+    public static String startTime = "00:00:00", endTime = "23:59:59";
     public static String distance = "20", discount = "100";
 }

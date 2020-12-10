@@ -35,4 +35,10 @@
     <string name="total_money">Thành tiền: %1$s</string>
     <string name="total_quantity">Số lượng: %1$d</string>
     <string name="stop_selling">NGỪNG BÁN</string>
+    <string name="wait_for_payment">CHỜ THANH TOÁN</string>
+    <string name="payed">ĐÃ THANH TOÁN</string>
+    <string name="canceled">ĐÃ HỦY</string>
+    <string name="empty_list_product">Không tìm thấy sản phẩm nào phù hợp</string>
+    <string name="empty_list_order">Bạn chưa đặt mua sản phẩm nào</string>
+    <string name="empty_list_seller_follow">Bạn chưa theo dõi người bán nào</string>
 </resources>
