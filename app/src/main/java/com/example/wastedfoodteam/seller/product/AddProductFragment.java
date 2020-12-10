@@ -26,8 +26,11 @@ import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
+import com.example.wastedfoodteam.seller.home.SellerHomeFragment;
+import com.example.wastedfoodteam.seller.order.ProductOrderSellerFragment;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.CommonFunction;
+import com.example.wastedfoodteam.utils.LoadingDialog;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -62,6 +65,7 @@ public class AddProductFragment extends Fragment {
     FirebaseStorage storage;
     StorageReference storageReference;
     CameraStorageFunction cameraStorageFunction;
+    LoadingDialog loadingDialog;
 
     final Calendar calendar = Calendar.getInstance();
 
@@ -85,6 +89,7 @@ public class AddProductFragment extends Fragment {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
+        loadingDialog = new LoadingDialog(getActivity());
         //init ui view
         //ui view
         ImageView ivProduct = view.findViewById(R.id.ivProduct);
@@ -95,7 +100,7 @@ public class AddProductFragment extends Fragment {
         etCloseTime = view.findViewById(R.id.etCloseTime);
         etDescription = view.findViewById(R.id.etDescription);
         etQuantity = view.findViewById(R.id.etQuantity);
-        Button btnAddProductAdd = view.findViewById(R.id.btnAddProductAdd);
+        final Button btnAddProductAdd = view.findViewById(R.id.btnAddProductAdd);
 
 
         //Date picker handle
@@ -150,7 +155,7 @@ public class AddProductFragment extends Fragment {
         btnAddProductAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                loadingDialog.startLoadingDialog();
                 cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
                     @Override
                     public void onSuccess(String url) {
@@ -159,7 +164,6 @@ public class AddProductFragment extends Fragment {
                         addProduct(urlGetData);
                     }
                 });
-
             }
         });
         return view;
@@ -174,8 +178,14 @@ public class AddProductFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         if (response.trim().equals("Succesfully update")) {
+                            loadingDialog.dismissDialog();
+                            SellerHomeFragment sellerHomeFragment = new SellerHomeFragment();
+                            //open seller detail product fragment
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.content_main, sellerHomeFragment, "")
+                                    .addToBackStack(null)
+                                    .commit();
                             Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
-                            //TODO move back to home
                         } else {
                             Toast.makeText(getActivity(), "Lỗi cập nhật", Toast.LENGTH_SHORT).show();
                         }
@@ -189,7 +199,7 @@ public class AddProductFragment extends Fragment {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() {
+            protected Map<String, String> getParams() throws AuthFailureError{
                 Map<String, String> params = new HashMap<>();
                 params.put("seller_id", String.valueOf(seller_id));
                 params.put("name", etProductName.getText().toString());
@@ -207,17 +217,12 @@ public class AddProductFragment extends Fragment {
             }
         };
         requestQueue.add(stringRequest);
-
     }
-
 
     //handle image pick result
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         cameraStorageFunction.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
-
     }
-
-
 }

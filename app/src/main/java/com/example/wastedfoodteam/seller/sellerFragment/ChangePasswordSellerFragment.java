@@ -36,6 +36,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static com.example.wastedfoodteam.utils.Encode.md5;
+
 
 public class ChangePasswordSellerFragment extends Fragment {
 
@@ -107,7 +109,6 @@ public class ChangePasswordSellerFragment extends Fragment {
                 }
             }
         });
-
         return view;
     }
 
@@ -122,7 +123,6 @@ public class ChangePasswordSellerFragment extends Fragment {
                         if(response.trim().equals("Succesfully update")){
                             Toast.makeText(getActivity(),"Cập nhật thành công",Toast.LENGTH_SHORT).show();
                             oldPassword = md5(confirmPassword);
-                            //TODO move back to home
                             SellerHomeFragment sellerHomeFragment = new SellerHomeFragment();
                             FragmentManager manager = requireActivity().getSupportFragmentManager();
                             manager.beginTransaction().replace(R.id.content_main, sellerHomeFragment, sellerHomeFragment.getTag()).commit();
@@ -147,22 +147,5 @@ public class ChangePasswordSellerFragment extends Fragment {
             }
         };
         requestQueue.add(stringRequest);
-    }
-
-
-
-    //hash the password for user security
-    private String md5(String str) {
-        String result = "";
-        MessageDigest digest;
-        try {
-            digest = MessageDigest.getInstance("MD5");
-            digest.update(str.getBytes());
-            BigInteger bigInteger = new BigInteger(1, digest.digest());
-            result = bigInteger.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return result;
     }
 }

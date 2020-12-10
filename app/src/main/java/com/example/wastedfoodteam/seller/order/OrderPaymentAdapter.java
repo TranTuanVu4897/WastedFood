@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.seller.sellerAdapter;
+package com.example.wastedfoodteam.seller.order;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -17,7 +17,6 @@ import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
-import com.example.wastedfoodteam.seller.order.ProductOrderSellerFragment;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.notification.SendNotif;
 import com.example.wastedfoodteam.utils.service.updateStatusForOrder;

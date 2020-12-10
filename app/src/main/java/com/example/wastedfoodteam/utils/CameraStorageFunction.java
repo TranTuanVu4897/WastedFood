@@ -196,13 +196,13 @@ public class CameraStorageFunction {
                             UploadTask.TaskSnapshot taskSnapshot) {
 
                         // Image uploaded successfully
-                        Toast.makeText(myActivity, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(myActivity, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
                         taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
                                 storage_location = uri.toString();
                                 handleUploadImage.onSuccess(storage_location);
-                                Toast.makeText(myActivity, uri.toString(), Toast.LENGTH_LONG).show();
+                                //Toast.makeText(myActivity, uri.toString(), Toast.LENGTH_LONG).show();
                             }
                         });
                     }

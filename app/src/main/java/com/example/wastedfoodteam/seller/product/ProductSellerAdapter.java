@@ -129,7 +129,6 @@ public class ProductSellerAdapter extends BaseAdapter {
                     public void onResponse(String response) {
                         if(response.trim().equals("Succesfully update")){
                             Toast.makeText(myContext,"Cập nhật thành công",Toast.LENGTH_SHORT).show();
-                            //TODO move back to home
                         }else{
                             Toast.makeText( myContext,"Lỗi cập nhật",Toast.LENGTH_SHORT).show();
                         }

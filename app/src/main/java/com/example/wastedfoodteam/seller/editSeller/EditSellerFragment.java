@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Scroller;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -32,13 +33,14 @@ import com.google.gson.GsonBuilder;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class EditSellerFragment extends Fragment {
 
-    private int id;
+    private int id ;
     //ui view
     EditText editText_editSeller_name;
     EditText editText_editSeller_address;
@@ -52,14 +54,13 @@ public class EditSellerFragment extends Fragment {
     String urlGetData = "";
 
     //string get from edit text
-    String string_editSeller_name;
-    String string_editSeller_address;
-    String string_editSeller_description;
+    String string_editSeller_name ;
+    String string_editSeller_address ;
+    String string_editSeller_description ;
 
     //camera and upload picture handle
     CameraStorageFunction cameraStorageFunction;
     private String storage_location;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,11 +89,11 @@ public class EditSellerFragment extends Fragment {
         string_editSeller_description = editText_editSeller_description.getText().toString().trim();
         editText_editSeller_email.setText(Variable.SELLER.getEmail());
         editText_editSeller_phoneNumber.setText(Variable.SELLER.getPhone());
-        cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), iv_editSeller_avatar);
+        cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(),iv_editSeller_avatar);
 
         //for multiline EditText
         //scroll for EditText
-        editText_editSeller_description.setScroller(new Scroller(requireActivity().getApplicationContext()));
+        editText_editSeller_description.setScroller(new Scroller( getActivity().getApplicationContext()));
         editText_editSeller_description.setVerticalScrollBarEnabled(true);
 
         //Edit Text Line
@@ -121,7 +122,7 @@ public class EditSellerFragment extends Fragment {
 
     private void getSeller(int id) {
         urlGetData = Variable.IP_ADDRESS + "getSellerById.php?id=" + id;
-        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity().getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         StringRequest getSellerRequestString = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
                     @Override
@@ -134,7 +135,7 @@ public class EditSellerFragment extends Fragment {
                             editText_editSeller_name.setText(seller.getName());
                             editText_editSeller_address.setText(seller.getAddress());
                             editText_editSeller_description.setText(seller.getDescription());
-                            CommonFunction.setImageViewSrc(getActivity(), seller.getImage(), iv_editSeller_avatar);
+                            CommonFunction.setImageViewSrc(getActivity(),seller.getImage(),iv_editSeller_avatar);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -152,17 +153,15 @@ public class EditSellerFragment extends Fragment {
     }
 
     private void inputData() {
-        //Get Data In Edit Text
-
-
-        //Validate
-        //TODO Do it later
-
-        //Modify in DB
-        String urlGetData = Variable.IP_ADDRESS + "seller/sellerEdit.php";
-        //updateSeller("http://192.168.1.10/wastedfoodphp/seller/sellerEdit.php");
-        updateSeller(urlGetData);
-
+        cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
+            @Override
+            public void onSuccess(String url) {
+                //TODO
+                storage_location = url;
+                String urlGetData = Variable.IP_ADDRESS + "seller/sellerEdit.php";
+                updateSeller(urlGetData);
+            }
+        });
     }
 
 
@@ -176,34 +175,37 @@ public class EditSellerFragment extends Fragment {
     }
 
     //update seller data
-    private void updateSeller(String url) {
-        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+    private void updateSeller(String url){
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if (response.trim().equals("Succesfully update")) {
-                            Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                        if(response.trim().equals("Succesfully update")){
+                            Toast.makeText(getActivity(),"Cập nhật thành công",Toast.LENGTH_SHORT).show();
+                            Variable.SELLER.setName(editText_editSeller_name.getText().toString().trim());
+                            Variable.SELLER.setAddress(editText_editSeller_address.getText().toString().trim());
+                            Variable.SELLER.setDescription(editText_editSeller_description.getText().toString().trim());
                             //TODO move back to home
-                        } else {
-                            Toast.makeText(getActivity(), "Lỗi cập nhật", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(getActivity(),"Lỗi cập nhật",Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(), "Xảy ra lỗi, vui lòng thử lại", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),"Xảy ra lỗi, vui lòng thử lại",Toast.LENGTH_SHORT).show();
                     }
                 }
-        ) {
+        ){
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
+                Map<String,String> params = new HashMap<>();
                 params.put("id", String.valueOf(id));
-                params.put("username", editText_editSeller_name.getText().toString().trim());
-                params.put("address", editText_editSeller_address.getText().toString().trim());
-                params.put("description", editText_editSeller_description.getText().toString().trim());
+                params.put("username",editText_editSeller_name.getText().toString().trim());
+                params.put("address",editText_editSeller_address.getText().toString().trim());
+                params.put("description",editText_editSeller_description.getText().toString().trim());
                 return params;
             }
         };

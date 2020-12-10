@@ -105,6 +105,7 @@ public class NotificationFragment extends ListFragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+
                     }
                 });
         requestQueue.add(getProductAround);

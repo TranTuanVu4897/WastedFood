@@ -26,7 +26,7 @@ public class Variable {
 
     public static final String INSERT_NEW_ORDER = "order/buyerOrder.php";
 
-    public static final String ADD_PRODUCT_SELLER = "seller/SellerCreateProduct.php";
+    public static final String ADD_PRODUCT_SELLER = "seller/sellerCreateProduct.php";
 
     //Order status constraint
     public static final String GET_FOLLOW = "follow/getFollow.php";

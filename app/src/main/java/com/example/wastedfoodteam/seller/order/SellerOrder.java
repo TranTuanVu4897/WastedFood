@@ -1,4 +1,4 @@
-package com.example.wastedfoodteam.seller.sellerAdapter;
+package com.example.wastedfoodteam.seller.order;
 
 import com.example.wastedfoodteam.model.Order;
 

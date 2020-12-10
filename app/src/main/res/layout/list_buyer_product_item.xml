@@ -3,70 +3,85 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-
-        <ImageView
-            android:contentDescription="@string/product"
-            android:id="@+id/ivProductLPI"
-            android:layout_width="100dp"
-            android:layout_height="130dp"
-            android:layout_margin="15dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.533"
-            tools:srcCompat="@drawable/no_image" />
+            app:layout_constraintVertical_bias="0.533">
 
-        <TextView
-            android:id="@+id/tvQuantity"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:background="#6BF271"
-            android:text="Còn: 10/10"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="@+id/ivProductLPI"
-            app:layout_constraintEnd_toEndOf="@+id/ivProductLPI"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/ivProductLPI"
-            app:layout_constraintTop_toTopOf="@+id/ivProductLPI"
-            app:layout_constraintVertical_bias="1.0" />
+            <ImageView
+                android:id="@+id/ivProductLPI"
+                android:layout_width="100dp"
+                android:layout_height="130dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="2dp"
+                android:contentDescription="@string/product"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.533"
+                tools:srcCompat="@drawable/no_image" />
 
-        <TextView
-            android:id="@+id/tvDiscount"
-            android:layout_width="40dp"
-            android:layout_height="38dp"
-            android:layout_marginBottom="96dp"
-            android:background="@drawable/triangle_text_view_background"
-            android:text="20%"
-            android:textAlignment="textStart"
-            app:layout_constraintBottom_toBottomOf="@+id/ivProductLPI"
-            app:layout_constraintEnd_toEndOf="@+id/ivProductLPI"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/ivProductLPI"
-            app:layout_constraintTop_toTopOf="@+id/ivProductLPI"
-            app:layout_constraintVertical_bias="0.0" />
+            <TextView
+                android:id="@+id/tvQuantity"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="#6BF271"
+                android:text="Còn: 10/10"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="@+id/ivProductLPI"
+                app:layout_constraintEnd_toEndOf="@+id/ivProductLPI"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/ivProductLPI"
+                app:layout_constraintTop_toTopOf="@+id/ivProductLPI"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/tvDiscount"
+                android:layout_width="40dp"
+                android:layout_height="38dp"
+                android:layout_marginBottom="96dp"
+                android:background="@drawable/triangle_text_view_background"
+                android:text="20%"
+                android:textAlignment="textStart"
+                app:layout_constraintBottom_toBottomOf="@+id/ivProductLPI"
+                app:layout_constraintEnd_toEndOf="@+id/ivProductLPI"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/ivProductLPI"
+                app:layout_constraintTop_toTopOf="@+id/ivProductLPI"
+                app:layout_constraintVertical_bias="0.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="249dp"
-            android:layout_height="131dp"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="10dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivProductLPI"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/constraintLayout2"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -79,7 +94,7 @@
                 android:paddingEnd="5dp"
                 android:text="20,000 VND"
                 app:layout_constraintBottom_toBottomOf="@+id/tvSellPrice"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tvTitleLPI"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/tvSellPrice"
                 app:layout_constraintTop_toTopOf="@+id/tvSellPrice"
@@ -95,7 +110,7 @@
                 android:text="Bánh Mỳ Tôm"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tvRating"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -106,14 +121,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:layout_marginTop="23dp"
                 android:text="20,000 VND"
                 android:textColor="#009688"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/tvOpenTime"
+                app:layout_constraintEnd_toEndOf="@+id/tvTitleLPI"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTitleLPI" />
 
 
             <TextView
@@ -142,13 +158,13 @@
                 android:text="16.00 - 20.00"
                 android:textSize="18sp"
 
+                app:drawableStartCompat="@drawable/ic_icons8_clock"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tvDistance"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"
-                app:drawableStartCompat="@drawable/ic_icons8_clock" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTitleLPI"
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/tvDistance"
@@ -158,16 +174,16 @@
                 android:gravity="center"
                 android:text="2 km"
                 android:textSize="18sp"
+                app:drawableStartCompat="@drawable/location"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"
-                app:drawableStartCompat="@drawable/location" />
+                app:layout_constraintStart_toStartOf="@+id/tvRating"
+                app:layout_constraintTop_toBottomOf="@+id/tvRating"
+                app:layout_constraintVertical_bias="1.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -122,6 +122,7 @@
                     style="@style/loginButton"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="40dp"
+                    android:layout_marginBottom="20dp"
                     android:text="Tiếp tục" />
 
             </LinearLayout>
