@@ -79,6 +79,7 @@
                     android:id="@+id/btn_seller_register_phone_next"
                     style="@style/loginButton"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="20dp"
                     android:layout_marginTop="40dp"
                     android:text="Tiếp tục" />
 

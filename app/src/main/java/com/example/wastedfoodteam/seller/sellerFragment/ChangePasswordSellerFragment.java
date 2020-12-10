@@ -122,7 +122,6 @@ public class ChangePasswordSellerFragment extends Fragment {
                         if(response.trim().equals("Succesfully update")){
                             Toast.makeText(getActivity(),"Cập nhật thành công",Toast.LENGTH_SHORT).show();
                             oldPassword = md5(confirmPassword);
-                            //TODO move back to home
                             SellerHomeFragment sellerHomeFragment = new SellerHomeFragment();
                             FragmentManager manager = getActivity().getSupportFragmentManager();
                             manager.beginTransaction().replace(R.id.content_main, sellerHomeFragment, sellerHomeFragment.getTag()).commit();
@@ -148,8 +147,4 @@ public class ChangePasswordSellerFragment extends Fragment {
         };
         requestQueue.add(stringRequest);
     }
-
-
-
-
 }
