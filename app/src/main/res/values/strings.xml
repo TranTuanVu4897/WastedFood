@@ -41,4 +41,5 @@
     <string name="empty_list_product">Không tìm thấy sản phẩm nào phù hợp</string>
     <string name="empty_list_order">Bạn chưa đặt mua sản phẩm nào</string>
     <string name="empty_list_seller_follow">Bạn chưa theo dõi người bán nào</string>
+    <string name="empty_list_notification">Bạn chưa có thông báo nào cả</string>
 </resources>

@@ -19,5 +19,6 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textSize="20sp"
+        android:background="@drawable/card_view_background"
         android:text="@string/empty_list_order" />
 </LinearLayout>
