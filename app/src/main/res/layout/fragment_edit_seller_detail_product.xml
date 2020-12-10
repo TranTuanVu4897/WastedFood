@@ -256,7 +256,6 @@
                 android:background="#0029FF"
                 android:layout_marginEnd="10dp"/>
             <Button
-                android:id="@+id/btn_cancel_FSAP"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"

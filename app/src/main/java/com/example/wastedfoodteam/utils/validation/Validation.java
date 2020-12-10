@@ -49,7 +49,7 @@ public class Validation {
 
     public static boolean checkPhone(String string) {
         try {
-            return Pattern.compile("^(84|0)([3|5|7|8|9])([0-9]{8})$").matcher(string).matches();
+            return Pattern.compile("^(84|0)([35789])([0-9]{8})$").matcher(string).matches();
         } catch (Exception e) {
             return false;
         }

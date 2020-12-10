@@ -78,7 +78,7 @@ public class FragmentDetailProduct extends Fragment {
         setViewContent();
 
         //Set button follow
-        followVolley = new FollowVolley(getActivity().getApplicationContext(), ibFollow);
+        followVolley = new FollowVolley(requireActivity().getApplicationContext(), ibFollow);
         String GET_FOLLOW_INFORMATION_URL = Variable.IP_ADDRESS + Variable.GET_FOLLOW;
         followVolley.setRequestGetFollow(GET_FOLLOW_INFORMATION_URL, Variable.BUYER.getId(), product.getSeller_id());
 
@@ -124,7 +124,7 @@ public class FragmentDetailProduct extends Fragment {
                 bundle.putSerializable("SELLER", product.getSeller());
                 fragmentSellerDetail.setArguments(bundle);
 
-                getActivity().getSupportFragmentManager().beginTransaction()
+                requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.flSearchResultAH, fragmentSellerDetail, "")
                         .addToBackStack(null)
                         .commit();
@@ -133,17 +133,16 @@ public class FragmentDetailProduct extends Fragment {
         return view;
     }
 
-    @SuppressLint("SetTextI18n")
     private void setViewContent() {
-        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), product.getSeller().getImage(), civSeller);
-        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), product.getImage(), ivProduct);
+        CommonFunction.setImageViewSrc(requireActivity().getApplicationContext(), product.getSeller().getImage(), civSeller);
+        CommonFunction.setImageViewSrc(requireActivity().getApplicationContext(), product.getImage(), ivProduct);
         tvQuantity.setText("Còn: " + product.getRemain_quantity() + "/" + product.getOriginal_quantity());
         tvPriceDiscount.setText(CommonFunction.getCurrency(product.getSell_price()));
         tvPriceOriginal.setText(CommonFunction.getCurrency(product.getOriginal_price()));
         tvOpenTime.setText("Mở cửa từ: " + CommonFunction.getOpenClose(product.getStart_time(), product.getEnd_time()));
         tvDescription.setText(product.getDescription());
         tvBuyQuantity.setText(orderQuantity + "");
-        tvDistance.setText(CommonFunction.getStringDistance(product.getSeller(),Variable.gps));
+        tvDistance.setText(CommonFunction.getStringDistance(product.getSeller(), Variable.gps));
     }
 
     @SuppressLint("SetTextI18n")
@@ -168,7 +167,7 @@ public class FragmentDetailProduct extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void setDialogConfirmBuy() {
-        final Dialog confirmDialog = new Dialog(getActivity());
+        final Dialog confirmDialog = new Dialog(requireActivity());
         confirmDialog.setTitle("Xác nhận mua hàng");
         confirmDialog.setContentView(R.layout.dialog_buyer_confirm_buy);
         confirmDialog.show();
@@ -199,13 +198,13 @@ public class FragmentDetailProduct extends Fragment {
      * buy
      */
     private void btnBuyOnClick(final String message, final BuyerProduct product) {
-        RequestQueue requestInsertOrder = Volley.newRequestQueue(getActivity().getApplicationContext());
+        RequestQueue requestInsertOrder = Volley.newRequestQueue(requireActivity().getApplicationContext());
         StringRequest stringRequestInsert = new StringRequest(Request.Method.POST, UPDATE_ORDER_URL, new Response.Listener<String>() {
             @SuppressLint("ShowToast")
             @Override
             public void onResponse(String response) {
                 if (response.equalsIgnoreCase("SUCCESS")) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Thành công", Toast.LENGTH_LONG);
+                    Toast.makeText(requireActivity().getApplicationContext(), "Thành công", Toast.LENGTH_LONG);
                     util = new NotificationUtil();
                     sendNotif = new SendNotif();
 
@@ -217,9 +216,9 @@ public class FragmentDetailProduct extends Fragment {
                     moveToFragmentOrderDetail();
                     Log.i("Firebase_UID", product.getSeller().getFirebase_UID());
                 } else if (response.equalsIgnoreCase("NOT ENOUGH QUANTITY")) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Số lượng còn lại không đủ", Toast.LENGTH_LONG);
+                    Toast.makeText(requireActivity().getApplicationContext(), "Số lượng còn lại không đủ", Toast.LENGTH_LONG);
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Có lỗi bất thường xảy ra", Toast.LENGTH_LONG);
+                    Toast.makeText(requireActivity().getApplicationContext(), "Có lỗi bất thường xảy ra", Toast.LENGTH_LONG);
                 }
             }
         }, new Response.ErrorListener() {
@@ -245,8 +244,9 @@ public class FragmentDetailProduct extends Fragment {
 
     private String setUpMessageForSend(@NotNull BuyerProduct product, String message) {
         String sendMessage = "Khách hàng" + Variable.BUYER.getName() + " đã đặt hàng sản phẩm " + product.getName() + " của bạn";
-        if (message != null || !message.isEmpty())
-            sendMessage = sendMessage + "\nKèm với lời nhắn: " + message;
+        if (message != null)
+            if (!message.isEmpty())
+                sendMessage = sendMessage + "\nKèm với lời nhắn: " + message;
         return sendMessage;
     }
 
@@ -264,7 +264,7 @@ public class FragmentDetailProduct extends Fragment {
         bundle.putSerializable("PRODUCT", product);
         fragmentOrderDetail.setArguments(bundle);
 
-        getActivity().getSupportFragmentManager().beginTransaction()
+        requireActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flSearchResultAH, fragmentOrderDetail, "")
                 .addToBackStack(null)
                 .commit();

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -62,7 +61,7 @@ public class NotificationUtil {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            Variable.TOTAL_NOTIFICATION = new Integer(response);
+                            Variable.TOTAL_NOTIFICATION = Integer.parseInt(response);
                             if(Variable.TOTAL_NOTIFICATION > 0) {
                                 BadgeDrawable badge;
                                 if(Variable.CURRENT_USER.equals("BUYER"))

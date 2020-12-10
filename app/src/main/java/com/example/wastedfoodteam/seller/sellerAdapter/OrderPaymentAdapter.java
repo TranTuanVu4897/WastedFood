@@ -85,8 +85,8 @@ public class OrderPaymentAdapter extends BaseAdapter {
         order = arrayOrder.get(position);
         product = Variable.PRODUCT;
         CommonFunction.setImageViewSrc(myContext,order.getBuyer_avatar(),holder.ivBuyer);
-        holder.tvTotalCost.setText( "Thành tiền: " + CommonFunction.getCurrency(order.getTotal_cost()));
-        holder.tvQuantity.setText("Số lượng: " + order.getQuantity());
+        holder.tvTotalCost.setText(myContext.getString(R.string.total_money, CommonFunction.getCurrency(order.getTotal_cost())));
+        holder.tvQuantity.setText(myContext.getString(R.string.total_quantity, order.getQuantity()));
         holder.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -33,7 +33,6 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class FragmentListProduct extends ListFragment {
     ArrayList<BuyerProduct> arrProduct;

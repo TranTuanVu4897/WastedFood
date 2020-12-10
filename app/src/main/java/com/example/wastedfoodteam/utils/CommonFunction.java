@@ -113,7 +113,7 @@ public class CommonFunction {
                 tvQuantity.setBackgroundColor(Color.RED);
             }
         } catch (Exception e) {
-            Log.e("CommonFunction", e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -137,7 +137,7 @@ public class CommonFunction {
             if (editText.getText().toString().trim().length() > 0)
                 return true;
         } catch (Exception e) {
-            Log.e("CommonFunction", e.getMessage());
+            e.printStackTrace();
         }
         return false;
     }

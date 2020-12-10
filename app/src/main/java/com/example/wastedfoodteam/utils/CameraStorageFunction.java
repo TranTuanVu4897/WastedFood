@@ -169,6 +169,7 @@ public class CameraStorageFunction {
                 image_uri = data.getData();
 
                 //image picked from camera
+                assert image_uri != null;
                 CommonFunction.setImageViewSrc(myContext,image_uri.toString(),imageView);
             } else if (requestCode == IMAGE_PICK_CAMERA_CODE) {
                 //image pick from camera

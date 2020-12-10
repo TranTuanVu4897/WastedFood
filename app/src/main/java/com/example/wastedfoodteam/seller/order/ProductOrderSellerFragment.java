@@ -13,7 +13,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,7 +24,6 @@ import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.seller.product.EditProductSellerFragment;
-import com.example.wastedfoodteam.seller.sellerAdapter.OrderConfirmAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.OrderPaymentAdapter;
 import com.example.wastedfoodteam.seller.sellerAdapter.SellerOrder;
 import com.example.wastedfoodteam.utils.CommonFunction;
@@ -44,7 +42,6 @@ public class ProductOrderSellerFragment extends ListFragment {
     ListView lvOrderConfirm,lvOrderPayment,lvOrderDone;
     ArrayList<SellerOrder> arrOrder,arrOrderPayment,arrOrderDone;
     Button editProduct,cancelProduct;
-    OrderConfirmAdapter orderAdapter;
     OrderPaymentAdapter orderPaymentAdapter;
     OrderDoneAdapter orderDoneAdapter;
     ImageView imageView;
@@ -76,12 +73,12 @@ public class ProductOrderSellerFragment extends ListFragment {
         cancelProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(cancelProduct.getText().equals("NGỪNG BÁN")){
+                if(cancelProduct.getText().equals(getString(R.string.stop_selling))){
                     updateProductStatus(Variable.IP_ADDRESS + "seller/setActiveForProduct.php","stop",product.getId());
                     cancelProduct.setText("MỞ LẠI BÁN");
                 }else {
                     updateProductStatus(Variable.IP_ADDRESS + "seller/setActiveForProduct.php","selling",product.getId());
-                    cancelProduct.setText("NGỪNG BÁN");
+                    cancelProduct.setText(getString(R.string.stop_selling));
                 }
             }
         });

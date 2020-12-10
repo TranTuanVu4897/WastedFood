@@ -59,7 +59,7 @@ public class RegisterSellerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try{
-                if(bolName == true && bolEmail == true && bolPassword == true && bolConfirmPassword==true  && bolDescription==true){
+                if(bolName && bolEmail && bolPassword && bolConfirmPassword && bolDescription){
                     Variable.RESISTER_SELLER = new Seller();
                     Variable.RESISTER_SELLER.setName(etName.getText().toString().trim());
                     Variable.RESISTER_SELLER.setEmail(etEmail.getText().toString().trim());
