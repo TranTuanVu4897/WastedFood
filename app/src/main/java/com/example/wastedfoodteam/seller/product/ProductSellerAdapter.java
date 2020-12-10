@@ -1,5 +1,7 @@
 package com.example.wastedfoodteam.seller.product;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.utils.CommonFunction;
+import com.example.wastedfoodteam.utils.LoadingDialog;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -33,7 +36,9 @@ public class ProductSellerAdapter extends BaseAdapter {
     final int myLayout;
     final List<Product> arrayProduct;
     Product product;
+    Activity myActivity;
     final Resources resources;
+    LoadingDialog loadingDialog;
 
     private static class ViewHolder {
         TextView tvName;
@@ -42,13 +47,15 @@ public class ProductSellerAdapter extends BaseAdapter {
         TextView tvRemainProduct;
         TextView tvSoldProduct;
         TextView tvTimeProduct;
+        TextView tvOrderWaiting;
     }
 
-    public ProductSellerAdapter(Context context, int layout, List<Product> productList , Resources resources){
+    public ProductSellerAdapter(Context context, int layout, List<Product> productList , Resources resources , Activity activity){
         myContext = context;
         myLayout = layout;
         arrayProduct = productList;
         this.resources = resources;
+        myActivity = activity;
     }
 
     @Override
@@ -69,7 +76,8 @@ public class ProductSellerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
-
+        product = arrayProduct.get(position);
+        loadingDialog = new LoadingDialog(myActivity);
         if (convertView == null) {
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -80,13 +88,14 @@ public class ProductSellerAdapter extends BaseAdapter {
             holder.tvRemainProduct = convertView.findViewById(R.id.tv_list_seller_remainTotal);
             holder.tvSoldProduct = convertView.findViewById(R.id.tv_list_seller_product_sold);
             holder.tvTimeProduct = convertView.findViewById(R.id.tv_list_seller_product_time);
+            holder.tvOrderWaiting = convertView.findViewById(R.id.tv_list_seller_product_orderWaiting);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
+        getTotalOrderWaiting(holder.tvOrderWaiting);
         final String urlGetData = Variable.IP_ADDRESS + "seller/setActiveForProduct.php";
-        product = arrayProduct.get(position);
+
         //for remain textView
         if(product.getRemain_quantity()!=0){
             holder.tvRemainProduct.setText("CÒN " + product.getRemain_quantity() + " SẢN PHẨM");
@@ -101,24 +110,34 @@ public class ProductSellerAdapter extends BaseAdapter {
         CommonFunction.setImageViewSrc(convertView.getContext(),product.getImage(),holder.ivImage);
         long timeDifferent =  product.getSell_date().getTime() - Calendar.getInstance().getTime().getTime();
         if(timeDifferent > 0){
-            long seconds = timeDifferent / 1000;
-            long minutes = seconds / 60;
-            long hours = minutes / 60;
-            long days = hours / 24;
-            //String time = days + ":" + hours % 24 + ":" + minutes % 60;
-            holder.tvTimeProduct.setText("KẾT THÚC TRONG : " + days + " NGÀY " + + hours%24 +" GIỜ"  + minutes%60  + " PHÚT ");
+            holder.tvTimeProduct.setText(" THỜI GIAN BÁN");
         }else {
-            holder.tvTimeProduct.setText("ĐÃ KẾT THÚC");
+            holder.tvTimeProduct.setText(" ĐÃ KẾT THÚC");
         }
-
         return convertView;
     }
 
-    //date to calender
-    public static Calendar toCalendar(Date date){
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        return cal;
+    public void getTotalOrderWaiting(final TextView totalOrder) {
+        String url = Variable.IP_ADDRESS + "seller/getTotalOrderWaiting.php" + "?product_id=" + product.getId();
+        RequestQueue requestQueue = Volley.newRequestQueue(myContext.getApplicationContext());
+        StringRequest getProductAround = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            totalOrder.setText("Đang chờ:" + Integer.parseInt(response) );
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                });
+        requestQueue.add(getProductAround);
     }
 
     //update product status

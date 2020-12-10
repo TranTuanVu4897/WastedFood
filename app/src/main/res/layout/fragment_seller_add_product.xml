@@ -64,6 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
+                        android:id="@+id/tvCountProductName"
                         android:text="0/120" />
                 </FrameLayout>
 
@@ -97,6 +98,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
+                        android:id="@+id/TvCountProductDescription"
                         android:text="0/3000" />
                 </FrameLayout>
 

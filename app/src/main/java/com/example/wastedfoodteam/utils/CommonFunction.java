@@ -23,13 +23,6 @@ import java.util.Date;
 
 public class CommonFunction {
 
-    /**
-     * set image view src from image url
-     *
-     * @param context
-     * @param src
-     * @param imageView
-     */
     public static void setImageViewSrc(Context context, String src, ImageView imageView) {
         if (src == null || src.isEmpty())
             imageView.setImageResource(R.drawable.no_image);
@@ -37,25 +30,12 @@ public class CommonFunction {
             Glide.with(context).load(src).into(imageView);
     }
 
-    /**
-     * set currency by double money input
-     *
-     * @param money
-     * @return
-     */
     @SuppressLint("DefaultLocale")
     @NotNull
     public static String getCurrency(Double money) {
         return String.format("%,.0f", money) + " VND";
     }
 
-    /**
-     * set open close time string
-     *
-     * @param start_time
-     * @param end_time
-     * @return
-     */
     @NotNull
     public static String getOpenClose(Date start_time, Date end_time) {
         try {
@@ -67,13 +47,6 @@ public class CommonFunction {
         }
     }
 
-    /**
-     * set discount string
-     *
-     * @param sell_price
-     * @param original_price
-     * @return
-     */
     @SuppressLint("DefaultLocale")
     @NotNull
     public static String getDiscount(double sell_price, double original_price) {

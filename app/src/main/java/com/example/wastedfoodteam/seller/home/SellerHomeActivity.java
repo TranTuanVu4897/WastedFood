@@ -23,6 +23,7 @@ import com.example.wastedfoodteam.seller.notification.NotificationFragment;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.seller.product.AddProductFragment;
 import com.example.wastedfoodteam.seller.product.ListProductSellerFragment;
+import com.example.wastedfoodteam.seller.register.RegisterSellerLocationFragment;
 import com.example.wastedfoodteam.seller.register.RegisterSellerPhoneFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.ChangePasswordSellerFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.SendFeedbackSellerFragment;
@@ -115,15 +116,15 @@ public class SellerHomeActivity extends AppCompatActivity {
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_main,listProductSellerFragment,listProductSellerFragment.getTag()).commit();
                 }else if(id == R.id.item_nav_drawer_menu_alert){
-                    /*RegisterSellerLocationFragment registerSellerLocationFragment = new RegisterSellerLocationFragment();
+                    RegisterSellerLocationFragment registerSellerLocationFragment = new RegisterSellerLocationFragment();
                     FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.content_main,registerSellerLocationFragment,registerSellerLocationFragment.getTag()).commit();*/
+                    manager.beginTransaction().replace(R.id.content_main,registerSellerLocationFragment,registerSellerLocationFragment.getTag()).commit();
                     /*NotificationFragment notificationFragment = new NotificationFragment(Variable.SELLER.getId()+"");
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_main,notificationFragment,notificationFragment.getTag()).commit();*/
-                    RegisterSellerPhoneFragment registerSellerLocationFragment = new RegisterSellerPhoneFragment();
+                    /*RegisterSellerPhoneFragment registerSellerLocationFragment = new RegisterSellerPhoneFragment();
                     FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.content_main,registerSellerLocationFragment,registerSellerLocationFragment.getTag()).commit();
+                    manager.beginTransaction().replace(R.id.content_main,registerSellerLocationFragment,registerSellerLocationFragment.getTag()).commit();*/
                 }else if(id == R.id.item_nav_drawer_menu_logout){
                     FirebaseAuth.getInstance().signOut();
                     finish();

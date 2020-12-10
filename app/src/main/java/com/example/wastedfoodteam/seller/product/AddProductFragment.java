@@ -9,12 +9,15 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -52,14 +55,7 @@ public class AddProductFragment extends Fragment {
             etOpenTime, etCloseTime,
             etDescription, etQuantity;
 
-    //permission constants
-    private static final int CAMERA_REQUEST_CODE = 200;
-    private static final int STORAGE_REQUEST_CODE = 300;
-
-    //image pick constants
-    private static final int IMAGE_PICK_GALLERY_CODE = 400;
-    private static final int IMAGE_PICK_CAMERA_CODE = 500;
-
+    private TextView tvCountProductName,TvCountProductDescription;
     //for time picker
     private int mHour, mMinute, mSecond, day, month, year;
 
@@ -102,15 +98,49 @@ public class AddProductFragment extends Fragment {
         etCloseTime = view.findViewById(R.id.etCloseTime);
         etDescription = view.findViewById(R.id.etDescription);
         etQuantity = view.findViewById(R.id.etQuantity);
+        tvCountProductName = view.findViewById(R.id.tvCountProductName);
+        TvCountProductDescription = view.findViewById(R.id.TvCountProductDescription);
         final Button btnAddProductAdd = view.findViewById(R.id.btnAddProductAdd);
 
+        etProductName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tvCountProductName.setText(s.length() + "/120");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        etDescription.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                TvCountProductDescription.setText(s.length()+"/3000");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         //Date picker handle
         mHour = calendar.get(Calendar.HOUR_OF_DAY);
         mMinute = calendar.get(Calendar.MINUTE);
 
         cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), ivProduct);
-
         etOpenTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,6 +219,7 @@ public class AddProductFragment extends Fragment {
                                     .commit();
                             Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                         } else {
+                            loadingDialog.dismissDialog();
                             Toast.makeText(getActivity(), "Lỗi cập nhật", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -196,6 +227,7 @@ public class AddProductFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        loadingDialog.dismissDialog();
                         Toast.makeText(getActivity(), "Xảy ra lỗi, vui lòng thử lại", Toast.LENGTH_SHORT).show();
                     }
                 }

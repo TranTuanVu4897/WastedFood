@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.wastedfoodteam.buyer.buy.FragmentListProduct;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.login.FragmentLoginBuyer;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -34,12 +35,12 @@ public class LoginActivity extends AppCompatActivity {
         //Variable.uri =  Uri.parse("android.resource://"+ getApplicationContext().getPackageName()+"/drawable/bell.png");
         Variable.uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
                 "://" + getResources().getResourcePackageName(R.drawable.button_home)
-                + '/' + getResources().getResourceTypeName(R.drawable.button_home) + '/' + getResources().getResourceEntryName(R.drawable.button_home) );
+                + '/' + getResources().getResourceTypeName(R.drawable.button_home) + '/' + getResources().getResourceEntryName(R.drawable.button_home));
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         //fragment for login
         FragmentLoginBuyer fragment = new FragmentLoginBuyer();
-        fragmentTransaction.add(R.id.flFragmentLayoutAM, fragment);
+        fragmentTransaction.add(R.id.flFragmentLayoutAM, fragment, "login_buyer");
         fragmentTransaction.commit();
 
 
@@ -69,5 +70,19 @@ public class LoginActivity extends AppCompatActivity {
                 fragment.onActivityResult(requestCode, resultCode, data);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent;
+        FragmentLoginBuyer loginBuyer = (FragmentLoginBuyer) getSupportFragmentManager().findFragmentByTag("login_buyer");
+        if (loginBuyer != null && loginBuyer.isVisible()) {
+            intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        } else
+            intent = new Intent(this, LoginActivity.class);
+        finishAndRemoveTask();
+        startActivity(intent);
     }
 }

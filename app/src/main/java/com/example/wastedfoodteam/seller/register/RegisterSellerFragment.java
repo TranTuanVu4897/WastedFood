@@ -189,4 +189,6 @@ public class RegisterSellerFragment extends Fragment {
                 });
         requestQueue.add(getSellerRequestString);
     }
+
+
 }

@@ -139,7 +139,7 @@ public class SellerChangePassword extends Fragment {
         }else {
             tilConfirmPass.setErrorEnabled(false);
         }
-        if(Validation.checkPassword(strPassword)){
+        if(!Validation.checkPassword(strPassword)){
             tilPassword.setError("Mật khẩu phải có từ 8 đến 16 kí tự");
             tilPassword.setErrorEnabled(true);
             flag = false;

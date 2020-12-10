@@ -1,16 +1,7 @@
 package com.example.wastedfoodteam.utils.validation;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.util.Log;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.wastedfoodteam.global.Variable;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -20,32 +11,6 @@ import java.util.Date;
 import java.util.regex.Pattern;
 
 public class Validation {
-
-    public static void checkPhoneExist(Context context, final ApiCallback apiCallback, String phone) {
-
-        String urlGetData = Variable.IP_ADDRESS + "register/checkPhoneExist.php?phone=" + phone;
-        RequestQueue requestQueue = Volley.newRequestQueue(context.getApplicationContext());
-        StringRequest getSellerRequestString = new StringRequest(Request.Method.GET, urlGetData,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        if (response.equals("notExist"))
-                            apiCallback.onResponse(false);
-                        else if (response.equals("exist")) {
-                            int a = 1;
-                            apiCallback.onResponse(true);
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-        requestQueue.add(getSellerRequestString);
-    }
 
     public static boolean checkPhone(String string) {
         try {
