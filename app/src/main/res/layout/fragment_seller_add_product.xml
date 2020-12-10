@@ -216,7 +216,7 @@
                         android:layout_gravity="end"
                         android:gravity="end"
                         android:hint="00:00"
-                        android:inputType="datetime" />
+                        android:inputType="none" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -238,8 +238,9 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:gravity="end"
+                        android:inputType="none"
                         android:hint="23:59"
-                        android:inputType="datetime" />
+                        />
                 </LinearLayout>
 
                 <Button
@@ -247,6 +248,7 @@
                     android:layout_width="200dp"
                     android:layout_height="45dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
                     android:layout_gravity="center"
                     style="@style/loginButton"
                     android:layout_centerInParent="true"
