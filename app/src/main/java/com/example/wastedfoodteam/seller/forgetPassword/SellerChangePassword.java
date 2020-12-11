@@ -95,7 +95,7 @@ public class SellerChangePassword extends Fragment {
     //update seller account password
     private void updateSellerPasswordByPhone(final String phone){
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        String urlGetData = Variable.IP_ADDRESS + "seller/updatePasswordAccountByUsername.php";
+        String urlGetData = Variable.IP_ADDRESS + "seller/updatePasswordByUsername.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, urlGetData,
                 new Response.Listener<String>() {
                     @Override
