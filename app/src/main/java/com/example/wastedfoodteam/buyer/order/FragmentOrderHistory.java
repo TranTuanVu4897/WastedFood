@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ public class FragmentOrderHistory extends ListFragment {
     ArrayList<BuyerOrder> orderArrayList;
     OrderAdapter adapter;
     ListView lvOrder;
+    TextView tvEmpty;
     FragmentOrderDetail orderDetail;
     Bundle bundleDetail;
 
@@ -46,14 +48,16 @@ public class FragmentOrderHistory extends ListFragment {
 
         //mapping view
         lvOrder = view.findViewById(android.R.id.list);
+        tvEmpty = view.findViewById(android.R.id.empty);
 
         //setup bundle
         bundleDetail = new Bundle();
 
         //set up list display
         orderArrayList = new ArrayList<>();
-        adapter = new OrderAdapter(getActivity().getApplicationContext(), R.layout.list_buyer_product_item, orderArrayList, getResources());
+        adapter = new OrderAdapter(requireActivity().getApplicationContext(), R.layout.list_buyer_order_history_item, orderArrayList, getResources());
         lvOrder.setAdapter(adapter);
+        lvOrder.setEmptyView(tvEmpty);
         lvOrder.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -74,7 +78,7 @@ public class FragmentOrderHistory extends ListFragment {
     }
 
     private void getListOrderHistory() {
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity().getApplicationContext());
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
                     @Override
@@ -118,7 +122,7 @@ public class FragmentOrderHistory extends ListFragment {
         orderDetail.setArguments(bundleDetail);
 
         //open detail order fragment
-        getActivity().getSupportFragmentManager().beginTransaction()
+        requireActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flSearchResultAH, orderDetail, "")
                 .addToBackStack(null)
                 .commit();

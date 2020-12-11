@@ -87,7 +87,7 @@ public class FragmentEditInformationBuyer extends Fragment {
 
                 String phone = etPhone.getText().toString();
                 String urlImage = "";
-                String dob = buyer.getDate_of_birth().toString();
+                String dob = etDob.getText().toString();
                 //check information change
                 if (!buyer.getDate_of_birth().toString().equals(etDob.getText().toString()))
                     dob = etDob.getText().toString();
@@ -124,7 +124,7 @@ public class FragmentEditInformationBuyer extends Fragment {
     }
 
     private void getData(final String url) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity().getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -136,7 +136,7 @@ public class FragmentEditInformationBuyer extends Fragment {
 
                     //set edit text here
                     etName.setText(buyer.getName());
-                    etDob.setText(buyer.getDate_of_birth() + "");
+                    etDob.setText(buyer.getDate_of_birth().toString());
                     etMail.setText(buyer.getEmail());
                     etPhone.setText(buyer.getPhone());
                     CommonFunction.setImageViewSrc(getActivity(),buyer.getImage(),ivAvatar);
@@ -162,7 +162,7 @@ public class FragmentEditInformationBuyer extends Fragment {
     }
 
     private void updateData(String url, final String accountId, final String name, final String phone, final String urlImage, final String dob, final String gender) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity().getApplicationContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -222,7 +222,7 @@ public class FragmentEditInformationBuyer extends Fragment {
             }
         };
         DatePickerDialog datePickerDialog;
-        datePickerDialog = new DatePickerDialog(getActivity(),
+        datePickerDialog = new DatePickerDialog(requireActivity(),
                 dateSetListener, lastSelectedYear, lastSelectedMonth, lastSelectedDayOfMonth);
         datePickerDialog.show();
     }

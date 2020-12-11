@@ -5,11 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="150dp"
-    android:background="#393939"
     >
 
     <LinearLayout
-        android:id="@+id/ll_nav_header_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="8"

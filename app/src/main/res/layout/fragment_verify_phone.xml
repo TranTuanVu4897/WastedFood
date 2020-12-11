@@ -52,10 +52,8 @@
 
 
                 <TextView
-                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="80dp"
                     android:text="Mã xác nhận đã được gửi cho bạn"
@@ -83,7 +81,6 @@
                     android:id="@+id/buttonSignIn"
                     style="@style/loginButton"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:text="TIẾP TỤC"

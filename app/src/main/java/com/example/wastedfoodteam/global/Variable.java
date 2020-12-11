@@ -3,13 +3,9 @@ package com.example.wastedfoodteam.global;
 import android.location.Location;
 import android.net.Uri;
 
-import com.example.wastedfoodteam.model.Account;
 import com.example.wastedfoodteam.model.Buyer;
-import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.model.Seller;
-import com.example.wastedfoodteam.model.Order;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.sql.Time;
@@ -21,8 +17,8 @@ public class Variable {
 //    public static final String IP_ADDRESS = "http://192.168.1.19/wastedfoodphp/";//TungPT ip
 //    public static final String IP_ADDRESS = "http://192.168.1.10/wastedfoodphp/";//DucHC ip
 //    public static final String IP_ADDRESS ="http://192.168.156.2/wastedfoodphp/";//DucHC ip lan
-    public static final String IP_ADDRESS ="http://192.168.1.253/wastedfoodphp/";//DucHC ip lan
-//    public static final String IP_ADDRESS ="https://wasted-food-service.herokuapp.com/";//heroku server
+//    public static final String IP_ADDRESS ="http://192.168.1.10/wastedfoodphp/";//DucHC ip lan
+    public static final String IP_ADDRESS ="https://wasted-food-service.herokuapp.com/";//heroku server
 
     //other php variable
     public static final String SEARCH_PRODUCT = "search/getListProducts.php";
@@ -30,7 +26,7 @@ public class Variable {
 
     public static final String INSERT_NEW_ORDER = "order/buyerOrder.php";
 
-    public static final String ADD_PRODUCT_SELLER = "seller/SellerCreateProduct.php";
+    public static final String ADD_PRODUCT_SELLER = "seller/sellerCreateProduct.php";
 
     //Order status constraint
     public static final String GET_FOLLOW = "follow/getFollow.php";
@@ -51,6 +47,6 @@ public class Variable {
     public static Seller RESISTER_SELLER;
     public static Uri uri;
 
-    public static Time startTime = Time.valueOf("00:00:00"), endTime = Time.valueOf("23:59:59");
+    public static String startTime = "00:00:00", endTime = "23:59:59";
     public static String distance = "20", discount = "100";
 }

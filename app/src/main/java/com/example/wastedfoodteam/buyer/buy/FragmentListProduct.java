@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,7 +34,6 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class FragmentListProduct extends ListFragment {
     ArrayList<BuyerProduct> arrProduct;
@@ -43,9 +43,9 @@ public class FragmentListProduct extends ListFragment {
     Bundle bundleDetail;
     ImageButton ibFilter;
     EditText etSearch;
+    TextView tvEmpty;
     Button btnNear, btnAll, btnFollowSeller;
 
-    @SuppressLint("ClickableViewAccessibility")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,11 +58,13 @@ public class FragmentListProduct extends ListFragment {
         //setup bundle
         bundleDetail = new Bundle();
 
-        setUpArrayProduct();
-
-        adapter = new ProductAdapter(getActivity().getApplicationContext(), R.layout.list_buyer_product_item, arrProduct, getResources());
+        if (!isHasProduct(arrProduct)) {
+            createNewArrayProduct();
+            getProduct(getUrlForAllSeller());
+        }
+        adapter = new ProductAdapter(requireActivity().getApplicationContext(), R.layout.list_buyer_product_item, arrProduct, getResources());
+        lvProduction.setEmptyView(tvEmpty);
         lvProduction.setAdapter(adapter);
-        getProduct(getUrlForAllSeller());
 
         lvProduction.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -88,11 +90,10 @@ public class FragmentListProduct extends ListFragment {
                 filterDialog.showFilterDialog(new FilterDialog.ModifyFilter() {
                     @Override
                     public void onClear() {
-                        Variable.startTime = null;
-                        Variable.endTime = null;
+                        Variable.startTime = "";
+                        Variable.endTime = "";
                         Variable.distance = "20";
-                        Variable.discount = null;
-
+                        Variable.discount = "";
                         createNewArrayProduct();
                         getProduct(getUrlForAllSeller());
                     }
@@ -134,6 +135,10 @@ public class FragmentListProduct extends ListFragment {
         return view;
     }
 
+    private boolean isHasProduct(ArrayList<BuyerProduct> arrProduct) {
+        return arrProduct != null && arrProduct.size() > 0;
+    }
+
     private void btnSimpleFilterHandle(Button btn, String url) {
         createNewArrayProduct();
         getProduct(url);
@@ -164,6 +169,7 @@ public class FragmentListProduct extends ListFragment {
         lvProduction = view.findViewById(android.R.id.list);
         etSearch = view.findViewById(R.id.etSearchBHA);
         ibFilter = view.findViewById(R.id.ibFilter);
+        tvEmpty = view.findViewById(android.R.id.empty);
         btnNear = view.findViewById(R.id.btnNearProduct);
         btnAll = view.findViewById(R.id.btnAllProduct);
         btnFollowSeller = view.findViewById(R.id.btnFollowSellerProduct);
@@ -194,9 +200,9 @@ public class FragmentListProduct extends ListFragment {
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
             for (int i = 0; i < jsonProducts.length(); i++) {
                 arrProduct.add(gson.fromJson(jsonProducts.getString(i), BuyerProduct.class));
-                adapter.setProductList(arrProduct);
-                adapter.notifyDataSetChanged();
             }
+            adapter.setProductList(arrProduct);
+            adapter.notifyDataSetChanged();
         } catch (Exception e) {
             Log.e("ListProduct", response);
             e.printStackTrace();
@@ -230,9 +236,6 @@ public class FragmentListProduct extends ListFragment {
         }
     }
 
-    private void setUpArrayProduct() {
-        if (arrProduct == null) createNewArrayProduct();
-    }
 
     private void resetStatusButton() {
         setNegativeButton(btnAll);

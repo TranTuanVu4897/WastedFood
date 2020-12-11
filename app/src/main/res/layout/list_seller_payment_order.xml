@@ -41,7 +41,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
-                android:paddingEnd="10dp"
                 android:layout_height="60dp">
 
                 <Button

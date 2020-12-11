@@ -7,7 +7,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -282,7 +281,7 @@ public class BuyHomeActivity extends AppCompatActivity {
             startActivity(new Intent(BuyHomeActivity.this, LoginActivity.class));
 
         } catch (Exception e) {
-            Log.d("e: ", e.getMessage());
+            e.printStackTrace();
         }
 
     }
@@ -291,10 +290,8 @@ public class BuyHomeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        if (fragments != null) {
-            for (Fragment fragment : fragments) {
-                fragment.onActivityResult(requestCode, resultCode, data);
-            }
+        for (Fragment fragment : fragments) {
+            fragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 

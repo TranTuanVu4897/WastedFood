@@ -3,6 +3,8 @@ package com.example.wastedfoodteam.utils;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.location.Location;
 import android.util.Log;
 import android.widget.EditText;
@@ -39,11 +41,11 @@ public class CommonFunction {
     @NotNull
     public static String getOpenClose(Date start_time, Date end_time) {
         try {
-             SimpleDateFormat getHourAndMinute = new SimpleDateFormat("hh.mm");
+            SimpleDateFormat getHourAndMinute = new SimpleDateFormat("hh:mm");
             return getHourAndMinute.format(start_time) + " - "
                     + getHourAndMinute.format(end_time);
         } catch (Exception e) {
-            return "00.00 - 23.59";
+            return "00:00 - 23:59";
         }
     }
 
@@ -86,12 +88,13 @@ public class CommonFunction {
                 tvQuantity.setBackgroundColor(Color.RED);
             }
         } catch (Exception e) {
-            Log.e("CommonFunction", e.getMessage());
+            e.printStackTrace();
         }
     }
 
     /**
      * get current date by format "yyyy-MM-dd"
+     *
      * @return
      */
     @NotNull
@@ -101,7 +104,6 @@ public class CommonFunction {
     }
 
     /**
-     *
      * @param editText
      * @return
      */
@@ -110,13 +112,12 @@ public class CommonFunction {
             if (editText.getText().toString().trim().length() > 0)
                 return true;
         } catch (Exception e) {
-            Log.e("CommonFunction", e.getMessage());
+            e.printStackTrace();
         }
         return false;
     }
 
     /**
-     *
      * @param seller
      * @param currentGPS
      * @return
@@ -167,4 +168,10 @@ public class CommonFunction {
         return remain_quantity == 0;
     }
 
+    public static void setDrawableForTextView(@NotNull TextView tv, int drawableId, @NotNull Context context) {
+        int drawableSize = 50;
+        Drawable drawable = new ScaleDrawable(context.getDrawable(drawableId), 0, drawableSize, drawableSize).getDrawable();
+        drawable.setBounds(0, 0, drawableSize, drawableSize);
+        tv.setCompoundDrawables(drawable, null, null, null);
+    }
 }

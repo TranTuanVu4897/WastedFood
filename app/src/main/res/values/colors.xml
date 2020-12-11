@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryOfHomeActivity">#04BBD6</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorWhite">#ffffff</color>
@@ -13,16 +11,13 @@
     <color name="colorBlack">#000000</color>
     <color name="goldYellow">#FFDF00</color>
     <color name="colorBackGroundOrder">#E8E7E7</color>
-    <color name="test">#F8F9CA</color>
 
     //home page UI
     <color name="cardColor">#ffffff</color>
-    <color name="textCardColor">#3f3f3f</color>
 
     <!--colors for modern ui-->
     <color name="whiteTextColor">#fff</color>
     <color name="primaryTextColor">#2661FA</color>
-    <color name="loginBkColor">#f0f0f0</color>
 
     <!--colros for card-->
     <color name="whiteCardColor">#fff</color>

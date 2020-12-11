@@ -24,7 +24,6 @@ import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.seller.product.EditProductSellerFragment;
-import com.example.wastedfoodteam.seller.sellerAdapter.OrderConfirmAdapter;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -41,7 +40,6 @@ public class ProductOrderSellerFragment extends ListFragment {
     ListView lvOrderConfirm,lvOrderPayment,lvOrderDone;
     ArrayList<SellerOrder> arrOrder,arrOrderPayment,arrOrderDone;
     Button editProduct,cancelProduct;
-    OrderConfirmAdapter orderAdapter;
     OrderPaymentAdapter orderPaymentAdapter;
     OrderDoneAdapter orderDoneAdapter;
     ImageView imageView;

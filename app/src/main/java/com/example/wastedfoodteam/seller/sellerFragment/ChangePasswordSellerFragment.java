@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -35,6 +34,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.example.wastedfoodteam.utils.Encode.md5;
 
@@ -89,6 +89,7 @@ public class ChangePasswordSellerFragment extends Fragment {
                     //update password to db
                     String urlGetData = Variable.IP_ADDRESS + "seller/updatePasswordAccount.php";
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    assert user != null;
                     user.updatePassword(md5(newPassword)).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
@@ -114,7 +115,7 @@ public class ChangePasswordSellerFragment extends Fragment {
 
     //update seller account password
     private void updateSellerPassword(String url){
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -123,7 +124,7 @@ public class ChangePasswordSellerFragment extends Fragment {
                             Toast.makeText(getActivity(),"Cập nhật thành công",Toast.LENGTH_SHORT).show();
                             oldPassword = md5(confirmPassword);
                             SellerHomeFragment sellerHomeFragment = new SellerHomeFragment();
-                            FragmentManager manager = getActivity().getSupportFragmentManager();
+                            FragmentManager manager = requireActivity().getSupportFragmentManager();
                             manager.beginTransaction().replace(R.id.content_main, sellerHomeFragment, sellerHomeFragment.getTag()).commit();
                         }else{
                             Toast.makeText(getActivity(),"Lỗi cập nhật",Toast.LENGTH_SHORT).show();

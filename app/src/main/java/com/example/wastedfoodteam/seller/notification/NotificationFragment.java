@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,8 +23,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Notification;
-import com.example.wastedfoodteam.seller.order.ProductOrderSellerFragment;
-import com.example.wastedfoodteam.seller.order.SellerOrderDetailFragment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -35,6 +34,7 @@ import java.util.ArrayList;
 public class NotificationFragment extends ListFragment {
 
     ListView lvNotification;
+    TextView tvEmpty;
     ArrayList<Notification> arrNotification;
     NotificationAdapter notificationAdapter;
     final String receiver_id;
@@ -50,10 +50,12 @@ public class NotificationFragment extends ListFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
         lvNotification = view.findViewById(android.R.id.list);
+        tvEmpty = view.findViewById(android.R.id.empty);
         arrNotification = new ArrayList<>();
-        notificationAdapter = new NotificationAdapter(getActivity().getApplicationContext(), R.layout.list_seller_notification, arrNotification, getResources(),getActivity());
+        notificationAdapter = new NotificationAdapter(getActivity().getApplicationContext(), R.layout.list_seller_notification, arrNotification, getResources(), getActivity());
         lvNotification.setAdapter(notificationAdapter);
-        if(Variable.CURRENT_USER.equals("SELLER"))
+        lvNotification.setEmptyView(tvEmpty);
+        if (Variable.CURRENT_USER.equals("SELLER"))
             getNotificationDataSeller();
         else
             getNotificationDataBuyer(receiver_id);
@@ -99,7 +101,7 @@ public class NotificationFragment extends ListFragment {
                                 notificationAdapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {
-                            Log.e("ResponseString",response);
+                            Log.e("ResponseString", response);
                             e.printStackTrace();
                         }
                     }
@@ -107,6 +109,7 @@ public class NotificationFragment extends ListFragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+
                     }
                 });
         requestQueue.add(getProductAround);
@@ -128,7 +131,7 @@ public class NotificationFragment extends ListFragment {
                                 notificationAdapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {
-                            Log.e("ResponseString",response);
+                            Log.e("ResponseString", response);
                             e.printStackTrace();
                         }
                     }

@@ -67,7 +67,7 @@ public class ProductAdapter extends BaseAdapter {
 
         BuyerProduct product = productList.get(position);
 
-        holder.tvName.setText(product.getName() + "");
+        holder.tvName.setText(product.getName());
         holder.tvSellPrice.setText(CommonFunction.getCurrency(product.getSell_price()));
         holder.tvOriginalPrice.setText(CommonFunction.getCurrency(product.getOriginal_price()));
         holder.tvOpenTime.setText(CommonFunction.getOpenClose(product.getStart_time(), product.getEnd_time()));
@@ -75,7 +75,9 @@ public class ProductAdapter extends BaseAdapter {
         holder.tvDistance.setText(CommonFunction.getStringDistance(product.getSeller(), Variable.gps));
         CommonFunction.setQuantityTextView(holder.tvQuantity, product.getRemain_quantity(), product.getOriginal_quantity());
         CommonFunction.setImageViewSrc(context, product.getImage(), holder.ivProduct);
-
+        CommonFunction.setDrawableForTextView(holder.tvOpenTime, R.drawable.ic_icons8_clock, context);
+        CommonFunction.setDrawableForTextView(holder.tvDistance, R.drawable.location, context);
+        holder.tvRating.setText(product.getSeller().getRating() + "");
         return convertView;
 
     }

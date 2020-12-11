@@ -1,6 +1,5 @@
 package com.example.wastedfoodteam.seller.product;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -38,11 +37,11 @@ import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.LoadingDialog;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class AddProductFragment extends Fragment {
 
@@ -225,7 +224,7 @@ public class AddProductFragment extends Fragment {
 
     //
     private void addProduct(String url) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -254,7 +253,7 @@ public class AddProductFragment extends Fragment {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() {
+            protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("seller_id", String.valueOf(seller_id));
                 params.put("name", etProductName.getText().toString());

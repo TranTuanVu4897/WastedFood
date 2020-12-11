@@ -19,7 +19,6 @@ import androidx.fragment.app.Fragment;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.utils.DirectionParser;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.RatingDialog;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -85,12 +84,12 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
         }
     }
 
-    @SuppressLint("SetTextI18n")
     private void setViewContent() {
         CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), order.getProduct().getImage(), ivProduct);
         tvDistance.setText("Đã đặt trước: " + order.getQuantity() + " sản phẩm.");
         tvProductName.setText("Sản phẩm: " + order.getProduct().getName());
         tvSellerName.setText(order.getProduct().getSeller().getName());
+        tvPrice.setText(CommonFunction.getCurrency(order.getTotal_cost()));
         tvDistance.setText(CommonFunction.getStringDistance(order.getProduct().getSeller(), Variable.gps));
     }
 
