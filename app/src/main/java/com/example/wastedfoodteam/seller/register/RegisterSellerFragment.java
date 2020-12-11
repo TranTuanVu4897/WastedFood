@@ -59,6 +59,7 @@ public class RegisterSellerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try{
+                activeCheck();
                 if(bolName == true && bolEmail == true && bolPassword == true && bolConfirmPassword==true  && bolDescription==true){
                     Variable.RESISTER_SELLER = new Seller();
                     Variable.RESISTER_SELLER.setName(etName.getText().toString().trim());
@@ -160,6 +161,15 @@ public class RegisterSellerFragment extends Fragment {
         bolEmail = false;
         bolName = false;
         bolPassword = false;
+    }
+
+    private void activeCheck(){
+        etDescription.requestFocus();
+        etConfirmPassword.requestFocus();
+        etEmail.requestFocus();
+        etName.requestFocus();
+        etPassword.requestFocus();
+        etPassword.clearFocus();
     }
 
     private  void checkEmailExist(final String email) {

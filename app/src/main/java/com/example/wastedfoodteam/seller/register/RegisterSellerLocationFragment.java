@@ -235,9 +235,7 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
                 setMarker(latLng.latitude, latLng.longitude);
             }
         });
-
         setMarkerByGPS();
-
     }
 
     private void setMarkerByGPS() {

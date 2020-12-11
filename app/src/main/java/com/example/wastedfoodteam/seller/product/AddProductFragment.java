@@ -52,9 +52,8 @@ public class AddProductFragment extends Fragment {
 
     private EditText etProductName,
             etOriginalPrice, etSellPrice,
-            etOpenTime, etCloseTime,
             etDescription, etQuantity;
-
+    TextView etCloseTime,etOpenTime;
     private TextView tvCountProductName,TvCountProductDescription;
     //for time picker
     private int mHour, mMinute, mSecond, day, month, year;
@@ -96,6 +95,8 @@ public class AddProductFragment extends Fragment {
         etSellPrice = view.findViewById(R.id.etSellPrice);
         etOpenTime = view.findViewById(R.id.etOpenTime);
         etCloseTime = view.findViewById(R.id.etCloseTime);
+
+
         etDescription = view.findViewById(R.id.etDescription);
         etQuantity = view.findViewById(R.id.etQuantity);
         tvCountProductName = view.findViewById(R.id.tvCountProductName);
@@ -141,6 +142,10 @@ public class AddProductFragment extends Fragment {
         mMinute = calendar.get(Calendar.MINUTE);
 
         cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), ivProduct);
+
+        //count time for validate
+        final int[] countEtOpenTime = new int[1];
+        final int[] countEtCloseTime = new int[1];
         etOpenTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,6 +155,14 @@ public class AddProductFragment extends Fragment {
                             @SuppressLint("DefaultLocale")
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                countEtOpenTime[0] = 60*hourOfDay + minute;
+                                if(!etCloseTime.getText().toString().equals("")){
+                                    if(countEtOpenTime[0] > countEtCloseTime[0]){
+                                        etOpenTime.setText(etCloseTime.getText().toString());
+                                    }else {
+                                        etOpenTime.setText(String.format("%02d:%02d", hourOfDay, minute));
+                                    }
+                                }else
                                 etOpenTime.setText(String.format("%02d:%02d", hourOfDay, minute));
                             }
                         }, mHour, mMinute, false);
@@ -176,6 +189,14 @@ public class AddProductFragment extends Fragment {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
+                        countEtCloseTime[0] = 60*hourOfDay + minute;
+                        if(!etOpenTime.getText().toString().equals("")){
+                            if(countEtOpenTime[0] < countEtCloseTime[0]){
+                                etCloseTime.setText(String.format("%02d:%02d", hourOfDay, minute));
+                            }else {
+                                etCloseTime.setText(etOpenTime.getText().toString());
+                            }
+                        }else
                         etCloseTime.setText(String.format("%02d:%02d", hourOfDay, minute));
                     }
                 }, mHour, mMinute, false);

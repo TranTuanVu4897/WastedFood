@@ -41,6 +41,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import static com.example.wastedfoodteam.utils.Encode.md5;
+
 public class FragmentLoginPartner extends Fragment {
     Button btnSignIn, btnBuyerOption;
     EditText etSDT, etPass;
@@ -104,19 +106,6 @@ public class FragmentLoginPartner extends Fragment {
      * @param str
      * @return
      */
-    public String md5(String str) {
-        String result = "";
-        MessageDigest digest;
-        try {
-            digest = MessageDigest.getInstance("MD5");
-            digest.update(str.getBytes());
-            BigInteger bigInteger = new BigInteger(1, digest.digest());
-            result = bigInteger.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
 
     /**
      * get data from mySql
