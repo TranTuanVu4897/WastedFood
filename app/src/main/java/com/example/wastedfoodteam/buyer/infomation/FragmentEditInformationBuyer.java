@@ -87,7 +87,7 @@ public class FragmentEditInformationBuyer extends Fragment {
 
                 String phone = etPhone.getText().toString();
                 String urlImage = "";
-                String dob = buyer.getDate_of_birth().toString();
+                String dob = etDob.getText().toString();
                 //check information change
                 if (!buyer.getDate_of_birth().toString().equals(etDob.getText().toString()))
                     dob = etDob.getText().toString();
