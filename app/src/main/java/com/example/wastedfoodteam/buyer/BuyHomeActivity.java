@@ -26,6 +26,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.LoginActivity;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.buy.FragmentListProduct;
@@ -34,6 +40,7 @@ import com.example.wastedfoodteam.buyer.infomation.FragmentEditInformationBuyer;
 import com.example.wastedfoodteam.buyer.order.FragmentOrderHistory;
 import com.example.wastedfoodteam.global.Variable;
 
+import com.example.wastedfoodteam.model.Buyer;
 import com.example.wastedfoodteam.seller.notification.NotificationFragment;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.seller.sellerFragment.SendFeedbackSellerFragment;
@@ -46,6 +53,10 @@ import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import org.json.JSONArray;
 
 import java.util.List;
 
@@ -65,18 +76,7 @@ public class BuyHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyer_home);
-        if(Variable.BUYER.getIs_active() == 0){
-            switch (Variable.CHECK_LOGIN) {
-                case 2:
-                    finish();
-                    signOutFacebook();
-                    break;
-                case 1:
-                    finish();
-                    signOutGoogle();
-                    break;
-            }
-        }
+        checkIsActive();
 
         if (checkGPSPermission()) {
             setUpBuyerContent();
@@ -348,5 +348,36 @@ public class BuyHomeActivity extends AppCompatActivity {
     private boolean isListFragment() {
         FragmentListProduct fragmentListProduct = (FragmentListProduct) getSupportFragmentManager().findFragmentByTag(TAG_LIST_FRAGMENT);
         return fragmentListProduct != null && fragmentListProduct.isVisible();
+    }
+    private void checkIsActive() {
+        String accountId = Variable.BUYER.getId() + "";
+        String url = Variable.IP_ADDRESS + "login/checkIsActive.php?account_id=" + accountId;
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                switch (response) {
+                    case "account is locked":
+                        Toast.makeText(BuyHomeActivity.this, "Tài khoản của bạn đã bị khóa", Toast.LENGTH_LONG).show();
+                        switch (Variable.CHECK_LOGIN) {
+                            case 2:
+                                signOutFacebook();
+                                break;
+                            case 1:
+                                signOutGoogle();
+                                break;
+                        }
+                        break;
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(BuyHomeActivity.this, "Lỗi kết nỗi", Toast.LENGTH_LONG).show();
+
+            }
+        }
+        );
+        requestQueue.add(stringRequest);
     }
 }

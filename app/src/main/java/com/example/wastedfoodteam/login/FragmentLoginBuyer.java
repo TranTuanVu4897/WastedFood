@@ -352,69 +352,6 @@ public class FragmentLoginBuyer extends Fragment {
         return result;
     }
 
-    /**
-     * get data from mySql
-     *
-     * @param url
-     */
-    private void getData(String url) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                switch (response) {
-                    case "not exist account":
-                    case "account is locked":
-                        Toast.makeText(getActivity(), "Mật khẩu sai", Toast.LENGTH_LONG).show();//TODO fix for suitable error
-                        break;
-                    case "not match role":
-                        Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO fix for suitable error
-                        break;
-                    case "PHONE_IS_NULL":
-
-                        //startActivity(new Intent(getActivity(),BuyHomeActivity.class));
-                    default:
-                        Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();//TODO get data
-                        try {
-                            JSONArray object = new JSONArray(response);
-
-                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-
-                            Buyer buyer = gson.fromJson(object.getString(0), Buyer.class);
-
-                            final Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
-
-                            FirebaseAuth.getInstance().signInWithEmailAndPassword(buyer.getEmail(), buyer.getPassword()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                                @Override
-                                public void onSuccess(AuthResult authResult) {
-                                    Variable.fireBaseUID = authResult.getUser().getUid();
-                                    startActivity(intent);
-                                }
-                            });
-
-                            Variable.BUYER = buyer;
-
-                            //TODO pass data through intent
-                            startActivity(intent);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Log.e("ResponseString", response);
-                        }
-                        break;
-
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "lỗi kết nỗi" + urlGetData, Toast.LENGTH_LONG).show();//TODO get data
-            }
-        }
-        );
-        requestQueue.add(stringRequest);
-    }
-
     private void resultFacebook(final String firebase_UID) {
 
         GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
