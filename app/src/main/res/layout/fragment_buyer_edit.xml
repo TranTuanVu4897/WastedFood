@@ -138,6 +138,7 @@
                     android:layout_weight="2"
                     android:hint="Email: "
                     android:textColorHint="#B6ADAD"
+                    android:textColor="#000000"
                     android:textSize="18sp" />
             </TableRow>
 
