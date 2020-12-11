@@ -118,9 +118,9 @@ public class FragmentLoginPartner extends Fragment {
             @Override
             public void onResponse(String response) {
                 if ("not exist account".equals(response)) {
-                    Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO fix for suitable error
+                    Toast.makeText(getActivity(), "Tài khoản bạn đã bị khóa" + urlGetData, Toast.LENGTH_LONG).show();//TODO fix for suitable error
                 } else {
-                    Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();//TODO get data
+                    Toast.makeText(getActivity(), "đăng nhập thành công", Toast.LENGTH_LONG).show();//TODO get data
                     try {
                         JSONArray object = new JSONArray(response);
                         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
@@ -147,7 +147,7 @@ public class FragmentLoginPartner extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "lỗi " + urlGetData, Toast.LENGTH_LONG).show();//TODO get data
+                Toast.makeText(getActivity(), "lỗi kết nối" + urlGetData, Toast.LENGTH_LONG).show();//TODO get data
                 Log.d("MK ", md5(etPass.getText().toString()));
             }
         });

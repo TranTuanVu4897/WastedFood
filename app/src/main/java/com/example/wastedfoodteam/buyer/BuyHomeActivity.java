@@ -65,6 +65,18 @@ public class BuyHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyer_home);
+        if(Variable.BUYER.getIs_active() == 0){
+            switch (Variable.CHECK_LOGIN) {
+                case 2:
+                    finish();
+                    signOutFacebook();
+                    break;
+                case 1:
+                    finish();
+                    signOutGoogle();
+                    break;
+            }
+        }
 
         if (checkGPSPermission()) {
             setUpBuyerContent();
@@ -113,10 +125,6 @@ public class BuyHomeActivity extends AppCompatActivity {
                             case 2:
                                 finish();
                                 signOutFacebook();
-                                break;
-                            case 0:
-                                finish();
-                                startActivity(new Intent(BuyHomeActivity.this, LoginActivity.class));
                                 break;
                             case 1:
                                 finish();

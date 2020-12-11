@@ -12,14 +12,23 @@ public class Account implements Serializable {
     private String third_party_id;
     private String email;
     private Date create_date;
-    private  boolean is_active;
+    private  int is_active;
     private String firebase_UID;
 
-    public String getFirebase_UID() {
-        return firebase_UID;
+
+    public Account() {
     }
 
-    public void setFirebase_UID(String firebase_UID) {
+    public Account(int id, int role_id, String username, String password, String phone, String third_party_id, String email, Date create_date, int is_active, String firebase_UID) {
+        this.id = id;
+        this.role_id = role_id;
+        this.username = username;
+        this.password = password;
+        this.phone = phone;
+        this.third_party_id = third_party_id;
+        this.email = email;
+        this.create_date = create_date;
+        this.is_active = is_active;
         this.firebase_UID = firebase_UID;
     }
 
@@ -79,37 +88,27 @@ public class Account implements Serializable {
         this.email = email;
     }
 
-// --Commented out by Inspection START (12/7/2020 11:31 PM):
-//    public Date getCreate_date() {
-//        return create_date;
-//    }
-// --Commented out by Inspection STOP (12/7/2020 11:31 PM)
+    public Date getCreate_date() {
+        return create_date;
+    }
 
     public void setCreate_date(Date create_date) {
         this.create_date = create_date;
     }
 
-    public boolean isIs_active() {
+    public int getIs_active() {
         return is_active;
     }
 
-    public void setIs_active(boolean is_active) {
+    public void setIs_active(int is_active) {
         this.is_active = is_active;
     }
 
-    public Account() {
+    public String getFirebase_UID() {
+        return firebase_UID;
     }
 
-    public Account(int id, int role_id, String username, String password, String phone, String third_party_id, String email, Date create_date, boolean is_active , String firebase_UID) {
-        this.id = id;
-        this.role_id = role_id;
-        this.username = username;
-        this.password = password;
-        this.phone = phone;
-        this.third_party_id = third_party_id;
-        this.email = email;
-        this.create_date = create_date;
-        this.is_active = is_active;
+    public void setFirebase_UID(String firebase_UID) {
         this.firebase_UID = firebase_UID;
     }
 }

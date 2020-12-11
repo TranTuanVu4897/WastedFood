@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.wastedfoodteam.LoginActivity;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
@@ -70,13 +71,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
+
 
 public class FragmentLoginBuyer extends Fragment {
     SharedPreferences sharedpreferences;
     GoogleSignInClient mGoogleSignInClient;
     final int RC_SIGN_IN = 10002;
-    EditText etSDT, etPass;
-    Button btnSignIn, btnPartnerOption, btnSignInGoogle;
+    Button  btnPartnerOption, btnSignInGoogle;
     //    SignInButton btnSignInGoogle;
     LoginButton btnSignInFacebook;
     CallbackManager callbackManager;
@@ -90,9 +92,6 @@ public class FragmentLoginBuyer extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login_buyer, container, false);
-        etSDT = view.findViewById(R.id.etSdtBuyerFLB);
-        etPass = view.findViewById(R.id.etPassBuyerFLB);
-        btnSignIn = view.findViewById(R.id.btnSignInBuyerFLB);
         btnSignInGoogle = view.findViewById(R.id.btnGoogleSignInFLB);
         btnSignInFacebook = view.findViewById(R.id.btnFacebookSignInFLB);
         btnPartnerOption = view.findViewById(R.id.btnPartnerOptionFLB);
@@ -139,17 +138,6 @@ public class FragmentLoginBuyer extends Fragment {
             }
         });
 
-
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (etSDT.getText().toString().length() == 10) {
-                    Variable.CHECK_LOGIN = 0;
-                    urlGetData = Variable.IP_ADDRESS + "login/buyerLogin.php?phone=" + etSDT.getText().toString() + "&password=" + md5(etPass.getText().toString());
-                    getData(urlGetData);
-                }
-            }
-        });
         btnPartnerOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -421,7 +409,6 @@ public class FragmentLoginBuyer extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getActivity(), "lỗi kết nỗi" + urlGetData, Toast.LENGTH_LONG).show();//TODO get data
-                Log.d("MK ", md5(etPass.getText().toString()));
             }
         }
         );
@@ -467,16 +454,30 @@ public class FragmentLoginBuyer extends Fragment {
             public void onResponse(String response) {
 
                 try {
-                    JSONArray object = new JSONArray(response);
+                    switch (response) {
+                        case "account is locked":
+                            Toast.makeText(getActivity(), "Tài khoản của bạn đã bị khóa", Toast.LENGTH_LONG).show();
+                            switch (Variable.CHECK_LOGIN) {
+                                case 2:
+                                    signOutFacebook();
+                                    break;
+                                case 1:
+                                    signOutGoogle();
+                                    break;
+                            }
+                            break;
+                        default:
+                            JSONArray object = new JSONArray(response);
 
-                    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
-                    Variable.BUYER = gson.fromJson(object.getString(0), Buyer.class);
-                    Save(Variable.BUYER);
+                            Variable.BUYER = gson.fromJson(object.getString(0), Buyer.class);
+                            Save(Variable.BUYER);
 
-                    Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
-                    getActivity().finishAndRemoveTask();
-                    startActivity(intent);
+                            Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+                            getActivity().finishAndRemoveTask();
+                            startActivity(intent);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e("StringResponse", response);
@@ -504,6 +505,21 @@ public class FragmentLoginBuyer extends Fragment {
             }
         };
         requestQueue.add(stringRequest);
+    }
+    private void signOutGoogle() {
+        try {
+            FirebaseAuth.getInstance().signOut();
+            GoogleSignIn.getClient(
+                    getApplicationContext(),
+                    new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+            ).signOut();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    private void signOutFacebook() {
+        LoginManager.getInstance().logOut();
     }
 
 

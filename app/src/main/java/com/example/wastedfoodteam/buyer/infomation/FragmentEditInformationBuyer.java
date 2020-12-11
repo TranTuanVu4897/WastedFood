@@ -53,6 +53,7 @@ public class FragmentEditInformationBuyer extends Fragment {
     int lastSelectedYear;
     int lastSelectedMonth;
     int lastSelectedDayOfMonth;
+    boolean checkDate = false;
 
     @Nullable
     @Override
@@ -99,7 +100,13 @@ public class FragmentEditInformationBuyer extends Fragment {
                 } else {
                     gender = "1";
                 }
+                if(!Validation.checkCurrentDate(dob)){
+                    Toast.makeText(getActivity(),"Bạn chọn hơn ngày hiện tại",Toast.LENGTH_LONG).show();
+                    return;
+                }
                 updateData(url, accountId, name, phone, urlImage, dob, gender);
+
+
             }
         });
 
@@ -142,7 +149,7 @@ public class FragmentEditInformationBuyer extends Fragment {
                     etMail.setText(buyer.getEmail());
                     etPhone.setText(buyer.getPhone());
                     CommonFunction.setImageViewSrc(getActivity(),buyer.getImage(),ivAvatar);
-                    if (buyer.isGender()) {
+                    if (buyer.getGender() == 1) {
                         rbGirl.setChecked(true);
                     } else {
                         rbBoy.setChecked(true);
@@ -214,8 +221,10 @@ public class FragmentEditInformationBuyer extends Fragment {
                 String date = year + "-" + month + "-" + dayOfMonth;
                 if (Validation.validateDate(date)) {
                     etDob.setText(date);
+                    checkDate = true;
                 }else{
                     Toast.makeText(getActivity(), "Bạn chọn hơn ngày hiện tại", Toast.LENGTH_LONG).show();
+                    checkDate = false;
                 }
                 lastSelectedYear = year;
                 lastSelectedMonth = month - 1;

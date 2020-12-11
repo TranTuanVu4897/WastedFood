@@ -11,13 +11,13 @@ public class Buyer extends Account{
     String name;
     Date date_of_birth;
     String image;
-    boolean gender;
+    int gender;
 
     public Buyer() {
     }
 
 
-    public Buyer(int id, int role_id, String username, String password, String phone, String third_party_id, String email, Date create_date, boolean is_active, String name, Date date_of_birth, String image, boolean gender , String firebaseUID) {
+    public Buyer(int id, int role_id, String username, String password, String phone, String third_party_id, String email, Date create_date, int is_active, String name, Date date_of_birth, String image, int gender , String firebaseUID) {
         super(id, role_id, username, password, phone, third_party_id, email, create_date, is_active ,firebaseUID);
         this.name = name;
         this.date_of_birth = date_of_birth;
@@ -64,12 +64,11 @@ public class Buyer extends Account{
         this.image = image;
     }
 
-    public boolean isGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(boolean gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
-
 }

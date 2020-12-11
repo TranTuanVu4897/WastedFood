@@ -3,6 +3,8 @@ package com.example.wastedfoodteam.utils.validation;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
+import com.example.wastedfoodteam.utils.CommonFunction;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
@@ -56,5 +58,17 @@ public class Validation {
             return false;
         }
 
+    }
+
+    public static Boolean checkCurrentDate(String date){
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-mm-dd");
+        String getCurrentDateTime = CommonFunction.getCurrentDate();
+
+        if (getCurrentDateTime.compareTo(date) < 0)
+        {
+            return true;
+        }
+        return false;
     }
 }
