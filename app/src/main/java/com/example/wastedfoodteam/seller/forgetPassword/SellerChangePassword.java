@@ -134,15 +134,15 @@ public class SellerChangePassword extends Fragment {
         boolean flag = true;
         if(!strPassword.equals(strConfirmPassword)){
             tilConfirmPass.setError("Mật khẩu xác nhận với mật khẩu không giống nhau");
-            tilConfirmPass.setErrorEnabled(true);
             flag = false;
         }else {
-            tilConfirmPass.setErrorEnabled(false);
+            tilPassword.setError(null);
         }
-        if(!Validation.checkPassword(strPassword)){
+        if(Validation.checkPassword(strPassword)){
             tilPassword.setError("Mật khẩu phải có từ 8 đến 16 kí tự");
-            tilPassword.setErrorEnabled(true);
             flag = false;
+        }else{
+            tilConfirmPass.setError(null);
         }
         return flag;
     }

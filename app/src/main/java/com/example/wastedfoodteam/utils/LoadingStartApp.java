@@ -3,22 +3,23 @@ package com.example.wastedfoodteam.utils;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.example.wastedfoodteam.R;
 
-public class LoadingDialog {
+public class LoadingStartApp {
     Activity activity;
     AlertDialog dialog;
 
-    public LoadingDialog(Activity myActivity){
+    public LoadingStartApp(Activity myActivity){
         activity = myActivity;
     }
 
     public void startLoadingDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity,R.style.DialogTheme);
         LayoutInflater inflater = activity.getLayoutInflater();
-        builder.setView(inflater.inflate(R.layout.custom_dialog,null));
-        builder.setCancelable(true);
+        builder.setView(inflater.inflate(R.layout.wasted_food_run_screen,null));
         dialog = builder.create();
         dialog.show();
     }

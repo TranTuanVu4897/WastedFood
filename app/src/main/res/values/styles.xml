@@ -40,7 +40,7 @@
     </style>
 
     <style name="loginButton" parent="viewParent">
-        <item name="android:background">@drawable/login_button_bk</item>
+        <item name="android:background">@drawable/login_button_bk </item>
         <item name="android:textColor">@color/whiteTextColor</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -59,6 +59,16 @@
         <item name="android:background">@drawable/round_corner_background_green</item>
         <item name="android:textColor">@color/whiteTextColor</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="DialogTheme" parent="android:Theme.Dialog">
+
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/gradient_seller_home</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
     </style>
 
 </resources>

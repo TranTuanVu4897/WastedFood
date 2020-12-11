@@ -11,11 +11,13 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 
 import com.example.wastedfoodteam.buyer.buy.FragmentListProduct;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.login.FragmentLoginBuyer;
+import com.example.wastedfoodteam.utils.LoadingStartApp;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,11 +29,20 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity {
 
     private FusedLocationProviderClient fusedLocationClient;
-
+    private LoadingStartApp loadingStartApp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //loadingStartApp = new LoadingStartApp(LoginActivity.this);
+        //loadingStartApp.startLoadingDialog();
+        /*Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadingStartApp.dismissDialog();
+            }
+        },3000);*/
         //Variable.uri =  Uri.parse("android.resource://"+ getApplicationContext().getPackageName()+"/drawable/bell.png");
         Variable.uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
                 "://" + getResources().getResourcePackageName(R.drawable.button_home)
