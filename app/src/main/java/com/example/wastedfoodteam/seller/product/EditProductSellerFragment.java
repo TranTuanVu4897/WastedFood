@@ -63,9 +63,6 @@ public class EditProductSellerFragment extends Fragment {
         sellPrice.setText(String.valueOf(Variable.PRODUCT.getSell_price()));
         openTime.setText(String.valueOf(Variable.PRODUCT.getStart_time()));
         closeTime.setText(String.valueOf(Variable.PRODUCT.getEnd_time()));
-
-
-
         cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), iv_detail_product_icon);
         //
         iv_detail_product_icon.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +127,4 @@ public class EditProductSellerFragment extends Fragment {
         };
         requestQueue.add(stringRequest);
     }
-
-
 }

@@ -11,6 +11,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,7 +41,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FragmentEditInformationBuyer extends Fragment {
-    EditText etName, etPhone, etDob, etMail;
+    EditText etName, etPhone, etMail;
+    TextView etDob;
     RadioButton rbBoy, rbGirl;
     String url = "";
     Buyer buyer;

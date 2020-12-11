@@ -111,20 +111,25 @@
                     android:text="Ngày sinh:"
                     android:textSize="18sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/etEditBuyerDateofBirth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="?attr/editTextColor"
+                    android:background="?attr/editTextBackground"
                     android:layout_weight="2"
-                    android:hint="Ngày sinh:"
-                    android:inputType="none"
-                    android:textColorHint="#B6ADAD" />
+                    android:hint="01-01-1990"
+                    android:textColorHint="#B6ADAD"
+                    android:textAppearance="?android:attr/textAppearanceMediumInverse"
+                    />
+
+
             </TableRow>
 
             <TableRow>
                 <TextView
                     android:layout_gravity="center_vertical"
-                    android:text="Ngày sinh:"
+                    android:text="Email:"
                     android:textSize="18sp" />
 
                 <EditText
