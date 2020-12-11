@@ -155,7 +155,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "lỗi kết nỗi" + url, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Lỗi kết nỗi" + url, Toast.LENGTH_LONG).show();
 
             }
         }
@@ -171,9 +171,9 @@ public class FragmentEditInformationBuyer extends Fragment {
             public void onResponse(String response) {
                 Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
                 if ("failed".equals(response)) {
-                    Toast.makeText(getActivity(), "failed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Cập nhật thất bại", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getActivity(), "OK Insert data", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_LONG).show();
                     try {
 
 
@@ -186,7 +186,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "lỗi kết nỗi" + FragmentEditInformationBuyer.this.url, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Lỗi kết nỗi" + FragmentEditInformationBuyer.this.url, Toast.LENGTH_LONG).show();
 
             }
         }
