@@ -3,12 +3,12 @@ package com.example.wastedfoodteam.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,9 +25,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
+import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.seller.forgetPassword.SellerForgetPasswordFragment;
 import com.example.wastedfoodteam.seller.home.SellerHomeActivity;
-import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.seller.register.RegisterSellerFragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -36,10 +36,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
-
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import static com.example.wastedfoodteam.utils.Encode.md5;
 
@@ -117,8 +113,10 @@ public class FragmentLoginPartner extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if ("not exist account".equals(response)) {
+                if ("account is locked".equals(response)) {
                     Toast.makeText(getActivity(), "Tài khoản bạn đã bị khóa" + urlGetData, Toast.LENGTH_LONG).show();//TODO fix for suitable error
+                } else if ("not exist account".equals(response)) {
+                    Toast.makeText(getActivity(), "Tên đăng nhập hoặc mật khẩu không đúng" + urlGetData, Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getActivity(), "đăng nhập thành công", Toast.LENGTH_LONG).show();//TODO get data
                     try {
