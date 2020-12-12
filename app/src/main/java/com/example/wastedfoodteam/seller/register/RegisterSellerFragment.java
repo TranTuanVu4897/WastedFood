@@ -100,7 +100,7 @@ public class RegisterSellerFragment extends Fragment {
                         bolPassword = true;
                         tilPassword.setError(null);
                     }else {
-                        tilPassword.setError("Mật khẩu không hợp lệ");
+                        tilPassword.setError("Mật khẩu không hợp lệ bao gồm ít nhất 1 số và 1 chữ trong khoảng 8 - 16 ký tự");
                         bolPassword = false;
                     }
                 }
