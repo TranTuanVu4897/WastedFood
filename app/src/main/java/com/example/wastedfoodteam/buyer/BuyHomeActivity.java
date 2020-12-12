@@ -76,7 +76,7 @@ public class BuyHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyer_home);
-        checkIsActive();
+
 
         if (checkGPSPermission()) {
             setUpBuyerContent();
@@ -86,6 +86,7 @@ public class BuyHomeActivity extends AppCompatActivity {
 
         Variable.CURRENT_USER = "BUYER";
         notificationUtil = new NotificationUtil();
+        checkIsActive();
 
         //get the header view
         NavigationView navigationView = findViewById(R.id.nav_view_buyer);

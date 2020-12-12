@@ -25,12 +25,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
-import com.example.wastedfoodteam.utils.validation.Validation;
 import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Buyer;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.CommonFunction;
+import com.example.wastedfoodteam.utils.validation.Validation;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -89,7 +89,9 @@ public class FragmentEditInformationBuyer extends Fragment {
                 }
 
                 String phone = etPhone.getText().toString();
-                String urlImage = "";
+                String urlImage = Variable.BUYER.getImage();
+                if (cameraStorageFunction.getImage_uri() != null)
+                    urlImage = cameraStorageFunction.getImage_uri().toString();
                 String dob = etDob.getText().toString();
                 //check information change
                 if (!buyer.getDate_of_birth().toString().equals(etDob.getText().toString()))
@@ -100,8 +102,8 @@ public class FragmentEditInformationBuyer extends Fragment {
                 } else {
                     gender = "1";
                 }
-                if(!Validation.checkCurrentDate(dob)){
-                    Toast.makeText(getActivity(),"Bạn chọn hơn ngày hiện tại",Toast.LENGTH_LONG).show();
+                if (!Validation.checkCurrentDate(dob)) {
+                    Toast.makeText(getActivity(), "Bạn chọn ngày sinh hơn ngày hiện tại", Toast.LENGTH_LONG).show();
                     return;
                 }
                 updateData(url, accountId, name, phone, urlImage, dob, gender);
@@ -148,7 +150,7 @@ public class FragmentEditInformationBuyer extends Fragment {
                     etDob.setText(buyer.getDate_of_birth().toString());
                     etMail.setText(buyer.getEmail());
                     etPhone.setText(buyer.getPhone());
-                    CommonFunction.setImageViewSrc(getActivity(),buyer.getImage(),ivAvatar);
+                    CommonFunction.setImageViewSrc(getActivity(), buyer.getImage(), ivAvatar);
                     if (buyer.getGender() == 1) {
                         rbGirl.setChecked(true);
                     } else {
@@ -222,7 +224,7 @@ public class FragmentEditInformationBuyer extends Fragment {
                 if (Validation.validateDate(date)) {
                     etDob.setText(date);
                     checkDate = true;
-                }else{
+                } else {
                     Toast.makeText(getActivity(), "Bạn chọn hơn ngày hiện tại", Toast.LENGTH_LONG).show();
                     checkDate = false;
                 }
