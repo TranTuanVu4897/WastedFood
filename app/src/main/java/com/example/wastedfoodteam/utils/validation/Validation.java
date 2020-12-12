@@ -45,6 +45,13 @@ public class Validation {
             return false;
         }
     }
+    public static boolean checkUsername(String string) {
+        try{
+            return Pattern.compile("^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$").matcher(string).matches();}
+        catch (Exception e){
+            return false;
+        }
+    }
 
     @NotNull
     public static Boolean validateDate(String date) {
