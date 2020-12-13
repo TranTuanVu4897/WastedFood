@@ -17,8 +17,8 @@ public class Variable {
 //    public static final String IP_ADDRESS = "http://192.168.1.19/wastedfoodphp/";//TungPT ip
 //    public static final String IP_ADDRESS = "http://192.168.1.10/wastedfoodphp/";//DucHC ip
 //    public static final String IP_ADDRESS ="http://192.168.156.2/wastedfoodphp/";//DucHC ip lan
-//    public static final String IP_ADDRESS ="http://192.168.1.10/wastedfoodphp/";//DucHC ip lan
-    public static final String IP_ADDRESS ="https://wasted-food-service.herokuapp.com/";//heroku server
+    public static final String IP_ADDRESS ="http://192.168.1.29/wastedfoodphp/";//DucHC ip lan
+   // public static final String IP_ADDRESS ="https://wasted-food-service.herokuapp.com/";//heroku server
 
     //other php variable
     public static final String SEARCH_PRODUCT = "search/getListProducts.php";

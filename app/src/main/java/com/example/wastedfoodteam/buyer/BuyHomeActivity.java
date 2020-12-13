@@ -55,6 +55,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.zxing.multi.ByQuadrantReader;
 
 import org.json.JSONArray;
 
@@ -83,7 +84,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         }
         //mapping
         ibUserInfo = findViewById(R.id.ibUserInfo);
-
+        //Variable.BUYER = new Buyer();
         Variable.CURRENT_USER = "BUYER";
         notificationUtil = new NotificationUtil();
         checkIsActive();
@@ -351,7 +352,9 @@ public class BuyHomeActivity extends AppCompatActivity {
         return fragmentListProduct != null && fragmentListProduct.isVisible();
     }
     private void checkIsActive() {
+
         String accountId = Variable.BUYER.getId() + "";
+        //String accountId = "201";
         String url = Variable.IP_ADDRESS + "login/checkIsActive.php?account_id=" + accountId;
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {

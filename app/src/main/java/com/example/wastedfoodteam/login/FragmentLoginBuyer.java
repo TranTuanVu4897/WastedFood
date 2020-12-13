@@ -170,10 +170,10 @@ public class FragmentLoginBuyer extends Fragment {
                             Log.d("fb", "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             resultFacebook(user.getUid());
-                            Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+                            //Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
                             Variable.CHECK_LOGIN = 2;
-                            getActivity().finishAndRemoveTask();
-                            startActivity(intent);
+                            //getActivity().finishAndRemoveTask();
+                            //startActivity(intent);
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -332,25 +332,7 @@ public class FragmentLoginBuyer extends Fragment {
         fragmentTransaction.commit();
     }
 
-    /**
-     * encode md5
-     *
-     * @param str
-     * @return
-     */
-    private String md5(String str) {
-        String result = "";
-        MessageDigest digest;
-        try {
-            digest = MessageDigest.getInstance("MD5");
-            digest.update(str.getBytes());
-            BigInteger bigInteger = new BigInteger(1, digest.digest());
-            result = bigInteger.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+
 
     private void resultFacebook(final String firebase_UID) {
 
@@ -376,6 +358,7 @@ public class FragmentLoginBuyer extends Fragment {
             }
         });
         Bundle parameter = new Bundle();
+        getUserInformationBy3rdPartyId(AccessToken.getCurrentAccessToken()+"");
         parameter.putString("fields", "id,name,email,gender,birthday");
         graphRequest.setParameters(parameter);
         graphRequest.executeAsync();

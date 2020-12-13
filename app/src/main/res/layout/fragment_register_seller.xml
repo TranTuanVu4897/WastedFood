@@ -79,12 +79,13 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputPassword"
                     style="@style/parent"
+                    android:hint="@string/login_password_hint"
                     android:layout_marginTop="20dp">
 
                     <EditText
                         android:id="@+id/et_seller_register_password"
                         style="@style/modifiedEditText"
-                        android:hint="@string/login_password_hint"
+
                         android:inputType="textPassword"
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
