@@ -32,7 +32,6 @@ public class CommonFunction {
             Glide.with(context).load(src).into(imageView);
     }
 
-    @SuppressLint("DefaultLocale")
     @NotNull
     public static String getCurrency(Double money) {
         return String.format("%,.0f", money) + " VND";
@@ -49,7 +48,6 @@ public class CommonFunction {
         }
     }
 
-    @SuppressLint("DefaultLocale")
     @NotNull
     public static String getDiscount(double sell_price, double original_price) {
         try {

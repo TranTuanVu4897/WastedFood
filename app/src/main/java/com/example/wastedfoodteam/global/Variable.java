@@ -12,13 +12,13 @@ import java.sql.Time;
 
 
 public class Variable {
-    ///public static final String IP_ADDRESS = "http://192.168.3.4/wastedfoodphp/";//Vutt ip
+    public static final String IP_ADDRESS = "http://192.168.3.4/wastedfoodphp/";//Vutt ip
 //    public static final String IP_ADDRESS = "http://10.22.178.239/wastedfoodphp/";//FPT University ip
 //    public static final String IP_ADDRESS = "http://192.168.1.19/wastedfoodphp/";//TungPT ip
 //    public static final String IP_ADDRESS = "http://192.168.1.10/wastedfoodphp/";//DucHC ip
 //    public static final String IP_ADDRESS ="http://192.168.156.2/wastedfoodphp/";//DucHC ip lan
-    public static final String IP_ADDRESS ="http://192.168.1.29/wastedfoodphp/";//DucHC ip lan
-   // public static final String IP_ADDRESS ="https://wasted-food-service.herokuapp.com/";//heroku server
+//    public static final String IP_ADDRESS ="http://192.168.1.29/wastedfoodphp/";//DucHC ip lan
+//    public static final String IP_ADDRESS ="https://wasted-food-service.herokuapp.com/";//heroku server
 
     //other php variable
     public static final String SEARCH_PRODUCT = "search/getListProducts.php";
@@ -47,6 +47,6 @@ public class Variable {
     public static Seller RESISTER_SELLER;
     public static Uri uri;
 
-    public static String startTime = "00:00:00", endTime = "23:59:59";
-    public static String distance = "20", discount = "100";
+    public static String startTime = "", endTime = "";
+    public static String distance = "20", discount = "";
 }

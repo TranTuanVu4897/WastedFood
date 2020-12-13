@@ -96,7 +96,8 @@ public class FragmentLoginBuyer extends Fragment {
         btnSignInFacebook = view.findViewById(R.id.btnFacebookSignInFLB);
         btnPartnerOption = view.findViewById(R.id.btnPartnerOptionFLB);
         mAuth = FirebaseAuth.getInstance();
-        sharedpreferences = getActivity().getSharedPreferences(mPreference, Context.MODE_PRIVATE);
+        sharedpreferences = requireActivity().getSharedPreferences(mPreference, Context.MODE_PRIVATE);
+
 
         if (sharedpreferences.contains(BUYER_JSON)) {
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
