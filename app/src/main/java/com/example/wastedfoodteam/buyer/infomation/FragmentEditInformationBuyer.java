@@ -81,32 +81,17 @@ public class FragmentEditInformationBuyer extends Fragment {
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                url = Variable.IP_ADDRESS + "information/changeInfoBuyer.php";
-                String name = etName.getText().toString();
-                if (name.trim().isEmpty()) {
-                    Toast.makeText(getActivity(), "Vui lòng điền tên", Toast.LENGTH_LONG).show();
-                    return;
-                }
 
-                String phone = etPhone.getText().toString();
-                String urlImage = Variable.BUYER.getImage();
-                if (cameraStorageFunction.getImage_uri() != null)
-                    urlImage = cameraStorageFunction.getImage_uri().toString();
-                String dob = etDob.getText().toString();
-                //check information change
-                if (!buyer.getDate_of_birth().toString().equals(etDob.getText().toString()))
-                    dob = etDob.getText().toString();
-                String gender;
-                if (rbBoy.isChecked()) {
-                    gender = "0";
-                } else {
-                    gender = "1";
+                if (cameraStorageFunction.getImage_uri() != null){
+                    cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
+                        @Override
+                        public void onSuccess(String url) {
+                            setUpUpdate();
+                        }
+                    });
+                }else{
+                    setUpUpdate();
                 }
-                if (!Validation.checkCurrentDate(dob)) {
-                    Toast.makeText(getActivity(), "Bạn chọn ngày sinh hơn ngày hiện tại", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                updateData(url, accountId, name, phone, urlImage, dob, gender);
 
 
             }
@@ -120,6 +105,37 @@ public class FragmentEditInformationBuyer extends Fragment {
         });
 
         return view;
+    }
+
+    private void setUpUpdate() {
+        url = Variable.IP_ADDRESS + "information/changeInfoBuyer.php";
+        String name = etName.getText().toString();
+        if (name.trim().isEmpty()) {
+            Toast.makeText(getActivity(), "Vui lòng điền tên", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        String phone = etPhone.getText().toString();
+        String urlImage = Variable.BUYER.getImage();
+        if (cameraStorageFunction.getImage_uri() != null)
+            urlImage = cameraStorageFunction.getImage_uri().toString();
+        String dob = etDob.getText().toString();
+        //check information change
+        if (!buyer.getDate_of_birth().toString().equals(etDob.getText().toString()))
+            dob = etDob.getText().toString();
+        String gender;
+        if (rbBoy.isChecked()) {
+            gender = "0";
+        } else {
+            gender = "1";
+        }
+        if (!Validation.checkCurrentDate(dob)) {
+            Toast.makeText(getActivity(), "Bạn chọn ngày sinh hơn ngày hiện tại", Toast.LENGTH_LONG).show();
+            return;
+        }
+        updateData(url, accountId, name, phone, urlImage, dob, gender);
+
+
     }
 
     private void mapping(View view) {

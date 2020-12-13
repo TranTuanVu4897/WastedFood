@@ -158,7 +158,6 @@ public class EditSellerFragment extends Fragment {
             cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
                 @Override
                 public void onSuccess(String url) {
-                    //TODO
                     storage_location = url;
                     String urlGetData = Variable.IP_ADDRESS + "seller/sellerEdit.php";
                     updateSeller(urlGetData);

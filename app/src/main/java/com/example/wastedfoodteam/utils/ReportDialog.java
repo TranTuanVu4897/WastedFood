@@ -46,7 +46,7 @@ public class ReportDialog {
     final Account accused;
 
 
-    public ReportDialog(Context context, LayoutInflater inflater, Account accused, CameraStorageFunction cameraStorageFunction,String reporterId) {
+    public ReportDialog(Context context, LayoutInflater inflater, Account accused, CameraStorageFunction cameraStorageFunction, String reporterId) {
         this.context = context;
         this.inflater = inflater;
         this.accused = accused;
@@ -56,7 +56,7 @@ public class ReportDialog {
 
 
     public void displayReportDialog() {
-        @SuppressLint("InflateParams") View ratingLayout = inflater.inflate(R.layout.dialog_report, null);
+        View ratingLayout = inflater.inflate(R.layout.dialog_report, null);
 
         TextView tvAccused = ratingLayout.findViewById(R.id.tvAccusedDR);
         etContent = ratingLayout.findViewById(R.id.etContentDR);
@@ -68,7 +68,6 @@ public class ReportDialog {
             tvAccused.setText(((Buyer) accused).getName());
 
         url = Variable.IP_ADDRESS + "FeedbackReport/report.php";
-//        reporterId = Variable.SELLER.getId() + "";
         accusedId = accused.getId() + "";
 
         ivReport.setOnClickListener(new View.OnClickListener() {
@@ -100,8 +99,18 @@ public class ReportDialog {
         builderDialogRating.setPositiveButton("GỬI", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                content = etContent.getText().toString();
-                insertData(url, reporterId, accusedId, content, cameraStorageFunction.getImage_uri().toString());
+                if (cameraStorageFunction.getImage_uri() != null)
+                    cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
+                        @Override
+                        public void onSuccess(String url) {
+                            content = etContent.getText().toString();
+                            insertData(url, reporterId, accusedId, content, cameraStorageFunction.getImage_uri().toString());
+                        }
+                    });
+                else {
+                    content = etContent.getText().toString();
+                    insertData(url, reporterId, accusedId, content, cameraStorageFunction.getImage_uri().toString());
+                }
             }
         });
         return builderDialogRating;

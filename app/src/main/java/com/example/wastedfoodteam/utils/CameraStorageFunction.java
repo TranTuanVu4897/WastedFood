@@ -42,7 +42,7 @@ public class CameraStorageFunction {
 
     //image pick uri
     private Uri image_uri;
-
+    private Uri upload_uri;
     // instance for firebase storage and StorageReference
     final FirebaseStorage storage;
     final StorageReference storageReference;
@@ -63,7 +63,7 @@ public class CameraStorageFunction {
         this.image_uri = image_uri;
     }
 
-    public CameraStorageFunction(Activity activity, Context context,ImageView imageView) {
+    public CameraStorageFunction(Activity activity, Context context, ImageView imageView) {
         myActivity = activity;
         myContext = context;
         this.imageView = imageView;
@@ -125,9 +125,6 @@ public class CameraStorageFunction {
     }
 
     private void pickFromCamera() {
-        //intent to pick image from camera
-
-        //use media store to pick high/ori quality image
         ContentValues contentValues = new ContentValues();
         contentValues.put(MediaStore.Images.Media.TITLE, "Temp_Image_Title");
         contentValues.put(MediaStore.Images.Media.DESCRIPTION, "Temp_Image_Description");
@@ -170,10 +167,10 @@ public class CameraStorageFunction {
 
                 //image picked from camera
                 assert image_uri != null;
-                CommonFunction.setImageViewSrc(myContext,image_uri.toString(),imageView);
+                CommonFunction.setImageViewSrc(myContext, image_uri.toString(), imageView);
             } else if (requestCode == IMAGE_PICK_CAMERA_CODE) {
                 //image pick from camera
-                CommonFunction.setImageViewSrc(myContext,image_uri.toString(),imageView);
+                CommonFunction.setImageViewSrc(myContext, image_uri.toString(), imageView);
             }
         }
     }
@@ -185,7 +182,7 @@ public class CameraStorageFunction {
 
         // adding listeners on upload
         // or failure of image
-        if(image_uri == null){
+        if (image_uri == null) {
             image_uri = Variable.uri;
         }
         ref.putFile(image_uri).addOnSuccessListener(
