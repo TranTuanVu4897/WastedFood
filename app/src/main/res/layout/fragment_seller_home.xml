@@ -62,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal|center_vertical"
-                android:layout_margin="16dp"
+                android:layout_margin="12dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -71,6 +71,7 @@
                     android:layout_height="wrap_content"
                     android:text="Số sản phẩm đang bán"
                     android:layout_marginTop="8dp"
+                    android:gravity="center"
                     android:textColor="@color/colorBlack"
                     android:textSize="16sp"
                     android:textStyle="bold"/>
@@ -80,6 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20 sản phẩm"
+                    android:gravity="center"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/colorBlack"
                     android:textSize="20sp"
@@ -104,13 +106,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
-                android:layout_margin="16dp"
+                android:layout_margin="12dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="Số đơn hàng đang đặt"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/colorBlack"
@@ -122,6 +125,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/tvOrderBuying"
                     android:text="20 sản phẩm"
+                    android:gravity="center"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/colorBlack"
                     android:textSize="20sp"
@@ -146,7 +150,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
-                android:layout_margin="16dp"
+                android:layout_margin="12dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -154,6 +158,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tổng số đơn hàng đã bán"
+                    android:gravity="center"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/colorBlack"
                     android:textSize="16sp"
@@ -166,6 +171,7 @@
                     android:id="@+id/tvTotalOrderSuccess"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/colorBlack"
+                    android:gravity="center"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
             </LinearLayout>
@@ -188,7 +194,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
-                android:layout_margin="16dp"
+                android:layout_margin="12dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -196,6 +202,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tổng số đơn hàng đã hủy"
+                    android:gravity="center"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/colorBlack"
                     android:textSize="16sp"
@@ -205,6 +212,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20 sản phẩm"
+                    android:gravity="center"
                     android:id="@+id/tvTotalOrderCancel"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/colorBlack"
@@ -230,7 +238,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
-                android:layout_margin="16dp"
+                android:layout_margin="12dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -240,6 +248,7 @@
                     android:text="Tổng số sản phẩm đã đăng"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/colorBlack"
+                    android:gravity="center"
                     android:textSize="16sp"
                     android:textStyle="bold"/>
 
@@ -249,6 +258,7 @@
                     android:text="20 sản phẩm"
                     android:id="@+id/tvTotalProduct"
                     android:layout_marginTop="8dp"
+                    android:gravity="center"
                     android:textColor="@color/colorBlack"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
@@ -272,7 +282,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
-                android:layout_margin="16dp"
+                android:layout_margin="12dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -283,6 +293,7 @@
                     android:layout_marginTop="8dp"
                     android:textColor="@color/colorBlack"
                     android:textSize="16sp"
+                    android:gravity="center"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -290,6 +301,7 @@
                     android:layout_height="wrap_content"
                     android:text="10 người"
                     android:id="@+id/tvTotalFollower"
+                    android:gravity="center"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/colorBlack"
                     android:textSize="20sp"
