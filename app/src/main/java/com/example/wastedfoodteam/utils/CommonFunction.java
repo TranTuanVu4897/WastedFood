@@ -40,7 +40,7 @@ public class CommonFunction {
     @NotNull
     public static String getOpenClose(Date start_time, Date end_time) {
         try {
-            SimpleDateFormat getHourAndMinute = new SimpleDateFormat("hh:mm");
+            SimpleDateFormat getHourAndMinute = new SimpleDateFormat("kk:mm");
             return getHourAndMinute.format(start_time) + " - "
                     + getHourAndMinute.format(end_time);
         } catch (Exception e) {

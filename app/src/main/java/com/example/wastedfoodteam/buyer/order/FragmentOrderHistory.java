@@ -40,8 +40,6 @@ public class FragmentOrderHistory extends ListFragment {
     FragmentOrderDetail orderDetail;
     Bundle bundleDetail;
 
-    @SuppressLint("ClickableViewAccessibility")
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_buyer_order_history, container, false);
@@ -58,21 +56,6 @@ public class FragmentOrderHistory extends ListFragment {
         adapter = new OrderAdapter(requireActivity().getApplicationContext(), R.layout.list_buyer_order_history_item, orderArrayList, getResources());
         lvOrder.setAdapter(adapter);
         lvOrder.setEmptyView(tvEmpty);
-        lvOrder.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        v.getParent().requestDisallowInterceptTouchEvent(true);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        v.getParent().requestDisallowInterceptTouchEvent(false);
-                        break;
-                }
-                v.onTouchEvent(event);
-                return true;
-            }
-        });
         getListOrderHistory();
         return view;
     }
