@@ -40,7 +40,7 @@ public class Validation {
 
     public static boolean checkName(String string) {
         try{
-        return Pattern.compile("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$").matcher(string).matches();}
+        return Pattern.compile("^([0-9a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s\\W|_]{1,50}$)+$").matcher(string).matches();}
         catch (Exception e){
             return false;
         }
@@ -48,7 +48,7 @@ public class Validation {
 
     public static boolean checkUsername(String string) {
         try{
-            return Pattern.compile("^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$").matcher(string).matches();}
+            return Pattern.compile("^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$").matcher(string).matches();}
         catch (Exception e){
             return false;
         }

@@ -39,6 +39,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -51,6 +53,19 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputUserName"
+                    style="@style/parent"
+                    android:layout_marginTop="20dp">
+
+                    <EditText
+                        android:id="@+id/et_seller_register_username"
+                        style="@style/modifiedEditText"
+                        android:hint="Tên tài khoản"
+                        android:inputType="textPersonName|text"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputName"
                     style="@style/parent"
                     android:layout_marginTop="20dp">
@@ -58,7 +73,7 @@
                     <EditText
                         android:id="@+id/et_seller_register_name"
                         style="@style/modifiedEditText"
-                        android:hint="@string/login_name_hint"
+                        android:hint="Tên nhà hàng"
                         android:inputType="textPersonName|text"
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -112,9 +127,10 @@
                         android:id="@+id/et_seller_register_Description"
                         style="@style/modifiedEditText"
                         android:layout_weight="3"
-                        android:hint="Ghi chú"
+                        android:hint="Thông tin chi tiết nhà hàng"
                         android:inputType="text"
                         android:maxLines="3"
+                        android:lines="3"
                         android:minLines="3" />
                 </com.google.android.material.textfield.TextInputLayout>
 
