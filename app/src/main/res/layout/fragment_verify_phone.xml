@@ -73,6 +73,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_gravity="center_horizontal"
                         android:digits="0123456789"
+                        android:inputType="number"
                         android:hint="Nhập mã xác thực"
                         android:maxLength="6" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -84,6 +85,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:text="TIẾP TỤC"
+
                     android:textAllCaps="false"
                     android:textColor="#ffffff" />
             </LinearLayout>
