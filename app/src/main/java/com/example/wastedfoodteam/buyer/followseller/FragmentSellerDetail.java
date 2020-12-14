@@ -53,7 +53,7 @@ public class FragmentSellerDetail extends ListFragment {
     TextView tvNameSeller, tvAddress, tvDescription, tvRatingFSD, tvFollowFSD, tvProductFSD;
     ImageView ivPhotoSeller;
     ListView lvProduction;
-    ImageButton ibReport,ibFollow;
+    ImageButton ibReport, ibFollow;
     CameraStorageFunction cameraStorageFunction;
     private FollowVolley followVolley;
 
@@ -75,7 +75,7 @@ public class FragmentSellerDetail extends ListFragment {
         ibReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ReportDialog reportDialog = new ReportDialog(getActivity(), getLayoutInflater(),seller, cameraStorageFunction,Variable.BUYER.getId()+"");
+                ReportDialog reportDialog = new ReportDialog(getActivity(), getLayoutInflater(), seller, cameraStorageFunction, Variable.BUYER.getId() + "");
                 reportDialog.displayReportDialog();
             }
         });
@@ -85,7 +85,7 @@ public class FragmentSellerDetail extends ListFragment {
                 + "&lat=" + Variable.gps.getLatitude()
                 + "&lng=" + Variable.gps.getLongitude();
 
-        followVolley = new FollowVolley(getActivity().getApplicationContext(),ibFollow);
+        followVolley = new FollowVolley(requireActivity().getApplicationContext(), ibFollow);
         followVolley.setRequestGetFollow(Variable.IP_ADDRESS + Variable.GET_FOLLOW, Variable.BUYER.getId(), seller.getId());
 
 
@@ -95,7 +95,7 @@ public class FragmentSellerDetail extends ListFragment {
         //setup bundle
         bundleDetail = new Bundle();
         arrProduct = new ArrayList<>();
-        adapter = new ProductAdapterOfSeller(getActivity().getApplicationContext(), R.layout.list_seller_product_item, arrProduct, getResources());
+        adapter = new ProductAdapterOfSeller(requireActivity().getApplicationContext(), R.layout.list_seller_product_item, arrProduct, getResources());
         lvProduction.setAdapter(adapter);
         getListProduct(urlGetData);
         getSellerExtraInfo();
@@ -120,25 +120,24 @@ public class FragmentSellerDetail extends ListFragment {
         ibFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               followVolley.onIbFollowClick();
+                followVolley.onIbFollowClick();
             }
         });
 
         return view;
     }
 
-    @SuppressLint("SetTextI18n")
     private void setViewContent() {
-        tvNameSeller.setText(seller.getName() + "");
-        tvAddress.setText(seller.getAddress() + "");
-        tvDescription.setText(seller.getDescription() + "");
-        CommonFunction.setImageViewSrc(getActivity().getApplicationContext(), seller.getImage(), ivPhotoSeller);
+        tvRatingFSD.setText(seller.getRating() + "");
+        tvNameSeller.setText(seller.getName() != null ? seller.getName() : "Chưa được đặt tên");
+        tvAddress.setText(seller.getAddress() != null ? seller.getAddress() : "Chưa có địa chỉ");
+        tvDescription.setText(seller.getDescription() != null ? seller.getDescription() : "Chưa có thông tin");
+        CommonFunction.setImageViewSrc(requireActivity().getApplicationContext(), seller.getImage(), ivPhotoSeller);
     }
 
     private void getSellerExtraInfo() {
         SellerExtraVolley sellerExtraVolley = new SellerExtraVolley(getActivity(), Variable.IP_ADDRESS + "follow/getSellerExtraInfo.php");
         sellerExtraVolley.setRequestGetSeller(new SellerResponseCallback() {
-            @SuppressLint("SetTextI18n")
             @Override
             public void onSuccess(SellerExtraInfo seller) {
                 tvFollowFSD.setText("Số người theo dõi: " + seller.follow_total);
@@ -160,7 +159,7 @@ public class FragmentSellerDetail extends ListFragment {
     }
 
     public void getListProduct(String urlGetData) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity().getApplicationContext());
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
                     @Override
@@ -201,7 +200,7 @@ public class FragmentSellerDetail extends ListFragment {
         detailProduct.setArguments(bundleDetail);
 
         //open detail product fragment
-        getActivity().getSupportFragmentManager().beginTransaction()
+        requireActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flSearchResultAH, detailProduct, "")
                 .addToBackStack(null)
                 .commit();
