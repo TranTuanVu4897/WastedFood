@@ -43,7 +43,6 @@ public class NotificationFragment extends ListFragment {
         this.receiver_id = receiver_id;
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,7 +51,7 @@ public class NotificationFragment extends ListFragment {
         lvNotification = view.findViewById(android.R.id.list);
         tvEmpty = view.findViewById(android.R.id.empty);
         arrNotification = new ArrayList<>();
-        notificationAdapter = new NotificationAdapter(getActivity().getApplicationContext(), R.layout.list_seller_notification, arrNotification, getResources(), getActivity());
+        notificationAdapter = new NotificationAdapter(requireActivity().getApplicationContext(), R.layout.list_seller_notification, arrNotification, getResources(), getActivity());
         lvNotification.setAdapter(notificationAdapter);
         lvNotification.setEmptyView(tvEmpty);
         if (Variable.CURRENT_USER.equals("SELLER"))
@@ -60,21 +59,6 @@ public class NotificationFragment extends ListFragment {
         else
             getNotificationDataBuyer(receiver_id);
 
-        lvNotification.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        v.getParent().requestDisallowInterceptTouchEvent(true);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        v.getParent().requestDisallowInterceptTouchEvent(false);
-                        break;
-                }
-                v.onTouchEvent(event);
-                return true;
-            }
-        });
         return view;
 
     }
@@ -86,7 +70,7 @@ public class NotificationFragment extends ListFragment {
     }
 
     public void getNotificationDataSeller() {
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity().getApplicationContext());
         String urlGetData = Variable.IP_ADDRESS + "notification/getListNotificationSeller.php?receiver_id=" + Variable.SELLER.getId();//TODO missing product id???
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
@@ -116,7 +100,7 @@ public class NotificationFragment extends ListFragment {
     }
 
     public void getNotificationDataBuyer(String receiver_id) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity().getApplicationContext());
         String urlGetData = Variable.IP_ADDRESS + "notification/getListNotificationBuyer.php?receiver_id=" + receiver_id;//TODO missing product id???
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
