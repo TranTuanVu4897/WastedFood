@@ -171,14 +171,10 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
                         FirebaseUser user = mAuth.getCurrentUser();
                         seller.setFirebase_UID(user.getUid());
                         String url = Variable.IP_ADDRESS + "seller/registerSeller.php";
-                        registerSellerData(url, seller.getName(), seller.getPassword(), seller.getPhone(), seller.getEmail(), seller.getLatitude() + "", seller.getLongitude() + "", seller.getAddress(), seller.getImage(), seller.getFirebase_UID(), seller.getDescription(), seller.getUsername());
-                        final Intent intent = new Intent(getActivity(), LoginActivity.class);//TODO change to seller activity
+
+                        registerSellerData(url, seller.getName(), seller.getPassword(), seller.getPhone(), seller.getEmail(), seller.getLatitude() + "", seller.getLongitude() + "", seller.getAddress(), seller.getImage(), seller.getFirebase_UID(), seller.getDescription(),seller.getUsername());
+                        final Intent intent = new Intent(getActivity(), SuccessRegisFragment.class);
                         startActivity(intent);
-                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        SuccessRegisFragment successRegisFragment = new SuccessRegisFragment();
-                        fragmentTransaction.replace(R.id.flFragmentLayoutAM, successRegisFragment);
-                        fragmentTransaction.commit();
                     }
                 });
     }

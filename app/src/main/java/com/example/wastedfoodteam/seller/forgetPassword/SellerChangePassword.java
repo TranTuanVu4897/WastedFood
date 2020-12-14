@@ -25,6 +25,7 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.utils.validation.Validation;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.home.SellerHomeFragment;
+import com.facebook.login.LoginFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -58,8 +59,6 @@ public class SellerChangePassword extends Fragment {
         etConfirmPassword = view.findViewById(R.id.etConfirmPassword);
         tilPassword = view.findViewById(R.id.textInputPasswordNew);
         tilConfirmPass = view.findViewById(R.id.textInputConfirmPassword);
-        strPassword = etPassword.getText().toString().trim();
-        strConfirmPassword = etConfirmPassword.getText().toString().trim();
         btnConfirm = view.findViewById(R.id.btnChangePassword);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -102,10 +101,10 @@ public class SellerChangePassword extends Fragment {
                     public void onResponse(String response) {
                         if(response.trim().equals("Succesfully update")){
                             Toast.makeText(getActivity(),"Đổi mật khẩu thành công",Toast.LENGTH_SHORT).show();
-                            SellerHomeFragment sellerHomeFragment = new SellerHomeFragment();
+                            LoginFragment loginFragment = new LoginFragment();
                             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.flFragmentLayoutAM,sellerHomeFragment);
+                            fragmentTransaction.replace(R.id.flFragmentLayoutAM, loginFragment);
                             fragmentTransaction.commit();
                         }else{
                             Toast.makeText(getActivity(),"Lỗi cập nhật, vui lòng thử lại sau",Toast.LENGTH_SHORT).show();
@@ -132,6 +131,8 @@ public class SellerChangePassword extends Fragment {
 
     public boolean validatePassword(){
         boolean flag = true;
+        strPassword = etPassword.getText().toString().trim();
+        strConfirmPassword = etConfirmPassword.getText().toString().trim();
         if(!strPassword.equals(strConfirmPassword)){
             tilConfirmPass.setError("Mật khẩu xác nhận với mật khẩu không giống nhau");
             flag = false;
