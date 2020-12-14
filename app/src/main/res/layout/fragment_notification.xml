@@ -24,6 +24,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:background="@drawable/background_with_shadow"
+        android:padding="15dp"
         android:text="@string/empty_list_notification"
         android:textSize="20sp"
         android:textStyle="bold" />
