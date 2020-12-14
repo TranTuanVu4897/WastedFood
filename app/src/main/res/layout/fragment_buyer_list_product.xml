@@ -19,58 +19,62 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
+            android:hint="@string/hint_search"
+            android:maxLines="1"
+            android:inputType="text"
+            android:imeOptions="actionSearch"
             android:maxHeight="50dp"
-            android:hint="Tìm kiếm" />
+            android:autofillHints="" />
 
         <ImageButton
             android:id="@+id/ibFilter"
-            android:background="@drawable/item_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="10dp"
+            android:background="@drawable/item_background"
             android:contentDescription="Filter"
             app:srcCompat="@drawable/button_filter" />
     </LinearLayout>
 
     <LinearLayout
+        style="?android:attr/buttonBarButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
         android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        style="?android:attr/buttonBarButtonStyle">
+        android:paddingEnd="10dp">
 
         <Button
-            android:tag="on"
             android:id="@+id/btnNearProduct"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/button_positive"
+            android:tag="on"
             android:text="Gần đây"
             android:textAlignment="center"
             android:textColor="@color/whiteTextColor" />
 
         <Button
-            android:tag="off"
             android:id="@+id/btnAllProduct"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="20dp"
             android:layout_weight="1"
             android:background="@drawable/button_negative"
+            android:tag="off"
             android:text="Tất cả"
             android:textAlignment="center" />
 
         <Button
-            android:tag="off"
             android:id="@+id/btnFollowSellerProduct"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="20dp"
             android:layout_weight="1"
             android:background="@drawable/button_negative"
+            android:tag="off"
             android:text="Yêu thích"
             android:textAlignment="center" />
     </LinearLayout>
@@ -85,15 +89,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@android:id/empty"
-        android:padding="15dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
         android:background="@drawable/background_with_shadow"
-        android:text="@string/empty_list_product" />
+        android:padding="15dp"
+        android:text="@string/empty_list_product"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 </LinearLayout>
