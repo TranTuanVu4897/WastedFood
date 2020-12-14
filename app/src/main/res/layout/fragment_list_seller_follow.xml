@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ListView
@@ -9,15 +10,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@android:id/empty"
+
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/cardColor"
+        app:cardCornerRadius="20dp"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:background="@drawable/background_with_shadow"
-        android:padding="15dp"
-        android:text="@string/empty_list_seller_follow"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        app:cardElevation="6dp">
+        <TextView
+            android:id="@android:id/empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="15dp"
+            android:text="@string/empty_list_seller_follow"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
+
 </LinearLayout>
