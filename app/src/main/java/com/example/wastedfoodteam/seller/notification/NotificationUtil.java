@@ -94,7 +94,6 @@ public class NotificationUtil {
                     @Override
                     public void onResponse(String response) {
                         if(response.trim().equals("Succesfully update")){
-                            Toast.makeText(context,"Cập nhật thành công",Toast.LENGTH_SHORT).show();
                             BadgeDrawable badge;
                             if(Variable.CURRENT_USER.equals("SELLER"))
                                 badge = bottomNavigationView.getOrCreateBadge(R.id.item_bottom_nav_menu_notification);
@@ -103,7 +102,6 @@ public class NotificationUtil {
                             Variable.TOTAL_NOTIFICATION = 0;
                             badge.setVisible(false);
                             badge.clearNumber();
-                            //TODO move back to home
                         }else{
                             Toast.makeText(context,"Lỗi cập nhật",Toast.LENGTH_SHORT).show();
                         }
