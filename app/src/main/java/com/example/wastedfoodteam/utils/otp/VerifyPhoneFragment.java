@@ -1,18 +1,18 @@
 package com.example.wastedfoodteam.utils.otp;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
@@ -38,6 +38,7 @@ public class VerifyPhoneFragment extends Fragment {
     EditText editText;
     TextInputLayout tilCode;
     Button button;
+    FragmentManager fragmentManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,16 +53,15 @@ public class VerifyPhoneFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 editText.clearFocus();
-                button.requestFocus();
             }
         });
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
-                    if(editText.getText().toString().trim().length()<6){
+                if (!hasFocus) {
+                    if (editText.getText().toString().trim().length() < 6) {
                         tilCode.setError("Mã xác nhận phải có 6 ký tự");
-                    }else{
+                    } else {
                         tilCode.setError(null);
                         String code = editText.getText().toString().trim();
                         verifyCode(code);
@@ -69,13 +69,10 @@ public class VerifyPhoneFragment extends Fragment {
                 }
             }
         });
-        phoneNumber=getArguments().getString("phone");
+        phoneNumber = getArguments().getString("phone");
         sendVerificationCode(phoneNumber);
         return view;
     }
-
-
-
 
 
     private void sendVerificationCode(String number) {
@@ -98,17 +95,18 @@ public class VerifyPhoneFragment extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Variable.RESISTER_SELLER.setPhone(phoneNumber.substring(3));
-                            RegisterSellerLocationFragment registerSellerLocationFragment = new RegisterSellerLocationFragment();
-                            //open seller detail product fragment
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.flFragmentLayoutAM,registerSellerLocationFragment);
-                            fragmentTransaction.commit();
-                        } else {
-                            Toast.makeText(getActivity(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        }
+                        if (fragmentManager == null)
+                            if (task.isSuccessful()) {
+                                Variable.RESISTER_SELLER.setPhone(phoneNumber.substring(3));
+                                RegisterSellerLocationFragment registerSellerLocationFragment = new RegisterSellerLocationFragment();
+                                //open seller detail product fragment
+                                fragmentManager = requireActivity().getSupportFragmentManager();
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.flFragmentLayoutAM, registerSellerLocationFragment);
+                                fragmentTransaction.commit();
+                            } else {
+                                Log.e("onError: ", task.getException().getMessage());
+                            }
                     }
                 });
     }
@@ -131,6 +129,7 @@ public class VerifyPhoneFragment extends Fragment {
                 verifyCode(code);
             }
         }
+
         @Override
         public void onVerificationFailed(FirebaseException e) {
             Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();

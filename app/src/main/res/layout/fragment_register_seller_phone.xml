@@ -68,6 +68,7 @@
                     android:layout_marginTop="10dp">
 
                     <EditText
+                        android:imeOptions="actionDone"
                         android:id="@+id/et_seller_register_phone"
                         style="@style/modifiedEditText"
                         android:hint="@string/login_mobile_number_hint"

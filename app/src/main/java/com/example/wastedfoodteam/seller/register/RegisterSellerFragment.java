@@ -33,6 +33,7 @@ public class RegisterSellerFragment extends Fragment {
     TextInputLayout tilName, tilEmail, tilPassword, tilConfirmPassword, tilDescription, tilUserName;
     String errName, errEmail, errPassword, errConfirmPassword, errDescription, pass;
     Boolean bolName, bolEmail, bolPassword, bolConfirmPassword, bolDescription, bolUserName;
+    FragmentManager fragmentManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,21 +62,22 @@ public class RegisterSellerFragment extends Fragment {
             public void onClick(View v) {
                 try {
                     activeCheck();
-                    if (bolName && bolEmail && bolPassword && bolConfirmPassword && bolDescription && bolUserName) {
-                        Variable.RESISTER_SELLER = new Seller();
-                        Variable.RESISTER_SELLER.setName(etName.getText().toString().trim());
-                        Variable.RESISTER_SELLER.setEmail(etEmail.getText().toString().trim());
-                        Variable.RESISTER_SELLER.setPassword(etPassword.getText().toString().trim());
-                        Variable.RESISTER_SELLER.setDescription(etDescription.getText().toString().trim());
-                        Variable.RESISTER_SELLER.setUsername(etUsername.getText().toString().trim());
-                        RegisterSellerPhoneFragment registerSellerPhoneFragment = new RegisterSellerPhoneFragment();
-                        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.flFragmentLayoutAM, registerSellerPhoneFragment);
-                        fragmentTransaction.commit();
-                    } else {
-                        //Yêu cầu fill thông tin
-                    }
+                    if (fragmentManager == null)
+                        if (bolName && bolEmail && bolPassword && bolConfirmPassword && bolDescription && bolUserName) {
+                            Variable.RESISTER_SELLER = new Seller();
+                            Variable.RESISTER_SELLER.setName(etName.getText().toString().trim());
+                            Variable.RESISTER_SELLER.setEmail(etEmail.getText().toString().trim());
+                            Variable.RESISTER_SELLER.setPassword(etPassword.getText().toString().trim());
+                            Variable.RESISTER_SELLER.setDescription(etDescription.getText().toString().trim());
+                            Variable.RESISTER_SELLER.setUsername(etUsername.getText().toString().trim());
+                            RegisterSellerPhoneFragment registerSellerPhoneFragment = new RegisterSellerPhoneFragment();
+                            fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.flFragmentLayoutAM, registerSellerPhoneFragment);
+                            fragmentTransaction.commit();
+                        } else {
+                            //Yêu cầu fill thông tin
+                        }
                 } catch (Exception e) {
                     Log.e("Error", "RegisterSellerFragment");
                 }

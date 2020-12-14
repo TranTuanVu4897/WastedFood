@@ -173,7 +173,7 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
                         String url = Variable.IP_ADDRESS + "seller/registerSeller.php";
 
                         registerSellerData(url, seller.getName(), seller.getPassword(), seller.getPhone(), seller.getEmail(), seller.getLatitude() + "", seller.getLongitude() + "", seller.getAddress(), seller.getImage(), seller.getFirebase_UID(), seller.getDescription(),seller.getUsername());
-                        final Intent intent = new Intent(getActivity(), SuccessRegisFragment.class);
+                        final Intent intent = new Intent(getActivity(), SuccessRegisActivity.class);
                         startActivity(intent);
                     }
                 });

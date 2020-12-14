@@ -2,12 +2,6 @@ package com.example.wastedfoodteam.seller.register;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -37,9 +36,11 @@ public class RegisterSellerPhoneFragment extends Fragment {
     TextInputLayout tilPhone;
     Button btnNext;
     ImageView ivSeller;
-    Boolean bolPhone = false;
+    boolean bolPhone = false;
     private String storage_location;
     CameraStorageFunction cameraStorageFunction;
+    FragmentManager fragmentManager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,15 +50,15 @@ public class RegisterSellerPhoneFragment extends Fragment {
         tilPhone = view.findViewById(R.id.textInputPhone);
         ivSeller = view.findViewById(R.id.iv_seller_register_phone);
         btnNext = view.findViewById(R.id.btn_seller_register_phone_next);
-        cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(),ivSeller);
+        cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), ivSeller);
 
         etPhone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
-                    if(checkEmptyEditText(etPhone) && Validation.checkPhone(etPhone.getText().toString())){
+                if (!hasFocus) {
+                    if (checkEmptyEditText(etPhone) && Validation.checkPhone(etPhone.getText().toString())) {
                         checkPhoneExist(etPhone.getText().toString().trim());
-                    }else {
+                    } else {
                         tilPhone.setError("Số điện thoại không hợp lệ");
                         bolPhone = false;
                     }
@@ -69,9 +70,8 @@ public class RegisterSellerPhoneFragment extends Fragment {
             public void onClick(View v) {
                 try {
                     etPhone.clearFocus();
-                    btnNext.requestFocus();
-                }catch (Exception e){
-                    Log.e("ERROR",e + "");
+                } catch (Exception e) {
+                    Log.e("ERROR", e + "");
                 }
             }
         });
@@ -92,41 +92,43 @@ public class RegisterSellerPhoneFragment extends Fragment {
 
     }
 
-    private void checkPhoneExist(final String phone ) {
-        String urlGetData = Variable.IP_ADDRESS + "register/checkPhoneExist.php?phone=" + phone ;
-        final RequestQueue requestQueue = Volley.newRequestQueue( getActivity().getApplicationContext()  );
+    private void checkPhoneExist(final String phone) {
+        String urlGetData = Variable.IP_ADDRESS + "register/checkPhoneExist.php?phone=" + phone;
+        final RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         final StringRequest getSellerRequestString = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         boolean emailExist;
                         emailExist = response.equals("exist");
-                        if(emailExist){
+                        if (emailExist) {
                             tilPhone.setError("Số điện thoại đã tồn tại");
                             bolPhone = false;
-                        }else{
+                        } else {
                             tilPhone.setError(null);
                             bolPhone = true;
                             cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
                                 @Override
                                 public void onSuccess(String url) {
                                     storage_location = url;
-                                    String phoneNumber = "+" + 84 + etPhone.getText().toString().trim();
                                     if (storage_location != null) {
                                         Variable.RESISTER_SELLER.setImage(storage_location);
                                     } else {
                                         Variable.RESISTER_SELLER.setImage("");
                                     }
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("phone", phoneNumber);
-                                    VerifyPhoneFragment verifyPhoneFragment = new VerifyPhoneFragment();
-                                    verifyPhoneFragment.setArguments(bundle);
-                                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                    fragmentTransaction.replace(R.id.flFragmentLayoutAM, verifyPhoneFragment);
-                                    fragmentTransaction.commit();
                                 }
                             });
+                            if (fragmentManager == null) {
+                                String phoneNumber = "+" + 84 + etPhone.getText().toString().trim();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("phone", phoneNumber);
+                                VerifyPhoneFragment verifyPhoneFragment = new VerifyPhoneFragment();
+                                verifyPhoneFragment.setArguments(bundle);
+                                fragmentManager = requireActivity().getSupportFragmentManager();
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.flFragmentLayoutAM, verifyPhoneFragment);
+                                fragmentTransaction.commit();
+                            }
                         }
                     }
                 },
