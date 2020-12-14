@@ -33,7 +33,7 @@ public class EditProductSellerFragment extends Fragment {
     private EditText name;
     private EditText originalPrice;
     private EditText sellPrice;
-    private EditText openTime;
+    private EditText openTime,closeTime,quantity,remainQuantity;
     int id;
 
     CameraStorageFunction cameraStorageFunction;
@@ -51,7 +51,9 @@ public class EditProductSellerFragment extends Fragment {
         originalPrice = view.findViewById(R.id.editText_detail_product_originalPrice);
         sellPrice = view.findViewById(R.id.editText_detail_product_sellPrice);
         openTime = view.findViewById(R.id.editText_detail_product_openTime);
-        EditText closeTime = view.findViewById(R.id.editText_detail_product_closeTime);
+        closeTime = view.findViewById(R.id.editText_detail_product_closeTime);
+        quantity = view.findViewById(R.id.etQuantity);
+        remainQuantity = view.findViewById(R.id.etRemainQuantity);
 
         Button btn_detail_product_add = view.findViewById(R.id.btn_detail_product_add);
 
@@ -63,6 +65,15 @@ public class EditProductSellerFragment extends Fragment {
         sellPrice.setText(String.valueOf(Variable.PRODUCT.getSell_price()));
         openTime.setText(String.valueOf(Variable.PRODUCT.getStart_time()));
         closeTime.setText(String.valueOf(Variable.PRODUCT.getEnd_time()));
+        quantity.setText(String.valueOf(Variable.PRODUCT.getOriginal_quantity()));
+        remainQuantity.setText(String.valueOf(Variable.PRODUCT.getRemain_quantity()));
+        closeTime.setEnabled(false);
+        openTime.setEnabled(false);
+        quantity.setEnabled(false);
+        originalPrice.setEnabled(false);
+        sellPrice.setEnabled(false);
+
+
         cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), iv_detail_product_icon);
         //
         iv_detail_product_icon.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +132,8 @@ public class EditProductSellerFragment extends Fragment {
                 params.put("originalPrice", originalPrice.getText().toString().trim());
                 params.put("sellPrice", sellPrice.getText().toString().trim());
                 params.put("openTime", openTime.getText().toString().trim());
-                params.put("closeTime", sellPrice.getText().toString().trim());
+                params.put("closeTime", closeTime.getText().toString().trim());
+                params.put("remainQuantity",remainQuantity.getText().toString().trim());
                 return params;
             }
         };

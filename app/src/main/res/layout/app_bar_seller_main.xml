@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".seller.home.SellerHomeActivity">
+    tools:context=".seller.home.SellerHomeActivity"
+    android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/gradient_seller_home"
+        android:layout_weight="1"
         >
         <ImageButton
             android:id="@+id/information_tab_seller"
@@ -25,11 +27,10 @@
 
 
     <include
-        android:layout_marginTop="50dp"
         android:layout_height="match_parent"
-        android:layout_marginBottom="60dp"
         android:layout_width="match_parent"
-        layout="@layout/content_main" />
+        layout="@layout/content_main"
+        android:layout_weight="20"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
@@ -39,10 +40,11 @@
         app:itemTextColor="@color/colorWhite"
         android:background="@drawable/gradient_seller_home"
         app:menu="@menu/bottom_nav_menu"
-        android:layout_height="60dp">
+        android:layout_height="60dp"
+        android:layout_weight="1">
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>
 

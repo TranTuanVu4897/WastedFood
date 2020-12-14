@@ -55,7 +55,8 @@ public class AddProductFragment extends Fragment {
     TextView etCloseTime,etOpenTime;
     private TextView tvCountProductName,TvCountProductDescription;
     //for time picker
-    private int mHour, mMinute, mSecond, day, month, year;
+    private int mHour, mMinute;
+    
 
     // instance for firebase storage and StorageReference
     FirebaseStorage storage;
