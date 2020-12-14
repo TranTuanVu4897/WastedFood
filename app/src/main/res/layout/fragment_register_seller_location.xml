@@ -81,6 +81,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/parent"
+                    android:id="@+id/textInputAddress"
                     android:layout_marginTop="10dp">
 
                     <EditText

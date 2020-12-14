@@ -29,11 +29,11 @@ import static com.example.wastedfoodteam.utils.CommonFunction.checkEmptyEditText
 
 public class RegisterSellerFragment extends Fragment {
 
-    EditText etName, etEmail, etPassword, etConfirmPassword,etDescription;
+    EditText etName, etEmail, etPassword, etConfirmPassword,etDescription,etUsername;
     Button btnNext;
-    TextInputLayout tilName,tilEmail,tilPassword,tilConfirmPassword,tilDescription;
+    TextInputLayout tilName,tilEmail,tilPassword,tilConfirmPassword,tilDescription,tilUserName;
     String errName,errEmail,errPassword,errConfirmPassword,errDescription,pass;
-    Boolean bolName,bolEmail,bolPassword,bolConfirmPassword,bolDescription;
+    Boolean bolName,bolEmail,bolPassword,bolConfirmPassword,bolDescription,bolUserName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,6 +46,7 @@ public class RegisterSellerFragment extends Fragment {
         etPassword = view.findViewById(R.id.et_seller_register_password);
         etConfirmPassword = view.findViewById(R.id.et_seller_register_confirm_password);
         etDescription = view.findViewById(R.id.et_seller_register_Description);
+        etUsername = view.findViewById(R.id.et_seller_register_username);
         etDescription.setMaxLines(3);
         etDescription.setMinLines(3);
         tilName = view.findViewById(R.id.textInputName);
@@ -53,6 +54,7 @@ public class RegisterSellerFragment extends Fragment {
         tilPassword = view.findViewById(R.id.textInputPassword);
         tilConfirmPassword = view.findViewById(R.id.textInputConfirmPassword);
         tilDescription = view.findViewById(R.id.textInputDescription);
+        tilUserName = view.findViewById(R.id.textInputUserName);
         btnNext = view.findViewById(R.id.btn_seller_register_next);
         stringSetUp();
         btnNext.setOnClickListener(new View.OnClickListener() {
@@ -60,12 +62,13 @@ public class RegisterSellerFragment extends Fragment {
             public void onClick(View v) {
                 try{
                 activeCheck();
-                if(bolName == true && bolEmail == true && bolPassword == true && bolConfirmPassword==true  && bolDescription==true){
+                if(bolName == true && bolEmail == true && bolPassword == true && bolConfirmPassword==true  && bolDescription==true && bolUserName==true){
                     Variable.RESISTER_SELLER = new Seller();
                     Variable.RESISTER_SELLER.setName(etName.getText().toString().trim());
                     Variable.RESISTER_SELLER.setEmail(etEmail.getText().toString().trim());
                     Variable.RESISTER_SELLER.setPassword(etPassword.getText().toString().trim());
                     Variable.RESISTER_SELLER.setDescription(etDescription.getText().toString().trim());
+                    Variable.RESISTER_SELLER.setUsername(etUsername.getText().toString().trim());
                     RegisterSellerPhoneFragment registerSellerPhoneFragment = new RegisterSellerPhoneFragment();
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -147,6 +150,19 @@ public class RegisterSellerFragment extends Fragment {
                 }
             }
         });
+        etUsername.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    if(checkEmptyEditText(etUsername)&& Validation.checkUsername(etUsername.getText().toString().trim())){
+                        checkUsernameExist(etUsername.getText().toString().trim());
+                    }else{
+                        tilUserName.setError("Tên tài khoản không hợp lệ");
+                        bolUserName = false;
+                    }
+                }
+            }
+        });
         return view;
     }
 
@@ -161,6 +177,7 @@ public class RegisterSellerFragment extends Fragment {
         bolEmail = false;
         bolName = false;
         bolPassword = false;
+        bolUserName = false;
     }
 
     private void activeCheck(){
@@ -200,5 +217,31 @@ public class RegisterSellerFragment extends Fragment {
         requestQueue.add(getSellerRequestString);
     }
 
+    private  void checkUsernameExist(final String username) {
 
+        String urlGetData = Variable.IP_ADDRESS + "register/checkUserNameExist.php?username=" + username ;
+        final RequestQueue requestQueue = Volley.newRequestQueue( getActivity().getApplicationContext());
+        final StringRequest getSellerRequestString = new StringRequest(Request.Method.GET, urlGetData,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        boolean emailExist;
+                        emailExist = response.equals("exist");
+                        if(emailExist){
+                            tilUserName.setError("Tên tài khoản đã tồn tại");
+                            bolUserName = false;
+                        }else{
+                            tilUserName.setError(null);
+                            bolUserName = true;
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        requestQueue.add(getSellerRequestString);
+    }
 }

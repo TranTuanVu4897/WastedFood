@@ -37,6 +37,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,13 +48,18 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.wastedfoodteam.utils.CommonFunction.checkEmptyEditText;
+import static com.example.wastedfoodteam.utils.Encode.md5;
+
 
 public class RegisterSellerLocationFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap mMap;
     private static final int REQUEST_CODE_PERMISSION = 2;
     EditText etLat, etLng, etAddress;
+    TextInputLayout tilAddress;
     Button btnComplete;
     private FirebaseAuth mAuth;
+    boolean bolAddress;
     Seller seller;
     GPSTracker gps;
 
@@ -66,6 +72,7 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
         etLng = view.findViewById(R.id.etLongitude);
         etAddress = view.findViewById(R.id.etAddress);
         btnComplete = view.findViewById(R.id.btnNext);
+        tilAddress = view.findViewById(R.id.textInputAddress);
         mAuth = FirebaseAuth.getInstance();
         seller = Variable.RESISTER_SELLER;
 
@@ -74,7 +81,7 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
         btnComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validateLocation()) {
+                if (bolAddress==true) {
                     seller.setLatitude(Double.parseDouble(etLat.getText().toString()));
                     seller.setLongitude(Double.parseDouble(etLng.getText().toString()));
                     seller.setAddress(etAddress.getText().toString());
@@ -98,6 +105,20 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
                 if (mMap != null) {
                     if (isNullOrEmpty(etLat.getText().toString()))
                         setMarker(Double.parseDouble(etLat.getText().toString()), Double.parseDouble(etLng.getText().toString()));
+                }
+            }
+        });
+        etAddress.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    if(checkEmptyEditText(etAddress)){
+                        bolAddress = true;
+                        tilAddress.setError(null);
+                    }else{
+                        tilAddress.setError("Địa chỉ không được để trống");
+                        bolAddress = false;
+                    }
                 }
             }
         });
@@ -154,7 +175,7 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
                         FirebaseUser user = mAuth.getCurrentUser();
                         seller.setFirebase_UID(user.getUid());
                         String url = Variable.IP_ADDRESS + "seller/registerSeller.php";
-                        registerSellerData(url, seller.getName(), seller.getPassword(), seller.getPhone(), seller.getEmail(), seller.getLatitude() + "", seller.getLongitude() + "", seller.getAddress(), seller.getImage(), seller.getFirebase_UID(), seller.getDescription());
+                        registerSellerData(url, seller.getName(), seller.getPassword(), seller.getPhone(), seller.getEmail(), seller.getLatitude() + "", seller.getLongitude() + "", seller.getAddress(), seller.getImage(), seller.getFirebase_UID(), seller.getDescription(),seller.getUsername());
                         final Intent intent = new Intent(getActivity(), LoginActivity.class);//TODO change to seller activity
                         startActivity(intent);
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -164,11 +185,10 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
                         fragmentTransaction.commit();
                     }
                 });
-
     }
 
     //register for seller
-    private void registerSellerData(final String url, final String name, final String password, final String phone, final String email, final String latitude, final String longitude, final String address, final String imageURL, final String firebase_UID, final String description) {
+    private void registerSellerData(final String url, final String name, final String password, final String phone, final String email, final String latitude, final String longitude, final String address, final String imageURL, final String firebase_UID, final String description , final String username) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -196,30 +216,11 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
                 params.put("imageURL", imageURL);
                 params.put("firebase_UID", firebase_UID);
                 params.put("description", description);
+                params.put("username", username);
                 return params;
             }
         };
         requestQueue.add(stringRequest);
-    }
-
-
-    private boolean validateLocation() {
-        boolean flag = true;
-        return flag;
-    }
-
-    private String md5(String str) {
-        String result = "";
-        MessageDigest digest;
-        try {
-            digest = MessageDigest.getInstance("MD5");
-            digest.update(str.getBytes());
-            BigInteger bigInteger = new BigInteger(1, digest.digest());
-            result = bigInteger.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return result;
     }
 
     @Override
