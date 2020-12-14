@@ -65,8 +65,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
-
 
 public class FragmentLoginBuyer extends Fragment {
     SharedPreferences sharedpreferences;
@@ -421,7 +419,7 @@ public class FragmentLoginBuyer extends Fragment {
         try {
             FirebaseAuth.getInstance().signOut();
             GoogleSignIn.getClient(
-                    getApplicationContext(),
+                    requireActivity().getApplicationContext(),
                     new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
             ).signOut();
         } catch (Exception e) {
