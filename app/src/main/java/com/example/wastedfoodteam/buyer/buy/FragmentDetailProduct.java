@@ -53,7 +53,8 @@ public class FragmentDetailProduct extends Fragment {
     TextView tvPriceDiscount,
             tvOpenTime, tvPriceOriginal,
             tvDirect, tvDescription,
-            tvBuyQuantity, tvQuantity, tvDistance;
+            tvBuyQuantity, tvQuantity, tvDistance,
+            tvDiscount;
     Button btnIncrease, btnDecrease, btnBuy;
     private FollowVolley followVolley;
 
@@ -143,6 +144,7 @@ public class FragmentDetailProduct extends Fragment {
         tvDescription.setText(product.getDescription());
         tvBuyQuantity.setText(orderQuantity + "");
         tvDistance.setText(CommonFunction.getStringDistance(product.getSeller(), Variable.gps));
+        tvDiscount.setText(CommonFunction.getDiscount(product.getSell_price(), product.getOriginal_price()));
     }
 
     @SuppressLint("SetTextI18n")
@@ -289,7 +291,7 @@ public class FragmentDetailProduct extends Fragment {
         tvBuyQuantity = view.findViewById(R.id.tvBuyQuantity);
         tvOpenTime = view.findViewById(R.id.tvOpenTime);
         tvDistance = view.findViewById(R.id.tvDistance);
-
+        tvDiscount = view.findViewById(R.id.tvDiscount);
         btnIncrease = view.findViewById(R.id.btnIncrease);
         btnDecrease = view.findViewById(R.id.btnDecrease);
         btnBuy = view.findViewById(R.id.btnBuy);

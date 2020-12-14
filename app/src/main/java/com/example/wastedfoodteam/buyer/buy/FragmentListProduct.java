@@ -3,9 +3,11 @@ package com.example.wastedfoodteam.buyer.buy;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -132,15 +134,16 @@ public class FragmentListProduct extends ListFragment {
             }
         });
 
-        etSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus && !txtSearch.equalsIgnoreCase(etSearch.getText().toString())) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     txtSearch = etSearch.getText().toString();
                     refreshListProduct();
+                    return true;
                 }
+                return false;
             }
-
         });
 
         return view;

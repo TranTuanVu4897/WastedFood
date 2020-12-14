@@ -104,7 +104,6 @@ public class FragmentLoginBuyer extends Fragment {
             String buyerJson = sharedpreferences.getString(BUYER_JSON, "");
             Variable.BUYER = gson.fromJson(buyerJson, Buyer.class);
         }
-
         handleSignInFacebook();
 
         //facebook option

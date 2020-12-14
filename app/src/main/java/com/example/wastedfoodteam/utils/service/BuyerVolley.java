@@ -47,7 +47,7 @@ public class BuyerVolley {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("ERROR", Objects.requireNonNull(error.getMessage()));
+                error.printStackTrace();
             }
         });
         requestQueue.add(getBuyerRequest);
