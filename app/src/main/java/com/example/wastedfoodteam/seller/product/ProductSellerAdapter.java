@@ -25,7 +25,6 @@ import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.LoadingDialog;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +34,7 @@ public class ProductSellerAdapter extends BaseAdapter {
     final int myLayout;
     final List<Product> arrayProduct;
     Product product;
-    Activity myActivity;
+    final Activity myActivity;
     final Resources resources;
     LoadingDialog loadingDialog;
 

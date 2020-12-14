@@ -14,12 +14,6 @@
         android:layout_weight="6"
         android:gravity="center"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:contentDescription="AppAvatar"
                 android:layout_marginTop="50dp"
@@ -31,9 +25,6 @@
                 android:layout_marginBottom="50dp"
                 android:src="@drawable/logo2"
                 />
-
-        </LinearLayout>
-
     </LinearLayout>
 
     <LinearLayout

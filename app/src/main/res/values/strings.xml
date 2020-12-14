@@ -43,4 +43,6 @@
     <string name="empty_list_seller_follow">Bạn chưa theo dõi người bán nào</string>
     <string name="empty_list_notification">Bạn chưa có thông báo nào cả</string>
     <string name="hint_search">Tìm kiếm</string>
+    <string name="sucess_upload">Cập nhật thành công</string>
+    <string name="error_upload">Lỗi cập nhật</string>
 </resources>

@@ -3,13 +3,11 @@ package com.example.wastedfoodteam.utils;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.example.wastedfoodteam.R;
 
 public class LoadingStartApp {
-    Activity activity;
+    final Activity activity;
     AlertDialog dialog;
 
     public LoadingStartApp(Activity myActivity){

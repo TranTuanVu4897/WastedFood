@@ -70,7 +70,7 @@ public class FragmentLoginPartner extends Fragment {
             @Override
             public void onClick(View v) {
                 SellerForgetPasswordFragment sellerForgetPasswordFragment = new SellerForgetPasswordFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.flFragmentLayoutAM, sellerForgetPasswordFragment);
                 fragmentTransaction.commit();
@@ -87,7 +87,7 @@ public class FragmentLoginPartner extends Fragment {
             @Override
             public void onClick(View v) {
                 RegisterSellerFragment registerSellerFragment = new RegisterSellerFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.flFragmentLayoutAM, registerSellerFragment);
                 fragmentTransaction.commit();
@@ -97,19 +97,12 @@ public class FragmentLoginPartner extends Fragment {
     }
 
     /**
-     * encode md5
-     *
-     * @param str
-     * @return
-     */
-
-    /**
      * get data from mySql
      *
      * @param url
      */
     private void getData(String url) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity().getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -156,7 +149,7 @@ public class FragmentLoginPartner extends Fragment {
      * move to fragment buyer
      */
     public void addFragmentLoginPartner() {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         FragmentLoginBuyer fragmentLoginBuyer = new FragmentLoginBuyer();
         fragmentTransaction.replace(R.id.flFragmentLayoutAM, fragmentLoginBuyer);
@@ -165,7 +158,7 @@ public class FragmentLoginPartner extends Fragment {
 
     private void openSellerHome() {
         Intent intent = new Intent(getActivity(), SellerHomeActivity.class);//TODO change to seller activity
-        getActivity().finish();
+        requireActivity().finish();
         startActivity(intent);
     }
 }

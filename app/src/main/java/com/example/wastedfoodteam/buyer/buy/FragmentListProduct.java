@@ -249,7 +249,7 @@ public class FragmentListProduct extends ListFragment {
         detailProduct.setArguments(bundleDetail);
 
         //open detail product fragment
-        getActivity().getSupportFragmentManager().beginTransaction()
+        requireActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flSearchResultAH, detailProduct, "")
                 .addToBackStack(null)
                 .commit();

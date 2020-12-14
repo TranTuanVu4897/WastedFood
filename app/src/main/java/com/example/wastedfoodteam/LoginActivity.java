@@ -11,10 +11,8 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 
-import com.example.wastedfoodteam.buyer.buy.FragmentListProduct;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.login.FragmentLoginBuyer;
 import com.example.wastedfoodteam.utils.LoadingStartApp;

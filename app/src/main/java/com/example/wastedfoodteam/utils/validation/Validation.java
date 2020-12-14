@@ -73,10 +73,6 @@ public class Validation {
         SimpleDateFormat sdf = new SimpleDateFormat("YYYY-mm-dd");
         String getCurrentDateTime = CommonFunction.getCurrentDate();
 
-        if (getCurrentDateTime.compareTo(date) < 0)
-        {
-            return true;
-        }
-        return false;
+        return getCurrentDateTime.compareTo(date) < 0;
     }
 }

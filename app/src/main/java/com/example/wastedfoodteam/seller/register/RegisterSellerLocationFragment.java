@@ -3,13 +3,6 @@ package com.example.wastedfoodteam.seller.register;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.test.mock.MockPackageManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -42,9 +41,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -81,7 +77,7 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
         btnComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bolAddress==true) {
+                if (bolAddress) {
                     seller.setLatitude(Double.parseDouble(etLat.getText().toString()));
                     seller.setLongitude(Double.parseDouble(etLng.getText().toString()));
                     seller.setAddress(etAddress.getText().toString());
@@ -111,11 +107,11 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
         etAddress.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
-                    if(checkEmptyEditText(etAddress)){
+                if (!hasFocus) {
+                    if (checkEmptyEditText(etAddress)) {
                         bolAddress = true;
                         tilAddress.setError(null);
-                    }else{
+                    } else {
                         tilAddress.setError("Địa chỉ không được để trống");
                         bolAddress = false;
                     }
@@ -175,7 +171,7 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
                         FirebaseUser user = mAuth.getCurrentUser();
                         seller.setFirebase_UID(user.getUid());
                         String url = Variable.IP_ADDRESS + "seller/registerSeller.php";
-                        registerSellerData(url, seller.getName(), seller.getPassword(), seller.getPhone(), seller.getEmail(), seller.getLatitude() + "", seller.getLongitude() + "", seller.getAddress(), seller.getImage(), seller.getFirebase_UID(), seller.getDescription(),seller.getUsername());
+                        registerSellerData(url, seller.getName(), seller.getPassword(), seller.getPhone(), seller.getEmail(), seller.getLatitude() + "", seller.getLongitude() + "", seller.getAddress(), seller.getImage(), seller.getFirebase_UID(), seller.getDescription(), seller.getUsername());
                         final Intent intent = new Intent(getActivity(), LoginActivity.class);//TODO change to seller activity
                         startActivity(intent);
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -188,7 +184,7 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
     }
 
     //register for seller
-    private void registerSellerData(final String url, final String name, final String password, final String phone, final String email, final String latitude, final String longitude, final String address, final String imageURL, final String firebase_UID, final String description , final String username) {
+    private void registerSellerData(final String url, final String name, final String password, final String phone, final String email, final String latitude, final String longitude, final String address, final String imageURL, final String firebase_UID, final String description, final String username) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,7 +24,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.wastedfoodteam.LoginActivity;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
@@ -47,7 +45,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -62,9 +59,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -82,7 +76,6 @@ public class FragmentLoginBuyer extends Fragment {
     //    SignInButton btnSignInGoogle;
     LoginButton btnSignInFacebook;
     CallbackManager callbackManager;
-    String urlGetData = "";
     int check = 0;
     private FirebaseAuth mAuth;
     public static final String mPreference = "mypref";
@@ -162,7 +155,7 @@ public class FragmentLoginBuyer extends Fragment {
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -188,7 +181,7 @@ public class FragmentLoginBuyer extends Fragment {
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -214,7 +207,7 @@ public class FragmentLoginBuyer extends Fragment {
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
     }
 
     /**
@@ -238,7 +231,7 @@ public class FragmentLoginBuyer extends Fragment {
     }
 
     private void resultGoogle(String firebase_UID) {
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(requireActivity());
         if (acct != null) {
             String name = acct.getDisplayName();
             String email = acct.getEmail();
@@ -263,7 +256,7 @@ public class FragmentLoginBuyer extends Fragment {
                 Save(Variable.BUYER);
 
                 Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
-                getActivity().finishAndRemoveTask();
+                requireActivity().finishAndRemoveTask();
                 startActivity(intent);
             }
 
@@ -297,9 +290,9 @@ public class FragmentLoginBuyer extends Fragment {
 
     @Override
     public void onStart() {
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(requireActivity());
         if (account != null) {
-            startActivity(new Intent(getActivity(), BuyHomeActivity.class));
+            startActivity(new Intent(requireActivity(), BuyHomeActivity.class));
         }
         super.onStart();
     }
@@ -314,7 +307,7 @@ public class FragmentLoginBuyer extends Fragment {
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
             Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
             Variable.CHECK_LOGIN = 2;
-            getActivity().finishAndRemoveTask();
+            requireActivity().finishAndRemoveTask();
             startActivity(intent);
 
         }
@@ -325,7 +318,7 @@ public class FragmentLoginBuyer extends Fragment {
      */
     public void addFragmentLoginPartner() {
 
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         FragmentLoginPartner fragmentLoginPartner = new FragmentLoginPartner();
         fragmentTransaction.replace(R.id.flFragmentLayoutAM, fragmentLoginPartner);
@@ -367,36 +360,34 @@ public class FragmentLoginBuyer extends Fragment {
 
     // checking register 3rdparty
     private void checkDataAndInsert3rdParty(String url, final String emailFB, final String thirdPartyIdFB, final String nameFB, final String urlImageFB, final String dobFB, final String genderFB, final String firebase_UID) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity().getApplicationContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 try {
-                    switch (response) {
-                        case "account is locked":
-                            Toast.makeText(getActivity(), "Tài khoản của bạn đã bị khóa", Toast.LENGTH_LONG).show();
-                            switch (Variable.CHECK_LOGIN) {
-                                case 2:
-                                    signOutFacebook();
-                                    break;
-                                case 1:
-                                    signOutGoogle();
-                                    break;
-                            }
-                            break;
-                        default:
-                            JSONArray object = new JSONArray(response);
+                    if ("account is locked".equals(response)) {
+                        Toast.makeText(getActivity(), "Tài khoản của bạn đã bị khóa", Toast.LENGTH_LONG).show();
+                        switch (Variable.CHECK_LOGIN) {
+                            case 2:
+                                signOutFacebook();
+                                break;
+                            case 1:
+                                signOutGoogle();
+                                break;
+                        }
+                    } else {
+                        JSONArray object = new JSONArray(response);
 
-                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
-                            Variable.BUYER = gson.fromJson(object.getString(0), Buyer.class);
-                            Save(Variable.BUYER);
+                        Variable.BUYER = gson.fromJson(object.getString(0), Buyer.class);
+                        Save(Variable.BUYER);
 
-                            Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
-                            getActivity().finishAndRemoveTask();
-                            startActivity(intent);
+                        Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
+                        requireActivity().finishAndRemoveTask();
+                        startActivity(intent);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -407,7 +398,7 @@ public class FragmentLoginBuyer extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "lỗi kết nỗi" + urlGetData, Toast.LENGTH_LONG).show();//TODO get data
+                Toast.makeText(getActivity(), "lỗi kết nỗi", Toast.LENGTH_LONG).show();
             }
         }
         ) {

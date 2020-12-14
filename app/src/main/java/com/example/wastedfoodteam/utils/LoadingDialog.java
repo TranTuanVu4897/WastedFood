@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import com.example.wastedfoodteam.R;
 
 public class LoadingDialog {
-    Activity activity;
-    AlertDialog dialog;
+    final Activity activity;
+    final AlertDialog dialog;
 
     public LoadingDialog(Activity myActivity) {
         activity = myActivity;

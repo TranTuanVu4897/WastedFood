@@ -31,7 +31,6 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.seller.home.SellerHomeFragment;
-import com.example.wastedfoodteam.seller.order.ProductOrderSellerFragment;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.LoadingDialog;
@@ -41,7 +40,6 @@ import com.google.firebase.storage.StorageReference;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class AddProductFragment extends Fragment {
 
@@ -233,14 +231,14 @@ public class AddProductFragment extends Fragment {
                             loadingDialog.dismissDialog();
                             SellerHomeFragment sellerHomeFragment = new SellerHomeFragment();
                             //open seller detail product fragment
-                            getActivity().getSupportFragmentManager().beginTransaction()
+                            requireActivity().getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.content_main, sellerHomeFragment, "")
                                     .addToBackStack(null)
                                     .commit();
-                            Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.sucess_upload, Toast.LENGTH_SHORT).show();
                         } else {
                             loadingDialog.dismissDialog();
-                            Toast.makeText(getActivity(), "Lỗi cập nhật", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.error_upload, Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -253,7 +251,7 @@ public class AddProductFragment extends Fragment {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("seller_id", String.valueOf(seller_id));
                 params.put("name", etProductName.getText().toString());

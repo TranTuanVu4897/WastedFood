@@ -1,6 +1,5 @@
 package com.example.wastedfoodteam.utils;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;

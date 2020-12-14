@@ -18,7 +18,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.test.mock.MockPackageManager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -40,7 +39,6 @@ import com.example.wastedfoodteam.buyer.infomation.FragmentEditInformationBuyer;
 import com.example.wastedfoodteam.buyer.order.FragmentOrderHistory;
 import com.example.wastedfoodteam.global.Variable;
 
-import com.example.wastedfoodteam.model.Buyer;
 import com.example.wastedfoodteam.seller.notification.NotificationFragment;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.seller.sellerFragment.SendFeedbackSellerFragment;
@@ -53,11 +51,6 @@ import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.zxing.multi.ByQuadrantReader;
-
-import org.json.JSONArray;
 
 import java.util.List;
 
@@ -360,18 +353,16 @@ public class BuyHomeActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                switch (response) {
-                    case "account is locked":
-                        Toast.makeText(BuyHomeActivity.this, "Tài khoản của bạn đã bị khóa", Toast.LENGTH_LONG).show();
-                        switch (Variable.CHECK_LOGIN) {
-                            case 2:
-                                signOutFacebook();
-                                break;
-                            case 1:
-                                signOutGoogle();
-                                break;
-                        }
-                        break;
+                if ("account is locked".equals(response)) {
+                    Toast.makeText(BuyHomeActivity.this, "Tài khoản của bạn đã bị khóa", Toast.LENGTH_LONG).show();
+                    switch (Variable.CHECK_LOGIN) {
+                        case 2:
+                            signOutFacebook();
+                            break;
+                        case 1:
+                            signOutGoogle();
+                            break;
+                    }
                 }
             }
         }, new Response.ErrorListener() {
