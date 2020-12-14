@@ -155,7 +155,6 @@ public class FragmentEditInformationBuyer extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();
                 try {
                     JSONArray object = new JSONArray(response);
                     Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
@@ -194,17 +193,10 @@ public class FragmentEditInformationBuyer extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
                 if ("failed".equals(response)) {
                     Toast.makeText(getActivity(), "Cập nhật thất bại", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_LONG).show();
-                    try {
-
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                 }
 
             }

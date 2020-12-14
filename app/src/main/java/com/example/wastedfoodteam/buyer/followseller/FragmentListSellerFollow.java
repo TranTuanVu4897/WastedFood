@@ -50,7 +50,7 @@ public class FragmentListSellerFollow extends ListFragment {
         lvSeller.setEmptyView(tvEmpty);
 
         listSellers = new ArrayList<>();
-        adapter = new SellerFollowAdapter(getActivity().getApplicationContext(), R.layout.list_seller_follow_item, listSellers, getResources());
+        adapter = new SellerFollowAdapter(requireActivity().getApplicationContext(), R.layout.list_seller_follow_item, listSellers, getResources());
         lvSeller.setAdapter(adapter);
         lvSeller.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -72,7 +72,7 @@ public class FragmentListSellerFollow extends ListFragment {
     }
 
     public void getListFollowSellerOfCurrentUser(final String urlGetData) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity().getApplicationContext());
 
         StringRequest getProductAround = new StringRequest(Request.Method.GET, urlGetData,
                 new Response.Listener<String>() {
@@ -113,7 +113,7 @@ public class FragmentListSellerFollow extends ListFragment {
         restaurant = new FragmentSellerDetail();
         restaurant.setArguments(bundleDetail);
 
-        getActivity().getSupportFragmentManager().beginTransaction()
+        requireActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.flSearchResultAH, restaurant, "")
                 .addToBackStack(null)
                 .commit();

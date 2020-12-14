@@ -227,7 +227,7 @@ public class FragmentDetailProduct extends Fragment {
             @SuppressLint("ShowToast")
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity().getApplicationContext(), "Lỗi hệ thống: " + error.getMessage(), Toast.LENGTH_LONG);
+                Toast.makeText(requireActivity().getApplicationContext(), "Lỗi hệ thống: " + error.getMessage(), Toast.LENGTH_LONG);
             }
         }) {
             @Override

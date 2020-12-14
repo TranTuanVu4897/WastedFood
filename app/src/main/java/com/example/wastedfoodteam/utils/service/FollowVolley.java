@@ -1,7 +1,6 @@
 package com.example.wastedfoodteam.utils.service;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.ImageButton;
 
 import com.android.volley.Request;

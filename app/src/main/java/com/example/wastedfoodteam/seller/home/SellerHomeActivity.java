@@ -24,7 +24,6 @@ import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.seller.product.AddProductFragment;
 import com.example.wastedfoodteam.seller.product.ListProductSellerFragment;
 import com.example.wastedfoodteam.seller.register.RegisterSellerLocationFragment;
-import com.example.wastedfoodteam.seller.register.RegisterSellerPhoneFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.ChangePasswordSellerFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.SendFeedbackSellerFragment;
 import com.example.wastedfoodteam.model.Seller;

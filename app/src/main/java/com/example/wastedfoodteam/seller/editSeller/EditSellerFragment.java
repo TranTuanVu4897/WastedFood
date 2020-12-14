@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.Scroller;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -33,7 +32,6 @@ import com.google.gson.GsonBuilder;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -90,11 +88,11 @@ public class EditSellerFragment extends Fragment {
         string_editSeller_description = editText_editSeller_description.getText().toString().trim();
         editText_editSeller_email.setText(Variable.SELLER.getEmail());
         editText_editSeller_phoneNumber.setText(Variable.SELLER.getPhone());
-        cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), iv_editSeller_avatar);
+        cameraStorageFunction = new CameraStorageFunction(requireActivity(), getContext(), iv_editSeller_avatar);
 
         //for multiline EditText
         //scroll for EditText
-        editText_editSeller_description.setScroller(new Scroller(getActivity().getApplicationContext()));
+        editText_editSeller_description.setScroller(new Scroller(requireActivity().getApplicationContext()));
         editText_editSeller_description.setVerticalScrollBarEnabled(true);
 
         //Edit Text Line
@@ -181,7 +179,7 @@ public class EditSellerFragment extends Fragment {
 
     //update seller data
     private void updateSeller(String url) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

@@ -8,8 +8,6 @@ import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.model.Seller;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.sql.Time;
-
 
 public class Variable {
     //public static final String IP_ADDRESS = "http://192.168.3.4/wastedfoodphp/";//Vutt ip
