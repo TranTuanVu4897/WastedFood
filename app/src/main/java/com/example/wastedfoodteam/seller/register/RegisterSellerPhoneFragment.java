@@ -69,6 +69,7 @@ public class RegisterSellerPhoneFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
+                    etPhone.requestFocus();
                     etPhone.clearFocus();
                 } catch (Exception e) {
                     Log.e("ERROR", e + "");

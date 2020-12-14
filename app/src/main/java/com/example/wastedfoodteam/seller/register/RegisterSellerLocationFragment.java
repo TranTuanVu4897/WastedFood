@@ -15,8 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,7 +22,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.wastedfoodteam.LoginActivity;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Seller;
@@ -77,6 +74,8 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
         btnComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                etAddress.requestFocus();
+                etAddress.clearFocus();
                 if (bolAddress) {
                     seller.setLatitude(Double.parseDouble(etLat.getText().toString()));
                     seller.setLongitude(Double.parseDouble(etLng.getText().toString()));
@@ -172,8 +171,10 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
                         seller.setFirebase_UID(user.getUid());
                         String url = Variable.IP_ADDRESS + "seller/registerSeller.php";
 
-                        registerSellerData(url, seller.getName(), seller.getPassword(), seller.getPhone(), seller.getEmail(), seller.getLatitude() + "", seller.getLongitude() + "", seller.getAddress(), seller.getImage(), seller.getFirebase_UID(), seller.getDescription(),seller.getUsername());
+                        registerSellerData(url, seller.getName(), seller.getPassword(), seller.getPhone(), seller.getEmail(), seller.getLatitude() + "", seller.getLongitude() + "", seller.getAddress(), seller.getImage(), seller.getFirebase_UID(), seller.getDescription(), seller.getUsername());
+
                         final Intent intent = new Intent(getActivity(), SuccessRegisActivity.class);
+                        getActivity().finishAndRemoveTask();
                         startActivity(intent);
                     }
                 });
