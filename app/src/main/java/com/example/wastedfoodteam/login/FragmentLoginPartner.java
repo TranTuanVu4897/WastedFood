@@ -107,9 +107,12 @@ public class FragmentLoginPartner extends Fragment {
             @Override
             public void onResponse(String response) {
                 if ("account is locked".equals(response)) {
-                    Toast.makeText(getActivity(), "Tài khoản bạn đã bị khóa" + urlGetData, Toast.LENGTH_LONG).show();//TODO fix for suitable error
-                } else if ("not exist account".equals(response)) {
-                    Toast.makeText(getActivity(), "Tên đăng nhập hoặc mật khẩu không đúng" + urlGetData, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Tài khoản bạn đã bị khóa", Toast.LENGTH_LONG).show();//TODO fix for suitable error
+                } else  if("account is not active".equals(response)){
+                    Toast.makeText(getActivity(), "Tài khoản của bạn chưa được kích hoạt nếu có thắc mắc vui lòng liên hệ với chúng tôi " + urlGetData, Toast.LENGTH_LONG).show();
+                }
+                else if ("not exist account".equals(response)) {
+                    Toast.makeText(getActivity(), "Tên đăng nhập hoặc mật khẩu không đúng" , Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getActivity(), "đăng nhập thành công", Toast.LENGTH_LONG).show();//TODO get data
                     try {
