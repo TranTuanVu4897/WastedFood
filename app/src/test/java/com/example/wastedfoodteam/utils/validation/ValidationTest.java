@@ -90,7 +90,7 @@ public class ValidationTest {
     }
 
     @Test
-    public void testCheckEmailorganizationCorrect() {
+    public void testCheckEmailOrganizationCorrect() {
         boolean result = Validation.checkEmail("tungptse05613@fpt.edu.vn");
         Assert.assertTrue(result);
     }
@@ -188,7 +188,7 @@ public class ValidationTest {
     @Test
     public void testCheckPasswordFailureInputSpace() {
         boolean result = Validation.checkPassword("test 1234");
-        Assert.assertFalse(result);
+        Assert.assertTrue(result);
     }
 
     @Test
@@ -224,8 +224,31 @@ public class ValidationTest {
     }
 
     @Test
-    public void testCheckNameLager50() {
+    public void testCheckNameNameIs2To49Character() {
+        boolean result = Validation.checkName("Jonh Smith");
+        Assert.assertTrue(result);
+    }
+
+    @Test
+    public void testCheckNameNormalName() {
+        boolean result = Validation.checkName("Phạm Thanh Tùng");
+        Assert.assertTrue(result);
+    }
+    @Test
+    public void testCheckNameHasNumberCharacter() {
+        boolean result = Validation.checkName("(HN_k12) Phạm Thanh Tùng");
+        Assert.assertTrue(result);
+    }
+
+    @Test
+    public void testCheckNameEqual50() {
         boolean result = Validation.checkName("ádasdasda dasdasdasdasdasdasdasdasdasdasdasdasdas");
+        Assert.assertTrue(result);
+    }
+
+    @Test
+    public void testCheckNameLager50() {
+        boolean result = Validation.checkName("assdasdasda dasdasdasdasdasdasdasdasdasdasdasdasdas");
         Assert.assertFalse(result);
     }
 
@@ -244,7 +267,7 @@ public class ValidationTest {
     @Test
     public void testCheckNameSpecial() {
         boolean result = Validation.checkName("Tung@1101");
-        Assert.assertFalse(result);
+        Assert.assertTrue(result);
     }
     //check Dob
     @Test
@@ -264,6 +287,8 @@ public class ValidationTest {
         Boolean result = Validation.validateDate("2021-11-01");
         Assert.assertEquals(Boolean.FALSE, result);
     }
+
+
 }
 
 //Generated with love by TestMe :) Please report issues and submit feature requests at: http://weirddev.com/forum#!/testme

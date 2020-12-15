@@ -49,6 +49,7 @@ public class CommonFunction {
     @NotNull
     public static String getDiscount(double sell_price, double original_price) {
         try {
+            if ((int) original_price == 0) return "%0";
             return "%" + String.format("%.0f", 100 - sell_price / original_price * 100);
         } catch (Exception e) {
             return "%0";
