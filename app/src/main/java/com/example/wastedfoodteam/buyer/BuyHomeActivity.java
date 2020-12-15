@@ -1,13 +1,5 @@
 package com.example.wastedfoodteam.buyer;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -16,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.test.mock.MockPackageManager;
 import android.view.MenuItem;
@@ -24,6 +17,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -38,7 +39,6 @@ import com.example.wastedfoodteam.buyer.followseller.FragmentListSellerFollow;
 import com.example.wastedfoodteam.buyer.infomation.FragmentEditInformationBuyer;
 import com.example.wastedfoodteam.buyer.order.FragmentOrderHistory;
 import com.example.wastedfoodteam.global.Variable;
-
 import com.example.wastedfoodteam.seller.notification.NotificationFragment;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.seller.sellerFragment.SendFeedbackSellerFragment;
@@ -73,7 +73,7 @@ public class BuyHomeActivity extends AppCompatActivity {
 
 
         if (checkGPSPermission()) {
-            setUpBuyerContent();
+            getGPSLocation();
         }
         //mapping
         ibUserInfo = findViewById(R.id.ibUserInfo);
@@ -181,18 +181,27 @@ public class BuyHomeActivity extends AppCompatActivity {
 
     }
 
-    private void setUpBuyerContent() {
-        getGPSLocation();
-        addFragmentListProduct();
-    }
-
     private void getGPSLocation() {
-        GPSTracker gps = new GPSTracker(this);
+        GPSTracker gps = new GPSTracker(this, new GPSTracker.HandleGetLastKnowLocation() {
+            @Override
+            public void onSuccess(Location location) {
+                Variable.gps = location;
+                addFragmentListProduct();
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
         if (gps.canGetLocation()) {
             Variable.gps = gps.getLocation();
+            if (Variable.gps != null)
+                addFragmentListProduct();
         } else {
             gps.showSettingAlert();
         }
+
     }
 
     private boolean checkGPSPermission() {
@@ -303,7 +312,6 @@ public class BuyHomeActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getGPSLocation();
-                addFragmentListProduct();
             } else {
                 setRequestCodeResultDialog();
             }
@@ -318,7 +326,7 @@ public class BuyHomeActivity extends AppCompatActivity {
                 .setTitle("Thông báo");
         builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                if (checkGPSPermission()) setUpBuyerContent();
+                if (checkGPSPermission()) getGPSLocation();
             }
         });
         builder.setNegativeButton("Từ chối", new DialogInterface.OnClickListener() {
@@ -344,6 +352,7 @@ public class BuyHomeActivity extends AppCompatActivity {
         FragmentListProduct fragmentListProduct = (FragmentListProduct) getSupportFragmentManager().findFragmentByTag(TAG_LIST_FRAGMENT);
         return fragmentListProduct != null && fragmentListProduct.isVisible();
     }
+
     private void checkIsActive() {
 
         try {
@@ -375,7 +384,7 @@ public class BuyHomeActivity extends AppCompatActivity {
             }
             );
             requestQueue.add(stringRequest);
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(BuyHomeActivity.this, "Vui lòng thử lại", Toast.LENGTH_LONG).show();
         }
     }

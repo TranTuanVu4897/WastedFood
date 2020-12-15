@@ -161,9 +161,9 @@ public class FragmentListProduct extends ListFragment {
     }
 
     private void btnSimpleFilterHandle(Button btn) {
-        refreshListProduct();
         resetStatusButton();
         setPositiveButton(btn);
+        refreshListProduct();
     }
 
     private String getUrl() {

@@ -20,6 +20,10 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 public class GPSTracker extends Service implements LocationListener {
     private final Context context;
 
@@ -35,12 +39,21 @@ public class GPSTracker extends Service implements LocationListener {
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60;
     private static final int MY_PERMISSIONS_REQUEST = 1;
-
+    private FusedLocationProviderClient fusedLocationClient;
     protected LocationManager locationManager;
 
-    public GPSTracker(Context context) {
+    public interface HandleGetLastKnowLocation {
+        void onSuccess(Location location);
+
+        void onFailure();
+    }
+
+    private HandleGetLastKnowLocation handleGetLastKnowLocation;
+
+    public GPSTracker(Context context, HandleGetLastKnowLocation handleGetLastKnowLocation) {
         this.context = context;
         getLocation();
+        this.handleGetLastKnowLocation = handleGetLastKnowLocation;
     }
 
 
@@ -51,7 +64,7 @@ public class GPSTracker extends Service implements LocationListener {
             isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             isNetWorkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-            if (!(!isGPSEnabled && !isNetWorkEnabled)){
+            if (!(!isGPSEnabled && !isNetWorkEnabled)) {
                 canGetLocation = true;
 
                 if (isNetWorkEnabled) {
@@ -79,6 +92,19 @@ public class GPSTracker extends Service implements LocationListener {
                             if (location != null) {
                                 latitude = location.getLatitude();
                                 longitude = location.getLongitude();
+                            } else {
+                                fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
+                                fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+                                    @Override
+                                    public void onSuccess(Location l) {
+                                        if (location == null && l != null) {
+                                            location = l;
+                                                latitude = location.getLatitude();
+                                                longitude = location.getLongitude();
+                                            handleGetLastKnowLocation.onSuccess(location);
+                                        }
+                                    }
+                                });
                             }
                         }
                     }

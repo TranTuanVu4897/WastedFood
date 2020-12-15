@@ -2,6 +2,7 @@ package com.example.wastedfoodteam.seller.register;
 
 import android.Manifest;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.test.mock.MockPackageManager;
 import android.util.Log;
@@ -146,7 +147,17 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
     }
 
     private void getGPS() {
-        gps = new GPSTracker(getActivity());
+        gps = new GPSTracker(getActivity(), new GPSTracker.HandleGetLastKnowLocation() {
+            @Override
+            public void onSuccess(Location location) {
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
         if (gps.canGetLocation()) {
             refreshTextEditText(gps.getLatitude(), gps.getLongitude());
         } else {
