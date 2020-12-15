@@ -70,7 +70,7 @@ public class VerifyPhoneFragment extends Fragment {
                 }
             }
         });
-        phoneNumber = getArguments().getString("phone");
+        phoneNumber = getArguments().getString("phoneNumber");
         sendVerificationCode(phoneNumber);
         return view;
     }

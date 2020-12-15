@@ -80,7 +80,7 @@ public class VerifyPhoneForgotPasswordFragment extends Fragment {
                             //open seller detail product fragment
                             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                             Bundle bundle = new Bundle();
-                            bundle.putString( "phoneNumber" ,phoneNumber);
+                            bundle.putString( "phoneNumberFromVerify" ,phoneNumber);
                             sellerChangePasswordFragment.setArguments(bundle);
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                             fragmentTransaction.replace(R.id.flFragmentLayoutAM,sellerChangePasswordFragment);

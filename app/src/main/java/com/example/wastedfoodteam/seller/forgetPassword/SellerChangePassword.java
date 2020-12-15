@@ -79,7 +79,7 @@ public class SellerChangePassword extends Fragment {
         btnConfirm = view.findViewById(R.id.btnChangePassword);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-             phone = bundle.getString("phoneNumber", ""); // Key, default value
+             phone = bundle.getString("phoneNumberFromVerify", ""); // Key, default value
         }
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
