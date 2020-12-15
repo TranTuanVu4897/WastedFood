@@ -7,6 +7,7 @@ import com.example.wastedfoodteam.utils.CommonFunction;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -68,11 +69,14 @@ public class Validation {
 
     }
 
-    public static Boolean checkCurrentDate(String date){
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-mm-dd");
-        String getCurrentDateTime = CommonFunction.getCurrentDate();
-
-        return getCurrentDateTime.compareTo(date) < 0;
+    public static Boolean checkCurrentDate(String date) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date strDate = sdf.parse(date);
+        if (new Date().after(strDate)) {
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
