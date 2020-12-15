@@ -95,6 +95,8 @@ public class EditSellerFragment extends Fragment {
         editText_editSeller_description.setScroller(new Scroller(requireActivity().getApplicationContext()));
         editText_editSeller_description.setVerticalScrollBarEnabled(true);
 
+
+
         //Edit Text Line
         editText_editSeller_description.setMinLines(2);
         editText_editSeller_description.setMaxLines(5);
@@ -210,7 +212,11 @@ public class EditSellerFragment extends Fragment {
                 params.put("username", editText_editSeller_name.getText().toString().trim());
                 params.put("address", editText_editSeller_address.getText().toString().trim());
                 params.put("description", editText_editSeller_description.getText().toString().trim());
-                params.put("image", storage_location);
+                if(storage_location!=null) {
+                    params.put("image", storage_location);
+                }else {
+                    params.put("image", "");
+                }
                 return params;
             }
         };

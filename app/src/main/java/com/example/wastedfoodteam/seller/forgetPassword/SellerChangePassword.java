@@ -1,5 +1,7 @@
 package com.example.wastedfoodteam.seller.forgetPassword;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,21 +21,35 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.login.FragmentLoginPartner;
+import com.example.wastedfoodteam.model.Product;
+import com.example.wastedfoodteam.model.Seller;
+import com.example.wastedfoodteam.seller.home.SellerHomeActivity;
 import com.example.wastedfoodteam.utils.validation.Validation;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.home.SellerHomeFragment;
 import com.facebook.login.LoginFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,33 +79,64 @@ public class SellerChangePassword extends Fragment {
         btnConfirm = view.findViewById(R.id.btnChangePassword);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-             phone = bundle.getString("phone", ""); // Key, default value
+             phone = bundle.getString("phoneNumber", ""); // Key, default value
         }
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(validatePassword()){
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    user.updatePassword(md5(strPassword)).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d("firebase", "User password failure.");
-                        }
-                    })
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Log.d("firebase", "User password updated.");
-                                    }
-                                }
+                    Log.i("Phone",phone);
+                    getSellerInformationByPhone(phone);
 
-                            });
-                    updateSellerPasswordByPhone(phone);
                 }
             }
         });
         return view;
+    }
+
+    private void getSellerInformationByPhone(final String phone){
+        String url = Variable.IP_ADDRESS + "seller/getSellerInformationByPhone.php?phone="+ phone;
+        RequestQueue requestQueue = Volley.newRequestQueue(requireActivity().getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray object = new JSONArray(response);
+                    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                    Seller seller = gson.fromJson(object.getString(0), Seller.class);
+                    FirebaseAuth.getInstance().signInWithEmailAndPassword(seller.getEmail(), seller.getPassword()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+                            authResult.getUser().updatePassword(md5(strPassword)).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("firebase", "User password failure.");
+                                }
+                            })
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d("firebase", "User password updated.");
+                                            }
+                                        }
+
+                                    });
+                            updateSellerPasswordByPhone(phone);
+                        }
+                    });
+
+                }catch (Exception e){
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), "lỗi kết nối" , Toast.LENGTH_LONG).show();
+            }
+        });
+        requestQueue.add(stringRequest);
     }
 
     //update seller account password

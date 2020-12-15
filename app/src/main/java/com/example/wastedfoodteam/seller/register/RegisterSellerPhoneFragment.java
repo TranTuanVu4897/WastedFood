@@ -122,7 +122,7 @@ public class RegisterSellerPhoneFragment extends Fragment {
                             if (fragmentManager == null) {
                                 String phoneNumber = "+" + 84 + etPhone.getText().toString().trim();
                                 Bundle bundle = new Bundle();
-                                bundle.putString("phone", phoneNumber);
+                                bundle.putString("phoneNumber", phoneNumber);
                                 VerifyPhoneFragment verifyPhoneFragment = new VerifyPhoneFragment();
                                 verifyPhoneFragment.setArguments(bundle);
                                 fragmentManager = requireActivity().getSupportFragmentManager();

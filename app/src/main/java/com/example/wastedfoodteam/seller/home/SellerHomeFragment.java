@@ -61,7 +61,7 @@ public class SellerHomeFragment extends Fragment {
                             tvOrderBuying.setText(jsonSellerHome.getString("totalOrderBuying") + " đơn hàng") ;
                             tvTotalOrderCancel.setText(jsonSellerHome.getString("totalOrderCancel") + " đơn hàng") ;
                             tvTotalOrderSuccess.setText(jsonSellerHome.getString("totalOrderSuccess") + " đơn hàng") ;
-                            tvTotalProduct.setText(jsonSellerHome.getString("totalProduct" + " sản phẩm")) ;
+                            tvTotalProduct.setText(jsonSellerHome.getString("totalProduct") + " sản phẩm" ) ;
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
