@@ -70,7 +70,7 @@ public class FragmentLoginBuyer extends Fragment {
     SharedPreferences sharedpreferences;
     GoogleSignInClient mGoogleSignInClient;
     final int RC_SIGN_IN = 10002;
-    Button  btnPartnerOption, btnSignInGoogle;
+    Button btnPartnerOption, btnSignInGoogle;
     //    SignInButton btnSignInGoogle;
     LoginButton btnSignInFacebook;
     CallbackManager callbackManager;
@@ -89,15 +89,8 @@ public class FragmentLoginBuyer extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         sharedpreferences = requireActivity().getSharedPreferences(mPreference, Context.MODE_PRIVATE);
 
-
-        if (sharedpreferences.contains(BUYER_JSON)) {
-            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-            String buyerJson = sharedpreferences.getString(BUYER_JSON, "");
-            Variable.BUYER = gson.fromJson(buyerJson, Buyer.class);
-        }
+        getBuyerFromPreference();
         handleSignInFacebook();
-
-        //facebook option
 
         callbackManager = CallbackManager.Factory.create();
         btnSignInFacebook.setPermissions(Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
@@ -241,7 +234,6 @@ public class FragmentLoginBuyer extends Fragment {
             String urlInsert = Variable.IP_ADDRESS + "login/register3rdParty.php";
             checkDataAndInsert3rdParty(urlInsert, email, thirdPartyId, name, urlImage, dob, gender, firebase_UID);
         }
-        getUserInformationBy3rdPartyId(acct.getId());
     }
 
     private void getUserInformationBy3rdPartyId(String thirdPartyId) {
@@ -290,11 +282,28 @@ public class FragmentLoginBuyer extends Fragment {
     public void onStart() {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(requireActivity());
         if (account != null) {
-            startActivity(new Intent(requireActivity(), BuyHomeActivity.class));
+            if (isBuyerInformationExist()) {
+                requireActivity().finishAndRemoveTask();
+                startActivity(new Intent(requireActivity(), BuyHomeActivity.class));
+            } else
+                getUserInformationBy3rdPartyId(account.getId());
         }
         super.onStart();
     }
 
+    private boolean isBuyerInformationExist() {
+        if (Variable.BUYER == null)
+            getBuyerFromPreference();
+        return Variable.BUYER != null;
+    }
+
+    private void getBuyerFromPreference() {
+        if (sharedpreferences.contains(BUYER_JSON)) {
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+            String buyerJson = sharedpreferences.getString(BUYER_JSON, "");
+            Variable.BUYER = gson.fromJson(buyerJson, Buyer.class);
+        }
+    }
 
     /**
      * Keep Sign In Facebook
@@ -324,7 +333,6 @@ public class FragmentLoginBuyer extends Fragment {
     }
 
 
-
     private void resultFacebook(final String firebase_UID) {
 
         GraphRequest graphRequest = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
@@ -349,7 +357,6 @@ public class FragmentLoginBuyer extends Fragment {
             }
         });
         Bundle parameter = new Bundle();
-        getUserInformationBy3rdPartyId(AccessToken.getCurrentAccessToken()+"");
         parameter.putString("fields", "id,name,email,gender,birthday");
         graphRequest.setParameters(parameter);
         graphRequest.executeAsync();
@@ -357,7 +364,9 @@ public class FragmentLoginBuyer extends Fragment {
     }
 
     // checking register 3rdparty
-    private void checkDataAndInsert3rdParty(String url, final String emailFB, final String thirdPartyIdFB, final String nameFB, final String urlImageFB, final String dobFB, final String genderFB, final String firebase_UID) {
+    private void checkDataAndInsert3rdParty(String url, final String emailFB,
+                                            final String thirdPartyIdFB, final String nameFB, final String urlImageFB,
+                                            final String dobFB, final String genderFB, final String firebase_UID) {
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity().getApplicationContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -415,6 +424,7 @@ public class FragmentLoginBuyer extends Fragment {
         };
         requestQueue.add(stringRequest);
     }
+
     private void signOutGoogle() {
         try {
             FirebaseAuth.getInstance().signOut();
@@ -427,6 +437,7 @@ public class FragmentLoginBuyer extends Fragment {
         }
 
     }
+
     private void signOutFacebook() {
         LoginManager.getInstance().logOut();
     }
