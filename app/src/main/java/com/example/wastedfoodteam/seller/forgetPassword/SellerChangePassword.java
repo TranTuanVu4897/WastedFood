@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.login.FragmentLoginPartner;
 import com.example.wastedfoodteam.utils.validation.Validation;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.home.SellerHomeFragment;
@@ -101,10 +102,10 @@ public class SellerChangePassword extends Fragment {
                     public void onResponse(String response) {
                         if(response.trim().equals("Succesfully update")){
                             Toast.makeText(getActivity(),"Đổi mật khẩu thành công",Toast.LENGTH_SHORT).show();
-                            LoginFragment loginFragment = new LoginFragment();
+                            FragmentLoginPartner fragmentLoginPartner = new FragmentLoginPartner();
                             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.flFragmentLayoutAM, loginFragment);
+                            fragmentTransaction.replace(R.id.flFragmentLayoutAM, fragmentLoginPartner);
                             fragmentTransaction.commit();
                         }else{
                             Toast.makeText(getActivity(),"Lỗi cập nhật, vui lòng thử lại sau",Toast.LENGTH_SHORT).show();
@@ -139,8 +140,8 @@ public class SellerChangePassword extends Fragment {
         }else {
             tilPassword.setError(null);
         }
-        if(Validation.checkPassword(strPassword)){
-            tilPassword.setError("Mật khẩu phải có từ 8 đến 16 kí tự");
+        if(!Validation.checkPassword(strPassword)){
+            tilPassword.setError("Mật khẩu phải gồm 1 chữ cái và có từ 8 đến 16 kí tự");
             flag = false;
         }else{
             tilConfirmPass.setError(null);

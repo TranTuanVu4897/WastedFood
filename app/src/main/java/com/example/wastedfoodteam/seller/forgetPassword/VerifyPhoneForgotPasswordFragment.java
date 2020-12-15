@@ -115,4 +115,5 @@ public class VerifyPhoneForgotPasswordFragment extends Fragment {
             Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
     };
+
 }

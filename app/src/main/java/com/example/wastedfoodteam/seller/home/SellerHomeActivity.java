@@ -115,12 +115,12 @@ public class SellerHomeActivity extends AppCompatActivity {
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_main,listProductSellerFragment,listProductSellerFragment.getTag()).commit();
                 }else if(id == R.id.item_nav_drawer_menu_alert){
-                    RegisterSellerLocationFragment registerSellerLocationFragment = new RegisterSellerLocationFragment();
+                    /*RegisterSellerLocationFragment registerSellerLocationFragment = new RegisterSellerLocationFragment();
                     FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.content_main,registerSellerLocationFragment,registerSellerLocationFragment.getTag()).commit();
-                    /*NotificationFragment notificationFragment = new NotificationFragment(Variable.SELLER.getId()+"");
+                    manager.beginTransaction().replace(R.id.content_main,registerSellerLocationFragment,registerSellerLocationFragment.getTag()).commit();*/
+                    NotificationFragment notificationFragment = new NotificationFragment(Variable.SELLER.getId()+"");
                     FragmentManager manager = getSupportFragmentManager();
-                    manager.beginTransaction().replace(R.id.content_main,notificationFragment,notificationFragment.getTag()).commit();*/
+                    manager.beginTransaction().replace(R.id.content_main,notificationFragment,notificationFragment.getTag()).commit();
                     /*RegisterSellerPhoneFragment registerSellerLocationFragment = new RegisterSellerPhoneFragment();
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction().replace(R.id.content_main,registerSellerLocationFragment,registerSellerLocationFragment.getTag()).commit();*/
