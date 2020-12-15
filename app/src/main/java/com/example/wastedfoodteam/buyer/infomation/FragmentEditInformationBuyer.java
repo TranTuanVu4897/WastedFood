@@ -2,6 +2,7 @@ package com.example.wastedfoodteam.buyer.infomation;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,11 +40,17 @@ import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class FragmentEditInformationBuyer extends Fragment {
+    SharedPreferences sharedpreferences;
+    public static final String mPreference = "mypref";
+    public static final String BUYER_JSON = "BUYER_JSON";
     EditText etName, etPhone, etMail;
     TextView etDob;
     RadioButton rbBoy, rbGirl;
@@ -136,15 +143,19 @@ public class FragmentEditInformationBuyer extends Fragment {
         //check information change
         if (!buyer.getDate_of_birth().toString().equals(etDob.getText().toString()))
             dob = etDob.getText().toString();
-        String gender;
+        int  gender;
         if (rbBoy.isChecked()) {
-            gender = "0";
+            gender = 0;
         } else {
-            gender = "1";
+            gender = 1;
         }
-        if (!Validation.checkCurrentDate(dob)) {
-            Toast.makeText(getActivity(), "Bạn chọn ngày sinh hơn ngày hiện tại", Toast.LENGTH_LONG).show();
-            return;
+        try {
+            if (Validation.checkCurrentDate(dob)) {
+                Toast.makeText(getActivity(), "Bạn chọn ngày sinh hơn ngày hiện tại", Toast.LENGTH_LONG).show();
+                return;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         updateData(url, accountId, name, phone, urlImage, dob, gender);
 
@@ -200,7 +211,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    private void updateData(String url, final String accountId, final String name, final String phone, final String urlImage, final String dob, final String gender) {
+    private void updateData(String url, final String accountId, final String name, final String phone, final String urlImage, final String dob, final int gender) {
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity().getApplicationContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -209,6 +220,14 @@ public class FragmentEditInformationBuyer extends Fragment {
                 if ("failed".equals(response)) {
                     Toast.makeText(getActivity(), "Cập nhật thất bại", Toast.LENGTH_LONG).show();
                 } else {
+
+                        Variable.BUYER.setDate_of_birth(Date.valueOf(dob));
+                        Variable.BUYER.setGender(gender);
+                        Variable.BUYER.setImage(urlImage);
+                        Variable.BUYER.setName(name);
+                        Variable.BUYER.setPhone(phone);
+
+                    Save(Variable.BUYER);
                     Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_LONG).show();
                 }
 
@@ -228,7 +247,7 @@ public class FragmentEditInformationBuyer extends Fragment {
                 params.put("name", name);
                 params.put("phone", phone);
                 params.put("urlImage", urlImage);
-                params.put("gender", gender);
+                params.put("gender", gender+"");
                 params.put("dob", dob);
                 return params;
             }
@@ -265,5 +284,15 @@ public class FragmentEditInformationBuyer extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         cameraStorageFunction.onActivityResult(requestCode, resultCode, data);
+    }
+    public void Save(Buyer buyer) {
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        String buyerJson = gson.toJson(buyer);
+        editor.putString(BUYER_JSON, buyerJson);
+        editor.apply();
+    }
+    public void setVariable(){
+
     }
 }

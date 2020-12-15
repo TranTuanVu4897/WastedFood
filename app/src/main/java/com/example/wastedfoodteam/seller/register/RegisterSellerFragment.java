@@ -142,11 +142,11 @@ public class RegisterSellerFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    if (etDescription.getText().toString().trim().length() <= 100) {
+                    if (etDescription.getText().toString().trim().length() <= 300) {
                         bolDescription = true;
                         tilDescription.setError(null);
                     } else {
-                        tilDescription.setError("Ghi chú không được vượt quá 100 ký tự");
+                        tilDescription.setError("Ghi chú không được vượt quá 300 ký tự");
                         bolDescription = false;
                     }
                 }

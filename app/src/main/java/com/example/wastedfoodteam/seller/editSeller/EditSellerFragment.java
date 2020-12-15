@@ -26,6 +26,7 @@ import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.CommonFunction;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -46,6 +47,8 @@ public class EditSellerFragment extends Fragment {
     EditText editText_editSeller_email;
     EditText editText_editSeller_phoneNumber;
     Button btn_editSeller_edit;
+    TextInputLayout tilName,tilAddress,tilDescription;
+    boolean bolName,bolAddress,bolDescription;
     ImageView iv_editSeller_avatar;
 
     //link to php file
@@ -77,10 +80,17 @@ public class EditSellerFragment extends Fragment {
         editText_editSeller_description = view.findViewById(R.id.editText_editSeller_description);
         editText_editSeller_email = view.findViewById(R.id.editText_editSeller_email);
         editText_editSeller_phoneNumber = view.findViewById(R.id.editText_editSeller_phoneNumber);
-
+        tilAddress = view.findViewById(R.id.textInputRestaurantAddress);
+        tilDescription = view.findViewById(R.id.textInputRestaurantDescription);
+        tilName = view.findViewById(R.id.textInputRestaurantName);
+        bolAddress = false;
+        bolDescription = false;
+        bolName = false;
         btn_editSeller_edit = view.findViewById(R.id.btn_editSeller_edit1);
         iv_editSeller_avatar = view.findViewById(R.id.iv_editSeller_avatar);
         id = Variable.SELLER.getId();
+        editText_editSeller_email.setEnabled(false);
+        editText_editSeller_phoneNumber.setEnabled(false);
         getSeller(id);
         //string get from edit text
         string_editSeller_name = editText_editSeller_name.getText().toString().trim();
@@ -101,6 +111,39 @@ public class EditSellerFragment extends Fragment {
         editText_editSeller_description.setMinLines(2);
         editText_editSeller_description.setMaxLines(5);
 
+        editText_editSeller_address.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+                    bolAddress = checkAndAlertEmptyEditText( editText_editSeller_address, tilAddress, "Địa chỉ nhà hàng không được quá 100 kí tự và không được để trống");
+                }
+            }
+        });
+
+        editText_editSeller_name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+                    bolName = checkAndAlertEmptyEditText( editText_editSeller_name, tilName, "Tên nhà hàng không được quá 100 kí tự và không được để trống");
+                }
+            }
+        });
+
+        editText_editSeller_description.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    if (editText_editSeller_description.getText().toString().trim().length() <= 300) {
+                        bolDescription = true;
+                        tilDescription.setError(null);
+                    } else {
+                        tilDescription.setError("Thông tin nhà hàng không được vượt quá 300 ký tự");
+                        bolDescription = false;
+                    }
+                }
+            }
+        });
+
         //click avatar handle
         iv_editSeller_avatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,9 +156,13 @@ public class EditSellerFragment extends Fragment {
         btn_editSeller_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Flow
-                //input data -> validate -> add to db
-                inputData();
+                editText_editSeller_address.requestFocus();
+                editText_editSeller_description.requestFocus();
+                editText_editSeller_name.requestFocus();
+                editText_editSeller_name.clearFocus();
+                if(bolAddress && bolDescription && bolName){
+                    inputData();
+                }
             }
         });
         return view;
@@ -152,6 +199,21 @@ public class EditSellerFragment extends Fragment {
                 });
         requestQueue.add(getSellerRequestString);
     }
+
+    private Boolean checkAndAlertEmptyEditText(EditText editText , TextInputLayout textInputLayout , String errorMessage){
+
+            String string = editText.getText().toString().trim();
+            if (CommonFunction.checkEmptyEditText(editText) && string.length() < 100) {
+                textInputLayout.setError(null);
+                return true;
+
+            } else {
+                textInputLayout.setError(errorMessage);
+                return false;
+            }
+
+    }
+
 
     private void inputData() {
         if (cameraStorageFunction.getImage_uri() != null)
@@ -215,7 +277,7 @@ public class EditSellerFragment extends Fragment {
                 if(storage_location!=null) {
                     params.put("image", storage_location);
                 }else {
-                    params.put("image", "");
+                    params.put("image", " ");
                 }
                 return params;
             }
