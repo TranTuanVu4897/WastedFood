@@ -155,15 +155,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="72dp"
+
                 android:text="Cập nhật"
-                style="?android:attr/buttonBarButtonStyle" />
+                style="@style/loginButton" />
 
             <Button
                 android:id="@+id/btCancelFEB"
                 android:layout_width="125dp"
+                android:layout_marginRight="10dp"
                 android:layout_height="wrap_content"
                 android:text="Hủy"
-                style="?android:attr/buttonBarButtonStyle"/>
+                style="@style/loginButton"/>
         </LinearLayout>
 
     </LinearLayout>

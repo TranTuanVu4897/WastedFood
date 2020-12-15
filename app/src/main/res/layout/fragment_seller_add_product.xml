@@ -81,7 +81,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
-                            android:text="0/120" />
+                            android:text="0/100" />
                     </FrameLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -123,6 +123,9 @@
                             android:text="0/3000" />
                     </FrameLayout>
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputProductDescription"
+                        style="@style/parent">
                     <EditText
                         android:id="@+id/etDescription"
                         android:layout_width="match_parent"
@@ -130,6 +133,7 @@
                         android:hint="Nhập tên mô tả sản phẩm"
                         android:inputType="textPersonName"
                         android:padding="5dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -146,15 +150,19 @@
                         android:gravity="center_vertical"
                         android:text="Giá gốc" />
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputOriginalPrice"
+                        style="@style/parent">
                     <EditText
                         android:id="@+id/etOriginalPrice"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_weight="1"
                         android:gravity="end"
                         android:hint="Thiết lập giá"
                         android:inputType="numberDecimal" />
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -170,15 +178,19 @@
                         android:gravity="center_vertical"
                         android:text="Giá bán" />
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputSellPrice"
+                        style="@style/parent">
                     <EditText
                         android:id="@+id/etSellPrice"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_weight="1"
                         android:gravity="end"
                         android:hint="Thiết lập giá"
                         android:inputType="numberDecimal" />
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -195,15 +207,19 @@
                         android:gravity="center_vertical"
                         android:text="Số lượng" />
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputQuantity"
+                        style="@style/parent">
                     <EditText
                         android:id="@+id/etQuantity"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_weight="1"
                         android:gravity="end"
                         android:hint="Nhập số lượng"
                         android:inputType="numberDecimal" />
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -232,6 +248,9 @@
                             android:gravity="center_vertical"
                             android:text="Bắt đầu" />
 
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textInputOpenTime"
+                            style="@style/parent">
                         <TextView
                             android:id="@+id/etOpenTime"
                             android:layout_width="match_parent"
@@ -242,6 +261,7 @@
                             android:text=""
                             android:textAppearance="?android:attr/textAppearanceMediumInverse"
                             android:textColor="?attr/editTextColor" />
+                        </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
 
                     <LinearLayout
@@ -257,6 +277,9 @@
                             android:gravity="center_vertical"
                             android:text="Kết thúc" />
 
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textInputCloseTime"
+                            style="@style/parent">
                         <TextView
                             android:id="@+id/etCloseTime"
                             android:layout_width="match_parent"
@@ -267,6 +290,7 @@
                             android:text=""
                             android:textAppearance="?android:attr/textAppearanceMediumInverse"
                             android:textColor="?attr/editTextColor" />
+                        </com.google.android.material.textfield.TextInputLayout>
                         <!--<EditText
                             android:id="@+id/etCloseTime"
                             android:layout_width="match_parent"

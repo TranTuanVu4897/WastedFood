@@ -34,6 +34,8 @@ import com.example.wastedfoodteam.seller.home.SellerHomeFragment;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.LoadingDialog;
+import com.example.wastedfoodteam.utils.validation.Validation;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -46,19 +48,16 @@ public class AddProductFragment extends Fragment {
     private int seller_id;
     private String storage_location;
 
-
+    private TextInputLayout tilProductName,tilDescription,tilOriginalPrice,tilSalePrice,tilQuantity,tilOpenTime,tilCloseTime;
     private EditText etProductName,
             etOriginalPrice, etSellPrice,
             etDescription, etQuantity;
-    TextView etCloseTime,etOpenTime;
+    private TextView etCloseTime,etOpenTime;
     private TextView tvCountProductName,TvCountProductDescription;
+    private boolean bolProductName,bolProductDescription,bolOriginalPrice,bolSalePrice,bolQuantity,bolOpenTime,bolCloseTime;
     //for time picker
     private int mHour, mMinute;
-    
 
-    // instance for firebase storage and StorageReference
-    FirebaseStorage storage;
-    StorageReference storageReference;
     CameraStorageFunction cameraStorageFunction;
     LoadingDialog loadingDialog;
 
@@ -80,10 +79,6 @@ public class AddProductFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_seller_add_product, container, false);
 
-        // get the Firebase  storage reference
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-
         loadingDialog = new LoadingDialog(getActivity());
         //init ui view
         //ui view
@@ -93,13 +88,71 @@ public class AddProductFragment extends Fragment {
         etSellPrice = view.findViewById(R.id.etSellPrice);
         etOpenTime = view.findViewById(R.id.etOpenTime);
         etCloseTime = view.findViewById(R.id.etCloseTime);
-
-
         etDescription = view.findViewById(R.id.etDescription);
         etQuantity = view.findViewById(R.id.etQuantity);
         tvCountProductName = view.findViewById(R.id.tvCountProductName);
         TvCountProductDescription = view.findViewById(R.id.TvCountProductDescription);
+        tilOpenTime = view.findViewById(R.id.textInputOpenTime);
+        tilCloseTime = view.findViewById(R.id.textInputCloseTime);
+        tilDescription = view.findViewById(R.id.textInputProductDescription);
+        tilProductName = view.findViewById(R.id.textInputProductName);
+        tilOriginalPrice = view.findViewById(R.id.textInputOriginalPrice);
+        tilSalePrice = view.findViewById(R.id.textInputSellPrice);
+        tilQuantity = view.findViewById(R.id.textInputQuantity);
         final Button btnAddProductAdd = view.findViewById(R.id.btnAddProductAdd);
+        setUp();
+        etSellPrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+                    String sellPrice = etSellPrice.getText().toString().trim();
+                    String originalPrice = etOriginalPrice.getText().toString().trim();
+                    if (CommonFunction.checkEmptyEditText(etSellPrice) && sellPrice.length() < 100) {
+                        if (Integer.parseInt(sellPrice) > Integer.parseInt(originalPrice)) {
+                            tilSalePrice.setError("Giá bán không được lớn hơn giá gốc");
+                            bolSalePrice = false;
+                        } else {
+                            tilSalePrice.setError(null);
+                            bolSalePrice = true;
+                        }
+                    } else {
+                        tilSalePrice.setError("Giá bán phải có ít nhất 1 kí tự và không được quá 100 kí tự");
+                        bolSalePrice = false;
+                    }
+                }
+            }
+        });
+
+        etOriginalPrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                checkAndAlertEmptyEditText(hasFocus, etOriginalPrice, tilOriginalPrice,bolOriginalPrice ,"Giá gốc phải có ít nhất 1 kí tự và không được quá 100 kí tự" );
+            }
+        });
+
+        etProductName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                checkAndAlertEmptyEditText(hasFocus, etProductName, tilProductName,bolProductName ,"Tên sản phẩm phải có ít nhất 1 kí tự và không được quá 100 kí tự" );
+
+            }
+        });
+
+        etQuantity.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                checkAndAlertEmptyEditText(hasFocus, etQuantity, tilQuantity,bolQuantity ,"Số lượng phải có ít nhất 1 kí tự và không được quá 100 kí tự" );
+
+            }
+        });
+
+        etDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+            }
+        });
 
         etProductName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -109,7 +162,7 @@ public class AddProductFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                tvCountProductName.setText(s.length() + "/120");
+                tvCountProductName.setText(s.length() + "/100");
             }
 
             @Override
@@ -206,22 +259,74 @@ public class AddProductFragment extends Fragment {
         btnAddProductAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingDialog.startLoadingDialog();
-                cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
-                    @Override
-                    public void onSuccess(String url) {
-                        storage_location = url;
-                        String urlGetData = Variable.IP_ADDRESS + Variable.ADD_PRODUCT_SELLER;
-                        addProduct(urlGetData);
-                    }
-                });
+                activeCheck();
+
+                if(bolCloseTime && bolOpenTime && bolOriginalPrice && bolProductDescription && bolProductName && bolQuantity && bolSalePrice && bolCloseTime && bolOpenTime ) {
+                    loadingDialog.startLoadingDialog();
+                    cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
+                        @Override
+                        public void onSuccess(String url) {
+                            storage_location = url;
+                            String urlGetData = Variable.IP_ADDRESS + Variable.ADD_PRODUCT_SELLER;
+                            addProduct(urlGetData);
+                        }
+                    });
+                }
             }
         });
         return view;
     }
 
 
-    //
+
+    private void checkAndAlertEmptyEditText(boolean hasFocus , EditText editText , TextInputLayout textInputLayout , boolean validate , String errorMessage){
+        if(!hasFocus){
+            String string = editText.getText().toString().trim();
+            if (CommonFunction.checkEmptyEditText(editText) && string.length() < 100) {
+                textInputLayout.setError(null);
+                validate = true;
+
+            } else {
+                textInputLayout.setError(errorMessage);
+                validate = false;
+            }
+        }
+    }
+
+    private void setUp(){
+        bolCloseTime = false;
+        bolOpenTime = false;
+        bolOriginalPrice = false;
+        bolProductDescription = false;
+        bolSalePrice = false;
+        bolProductName = false;
+        bolQuantity = false;
+    }
+
+    private void activeCheck(){
+        etQuantity.requestFocus();
+        etDescription.requestFocus();
+        etProductName.requestFocus();
+        etSellPrice.requestFocus();
+        etOriginalPrice.requestFocus();
+        etOriginalPrice.clearFocus();
+        if(etCloseTime.getText().toString().trim()!=""){
+            tilCloseTime.setError(null);
+            bolCloseTime = true;
+        }else {
+            tilCloseTime.setError("Thời gian đóng cửa không được để trống");
+            bolCloseTime = false;
+        }
+        if(etOpenTime.getText().toString().trim()!=""){
+            tilOpenTime.setError(null);
+            bolOpenTime = true;
+        }else {
+            tilOpenTime.setError("Thời gian bán không được để trống");
+            bolOpenTime = false;
+        }
+    }
+
+
     private void addProduct(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,

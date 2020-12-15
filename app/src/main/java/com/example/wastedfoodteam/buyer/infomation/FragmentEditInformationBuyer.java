@@ -17,6 +17,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,6 +30,7 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Buyer;
+import com.example.wastedfoodteam.seller.register.RegisterSellerPhoneFragment;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.validation.Validation;
@@ -78,6 +81,13 @@ public class FragmentEditInformationBuyer extends Fragment {
 
         cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), ivAvatar);
 
+        btCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),BuyHomeActivity.class);
+                startActivity(intent);
+            }
+        });
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,12 +120,15 @@ public class FragmentEditInformationBuyer extends Fragment {
     private void setUpUpdate() {
         url = Variable.IP_ADDRESS + "information/changeInfoBuyer.php";
         String name = etName.getText().toString();
-        if (name.trim().isEmpty()) {
-            Toast.makeText(getActivity(), "Vui lòng điền tên", Toast.LENGTH_LONG).show();
+        if (name.trim().isEmpty() || !Validation.checkName(name)) {
+            Toast.makeText(getActivity(), "Vui lòng điền tên,tên quá không được quá 50 kí tự", Toast.LENGTH_LONG).show();
             return;
         }
-
         String phone = etPhone.getText().toString();
+        if (phone.trim().isEmpty()||!Validation.checkPhone(phone)) {
+            Toast.makeText(getActivity(), "Số điện thoại không hợp lệ", Toast.LENGTH_LONG).show();
+            return;
+        }
         String urlImage = Variable.BUYER.getImage();
         if (cameraStorageFunction.getImage_uri() != null)
             urlImage = cameraStorageFunction.getImage_uri().toString();

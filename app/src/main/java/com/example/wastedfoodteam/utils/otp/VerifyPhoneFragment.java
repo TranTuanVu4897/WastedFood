@@ -52,6 +52,7 @@ public class VerifyPhoneFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                editText.requestFocus();
                 editText.clearFocus();
             }
         });
@@ -59,7 +60,7 @@ public class VerifyPhoneFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    if (editText.getText().toString().trim().length() < 6) {
+                    if (editText.getText().toString().trim().length() < 6 || editText.getText().toString().trim().equals(null)) {
                         tilCode.setError("Mã xác nhận phải có 6 ký tự");
                     } else {
                         tilCode.setError(null);

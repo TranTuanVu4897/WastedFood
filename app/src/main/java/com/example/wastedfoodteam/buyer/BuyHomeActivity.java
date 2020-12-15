@@ -346,33 +346,37 @@ public class BuyHomeActivity extends AppCompatActivity {
     }
     private void checkIsActive() {
 
-        String accountId = Variable.BUYER.getId() + "";
-        //String accountId = "201";
-        String url = Variable.IP_ADDRESS + "login/checkIsActive.php?account_id=" + accountId;
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if ("account is locked".equals(response)) {
-                    Toast.makeText(BuyHomeActivity.this, "Tài khoản của bạn đã bị khóa", Toast.LENGTH_LONG).show();
-                    switch (Variable.CHECK_LOGIN) {
-                        case 2:
-                            signOutFacebook();
-                            break;
-                        case 1:
-                            signOutGoogle();
-                            break;
+        try {
+            String accountId = Variable.BUYER.getId() + "";
+            //String accountId = "201";
+            String url = Variable.IP_ADDRESS + "login/checkIsActive.php?account_id=" + accountId;
+            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    if ("account is locked".equals(response)) {
+                        Toast.makeText(BuyHomeActivity.this, "Tài khoản của bạn đã bị khóa", Toast.LENGTH_LONG).show();
+                        switch (Variable.CHECK_LOGIN) {
+                            case 2:
+                                signOutFacebook();
+                                break;
+                            case 1:
+                                signOutGoogle();
+                                break;
+                        }
                     }
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(BuyHomeActivity.this, "Lỗi kết nỗi", Toast.LENGTH_LONG).show();
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(BuyHomeActivity.this, "Lỗi kết nỗi", Toast.LENGTH_LONG).show();
 
+                }
             }
+            );
+            requestQueue.add(stringRequest);
+        }catch (Exception e){
+            Toast.makeText(BuyHomeActivity.this, "Vui lòng thử lại", Toast.LENGTH_LONG).show();
         }
-        );
-        requestQueue.add(stringRequest);
     }
 }
