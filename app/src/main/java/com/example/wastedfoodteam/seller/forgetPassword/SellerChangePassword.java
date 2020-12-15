@@ -29,6 +29,7 @@ import com.example.wastedfoodteam.login.FragmentLoginPartner;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.seller.home.SellerHomeActivity;
+import com.example.wastedfoodteam.utils.LoadingDialog;
 import com.example.wastedfoodteam.utils.validation.Validation;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.home.SellerHomeFragment;
@@ -63,6 +64,7 @@ public class SellerChangePassword extends Fragment {
     TextInputLayout tilPassword,tilConfirmPass;
     String phone;
     Button btnConfirm;
+    LoadingDialog loadingDialog;
 
 
 
@@ -77,6 +79,7 @@ public class SellerChangePassword extends Fragment {
         tilPassword = view.findViewById(R.id.textInputPasswordNew);
         tilConfirmPass = view.findViewById(R.id.textInputConfirmPassword);
         btnConfirm = view.findViewById(R.id.btnChangePassword);
+        loadingDialog = new LoadingDialog(getActivity());
         Bundle bundle = this.getArguments();
         if (bundle != null) {
              phone = bundle.getString("phoneNumberFromVerify", ""); // Key, default value
@@ -86,6 +89,7 @@ public class SellerChangePassword extends Fragment {
             public void onClick(View v) {
                 if(validatePassword()){
                     Log.i("Phone",phone);
+                    loadingDialog.startLoadingDialog();
                     getSellerInformationByPhone(phone);
 
                 }
@@ -148,6 +152,7 @@ public class SellerChangePassword extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         if(response.trim().equals("Succesfully update")){
+                            loadingDialog.dismissDialog();
                             Toast.makeText(getActivity(),"Đổi mật khẩu thành công",Toast.LENGTH_SHORT).show();
                             FragmentLoginPartner fragmentLoginPartner = new FragmentLoginPartner();
                             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -155,6 +160,7 @@ public class SellerChangePassword extends Fragment {
                             fragmentTransaction.replace(R.id.flFragmentLayoutAM, fragmentLoginPartner);
                             fragmentTransaction.commit();
                         }else{
+                            loadingDialog.dismissDialog();
                             Toast.makeText(getActivity(),"Lỗi cập nhật, vui lòng thử lại sau",Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -162,6 +168,7 @@ public class SellerChangePassword extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        loadingDialog.dismissDialog();
                         Toast.makeText(getActivity(),"Xảy ra lỗi, vui lòng thử lại",Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -185,13 +192,13 @@ public class SellerChangePassword extends Fragment {
             tilConfirmPass.setError("Mật khẩu xác nhận với mật khẩu không giống nhau");
             flag = false;
         }else {
-            tilPassword.setError(null);
+            tilConfirmPass.setError(null);
         }
         if(!Validation.checkPassword(strPassword)){
             tilPassword.setError("Mật khẩu phải gồm 1 chữ cái và có từ 8 đến 16 kí tự");
             flag = false;
         }else{
-            tilConfirmPass.setError(null);
+            tilPassword.setError(null);
         }
         return flag;
     }
