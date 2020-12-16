@@ -1,7 +1,9 @@
 package com.example.wastedfoodteam.seller.order;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.ListFragment;
 
 import android.view.LayoutInflater;
@@ -24,6 +26,7 @@ import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.seller.product.EditProductSellerFragment;
+import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -37,14 +40,16 @@ import java.util.Map;
 
 public class ProductOrderSellerFragment extends ListFragment {
 
-    ListView lvOrderConfirm,lvOrderPayment,lvOrderDone;
-    ArrayList<SellerOrder> arrOrder,arrOrderPayment,arrOrderDone;
-    Button editProduct,cancelProduct;
+    ListView lvOrderCancel, lvOrderPayment, lvOrderDone;
+    ArrayList<SellerOrder> arrOrderCancel, arrOrderPayment, arrOrderDone;
+    Button editProduct, cancelProduct;
     OrderPaymentAdapter orderPaymentAdapter;
     OrderDoneAdapter orderDoneAdapter;
+    OrderCancelAdapter orderCancelAdapter;
     ImageView imageView;
     Product product;
-    TextView tvPaymentAlert,tvDoneAlert;
+    CameraStorageFunction cameraStorageFunction;
+    TextView tvPaymentAlert, tvDoneAlert, tvCancelAlert;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,17 +58,19 @@ public class ProductOrderSellerFragment extends ListFragment {
         View view = inflater.inflate(R.layout.fragment_order_detail_seller, container, false);
         lvOrderPayment = view.findViewById(android.R.id.list);
         lvOrderDone = view.findViewById(R.id.lv_list_product_3);
+        lvOrderCancel = view.findViewById(R.id.lv_list_product_cancel);
         imageView = view.findViewById(R.id.iv_list_order_product_picture);
         editProduct = view.findViewById(R.id.btn_editProduct_edit);
         cancelProduct = view.findViewById(R.id.btn_editProduct_stop);
         tvPaymentAlert = view.findViewById(R.id.tv_order_detail_seller_payment);
         tvDoneAlert = view.findViewById(R.id.tv_order_detail_seller_done);
+        tvCancelAlert = view.findViewById(R.id.tv_order_detail_seller_cancel);
         editProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditProductSellerFragment editProductSellerFragment = new EditProductSellerFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace( R.id.content_main, editProductSellerFragment, "")//TODO check if this work
+                        .replace(R.id.content_main, editProductSellerFragment, "")//TODO check if this work
                         .addToBackStack(null)
                         .commit();
             }
@@ -71,56 +78,62 @@ public class ProductOrderSellerFragment extends ListFragment {
         cancelProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(cancelProduct.getText().equals("NGỪNG BÁN")){
-                    updateProductStatus(Variable.IP_ADDRESS + "seller/setActiveForProduct.php","stop",product.getId());
+                if (cancelProduct.getText().equals("NGỪNG BÁN")) {
+                    updateProductStatus(Variable.IP_ADDRESS + "seller/setActiveForProduct.php", "stop", product.getId());
                     cancelProduct.setText("MỞ LẠI BÁN");
-                }else {
-                    updateProductStatus(Variable.IP_ADDRESS + "seller/setActiveForProduct.php","selling",product.getId());
+                } else {
+                    updateProductStatus(Variable.IP_ADDRESS + "seller/setActiveForProduct.php", "selling", product.getId());
                     cancelProduct.setText("NGỪNG BÁN");
                 }
             }
         });
+
+        cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), null);
         product = Variable.PRODUCT;
-        CommonFunction.setImageViewSrc(getContext(),product.getImage(),imageView);
+        CommonFunction.setImageViewSrc(getContext(), product.getImage(), imageView);
         arrOrderPayment = new ArrayList<>();
         arrOrderDone = new ArrayList<>();
-        orderPaymentAdapter = new OrderPaymentAdapter(getActivity().getApplicationContext(), R.layout.list_seller_payment_order, arrOrderPayment, getResources(),getActivity());
-        orderDoneAdapter = new OrderDoneAdapter(getActivity().getApplicationContext(), R.layout.list_seller_done_order, arrOrderDone, getResources(),getActivity());
+        arrOrderCancel = new ArrayList<>();
+        orderPaymentAdapter = new OrderPaymentAdapter(getActivity().getApplicationContext(), R.layout.list_seller_payment_order, arrOrderPayment, getResources(), getActivity());
+        orderDoneAdapter = new OrderDoneAdapter(getActivity().getApplicationContext(), R.layout.list_seller_done_order, arrOrderDone, getResources(), getActivity());
+        orderCancelAdapter = new OrderCancelAdapter(getActivity().getApplicationContext(), R.layout.list_seller_cancel_order, arrOrderCancel, getResources(), getActivity(), cameraStorageFunction);
         lvOrderPayment.setAdapter(orderPaymentAdapter);
         lvOrderDone.setAdapter(orderDoneAdapter);
+        lvOrderCancel.setAdapter(orderCancelAdapter);
         getData(Order.Status.BUYING);
         getData(Order.Status.SUCCESS);
+        getData(Order.Status.CANCEL);
         return view;
     }
 
     //update product status
-    public void updateProductStatus(String url, final String status , final int id){
+    public void updateProductStatus(String url, final String status, final int id) {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if(response.trim().equals("Succesfully update")){
-                            Toast.makeText(getContext(),"Cập nhật thành công",Toast.LENGTH_SHORT).show();
+                        if (response.trim().equals("Succesfully update")) {
+                            Toast.makeText(getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                             //TODO move back to home
-                        }else{
-                            Toast.makeText( getContext(),"Lỗi cập nhật",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), "Lỗi cập nhật", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(),"Xảy ra lỗi, vui lòng thử lại",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Xảy ra lỗi, vui lòng thử lại", Toast.LENGTH_SHORT).show();
                     }
                 }
-        ){
+        ) {
             @Override
             protected Map<String, String> getParams() {
-                Map<String,String> params = new HashMap<>();
+                Map<String, String> params = new HashMap<>();
                 params.put("seller_id", String.valueOf(product.getSeller_id()));
-                params.put("status",  status );
-                params.put("id" ,  String.valueOf(id) );
+                params.put("status", status);
+                params.put("id", String.valueOf(id));
                 return params;
             }
         };
@@ -151,12 +164,18 @@ public class ProductOrderSellerFragment extends ListFragment {
                                         arrOrderDone.add(gson.fromJson(jsonOrders.getString(i), SellerOrder.class));
                                         orderDoneAdapter.notifyDataSetChanged();
                                         break;
+                                    case CANCEL:
+                                        arrOrderCancel.add(gson.fromJson(jsonOrders.getString(i), SellerOrder.class));
+                                        orderCancelAdapter.notifyDataSetChanged();
+                                        break;
                                 }
                             }
-                            if(arrOrderPayment.size()>0)
+                            if (arrOrderPayment.size() > 0)
                                 tvPaymentAlert.setVisibility(View.INVISIBLE);
-                            if (arrOrderDone.size()>0)
+                            if (arrOrderDone.size() > 0)
                                 tvDoneAlert.setVisibility(View.INVISIBLE);
+                            if (arrOrderCancel.size() > 0)
+                                tvCancelAlert.setVisibility(View.INVISIBLE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -168,5 +187,11 @@ public class ProductOrderSellerFragment extends ListFragment {
                     }
                 });
         requestQueue.add(getProductAround);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        cameraStorageFunction.onActivityResult(requestCode, resultCode, data);
     }
 }

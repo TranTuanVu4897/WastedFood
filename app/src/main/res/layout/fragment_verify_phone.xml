@@ -79,13 +79,21 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
+                    android:id="@+id/btnResend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:text="Gửi lại mã thực"
+                    android:textAllCaps="false"
+                    android:textColor="#ffffff" />
+                <Button
                     android:id="@+id/buttonSignIn"
                     style="@style/loginButton"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:text="TIẾP TỤC"
-
                     android:textAllCaps="false"
                     android:textColor="#ffffff" />
             </LinearLayout>

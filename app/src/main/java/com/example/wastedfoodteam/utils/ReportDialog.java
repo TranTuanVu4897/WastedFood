@@ -56,10 +56,10 @@ public class ReportDialog {
 
     public void displayReportDialog() {
         View ratingLayout = inflater.inflate(R.layout.dialog_report, null);
-
         TextView tvAccused = ratingLayout.findViewById(R.id.tvAccusedDR);
         etContent = ratingLayout.findViewById(R.id.etContentDR);
         ivReport = ratingLayout.findViewById(R.id.ivReport);
+
 
         if (accused.getClass().equals(Seller.class))
             tvAccused.setText(((Seller) accused).getName());
@@ -108,7 +108,7 @@ public class ReportDialog {
                     });
                 else {
                     content = etContent.getText().toString();
-                    insertData(url, reporterId, accusedId, content, cameraStorageFunction.getImage_uri().toString());
+                    insertData(url, reporterId, accusedId, content, "");
                 }
             }
         });
@@ -120,23 +120,17 @@ public class ReportDialog {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Intent intent = new Intent(context, BuyHomeActivity.class);
                 if ("ERROR".equals(response)) {
-                    Toast.makeText(context, "ERROR", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Có lỗi xảy ra", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(context, "OK Insert data", Toast.LENGTH_LONG).show();
-                    try {
-                        context.startActivity(intent);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    Toast.makeText(context, "Báo cáo thành công", Toast.LENGTH_LONG).show();
                 }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, "ERROR " + url, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Có lỗi xảy ra", Toast.LENGTH_LONG).show();
             }
         }
         ) {

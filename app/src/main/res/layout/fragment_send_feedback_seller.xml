@@ -68,13 +68,16 @@
                     android:id="@+id/textInputFeedbackDescription"
                     style="@style/parent"
                     android:layout_marginTop="20dp">
+
                 <EditText
                     android:id="@+id/editText_sendFeedback_description"
                     android:layout_width="match_parent"
                     style="@style/modifiedEditText"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="Ghi chú:"
+                    android:layout_height="300dp"
+                    android:lines="30"
+                    android:hint="Nội dung chi tiết:"
+
+                    android:gravity="top"
                     android:inputType=""
                     android:textColorHint="#B6ADAD" />
                 </com.google.android.material.textfield.TextInputLayout>

@@ -1,6 +1,8 @@
 package com.example.wastedfoodteam.utils.otp;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -29,6 +31,8 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 public class VerifyPhoneFragment extends Fragment {
@@ -38,8 +42,9 @@ public class VerifyPhoneFragment extends Fragment {
     private FirebaseAuth mAuth;
     EditText editText;
     TextInputLayout tilCode;
-    Button button;
+    Button button,btnResend;
     FragmentManager fragmentManager;
+    int count;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +54,9 @@ public class VerifyPhoneFragment extends Fragment {
         button = view.findViewById(R.id.buttonSignIn);
         editText = view.findViewById(R.id.editTextCode);
         tilCode = view.findViewById(R.id.textInputVerifyPhone);
+        btnResend = view.findViewById(R.id.btnResend);
         mAuth = FirebaseAuth.getInstance();
+        btnResend.setClickable(true);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,8 +80,30 @@ public class VerifyPhoneFragment extends Fragment {
         });
         phoneNumber = getArguments().getString("phoneNumber");
         sendVerificationCode(phoneNumber);
+        btnResend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnResend.setClickable(false);
+                sendVerificationCode(phoneNumber);
+            }
+        });
         return view;
     }
+
+    private void countDownTimer(){
+        new CountDownTimer(60000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                btnResend.setText("" + millisUntilFinished/1000);
+            }
+
+            public void onFinish() {
+                btnResend.setText("Gửi lại mã");
+                btnResend.setClickable(true);
+            }
+        }.start();
+    }
+
 
 
     private void sendVerificationCode(String number) {
@@ -87,12 +116,14 @@ public class VerifyPhoneFragment extends Fragment {
         );
     }
 
+
+
     private void verifyCode(String code) {
         try {
             PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
             signInWithCredential(credential);
         }catch (Exception e){
-            Toast toast = Toast.makeText(getActivity(), "Verification Code is wrong", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getActivity(), "Mã xác nhận không đúng", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER,0,0);
             toast.show();
         }
@@ -127,6 +158,7 @@ public class VerifyPhoneFragment extends Fragment {
         public void onCodeSent(@NotNull String s, @NotNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             verificationId = s;
+            countDownTimer();
         }
 
         @Override

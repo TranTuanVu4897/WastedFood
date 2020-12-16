@@ -19,7 +19,7 @@ import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.notification.SendNotif;
-import com.example.wastedfoodteam.utils.service.updateStatusForOrder;
+import com.example.wastedfoodteam.utils.service.UpdateStatusForOrder;
 
 import java.util.List;
 
@@ -92,7 +92,7 @@ public class OrderPaymentAdapter extends BaseAdapter {
                 //set status = done
                 //reload fragment
                 //sendNotif.notificationHandle(order.getBuyer_name());
-                updateStatusForOrder.updateOrderStatus(Variable.IP_ADDRESS + "seller/updateStatusForOrderSeller.php",Order.Status.SUCCESS, order.getId(),myContext);
+                UpdateStatusForOrder.updateOrderStatus(Variable.IP_ADDRESS + "seller/updateStatusForOrderSeller.php",Order.Status.SUCCESS, order.getId(),myContext);
                 String message = Variable.SELLER.getName() + " đã xác nhận thanh toán của bạn\r Cảm ơn bạn vì đã sử dụng dịch vụ của chúng tôi";
                 util.addNotification(myContext,Variable.SELLER.getId() , order.getBuyer_id(), message , order.getId());
                 sendNotif.notificationHandle(order.getFirebase_UID(), "Wasted food app" , message);
@@ -105,7 +105,7 @@ public class OrderPaymentAdapter extends BaseAdapter {
             public void onClick(View v) {
                 //set status = rejected
                 //set btnReject text to Đã từ chối set clickable = false
-                updateStatusForOrder.updateOrderStatus(Variable.IP_ADDRESS + "seller/updateStatusForOrderSeller.php",Order.Status.CANCEL, order.getId(),myContext);
+                UpdateStatusForOrder.updateOrderStatus(Variable.IP_ADDRESS + "seller/updateStatusForOrderSeller.php",Order.Status.CANCEL, order.getId(),myContext);
                 ProductOrderSellerFragment productOrderSellerFragment = new ProductOrderSellerFragment();
                 myFragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, productOrderSellerFragment, productOrderSellerFragment.getTag()).commit();
             }

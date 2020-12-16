@@ -14,7 +14,7 @@ import com.example.wastedfoodteam.model.Order;
 import java.util.HashMap;
 import java.util.Map;
 
-public class updateStatusForOrder {
+public class UpdateStatusForOrder {
     //update order status
     public static void updateOrderStatus(String url, final Order.Status status, final int id, final Context myContext){
         RequestQueue requestQueue = Volley.newRequestQueue(myContext);

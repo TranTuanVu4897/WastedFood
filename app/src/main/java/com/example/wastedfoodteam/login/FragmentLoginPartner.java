@@ -107,20 +107,20 @@ public class FragmentLoginPartner extends Fragment {
             @Override
             public void onResponse(String response) {
                 if ("account is locked".equals(response)) {
-                    Toast.makeText(getActivity(), "Tài khoản bạn đã bị khóa", Toast.LENGTH_LONG).show();//TODO fix for suitable error
+                    Toast.makeText(getActivity(), "Tài khoản bạn đã bị khóa", Toast.LENGTH_LONG).show();
                 } else  if("account is not active".equals(response)){
                     Toast.makeText(getActivity(), "Tài khoản của bạn chưa được kích hoạt nếu có thắc mắc vui lòng liên hệ với chúng tôi " + urlGetData, Toast.LENGTH_LONG).show();
                 }
                 else if ("not exist account".equals(response)) {
                     Toast.makeText(getActivity(), "Tên đăng nhập hoặc mật khẩu không đúng" , Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getActivity(), "đăng nhập thành công", Toast.LENGTH_LONG).show();//TODO get data
+                    Toast.makeText(getActivity(), "đăng nhập thành công", Toast.LENGTH_LONG).show();
                     try {
                         JSONArray object = new JSONArray(response);
                         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                         Seller seller = gson.fromJson(object.getString(0), Seller.class);
 
-                        final Intent intent = new Intent(getActivity(), SellerHomeActivity.class);//TODO change to seller activity
+                        final Intent intent = new Intent(getActivity(), SellerHomeActivity.class);
 
                         Variable.SELLER = seller;
                         //openSellerHome();
@@ -141,7 +141,7 @@ public class FragmentLoginPartner extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "lỗi kết nối" + urlGetData, Toast.LENGTH_LONG).show();//TODO get data
+                Toast.makeText(getActivity(), "Lỗi kết nối", Toast.LENGTH_LONG).show();
                 Log.d("MK ", md5(etPass.getText().toString()));
             }
         });
