@@ -99,7 +99,9 @@ public class FragmentEditInformationBuyer extends Fragment {
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                etName.clearFocus();
+                etPhone.clearFocus();
+                etMail.clearFocus();
                 if (cameraStorageFunction.getImage_uri() != null){
                     cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
                         @Override
@@ -133,7 +135,7 @@ public class FragmentEditInformationBuyer extends Fragment {
             return;
         }
         String phone = etPhone.getText().toString();
-        if (phone.trim().isEmpty()||!Validation.checkPhone(phone)) {
+        if (!phone.trim().isEmpty()&&!Validation.checkPhone(phone)) {
             Toast.makeText(getActivity(), "Số điện thoại không hợp lệ", Toast.LENGTH_LONG).show();
             return;
         }
@@ -150,10 +152,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         } else {
             gender = 1;
         }
-
         updateData(url, accountId, name, phone, urlImage, dob, gender);
-
-
     }
 
     private void mapping(View view) {

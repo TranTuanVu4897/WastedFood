@@ -126,23 +126,28 @@ public class AddProductFragment extends Fragment {
         etOriginalPrice.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                checkAndAlertEmptyEditText(hasFocus, etOriginalPrice, tilOriginalPrice,bolOriginalPrice ,"Giá gốc phải có ít nhất 1 kí tự và không được quá 100 kí tự" );
+                if(!hasFocus){
+                    bolOriginalPrice = checkAndAlertEmptyEditText(etOriginalPrice, tilOriginalPrice ,"Giá gốc phải có ít nhất 1 kí tự và không được quá 100 kí tự" );
+                }
+
             }
         });
 
         etProductName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-
-                checkAndAlertEmptyEditText(hasFocus, etProductName, tilProductName,bolProductName ,"Tên sản phẩm phải có ít nhất 1 kí tự và không được quá 100 kí tự" );
-
+                if(!hasFocus){
+                    bolProductName = checkAndAlertEmptyEditText(etProductName, tilProductName ,"Giá gốc phải có ít nhất 1 kí tự và không được quá 100 kí tự" );
+                }
             }
         });
 
         etQuantity.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                checkAndAlertEmptyEditText(hasFocus, etQuantity, tilQuantity,bolQuantity ,"Số lượng phải có ít nhất 1 kí tự và không được quá 100 kí tự" );
+                if(!hasFocus){
+                    bolQuantity = checkAndAlertEmptyEditText(etQuantity, tilQuantity ,"Giá gốc phải có ít nhất 1 kí tự và không được quá 100 kí tự" );
+                }
 
             }
         });
@@ -150,7 +155,15 @@ public class AddProductFragment extends Fragment {
         etDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
+                String string = etDescription.getText().toString().trim();
+                if (string.length() <= 3000) {
+                    tilDescription.setError(null);
+                    bolProductDescription = true;
 
+                } else {
+                    tilDescription.setError("Thông tin chi tiết sản phẩm không được quá 3000 ký tự");
+                    bolProductDescription = false;
+                }
             }
         });
 
@@ -260,17 +273,21 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 activeCheck();
-
+                final String urlGetData = Variable.IP_ADDRESS + Variable.ADD_PRODUCT_SELLER;
                 if(bolCloseTime && bolOpenTime && bolOriginalPrice && bolProductDescription && bolProductName && bolQuantity && bolSalePrice && bolCloseTime && bolOpenTime ) {
                     loadingDialog.startLoadingDialog();
-                    cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
-                        @Override
-                        public void onSuccess(String url) {
-                            storage_location = url;
-                            String urlGetData = Variable.IP_ADDRESS + Variable.ADD_PRODUCT_SELLER;
-                            addProduct(urlGetData);
-                        }
-                    });
+                    if(cameraStorageFunction.getImage_uri().equals(null)){
+                        storage_location = "";
+                        addProduct(urlGetData);
+                    }else {
+                        cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
+                            @Override
+                            public void onSuccess(String url) {
+                                storage_location = url;
+                                addProduct(urlGetData);
+                            }
+                        });
+                    }
                 }
             }
         });
@@ -279,18 +296,18 @@ public class AddProductFragment extends Fragment {
 
 
 
-    private void checkAndAlertEmptyEditText(boolean hasFocus , EditText editText , TextInputLayout textInputLayout , boolean validate , String errorMessage){
-        if(!hasFocus){
+    private boolean checkAndAlertEmptyEditText( EditText editText , TextInputLayout textInputLayout  , String errorMessage){
+
             String string = editText.getText().toString().trim();
             if (CommonFunction.checkEmptyEditText(editText) && string.length() < 100) {
                 textInputLayout.setError(null);
-                validate = true;
+                return true;
 
             } else {
                 textInputLayout.setError(errorMessage);
-                validate = false;
+                return false;
             }
-        }
+
     }
 
     private void setUp(){
