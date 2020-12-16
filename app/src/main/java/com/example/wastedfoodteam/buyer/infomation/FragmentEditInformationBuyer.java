@@ -35,6 +35,7 @@ import com.example.wastedfoodteam.model.Buyer;
 import com.example.wastedfoodteam.seller.register.RegisterSellerPhoneFragment;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.CommonFunction;
+import com.example.wastedfoodteam.utils.LoadingDialog;
 import com.example.wastedfoodteam.utils.validation.Validation;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -64,6 +65,7 @@ public class FragmentEditInformationBuyer extends Fragment {
     int lastSelectedYear;
     int lastSelectedMonth;
     int lastSelectedDayOfMonth;
+    LoadingDialog loadingDialog;
     boolean checkDate = false;
 
     @Nullable
@@ -82,6 +84,7 @@ public class FragmentEditInformationBuyer extends Fragment {
                 selectDate();
             }
         });
+        loadingDialog = new LoadingDialog(getActivity());
         final Calendar c = Calendar.getInstance();
         this.lastSelectedYear = c.get(Calendar.YEAR);
         this.lastSelectedMonth = c.get(Calendar.MONTH);
@@ -99,6 +102,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadingDialog.startLoadingDialog();
                 etName.clearFocus();
                 etPhone.clearFocus();
                 etMail.clearFocus();
@@ -211,9 +215,10 @@ public class FragmentEditInformationBuyer extends Fragment {
             @Override
             public void onResponse(String response) {
                 if ("failed".equals(response)) {
+                    loadingDialog.dismissDialog();
                     Toast.makeText(getActivity(), "Cập nhật thất bại", Toast.LENGTH_LONG).show();
                 } else {
-
+                        loadingDialog.dismissDialog();
                         Variable.BUYER.setDate_of_birth(Date.valueOf(dob));
                         Variable.BUYER.setGender(gender);
                         Variable.BUYER.setImage(urlImage);
@@ -221,6 +226,7 @@ public class FragmentEditInformationBuyer extends Fragment {
                         Variable.BUYER.setPhone(phone);
 
                     Save(Variable.BUYER);
+
                     Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(getActivity(), BuyHomeActivity.class));
                 }
@@ -229,6 +235,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismissDialog();
                 Toast.makeText(getActivity(), "Lỗi kết nỗi" + FragmentEditInformationBuyer.this.url, Toast.LENGTH_LONG).show();
 
             }
