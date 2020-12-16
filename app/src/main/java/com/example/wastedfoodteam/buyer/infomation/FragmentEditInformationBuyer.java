@@ -1,6 +1,7 @@
 package com.example.wastedfoodteam.buyer.infomation;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -70,7 +71,7 @@ public class FragmentEditInformationBuyer extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_buyer_edit, container, false);
         mapping(view);
-
+        sharedpreferences = requireActivity().getSharedPreferences(mPreference, Context.MODE_PRIVATE);
         accountId = Variable.BUYER.getId() + "";
         url = Variable.IP_ADDRESS + "information/informationBuyer.php?account_id=" + accountId;
         getData(url);
@@ -149,14 +150,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         } else {
             gender = 1;
         }
-        try {
-            if (Validation.checkCurrentDate(dob)) {
-                Toast.makeText(getActivity(), "Bạn chọn ngày sinh hơn ngày hiện tại", Toast.LENGTH_LONG).show();
-                return;
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
         updateData(url, accountId, name, phone, urlImage, dob, gender);
 
 
@@ -229,6 +223,7 @@ public class FragmentEditInformationBuyer extends Fragment {
 
                     Save(Variable.BUYER);
                     Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(getActivity(), BuyHomeActivity.class));
                 }
 
             }
@@ -261,12 +256,16 @@ public class FragmentEditInformationBuyer extends Fragment {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month = month + 1;
                 String date = year + "-" + month + "-" + dayOfMonth;
-                if (Validation.validateDate(date)) {
-                    etDob.setText(date);
-                    checkDate = true;
-                } else {
-                    Toast.makeText(getActivity(), "Bạn chọn hơn ngày hiện tại", Toast.LENGTH_LONG).show();
-                    checkDate = false;
+                try {
+                    if (Validation.checkCurrentDate(date)) {
+                        etDob.setText(date);
+                        checkDate = true;
+                    } else {
+                        Toast.makeText(getActivity(), "Bạn chọn hơn ngày hiện tại", Toast.LENGTH_LONG).show();
+                        checkDate = false;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
                 lastSelectedYear = year;
                 lastSelectedMonth = month - 1;
