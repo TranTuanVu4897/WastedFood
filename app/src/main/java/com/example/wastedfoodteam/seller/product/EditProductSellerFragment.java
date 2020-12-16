@@ -34,6 +34,7 @@ public class EditProductSellerFragment extends Fragment {
     private EditText originalPrice;
     private EditText sellPrice;
     private EditText openTime,closeTime,quantity,remainQuantity;
+    private String storageLocation;
     int id;
 
     CameraStorageFunction cameraStorageFunction;
@@ -86,8 +87,21 @@ public class EditProductSellerFragment extends Fragment {
         btn_detail_product_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String urlGetData = Variable.IP_ADDRESS + "seller/updateProductByID.php";
-                updateProduct(urlGetData);
+                if(cameraStorageFunction.getImage_uri() != null)
+                {
+                    cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
+                        @Override
+                        public void onSuccess(String url) {
+                            storageLocation = url;
+                            String urlGetData = Variable.IP_ADDRESS + "seller/updateProductByID.php";
+                            updateProduct(urlGetData);
+                        }
+                    });
+                }else {
+                    storageLocation = " ";
+                    String urlGetData = Variable.IP_ADDRESS + "seller/updateProductByID.php";
+                    updateProduct(urlGetData);
+                }
             }
         });
         return view;
@@ -134,6 +148,7 @@ public class EditProductSellerFragment extends Fragment {
                 params.put("openTime", openTime.getText().toString().trim());
                 params.put("closeTime", closeTime.getText().toString().trim());
                 params.put("remainQuantity",remainQuantity.getText().toString().trim());
+                params.put("image",storageLocation);
                 return params;
             }
         };

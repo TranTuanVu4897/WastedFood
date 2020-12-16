@@ -84,7 +84,7 @@
         <TextView
             android:id="@+id/tv_order_detail_seller_payment"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             style="@style/AppTheme"
             android:textStyle="bold"
             android:textSize="18sp"
@@ -97,7 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:nestedScrollingEnabled="false"
+            android:nestedScrollingEnabled="true"
             />
         <TextView
             android:layout_width="match_parent"
@@ -112,7 +112,7 @@
         <TextView
             android:id="@+id/tv_order_detail_seller_done"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:textStyle="bold"
             style="@style/AppTheme"
             android:textSize="18sp"

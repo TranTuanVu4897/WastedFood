@@ -2,6 +2,8 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:fillViewport="true"
+    android:layout_gravity="fill_vertical"
     android:layout_height="wrap_content">
 
 
@@ -244,10 +246,10 @@
             android:textColor="#000"
             android:textStyle="bold" />
 
-        <ListView
+        <com.example.wastedfoodteam.utils.service.NonScrollListView
             android:id="@android:id/list"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:nestedScrollingEnabled="true"
             app:layout_constraintBottom_toBottomOf="parent"
