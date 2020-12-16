@@ -276,7 +276,7 @@ public class AddProductFragment extends Fragment {
                 final String urlGetData = Variable.IP_ADDRESS + Variable.ADD_PRODUCT_SELLER;
                 if(bolCloseTime && bolOpenTime && bolOriginalPrice && bolProductDescription && bolProductName && bolQuantity && bolSalePrice && bolCloseTime && bolOpenTime ) {
                     loadingDialog.startLoadingDialog();
-                    if(cameraStorageFunction.getImage_uri().equals(null)){
+                    if(cameraStorageFunction.getImage_uri()==null){
                         storage_location = "";
                         addProduct(urlGetData);
                     }else {

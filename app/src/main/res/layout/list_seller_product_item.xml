@@ -9,6 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/colorBackGroundOrder"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +22,7 @@
             android:contentDescription="@string/product"
             android:id="@+id/ivProductLSPI"
             android:layout_width="100dp"
-            android:layout_height="60dp"
+            android:layout_height="100dp"
             android:layout_margin="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -68,10 +69,10 @@
                 android:text="20,000 VND"
                 app:layout_constraintBottom_toBottomOf="@+id/tvSellPrice"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.709"
                 app:layout_constraintStart_toEndOf="@+id/tvSellPrice"
                 app:layout_constraintTop_toTopOf="@+id/tvSellPrice"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/tvNameLSPI"
@@ -114,10 +115,10 @@
                 android:textColor="#FF0000"
                 app:layout_constraintBottom_toTopOf="@+id/tvOriginalPrice"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.451"
                 app:layout_constraintStart_toEndOf="@+id/tvNameLSPI"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.127" />
+                app:layout_constraintVertical_bias="0.294" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

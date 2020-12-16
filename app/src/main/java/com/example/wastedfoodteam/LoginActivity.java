@@ -43,8 +43,8 @@ public class LoginActivity extends AppCompatActivity {
         },3000);*/
         //Variable.uri =  Uri.parse("android.resource://"+ getApplicationContext().getPackageName()+"/drawable/bell.png");
         Variable.uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
-                "://" + getResources().getResourcePackageName(R.drawable.no_image)
-                + '/' + getResources().getResourceTypeName(R.drawable.no_image) + '/' + getResources().getResourceEntryName(R.drawable.no_image) + ".png");
+                "://" + getResources().getResourcePackageName(R.drawable.button_home)
+                + '/' + getResources().getResourceTypeName(R.drawable.button_home) + '/' + getResources().getResourceEntryName(R.drawable.button_home));
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         //fragment for login
