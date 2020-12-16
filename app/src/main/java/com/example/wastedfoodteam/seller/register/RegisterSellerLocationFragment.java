@@ -66,6 +66,8 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
         etLng = view.findViewById(R.id.etLongitude);
         etAddress = view.findViewById(R.id.etAddress);
         btnComplete = view.findViewById(R.id.btnNext);
+        etLng.setEnabled(false);
+        etLat.setEnabled(false);
         tilAddress = view.findViewById(R.id.textInputAddress);
         mAuth = FirebaseAuth.getInstance();
         seller = Variable.RESISTER_SELLER;

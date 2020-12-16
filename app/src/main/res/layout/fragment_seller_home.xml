@@ -80,7 +80,7 @@
                     android:id="@+id/tvTotalProductSelling"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20 sản phẩm"
+                    android:text="0 sản phẩm"
                     android:gravity="center"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/colorBlack"
@@ -124,7 +124,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tvOrderBuying"
-                    android:text="20 sản phẩm"
+                    android:text="0 sản phẩm"
                     android:gravity="center"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/colorBlack"
@@ -167,7 +167,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20 sản phẩm"
+                    android:text="0 sản phẩm"
                     android:id="@+id/tvTotalOrderSuccess"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/colorBlack"
@@ -211,7 +211,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20 sản phẩm"
+                    android:text="0 sản phẩm"
                     android:gravity="center"
                     android:id="@+id/tvTotalOrderCancel"
                     android:layout_marginTop="8dp"
@@ -255,7 +255,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="20 sản phẩm"
+                    android:text="0 sản phẩm"
                     android:id="@+id/tvTotalProduct"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
@@ -299,7 +299,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10 người"
+                    android:text="0 người"
                     android:id="@+id/tvTotalFollower"
                     android:gravity="center"
                     android:layout_marginTop="8dp"
