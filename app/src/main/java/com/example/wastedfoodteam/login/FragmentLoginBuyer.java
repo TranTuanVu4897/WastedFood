@@ -132,7 +132,7 @@ public class FragmentLoginBuyer extends Fragment {
         return view;
     }
 
-    public void Save(Buyer buyer) {
+    public void saveUserInformation(Buyer buyer) {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         String buyerJson = gson.toJson(buyer);
@@ -243,7 +243,7 @@ public class FragmentLoginBuyer extends Fragment {
             @Override
             public void onSuccess(Buyer result) {
                 Variable.BUYER = result;
-                Save(Variable.BUYER);
+                saveUserInformation(Variable.BUYER);
 
                 Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
                 requireActivity().finishAndRemoveTask();
@@ -390,7 +390,7 @@ public class FragmentLoginBuyer extends Fragment {
                         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
                         Variable.BUYER = gson.fromJson(object.getString(0), Buyer.class);
-                        Save(Variable.BUYER);
+                        saveUserInformation(Variable.BUYER);
 
                         Intent intent = new Intent(getActivity(), BuyHomeActivity.class);
                         requireActivity().finishAndRemoveTask();

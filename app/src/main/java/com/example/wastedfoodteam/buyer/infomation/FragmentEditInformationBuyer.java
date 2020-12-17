@@ -19,8 +19,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,7 +30,6 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Buyer;
-import com.example.wastedfoodteam.seller.register.RegisterSellerPhoneFragment;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.LoadingDialog;
@@ -44,7 +41,6 @@ import org.json.JSONArray;
 
 import java.sql.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,12 +72,12 @@ public class FragmentEditInformationBuyer extends Fragment {
         sharedpreferences = requireActivity().getSharedPreferences(mPreference, Context.MODE_PRIVATE);
         accountId = Variable.BUYER.getId() + "";
         url = Variable.IP_ADDRESS + "information/informationBuyer.php?account_id=" + accountId;
-        getData(url);
+        getUserInformation(url);
 
         etDob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectDate();
+                setUpdateDatePickerDialog();
             }
         });
         loadingDialog = new LoadingDialog(getActivity());
@@ -156,7 +152,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         } else {
             gender = 1;
         }
-        updateData(url, accountId, name, phone, urlImage, dob, gender);
+        updateUserInformation(url, accountId, name, phone, urlImage, dob, gender);
     }
 
     private void mapping(View view) {
@@ -171,7 +167,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         btCancel = view.findViewById(R.id.btCancelFEB);
     }
 
-    private void getData(final String url) {
+    private void getUserInformation(final String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity().getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -208,7 +204,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    private void updateData(String url, final String accountId, final String name, final String phone, final String urlImage, final String dob, final int gender) {
+    private void updateUserInformation(String url, final String accountId, final String name, final String phone, final String urlImage, final String dob, final int gender) {
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity().getApplicationContext());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -225,7 +221,7 @@ public class FragmentEditInformationBuyer extends Fragment {
                         Variable.BUYER.setName(name);
                         Variable.BUYER.setPhone(phone);
 
-                    Save(Variable.BUYER);
+                    saveUserInformation(Variable.BUYER);
 
                     Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(getActivity(), BuyHomeActivity.class));
@@ -256,7 +252,7 @@ public class FragmentEditInformationBuyer extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    private void selectDate() {
+    private void setUpdateDatePickerDialog() {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -290,14 +286,11 @@ public class FragmentEditInformationBuyer extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         cameraStorageFunction.onActivityResult(requestCode, resultCode, data);
     }
-    public void Save(Buyer buyer) {
+    public void saveUserInformation(Buyer buyer) {
         SharedPreferences.Editor editor = sharedpreferences.edit();
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         String buyerJson = gson.toJson(buyer);
         editor.putString(BUYER_JSON, buyerJson);
         editor.apply();
-    }
-    public void setVariable(){
-
     }
 }
