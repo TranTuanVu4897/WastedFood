@@ -203,7 +203,11 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "lỗi kết nỗi" + url, Toast.LENGTH_LONG).show();//TODO get data
+                try {
+                    Toast.makeText(getActivity(), "lỗi kết nỗi", Toast.LENGTH_LONG).show();//TODO get data
+                }catch (Exception e){
+
+                }
             }
         }
         ) {
