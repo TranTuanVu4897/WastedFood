@@ -198,7 +198,7 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
+                int i = 0;
             }
         }, new Response.ErrorListener() {
             @Override
