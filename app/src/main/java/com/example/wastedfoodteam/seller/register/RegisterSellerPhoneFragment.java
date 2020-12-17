@@ -108,17 +108,21 @@ public class RegisterSellerPhoneFragment extends Fragment {
                         } else {
                             tilPhone.setError(null);
                             bolPhone = true;
-                            cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
-                                @Override
-                                public void onSuccess(String url) {
-                                    storage_location = url;
-                                    if (storage_location != null) {
-                                        Variable.RESISTER_SELLER.setImage(storage_location);
-                                    } else {
-                                        Variable.RESISTER_SELLER.setImage("");
+                            if(cameraStorageFunction.getImage_uri()==null){
+                                storage_location = " ";
+                            }else {
+                                cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
+                                    @Override
+                                    public void onSuccess(String url) {
+                                        storage_location = url;
+                                        if (storage_location != null) {
+                                            Variable.RESISTER_SELLER.setImage(storage_location);
+                                        } else {
+                                            Variable.RESISTER_SELLER.setImage("");
+                                        }
                                     }
-                                }
-                            });
+                                });
+                            }
                             if (fragmentManager == null) {
                                 String phoneNumber = "+" + 84 + etPhone.getText().toString().trim();
                                 Bundle bundle = new Bundle();

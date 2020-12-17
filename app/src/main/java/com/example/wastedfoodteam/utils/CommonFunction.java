@@ -24,7 +24,7 @@ import java.util.Date;
 public class CommonFunction {
 
     public static void setImageViewSrc(Context context, String src, ImageView imageView) {
-        if (src == null || src.isEmpty())
+        if (src == null || src.trim().isEmpty())
             imageView.setImageResource(R.drawable.no_image);
         else
             Glide.with(context).load(src).into(imageView);

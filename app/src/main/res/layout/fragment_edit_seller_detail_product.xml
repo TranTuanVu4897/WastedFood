@@ -79,7 +79,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
-                            android:text="0/120" />
+                            android:text="0/100" />
                     </FrameLayout>
 
                     <EditText
@@ -112,7 +112,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
-                            android:text="0/3000" />
+                            android:text="0/300" />
                     </FrameLayout>
 
                     <EditText

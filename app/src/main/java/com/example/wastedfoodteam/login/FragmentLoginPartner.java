@@ -29,6 +29,7 @@ import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.seller.forgetPassword.SellerForgetPasswordFragment;
 import com.example.wastedfoodteam.seller.home.SellerHomeActivity;
 import com.example.wastedfoodteam.seller.register.RegisterSellerFragment;
+import com.example.wastedfoodteam.utils.LoadingDialog;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,6 +45,7 @@ public class FragmentLoginPartner extends Fragment {
     EditText etSDT, etPass;
     String urlGetData = "";
     TextView tvRegisterAccount, tvForgotPassword;
+    LoadingDialog loadingDialog;
     String password = "";
 
     @Nullable
@@ -55,11 +57,13 @@ public class FragmentLoginPartner extends Fragment {
         btnSignIn = view.findViewById(R.id.btnSignInPartnerFLP);
         btnBuyerOption = view.findViewById(R.id.btnBuyerOptionFLP);
         tvRegisterAccount = view.findViewById(R.id.tvRegisterSeller);
+        loadingDialog = new LoadingDialog(getActivity());
         tvForgotPassword = view.findViewById(R.id.tvForgotPassPartnerFLP);
         Intent intent = new Intent(getActivity(), SellerHomeActivity.class);
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadingDialog.startLoadingDialog();
                 password = md5(etPass.getText().toString());
                 urlGetData = Variable.IP_ADDRESS + "login/sellerLogin.php?username=" + etSDT.getText().toString().trim() + "&password=" + md5(etPass.getText().toString().trim());
                 getData(urlGetData);
@@ -107,32 +111,34 @@ public class FragmentLoginPartner extends Fragment {
             @Override
             public void onResponse(String response) {
                 if ("account is locked".equals(response)) {
+                    loadingDialog.dismissDialog();
                     Toast.makeText(getActivity(), "Tài khoản bạn đã bị khóa", Toast.LENGTH_LONG).show();
                 } else  if("account is not active".equals(response)){
-                    Toast.makeText(getActivity(), "Tài khoản của bạn chưa được kích hoạt nếu có thắc mắc vui lòng liên hệ với chúng tôi " + urlGetData, Toast.LENGTH_LONG).show();
+                    loadingDialog.dismissDialog();
+                    Toast.makeText(getActivity(), "Tài khoản của bạn chưa được kích hoạt nếu có thắc mắc vui lòng liên hệ với chúng tôi " , Toast.LENGTH_LONG).show();
                 }
                 else if ("not exist account".equals(response)) {
+                    loadingDialog.dismissDialog();
                     Toast.makeText(getActivity(), "Tên đăng nhập hoặc mật khẩu không đúng" , Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(getActivity(), "đăng nhập thành công", Toast.LENGTH_LONG).show();
                     try {
                         JSONArray object = new JSONArray(response);
                         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                         Seller seller = gson.fromJson(object.getString(0), Seller.class);
-
                         final Intent intent = new Intent(getActivity(), SellerHomeActivity.class);
-
                         Variable.SELLER = seller;
-                        //openSellerHome();
-
+                        loadingDialog.dismissDialog();
                         FirebaseAuth.getInstance().signInWithEmailAndPassword(seller.getEmail(), seller.getPassword()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
                             public void onSuccess(AuthResult authResult) {
+
                                 Variable.fireBaseUID = authResult.getUser().getUid();
+                                Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_LONG).show();
                                 startActivity(intent);
                             }
                         });
                     } catch (Exception e) {
+                        loadingDialog.dismissDialog();
                         e.printStackTrace();
                     }
                 }
@@ -141,6 +147,7 @@ public class FragmentLoginPartner extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismissDialog();
                 Toast.makeText(getActivity(), "Lỗi kết nối", Toast.LENGTH_LONG).show();
                 Log.d("MK ", md5(etPass.getText().toString()));
             }

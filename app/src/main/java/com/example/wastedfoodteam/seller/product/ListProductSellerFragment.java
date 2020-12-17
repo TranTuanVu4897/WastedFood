@@ -25,6 +25,7 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.seller.order.ProductOrderSellerFragment;
+import com.example.wastedfoodteam.utils.LoadingDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +43,7 @@ public class ListProductSellerFragment extends ListFragment {
     Product product;
     ListView lvProduct;
     TextView tv_total_product;
+    LoadingDialog loadingDialog;
     int seller_id;
     int totalProduct;
 
@@ -57,6 +59,7 @@ public class ListProductSellerFragment extends ListFragment {
         arrProduct = new ArrayList<>();
         seller_id = Variable.SELLER.getId();
         product = Variable.PRODUCT;
+        loadingDialog = new LoadingDialog(getActivity());
         tv_total_product = view.findViewById(R.id.tv_total_product);
         String urlGetData = Variable.IP_ADDRESS + "seller/getListProductSeller.php?seller_id=" + seller_id;
         adapter = new ProductSellerAdapter(getActivity().getApplicationContext(), R.layout.list_seller_product, arrProduct, getResources(),getActivity());
@@ -153,7 +156,7 @@ public class ListProductSellerFragment extends ListFragment {
         ProductOrderSellerFragment productOrderSellerFragment = new ProductOrderSellerFragment();
         //open seller detail product fragment
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_main, productOrderSellerFragment, "")//TODO check if this work
+                .replace(R.id.content_main, productOrderSellerFragment, "")
                 .addToBackStack(null)
                 .commit();
     }

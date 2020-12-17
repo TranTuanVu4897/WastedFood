@@ -56,7 +56,7 @@ public class VerifyPhoneFragment extends Fragment {
         tilCode = view.findViewById(R.id.textInputVerifyPhone);
         btnResend = view.findViewById(R.id.btnResend);
         mAuth = FirebaseAuth.getInstance();
-        btnResend.setClickable(true);
+        btnResend.setClickable(false);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

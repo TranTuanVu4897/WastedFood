@@ -183,6 +183,9 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
                         FirebaseUser user = mAuth.getCurrentUser();
                         seller.setFirebase_UID(user.getUid());
                         String url = Variable.IP_ADDRESS + "seller/registerSeller.php";
+                        if(seller.getImage() == null){
+                            seller.setImage(" ");
+                        }
                         registerSellerData(url, seller.getName(), seller.getPassword(), seller.getPhone(), seller.getEmail(), seller.getLatitude() + "", seller.getLongitude() + "", seller.getAddress(), seller.getImage(), seller.getFirebase_UID(), seller.getDescription(), seller.getUsername());
                         final Intent intent = new Intent(getActivity(), SuccessRegisActivity.class);
                         getActivity().finishAndRemoveTask();
@@ -194,11 +197,10 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
     //register for seller
     private void registerSellerData(final String url, final String name, final String password, final String phone, final String email, final String latitude, final String longitude, final String address, final String imageURL, final String firebase_UID, final String description, final String username) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
+                int i = 0;
             }
         }, new Response.ErrorListener() {
             @Override
