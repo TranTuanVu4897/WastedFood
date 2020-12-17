@@ -56,9 +56,7 @@ public class EditProductSellerFragment extends Fragment {
         closeTime = view.findViewById(R.id.editText_detail_product_closeTime);
         quantity = view.findViewById(R.id.etQuantity);
         remainQuantity = view.findViewById(R.id.etRemainQuantity);
-
         Button btn_detail_product_add = view.findViewById(R.id.btn_detail_product_add);
-
         //input data
         id = Variable.PRODUCT.getId();
         CommonFunction.setImageViewSrc(getContext(),Variable.PRODUCT.getImage(), iv_detail_product_icon);

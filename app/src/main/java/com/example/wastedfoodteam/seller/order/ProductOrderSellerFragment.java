@@ -100,9 +100,9 @@ public class ProductOrderSellerFragment extends ListFragment {
         lvOrderPayment.setAdapter(orderPaymentAdapter);
         lvOrderDone.setAdapter(orderDoneAdapter);
         lvOrderCancel.setAdapter(orderCancelAdapter);
-        getData(Order.Status.BUYING);
-        getData(Order.Status.SUCCESS);
-        getData(Order.Status.CANCEL);
+        getListOrderSeller(Order.Status.BUYING);
+        getListOrderSeller(Order.Status.SUCCESS);
+        getListOrderSeller(Order.Status.CANCEL);
         return view;
     }
 
@@ -141,7 +141,7 @@ public class ProductOrderSellerFragment extends ListFragment {
     }
 
 
-    public void getData(final Order.Status status) {
+    public void getListOrderSeller(final Order.Status status) {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         String urlGetData = Variable.IP_ADDRESS + "seller/getListOrderSeller.php?seller_id=" + Variable.SELLER.getId() + "&product_id=" + Variable.PRODUCT.getId() + "&order_status=" + status;

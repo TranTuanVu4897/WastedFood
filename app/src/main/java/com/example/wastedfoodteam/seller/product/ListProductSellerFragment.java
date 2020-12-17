@@ -64,7 +64,7 @@ public class ListProductSellerFragment extends ListFragment {
         String urlGetData = Variable.IP_ADDRESS + "seller/getListProductSeller.php?seller_id=" + seller_id;
         adapter = new ProductSellerAdapter(getActivity().getApplicationContext(), R.layout.list_seller_product, arrProduct, getResources(),getActivity());
         lvProduct.setAdapter(adapter);
-        getData(urlGetData);
+        getListProductSeller(urlGetData);
         getTotalProduct(Variable.IP_ADDRESS + "seller/getTotalProduct.php" + "?seller_id=" + Variable.SELLER.getId());
         lvProduct.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -85,7 +85,7 @@ public class ListProductSellerFragment extends ListFragment {
     }
 
 
-    public void getData(String url) {
+    public void getListProductSeller(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
