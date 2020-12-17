@@ -72,11 +72,6 @@ public class Validation {
     public static Boolean checkCurrentDate(String date) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date strDate = sdf.parse(date);
-        if (new Date().after(strDate)) {
-            return true;
-        }
-        else{
-            return false;
-        }
+        return new Date().after(strDate);
     }
 }
