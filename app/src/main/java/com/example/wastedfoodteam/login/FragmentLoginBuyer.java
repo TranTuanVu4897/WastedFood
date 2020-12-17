@@ -113,7 +113,7 @@ public class FragmentLoginBuyer extends Fragment {
             }
         });
         //google option
-        AddGoogleSignInOption();
+        addGoogleSignInOption();
         btnSignInGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,7 +193,7 @@ public class FragmentLoginBuyer extends Fragment {
     /**
      * google sign in option
      */
-    private void AddGoogleSignInOption() {
+    private void addGoogleSignInOption() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
