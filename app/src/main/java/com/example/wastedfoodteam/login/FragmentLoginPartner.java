@@ -115,7 +115,7 @@ public class FragmentLoginPartner extends Fragment {
                     Toast.makeText(getActivity(), "Tài khoản bạn đã bị khóa", Toast.LENGTH_LONG).show();
                 } else  if("account is not active".equals(response)){
                     loadingDialog.dismissDialog();
-                    Toast.makeText(getActivity(), "Tài khoản của bạn chưa được kích hoạt nếu có thắc mắc vui lòng liên hệ với chúng tôi " + urlGetData, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Tài khoản của bạn chưa được kích hoạt nếu có thắc mắc vui lòng liên hệ với chúng tôi " , Toast.LENGTH_LONG).show();
                 }
                 else if ("not exist account".equals(response)) {
                     loadingDialog.dismissDialog();
@@ -127,11 +127,11 @@ public class FragmentLoginPartner extends Fragment {
                         Seller seller = gson.fromJson(object.getString(0), Seller.class);
                         final Intent intent = new Intent(getActivity(), SellerHomeActivity.class);
                         Variable.SELLER = seller;
-
+                        loadingDialog.dismissDialog();
                         FirebaseAuth.getInstance().signInWithEmailAndPassword(seller.getEmail(), seller.getPassword()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
                             public void onSuccess(AuthResult authResult) {
-                                loadingDialog.dismissDialog();
+
                                 Variable.fireBaseUID = authResult.getUser().getUid();
                                 Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_LONG).show();
                                 startActivity(intent);

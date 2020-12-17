@@ -27,7 +27,7 @@ public class SellerHomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSellerHome();
+
 
     }
 
@@ -42,6 +42,7 @@ public class SellerHomeFragment extends Fragment {
         tvTotalOrderSuccess = view.findViewById(R.id.tvTotalOrderSuccess);
         tvTotalProduct = view.findViewById(R.id.tvTotalProduct);
         tvTotalProductSelling = view.findViewById(R.id.tvTotalProductSelling);
+        getSellerHome();
          return  view;
     }
 

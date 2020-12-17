@@ -26,6 +26,7 @@ import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,8 +65,8 @@ public class EditProductSellerFragment extends Fragment {
         name.setText(Variable.PRODUCT.getName());
         originalPrice.setText(String.valueOf(Variable.PRODUCT.getOriginal_price()));
         sellPrice.setText(String.valueOf(Variable.PRODUCT.getSell_price()));
-        openTime.setText(String.valueOf(Variable.PRODUCT.getStart_time()));
-        closeTime.setText(String.valueOf(Variable.PRODUCT.getEnd_time()));
+        openTime.setText( new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Variable().PRODUCT.getStart_time()));
+        closeTime.setText( new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Variable().PRODUCT.getEnd_time()));
         quantity.setText(String.valueOf(Variable.PRODUCT.getOriginal_quantity()));
         remainQuantity.setText(String.valueOf(Variable.PRODUCT.getRemain_quantity()));
         closeTime.setEnabled(false);
@@ -73,6 +74,13 @@ public class EditProductSellerFragment extends Fragment {
         quantity.setEnabled(false);
         originalPrice.setEnabled(false);
         sellPrice.setEnabled(false);
+
+        name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+            }
+        });
 
 
         cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), iv_detail_product_icon);

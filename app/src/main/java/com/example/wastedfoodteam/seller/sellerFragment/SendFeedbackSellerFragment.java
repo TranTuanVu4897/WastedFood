@@ -106,7 +106,7 @@ public class SendFeedbackSellerFragment extends Fragment {
                 if(!hasFocus){
                     if(editText_sendFeedback_description.getText().toString().trim().length() > 200){
                         bolDescription = false;
-                        tilDescription.setError("Ghi chú không được quá 200 ký tự");
+                        tilDescription.setError("Nội dung không được quá 200 ký tự");
                     }else{
                         bolDescription = true;
                         tilDescription.setError(null);

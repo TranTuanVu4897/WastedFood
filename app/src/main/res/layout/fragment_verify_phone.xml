@@ -60,33 +60,41 @@
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                     android:textColor="@color/primaryTextColor" />
 
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputVerifyPhone"
-                    style="@style/parent"
-                    android:layout_marginTop="20dp">
-
-                    <EditText
-                        android:id="@+id/editTextCode"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="center_horizontal"
-                        android:digits="0123456789"
-                        android:inputType="number"
-                        android:hint="Nhập mã xác thực"
-                        android:maxLength="6" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <Button
-                    android:id="@+id/btnResend"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:text="Gửi lại mã thực"
-                    android:textAllCaps="false"
-                    android:textColor="#ffffff" />
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    >
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputVerifyPhone"
+                        style="@style/parent"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="20dp">
+
+                        <EditText
+                            android:id="@+id/editTextCode"
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center_horizontal"
+                            android:digits="0123456789"
+                            android:inputType="number"
+                            android:hint="Nhập mã xác thực"
+                            android:maxLength="6" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/btnResend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:text="Gửi lại"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff" />
+                </LinearLayout>
+
+
                 <Button
                     android:id="@+id/buttonSignIn"
                     style="@style/loginButton"

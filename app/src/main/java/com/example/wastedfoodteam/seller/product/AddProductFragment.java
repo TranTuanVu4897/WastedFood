@@ -137,7 +137,7 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
-                    bolProductName = checkAndAlertEmptyEditText(etProductName, tilProductName ,"Giá gốc phải có ít nhất 1 kí tự và không được quá 100 kí tự" );
+                    bolProductName = checkAndAlertEmptyEditText(etProductName, tilProductName ,"Tên sản phẩm phải có ít nhất 1 kí tự và không được quá 100 kí tự" );
                 }
             }
         });
@@ -146,7 +146,7 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
-                    bolQuantity = checkAndAlertEmptyEditText(etQuantity, tilQuantity ,"Giá gốc phải có ít nhất 1 kí tự và không được quá 100 kí tự" );
+                    bolQuantity = checkAndAlertEmptyEditText(etQuantity, tilQuantity ,"Số lượng phải có ít nhất 1 kí tự và không được quá 100 kí tự" );
                 }
 
             }
@@ -156,12 +156,12 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 String string = etDescription.getText().toString().trim();
-                if (string.length() <= 3000) {
+                if (string.length() <= 300) {
                     tilDescription.setError(null);
                     bolProductDescription = true;
 
                 } else {
-                    tilDescription.setError("Thông tin chi tiết sản phẩm không được quá 3000 ký tự");
+                    tilDescription.setError("Thông tin chi tiết sản phẩm không được quá 300 ký tự");
                     bolProductDescription = false;
                 }
             }
@@ -192,7 +192,7 @@ public class AddProductFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                TvCountProductDescription.setText(s.length()+"/3000");
+                TvCountProductDescription.setText(s.length()+"/300");
             }
 
             @Override

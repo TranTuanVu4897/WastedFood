@@ -26,6 +26,7 @@ import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Seller;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.CommonFunction;
+import com.example.wastedfoodteam.utils.LoadingDialog;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -58,6 +59,7 @@ public class EditSellerFragment extends Fragment {
     String string_editSeller_name;
     String string_editSeller_address;
     String string_editSeller_description;
+    LoadingDialog loadingDialog;
 
     //camera and upload picture handle
     CameraStorageFunction cameraStorageFunction;
@@ -91,6 +93,7 @@ public class EditSellerFragment extends Fragment {
         id = Variable.SELLER.getId();
         editText_editSeller_email.setEnabled(false);
         editText_editSeller_phoneNumber.setEnabled(false);
+        loadingDialog = new LoadingDialog(getActivity());
         getSeller(id);
         //string get from edit text
         string_editSeller_name = editText_editSeller_name.getText().toString().trim();
@@ -156,12 +159,15 @@ public class EditSellerFragment extends Fragment {
         btn_editSeller_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadingDialog.startLoadingDialog();
                 editText_editSeller_address.requestFocus();
                 editText_editSeller_description.requestFocus();
                 editText_editSeller_name.requestFocus();
                 editText_editSeller_name.clearFocus();
                 if(bolAddress && bolDescription && bolName){
                     inputData();
+                }else{
+                    loadingDialog.dismissDialog();
                 }
             }
         });
@@ -249,6 +255,7 @@ public class EditSellerFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         if (response.trim().equals("Succesfully update")) {
+                            loadingDialog.dismissDialog();
                             Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                             Variable.SELLER.setName(editText_editSeller_name.getText().toString().trim());
                             Variable.SELLER.setAddress(editText_editSeller_address.getText().toString().trim());
@@ -256,6 +263,7 @@ public class EditSellerFragment extends Fragment {
                             if (storage_location != null)
                                 Variable.SELLER.setImage(storage_location);
                         } else {
+                            loadingDialog.dismissDialog();
                             Toast.makeText(getActivity(), "Lỗi cập nhật", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -263,6 +271,7 @@ public class EditSellerFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        loadingDialog.dismissDialog();
                         Toast.makeText(getActivity(), "Xảy ra lỗi, vui lòng thử lại", Toast.LENGTH_SHORT).show();
                     }
                 }
