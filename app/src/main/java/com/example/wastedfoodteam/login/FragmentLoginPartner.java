@@ -66,7 +66,7 @@ public class FragmentLoginPartner extends Fragment {
                 loadingDialog.startLoadingDialog();
                 password = md5(etPass.getText().toString());
                 urlGetData = Variable.IP_ADDRESS + "login/sellerLogin.php?username=" + etSDT.getText().toString().trim() + "&password=" + md5(etPass.getText().toString().trim());
-                getData(urlGetData);
+                getSellerLoginStatus(urlGetData);
             }
         });
 
@@ -84,7 +84,7 @@ public class FragmentLoginPartner extends Fragment {
         btnBuyerOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addFragmentLoginPartner();
+                addFragmentLoginBuyer();
             }
         });
         tvRegisterAccount.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +105,7 @@ public class FragmentLoginPartner extends Fragment {
      *
      * @param url
      */
-    private void getData(String url) {
+    private void getSellerLoginStatus(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(requireActivity().getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -158,7 +158,7 @@ public class FragmentLoginPartner extends Fragment {
     /**
      * move to fragment buyer
      */
-    public void addFragmentLoginPartner() {
+    public void addFragmentLoginBuyer() {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         FragmentLoginBuyer fragmentLoginBuyer = new FragmentLoginBuyer();
