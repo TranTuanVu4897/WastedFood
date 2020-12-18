@@ -37,6 +37,7 @@ public class VerifyPhoneForgotPasswordFragment extends Fragment {
     private FirebaseAuth mAuth;
     EditText editText;
     TextInputLayout tilCode;
+    boolean bolCode = false;
     Button button,btnResend;
 
     @Override
@@ -55,6 +56,12 @@ public class VerifyPhoneForgotPasswordFragment extends Fragment {
             public void onClick(View v) {
                 editText.requestFocus();
                 editText.clearFocus();
+                if(bolCode){
+                    String code = editText.getText().toString().trim();
+                    verifyCode(code);
+                }else {
+                    Toast.makeText(getActivity(), "Mã xác nhận không hợp lệ", Toast.LENGTH_LONG).show();
+                }
             }
         });
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -63,14 +70,17 @@ public class VerifyPhoneForgotPasswordFragment extends Fragment {
                 if (!hasFocus) {
                     if (editText.getText().toString().trim().length() < 6 || editText.getText().toString().trim().equals(null)) {
                         tilCode.setError("Mã xác nhận phải có 6 ký tự");
+                        bolCode = false;
                     } else {
                         tilCode.setError(null);
-                        String code = editText.getText().toString().trim();
-                        verifyCode(code);
+                        bolCode = true;
                     }
                 }
             }
         });
+
+
+
         phoneNumber=getArguments().getString("phone");
         sendVerificationCode("+84" + phoneNumber);
         btnResend.setOnClickListener(new View.OnClickListener() {

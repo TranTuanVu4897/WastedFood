@@ -66,32 +66,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputName"
-                    style="@style/parent"
-                    android:layout_marginTop="20dp">
-
-                    <EditText
-                        android:id="@+id/et_seller_register_name"
-                        style="@style/modifiedEditText"
-                        android:hint="Tên nhà hàng"
-                        android:inputType="textPersonName|text"
-                        android:maxLines="1" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputEmail"
-                    style="@style/parent"
-                    android:layout_marginTop="20dp">
-
-                    <EditText
-                        android:id="@+id/et_seller_register_email"
-                        style="@style/modifiedEditText"
-                        android:hint="@string/login_email_hint"
-                        android:inputType="textEmailAddress"
-                        android:maxLines="1" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputPassword"
                     style="@style/parent"
                     android:hint="@string/login_password_hint"
@@ -115,6 +89,32 @@
                         style="@style/modifiedEditText"
                         android:hint="Nhập lại mật khẩu"
                         android:inputType="textPassword"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputName"
+                    style="@style/parent"
+                    android:layout_marginTop="20dp">
+
+                    <EditText
+                        android:id="@+id/et_seller_register_name"
+                        style="@style/modifiedEditText"
+                        android:hint="Tên nhà hàng"
+                        android:inputType="textPersonName|text"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputEmail"
+                    style="@style/parent"
+                    android:layout_marginTop="20dp">
+
+                    <EditText
+                        android:id="@+id/et_seller_register_email"
+                        style="@style/modifiedEditText"
+                        android:hint="@string/login_email_hint"
+                        android:inputType="textEmailAddress"
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
 
