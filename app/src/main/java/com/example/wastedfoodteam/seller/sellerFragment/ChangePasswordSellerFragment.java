@@ -23,6 +23,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.seller.home.SellerHomeFragment;
+import com.example.wastedfoodteam.utils.validation.Validation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -80,28 +81,34 @@ public class ChangePasswordSellerFragment extends Fragment {
                     Toast.makeText(getActivity(), "Mật khẩu sai thử lại lần nữa", Toast.LENGTH_LONG).show();
                 }else if(!newPassword.equals(confirmPassword)){
                     Toast.makeText(getActivity(), "Mật khẩu và xác nhận mật khẩu phải giống nhau", Toast.LENGTH_LONG).show();
-                }else {
-                    //validate new password
-                    //update password to db
-                    String urlGetData = Variable.IP_ADDRESS + "seller/updatePasswordAccount.php";
+                }else if(!Validation.checkPassword(newPassword)) {
+                    Toast.makeText(getActivity(), "Mật khẩu không hợp lệ, mật khẩu phải có từ 8 đến 16 kí tự và có ít nhất 1 chữ cái và 1 chữ số", Toast.LENGTH_LONG).show();
+                }else
+                    {
+
+
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     assert user != null;
                     user.updatePassword(md5(newPassword)).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Log.d("firebase", "User password failure.");
+                            Toast.makeText(getActivity(),"Cập nhật không thành công, vui lòng thử lại",Toast.LENGTH_SHORT).show();
+
                         }
                     })
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
+                                        String urlGetData = Variable.IP_ADDRESS + "seller/updatePasswordAccount.php";
+                                        updateSellerPassword(urlGetData);
                                         Log.d("firebase", "User password updated.");
                                     }
                                 }
 
                             });
-                    updateSellerPassword(urlGetData);
+
                 }
             }
         });

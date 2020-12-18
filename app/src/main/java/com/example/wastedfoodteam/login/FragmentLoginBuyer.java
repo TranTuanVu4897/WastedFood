@@ -74,7 +74,6 @@ public class FragmentLoginBuyer extends Fragment {
     //    SignInButton btnSignInGoogle;
     LoginButton btnSignInFacebook;
     CallbackManager callbackManager;
-    int check = 0;
     private FirebaseAuth mAuth;
     public static final String mPreference = "mypref";
     public static final String BUYER_JSON = "BUYER_JSON";

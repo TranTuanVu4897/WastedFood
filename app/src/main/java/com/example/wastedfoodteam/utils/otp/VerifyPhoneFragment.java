@@ -44,7 +44,6 @@ public class VerifyPhoneFragment extends Fragment {
     TextInputLayout tilCode;
     Button button,btnResend;
     FragmentManager fragmentManager;
-    int count;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -115,18 +115,19 @@ public class SellerChangePassword extends Fragment {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Log.d("firebase", "User password failure.");
+                                    Toast.makeText(getActivity(),"Cập nhật không thành công, vui lòng thử lại",Toast.LENGTH_SHORT).show();
                                 }
                             })
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
+                                                updateSellerPasswordByPhone(phone);
                                                 Log.d("firebase", "User password updated.");
                                             }
                                         }
 
                                     });
-                            updateSellerPasswordByPhone(phone);
                         }
                     });
 

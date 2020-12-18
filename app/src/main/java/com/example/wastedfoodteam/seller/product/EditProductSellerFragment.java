@@ -23,6 +23,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
+import com.example.wastedfoodteam.seller.home.SellerHomeFragment;
+import com.example.wastedfoodteam.seller.order.ProductOrderSellerFragment;
+import com.example.wastedfoodteam.seller.order.SellerOrder;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
@@ -130,6 +133,14 @@ public class EditProductSellerFragment extends Fragment {
                     public void onResponse(String response) {
                         if (response.trim().equals("Successfully update")) {
                             Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                            Variable.PRODUCT.setName(name.getText().toString().trim());
+                            Variable.PRODUCT.setRemain_quantity( Integer.parseInt(remainQuantity.getText().toString().trim()));
+                            ProductOrderSellerFragment productOrderSellerFragment = new ProductOrderSellerFragment();
+                            requireActivity().getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.content_main, productOrderSellerFragment, "")
+                                    .addToBackStack(null)
+                                    .commit();
+
                             //TODO move back to home
                         } else {
                             Toast.makeText(getActivity(), "Lỗi cập nhật", Toast.LENGTH_SHORT).show();

@@ -42,7 +42,6 @@ public class CameraStorageFunction {
 
     //image pick uri
     private Uri image_uri;
-    private Uri upload_uri;
     // instance for firebase storage and StorageReference
     final FirebaseStorage storage;
     final StorageReference storageReference;

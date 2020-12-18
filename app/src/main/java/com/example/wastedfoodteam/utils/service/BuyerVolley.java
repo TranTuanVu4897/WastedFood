@@ -18,7 +18,6 @@ import org.json.JSONException;
 public class BuyerVolley {
     private final RequestQueue requestQueue;
     private String url;
-    private Buyer buyer;
 
 
     public BuyerVolley(Context context, String url) {

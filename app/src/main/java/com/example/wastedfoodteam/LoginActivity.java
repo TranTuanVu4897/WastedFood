@@ -15,7 +15,6 @@ import android.util.Log;
 
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.login.FragmentLoginBuyer;
-import com.example.wastedfoodteam.utils.LoadingStartApp;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,7 +26,6 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity {
 
     private FusedLocationProviderClient fusedLocationClient;
-    private LoadingStartApp loadingStartApp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

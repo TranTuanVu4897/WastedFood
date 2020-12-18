@@ -116,12 +116,6 @@ public class GPSTracker extends Service implements LocationListener {
         return location;
     }
 
-
-    public void stopUsingGPS() {
-        if (locationManager != null)
-            locationManager.removeUpdates(this);
-    }
-
     public double getLatitude() {
         if (location != null)
             latitude = location.getLatitude();
