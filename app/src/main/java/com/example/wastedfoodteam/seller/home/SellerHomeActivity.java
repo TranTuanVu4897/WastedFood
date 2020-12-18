@@ -23,7 +23,6 @@ import com.example.wastedfoodteam.seller.notification.NotificationFragment;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.seller.product.AddProductFragment;
 import com.example.wastedfoodteam.seller.product.ListProductSellerFragment;
-import com.example.wastedfoodteam.seller.register.RegisterSellerLocationFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.ChangePasswordSellerFragment;
 import com.example.wastedfoodteam.seller.sellerFragment.SendFeedbackSellerFragment;
 import com.example.wastedfoodteam.model.Seller;
@@ -57,7 +56,7 @@ public class SellerHomeActivity extends AppCompatActivity {
         notificationUtil = new NotificationUtil();
         Variable.CURRENT_USER = "SELLER";
         final SendNotif sendNotif = new SendNotif();
-        sendNotif.UpdateToken();
+        sendNotif.updateToken();
 
         //get the header view
         NavigationView navigationView = findViewById(R.id.nav_view);

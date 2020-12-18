@@ -37,10 +37,10 @@ public class SendNotif {
 
             }
         });
-        UpdateToken();
+        updateToken();
     }
 
-    public void UpdateToken(){
+    public void updateToken(){
         //DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child()
         FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         String refreshToken= FirebaseInstanceId.getInstance().getToken();
@@ -48,9 +48,9 @@ public class SendNotif {
         FirebaseDatabase.getInstance().getReference("Tokens").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(token);
     }
 
-    public void sendNotifications(String usertoken, String title, String message) {
+    public void sendNotifications(String userToken, String title, String message) {
         Data data = new Data(title, message);
-        NotificationSender sender = new NotificationSender(data, usertoken);
+        NotificationSender sender = new NotificationSender(data, userToken);
         APIService apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
         apiService.sendNotifcation(sender).enqueue(new Callback<MyResponse>() {
             @Override
