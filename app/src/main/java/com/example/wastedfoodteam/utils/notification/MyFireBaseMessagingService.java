@@ -152,5 +152,4 @@ public class MyFireBaseMessagingService extends FirebaseMessagingService {
         Token token1= new Token(refreshToken);
         FirebaseDatabase.getInstance().getReference("Tokens").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(token1);
     }
-
 }

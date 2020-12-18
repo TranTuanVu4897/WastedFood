@@ -107,7 +107,7 @@ public class AddProductFragment extends Fragment {
                 if(!hasFocus) {
                     String sellPrice = etSellPrice.getText().toString().trim();
                     String originalPrice = etOriginalPrice.getText().toString().trim();
-                    if (CommonFunction.checkEmptyEditText(etSellPrice) && sellPrice.length() < 100) {
+                    if (CommonFunction.checkEmptyEditText(etSellPrice) && sellPrice.length() <= 100) {
                         if (Integer.parseInt(sellPrice) > Integer.parseInt(originalPrice)) {
                             tilSalePrice.setError("Giá bán không được lớn hơn giá gốc");
                             bolSalePrice = false;
@@ -127,11 +127,22 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
-                    bolOriginalPrice = checkAndAlertEmptyEditText(etOriginalPrice, tilOriginalPrice ,"Giá gốc phải có ít nhất 1 kí tự và không được quá 100 kí tự" );
+                    if(checkAndAlertEmptyEditText(etOriginalPrice, tilOriginalPrice ,"Giá gốc phải có ít nhất 1 kí tự và không được quá 100 kí tự" )){
+                        if(Double.parseDouble(etOriginalPrice.getText().toString()) == 0){
+                            bolOriginalPrice = false;
+                            tilOriginalPrice.setError("Giá gốc không được bằng không");
+                        }else{
+                            tilOriginalPrice.setError(null);
+                            bolOriginalPrice = true;
+                        }
+                    }else{
+                        bolOriginalPrice = false;
+                    }
                 }
 
             }
         });
+
 
         etProductName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -146,9 +157,16 @@ public class AddProductFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
-                    bolQuantity = checkAndAlertEmptyEditText(etQuantity, tilQuantity ,"Số lượng phải có ít nhất 1 kí tự và không được quá 100 kí tự" );
+                     if( checkAndAlertEmptyEditText(etQuantity, tilQuantity ,"Số lượng phải có ít nhất 1 kí tự và không được quá 100 kí tự" )){
+                         if(Integer.parseInt(etQuantity.getText().toString().trim() ) == 0){
+                             bolQuantity = false;
+                             tilQuantity.setError("Số lượng không được bằng không");
+                         }else{
+                             tilQuantity.setError(null);
+                             bolQuantity = true;
+                         }
+                     }
                 }
-
             }
         });
 
@@ -166,6 +184,7 @@ public class AddProductFragment extends Fragment {
                 }
             }
         });
+
 
         etProductName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -299,7 +318,7 @@ public class AddProductFragment extends Fragment {
     private boolean checkAndAlertEmptyEditText( EditText editText , TextInputLayout textInputLayout  , String errorMessage){
 
             String string = editText.getText().toString().trim();
-            if (CommonFunction.checkEmptyEditText(editText) && string.length() < 100) {
+            if (CommonFunction.checkEmptyEditText(editText) && string.length() <= 100) {
                 textInputLayout.setError(null);
                 return true;
 

@@ -19,10 +19,20 @@
         <item>Tất cả</item>
     </string-array>
 
-    <string name="login_email_hint">Địa chỉ email</string>
+    //register
+    <string name="username_hint">Tên tài khoản <font fgcolor='#FF0000'>*</font></string>
     <string name="login_password_hint">Mật khẩu <font fgcolor='#FF0000'>*</font></string>
+    <string name="login_confirm_password_hint">Nhập lại mật khẩu <font fgcolor='#FF0000'>*</font></string>
+    <string name="login_restaurant_hint">Tên nhà hàng <font fgcolor='#FF0000'>*</font></string>
+    <string name="login_email_hint">Địa chỉ email <font fgcolor='#FF0000'>*</font></string>
+    <string name="login_lng_hint">Kinh độ <font fgcolor='#FF0000'>*</font></string>
+    <string name="login_lat_hint">Vĩ độ <font fgcolor='#FF0000'>*</font></string>
+    <string name="login_address_hint">Địa chỉ <font fgcolor='#FF0000'>*</font></string>
+    <string name="login_mobile_number_hint">Số điện thoại <font fgcolor='#FF0000'>*</font></string>
+
+
+
     <string name="login_name_hint">Tên người dùng</string>
-    <string name="login_mobile_number_hint">Số điện thoại</string>
     <string name="default_web_client_id">89673767638-adjcn6mgai4g7qe4kl4i83t6i7dg5rpt.apps.googleusercontent.com</string>
     <string name="product">Product</string>
     <string name="avatar">Avatar</string>

@@ -62,7 +62,7 @@
                     <EditText
                         android:id="@+id/etLatitude"
                         style="@style/modifiedEditText"
-                        android:hint="Tọa độ X"
+                        android:hint="@string/login_lat_hint"
                         android:inputType="none"
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -74,7 +74,7 @@
                     <EditText
                         android:id="@+id/etLongitude"
                         style="@style/modifiedEditText"
-                        android:hint="Tọa độ Y"
+                        android:hint="@string/login_lng_hint"
                         android:inputType="none"
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -87,7 +87,7 @@
                     <EditText
                         android:id="@+id/etAddress"
                         style="@style/modifiedEditText"
-                        android:hint="Địa chỉ"
+                        android:hint="@string/login_address_hint"
                         android:inputType="text"
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
