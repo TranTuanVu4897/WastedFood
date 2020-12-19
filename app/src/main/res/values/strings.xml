@@ -6,7 +6,7 @@
     <string name="order">Đặt hàng</string>
 
     <string-array name="direction_array">
-        <item> </item>
+        <item>Tất cả</item>
         <item>5km</item>
         <item>10km</item>
         <item>15km</item>
@@ -14,7 +14,6 @@
     </string-array>
 
     <string-array name="discount_array">
-        <item> </item>
         <item>10%</item>
         <item>50%</item>
         <item>90%</item>

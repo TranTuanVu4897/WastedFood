@@ -91,12 +91,16 @@ public class FilterDialog {
         spDistance.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Variable.distance = parent.getAdapter().getItem(position).toString().replace("km", "").trim();//Get from string array
+                String distance = parent.getAdapter().getItem(position).toString().replace("km", "").trim();
+                if (distance.equals("Tất cả"))
+                    Variable.distance = "";
+                else
+                    Variable.distance = distance;//Get from string array
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                Variable.distance = "";
             }
         });
     }
@@ -124,7 +128,7 @@ public class FilterDialog {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                Variable.startTime = "";
             }
         });
     }
@@ -145,7 +149,7 @@ public class FilterDialog {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                Variable.endTime = "";
             }
         });
     }
@@ -172,12 +176,12 @@ public class FilterDialog {
                 if (item.contains("%"))
                     Variable.discount = item.replace("%", "").trim();
                 else
-                    Variable.discount = "120";
+                    Variable.discount = "";
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                Variable.discount = "";
             }
         });
     }
