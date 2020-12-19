@@ -383,7 +383,19 @@ public class FragmentLoginBuyer extends Fragment {
                                 signOutGoogle();
                                 break;
                         }
-                    } else {
+
+                    }else if("exist".equals(response)){
+                        Toast.makeText(getActivity(), "Tài khoản của bạn đã được sử dụng bên bán hàng", Toast.LENGTH_LONG).show();
+                        switch (Variable.CHECK_LOGIN) {
+                            case 2:
+                                signOutFacebook();
+                                break;
+                            case 1:
+                                signOutGoogle();
+                                break;
+                        }
+                    }
+                    else {
                         JSONArray object = new JSONArray(response);
 
                         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
