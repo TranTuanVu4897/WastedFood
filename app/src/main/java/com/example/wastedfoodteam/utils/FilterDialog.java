@@ -91,12 +91,16 @@ public class FilterDialog {
         spDistance.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Variable.distance = parent.getAdapter().getItem(position).toString().replace("km", "");//Get from string array
+                String distance = parent.getAdapter().getItem(position).toString().replace("km", "").trim();
+                if (distance.equals("Tất cả"))
+                    Variable.distance = "";
+                else
+                    Variable.distance = distance;//Get from string array
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                Variable.distance = "";
             }
         });
     }
@@ -110,18 +114,21 @@ public class FilterDialog {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getAdapter().getItem(position).toString();
-                Variable.startTime = Time.valueOf(item.replace("h", "").trim() + ":00:00").toString();
+                if (!item.trim().isEmpty()) {
+                    Variable.startTime = Time.valueOf(item.replace("h", "").trim() + ":00:00").toString();
 
-                String[] times = getTimeArray(position + 1);
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, times);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spEndTime.setAdapter(adapter);
-
+                    String[] times = getTimeArray(position + 1);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, times);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spEndTime.setAdapter(adapter);
+                } else {
+                    Variable.startTime = "";
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                Variable.startTime = "";
             }
         });
     }
@@ -135,13 +142,14 @@ public class FilterDialog {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getAdapter().getItem(position).toString();
-                Variable.endTime = Time.valueOf(item.replace("h", "").trim() + ":00:00").toString();
-
+                if (!item.trim().isEmpty())
+                    Variable.endTime = Time.valueOf(item.replace("h", "").trim() + ":00:00").toString();
+                else Variable.endTime = "";
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                Variable.endTime = "";
             }
         });
     }
@@ -149,6 +157,7 @@ public class FilterDialog {
 
     private String[] getTimeArray(int start) {
         ArrayList<String> times = new ArrayList<>();
+        times.add("");
         for (; start <= END_TIME; start++) {
             times.add(start + "h");
         }
@@ -165,14 +174,14 @@ public class FilterDialog {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getAdapter().getItem(position).toString();
                 if (item.contains("%"))
-                    Variable.discount = item.replace("%", "");
+                    Variable.discount = item.replace("%", "").trim();
                 else
-                    Variable.discount = "120";
+                    Variable.discount = "";
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                Variable.discount = "";
             }
         });
     }

@@ -26,9 +26,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.buyer.followseller.FragmentSellerDetail;
+import com.example.wastedfoodteam.buyer.order.BuyerOrder;
 import com.example.wastedfoodteam.buyer.order.FragmentOrderDetail;
 import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.buyer.order.BuyerOrder;
 import com.example.wastedfoodteam.model.Order;
 import com.example.wastedfoodteam.seller.notification.NotificationUtil;
 import com.example.wastedfoodteam.utils.CommonFunction;
@@ -301,12 +301,16 @@ public class FragmentDetailProduct extends Fragment {
     @Override
     public void onPause() {
         String UPDATE_FOLLOW_URL = Variable.IP_ADDRESS + Variable.UPDATE_FOLLOW;
-        followVolley.setRequestUpdateFollow(new FollowResponseCallback() {
-            @Override
-            public void onSuccess(String result) {
-                Log.w("FollowResult", result);
-            }
-        }, UPDATE_FOLLOW_URL, Variable.BUYER.getId(), product.getSeller_id(), isImageButtonIsFollowed(ibFollow.getTag()));
+        try {
+            followVolley.setRequestUpdateFollow(new FollowResponseCallback() {
+                @Override
+                public void onSuccess(String result) {
+                    Log.w("FollowResult", result);
+                }
+            }, UPDATE_FOLLOW_URL, Variable.BUYER.getId(), product.getSeller_id(), isImageButtonIsFollowed(ibFollow.getTag()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         super.onPause();
     }
 }

@@ -66,7 +66,7 @@ public class ReportDialog {
         else
             tvAccused.setText(((Buyer) accused).getName());
 
-        url = Variable.IP_ADDRESS + "FeedbackReport/report.php";
+        url = Variable.IP_ADDRESS + "feedbackReport/report.php";
         accusedId = accused.getId() + "";
 
         ivReport.setOnClickListener(new View.OnClickListener() {
@@ -101,9 +101,9 @@ public class ReportDialog {
                 if (cameraStorageFunction.getImage_uri() != null)
                     cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
                         @Override
-                        public void onSuccess(String url) {
+                        public void onSuccess(String imageUrl) {
                             content = etContent.getText().toString();
-                            insertData(url, reporterId, accusedId, content, cameraStorageFunction.getImage_uri().toString());
+                            insertData(url, reporterId, accusedId, content, imageUrl);
                         };
 
                         @Override
