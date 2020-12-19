@@ -208,15 +208,19 @@ public class FragmentSellerDetail extends ListFragment {
 
     @Override
     public void onPause() {
-        boolean isFollow = false;
-        if (ibFollow.getTag().equals(R.drawable.followed)) isFollow = true;
-        String UPDATE_FOLLOW_URL = Variable.IP_ADDRESS + Variable.UPDATE_FOLLOW;
-        followVolley.setRequestUpdateFollow(new FollowResponseCallback() {
-            @Override
-            public void onSuccess(String result) {
+        try {
+            boolean isFollow = false;
+            if (ibFollow.getTag().equals(R.drawable.followed)) isFollow = true;
+            String UPDATE_FOLLOW_URL = Variable.IP_ADDRESS + Variable.UPDATE_FOLLOW;
+            followVolley.setRequestUpdateFollow(new FollowResponseCallback() {
+                @Override
+                public void onSuccess(String result) {
 
-            }
-        }, UPDATE_FOLLOW_URL, Variable.BUYER.getId(), seller.getId(), isFollow);
+                }
+            }, UPDATE_FOLLOW_URL, Variable.BUYER.getId(), seller.getId(), isFollow);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         super.onPause();
     }
 
