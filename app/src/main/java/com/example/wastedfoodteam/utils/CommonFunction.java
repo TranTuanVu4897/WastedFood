@@ -135,8 +135,10 @@ public class CommonFunction {
     }
 
     private static double getDistanceBetweenTwoPlace(double lat1, double lon1, double lat2, double lon2) {
-        double dist = (((Math.acos(Math.sin((lat1 * Math.PI / 180)) * Math.sin((lat2 * Math.PI / 180)) + Math.cos((lat1 * Math.PI / 180)) * Math.cos((lat2 * Math.PI / 180)) * Math.cos(((lon1 - lon2) * Math.PI / 180)))) * 180 / Math.PI) * 60 * 1.1515 * 1.609344);
-        return (Math.round(dist));
+        double dist = (((Math.acos(Math.sin((lat1 * Math.PI / 180)) *
+                Math.sin((lat2 * Math.PI / 180)) + Math.cos((lat1 * Math.PI / 180)) *
+                Math.cos((lat2 * Math.PI / 180)) * Math.cos(((lon1 - lon2) * Math.PI / 180)))) * 180 / Math.PI) * 60 * 1.1515 * 1.609344);
+        return (Math.round(dist * 100.0) / 100.0);
     }
 
     private static double deg2rad(double deg) {
