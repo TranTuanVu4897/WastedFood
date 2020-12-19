@@ -12,6 +12,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.global.Variable;
+import com.example.wastedfoodteam.utils.CommonFunction;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -47,6 +48,7 @@ public class NotificationUtil {
                 params.put("receiver_id", String.valueOf(receiver_id));
                 params.put("content", content);
                 params.put("order_id", String.valueOf(order_id));
+                params.put("modified_date" , CommonFunction.getCurrentDatetime() + "");
                 return params;
             }
         };

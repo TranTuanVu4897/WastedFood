@@ -305,6 +305,11 @@ public class AddProductFragment extends Fragment {
                                 storage_location = url;
                                 addProduct(urlGetData);
                             }
+
+                            @Override
+                            public void onError() {
+                                loadingDialog.dismissDialog();
+                            }
                         });
                     }
                 }
@@ -316,7 +321,6 @@ public class AddProductFragment extends Fragment {
 
 
     private boolean checkAndAlertEmptyEditText( EditText editText , TextInputLayout textInputLayout  , String errorMessage){
-
             String string = editText.getText().toString().trim();
             if (CommonFunction.checkEmptyEditText(editText) && string.length() <= 100) {
                 textInputLayout.setError(null);
@@ -326,7 +330,6 @@ public class AddProductFragment extends Fragment {
                 textInputLayout.setError(errorMessage);
                 return false;
             }
-
     }
 
     private void setUp(){

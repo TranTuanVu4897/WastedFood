@@ -150,6 +150,11 @@ public class EditProductSellerFragment extends Fragment {
                             storageLocation = url;
                             String urlGetData = Variable.IP_ADDRESS + "seller/updateProductByID.php";
                             updateProduct(urlGetData);
+                        };
+
+                        @Override
+                        public void onError() {
+
                         }
                     });
                 }else {

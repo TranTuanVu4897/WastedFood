@@ -231,6 +231,11 @@ public class EditSellerFragment extends Fragment {
                     storage_location = url;
                     String urlGetData = Variable.IP_ADDRESS + "seller/sellerEdit.php";
                     updateSeller(urlGetData);
+                };
+
+                @Override
+                public void onError() {
+
                 }
             });
         else {

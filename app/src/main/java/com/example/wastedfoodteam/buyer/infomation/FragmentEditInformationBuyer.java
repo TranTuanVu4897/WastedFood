@@ -107,6 +107,11 @@ public class FragmentEditInformationBuyer extends Fragment {
                         @Override
                         public void onSuccess(String url) {
                             setUpUpdate();
+                        };
+
+                        @Override
+                        public void onError() {
+
                         }
                     });
                 }else{
@@ -157,6 +162,11 @@ public class FragmentEditInformationBuyer extends Fragment {
                 public void onSuccess(String url1) {
                     urlImage[0] = url1;
                     updateUserInformation(url, accountId, name, phone, urlImage[0], finalDob, gender);
+                };
+
+                @Override
+                public void onError() {
+
                 }
             });
         }else{

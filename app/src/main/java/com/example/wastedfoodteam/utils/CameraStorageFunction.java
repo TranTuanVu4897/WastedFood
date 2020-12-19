@@ -52,6 +52,7 @@ public class CameraStorageFunction {
 
     public interface HandleUploadImage {
         void onSuccess(String url);
+        void onError();
     }
 
     public Uri getImage_uri() {
@@ -207,12 +208,12 @@ public class CameraStorageFunction {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
                         // Error, Image not uploaded
                         Toast.makeText(myActivity, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
 
 
 }
