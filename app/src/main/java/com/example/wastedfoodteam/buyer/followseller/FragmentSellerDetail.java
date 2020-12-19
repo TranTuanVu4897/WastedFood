@@ -50,7 +50,7 @@ public class FragmentSellerDetail extends ListFragment {
     FragmentDetailProduct detailProduct;
     Bundle bundleDetail;
     Seller seller;
-    TextView tvNameSeller, tvAddress, tvDescription, tvRatingFSD, tvFollowFSD, tvProductFSD;
+    TextView tvNameSeller, tvAddress, tvDescription, tvRatingFSD, tvFollowFSD, tvProductFSD,tvDistance;
     ImageView ivPhotoSeller;
     ListView lvProduction;
     ImageButton ibReport, ibFollow;
@@ -132,6 +132,7 @@ public class FragmentSellerDetail extends ListFragment {
         tvNameSeller.setText(seller.getName() != null ? seller.getName() : "Chưa được đặt tên");
         tvAddress.setText(seller.getAddress() != null ? seller.getAddress() : "Chưa có địa chỉ");
         tvDescription.setText(seller.getDescription() != null ? seller.getDescription() : "Chưa có thông tin");
+        tvDistance.setText(CommonFunction.getStringDistance(seller,Variable.gps));
         CommonFunction.setImageViewSrc(requireActivity().getApplicationContext(), seller.getImage(), ivPhotoSeller);
     }
 
@@ -153,6 +154,7 @@ public class FragmentSellerDetail extends ListFragment {
         tvRatingFSD = view.findViewById(R.id.tvRatingFSD);
         tvFollowFSD = view.findViewById(R.id.tvFollowFSD);
         tvProductFSD = view.findViewById(R.id.tvProductFSD);
+        tvDistance = view.findViewById(R.id.tvDistance);
         ivPhotoSeller = view.findViewById(R.id.ivPhotoSellerFSD);
         ibReport = view.findViewById(R.id.ibReport);
         ibFollow = view.findViewById(R.id.iBtnFollow);
