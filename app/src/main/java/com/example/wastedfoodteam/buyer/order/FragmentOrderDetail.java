@@ -16,10 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.wastedfoodteam.global.Variable;
-import com.example.wastedfoodteam.utils.DirectionParser;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.buyer.followseller.FragmentSellerDetail;
+import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.utils.CommonFunction;
+import com.example.wastedfoodteam.utils.DirectionParser;
 import com.example.wastedfoodteam.utils.RatingDialog;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -68,6 +69,20 @@ public class FragmentOrderDetail extends Fragment implements OnMapReadyCallback 
         //show dialog
         setRatingDialog();
 
+        ivProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundleDetail = new Bundle();
+                bundleDetail.putSerializable("SELLER", order.getProduct().getSeller());
+                FragmentSellerDetail restaurant = new FragmentSellerDetail();
+                restaurant.setArguments(bundleDetail);
+
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.flSearchResultAH, restaurant, "")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
