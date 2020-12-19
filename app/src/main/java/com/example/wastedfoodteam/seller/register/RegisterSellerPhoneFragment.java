@@ -120,6 +120,11 @@ public class RegisterSellerPhoneFragment extends Fragment {
                                         } else {
                                             Variable.RESISTER_SELLER.setImage("");
                                         }
+                                    };
+
+                                    @Override
+                                    public void onError() {
+
                                     }
                                 });
                             }

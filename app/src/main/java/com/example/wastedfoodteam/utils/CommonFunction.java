@@ -100,6 +100,11 @@ public class CommonFunction {
         return new SimpleDateFormat("yyyy-MM-dd").format(currentTime);
     }
 
+    public static String getCurrentDatetime() {
+        Date currentTime = Calendar.getInstance().getTime();
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(currentTime);
+    }
+
     /**
      * @param editText
      * @return

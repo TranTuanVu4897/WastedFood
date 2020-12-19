@@ -104,6 +104,11 @@ public class ReportDialog {
                         public void onSuccess(String url) {
                             content = etContent.getText().toString();
                             insertData(url, reporterId, accusedId, content, cameraStorageFunction.getImage_uri().toString());
+                        };
+
+                        @Override
+                        public void onError() {
+
                         }
                     });
                 else {
