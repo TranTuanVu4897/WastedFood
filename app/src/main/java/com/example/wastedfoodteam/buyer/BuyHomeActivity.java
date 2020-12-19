@@ -149,6 +149,10 @@ public class BuyHomeActivity extends AppCompatActivity {
                         clearBackStackAndOpenFragment(notificationFragment);
                         notificationUtil.updateNotificationSeen(getApplicationContext(), Variable.BUYER.getId(), navigation);
                         break;
+                    case R.id.itemNavMenuBuyerHome:
+                        addFragmentListProduct();
+                        break;
+
                 }
 
                 DrawerLayout drawer = findViewById(R.id.drawer_layout_buyer);

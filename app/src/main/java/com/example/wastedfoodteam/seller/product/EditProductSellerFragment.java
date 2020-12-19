@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -34,11 +37,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EditProductSellerFragment extends Fragment {
-    private EditText name;
+    private EditText name,description;
     private EditText originalPrice;
     private EditText sellPrice;
     private EditText openTime,closeTime,quantity,remainQuantity;
     private String storageLocation;
+    private Button btnCancel;
+    private TextView tvCountProductName,tvCountProductDescription;
     int id;
 
     CameraStorageFunction cameraStorageFunction;
@@ -53,10 +58,14 @@ public class EditProductSellerFragment extends Fragment {
         //ui view
         ImageView iv_detail_product_icon = view.findViewById(R.id.iv_detail_product_icon);
         name = view.findViewById(R.id.editText_detail_product_name);
+        btnCancel = view.findViewById(R.id.btn_cancel_FSAP);
         originalPrice = view.findViewById(R.id.editText_detail_product_originalPrice);
         sellPrice = view.findViewById(R.id.editText_detail_product_sellPrice);
         openTime = view.findViewById(R.id.editText_detail_product_openTime);
         closeTime = view.findViewById(R.id.editText_detail_product_closeTime);
+        description = view.findViewById(R.id.etDescription);
+        tvCountProductName = view.findViewById(R.id.tvCountProductName);
+        tvCountProductDescription = view.findViewById(R.id.tvCountProductDescription);
         quantity = view.findViewById(R.id.etQuantity);
         remainQuantity = view.findViewById(R.id.etRemainQuantity);
         Button btn_detail_product_add = view.findViewById(R.id.btn_detail_product_add);
@@ -75,10 +84,47 @@ public class EditProductSellerFragment extends Fragment {
         quantity.setEnabled(false);
         originalPrice.setEnabled(false);
         sellPrice.setEnabled(false);
-
-        name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public void onClick(View v) {
+                ProductOrderSellerFragment productOrderSellerFragment = new ProductOrderSellerFragment();
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content_main, productOrderSellerFragment, "")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                tvCountProductName.setText(s.length() + "/100");
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tvCountProductName.setText(s.length() + "/100");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        description.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tvCountProductDescription.setText(s.length()+"/300");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
 
             }
         });
@@ -113,6 +159,8 @@ public class EditProductSellerFragment extends Fragment {
                 }
             }
         });
+        tvCountProductDescription.setText(description.getText().toString().trim().length()+"/300");
+        tvCountProductName.setText(name.getText().toString().trim().length()+"/100");
         return view;
     }
 

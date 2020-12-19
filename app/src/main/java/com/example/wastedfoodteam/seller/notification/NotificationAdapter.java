@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Notification;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.service.TimeCount;
@@ -71,7 +72,11 @@ public class NotificationAdapter extends BaseAdapter {
         }
         notification = arrayNotification.get(position);
         timeCount = new TimeCount();
-        CommonFunction.setImageViewSrc(myContext, notification.getBuyer_image(), holder.ivBuyer);
+        if(Variable.CURRENT_USER.equals("SELLER")){
+            CommonFunction.setImageViewSrc(myContext, notification.getSeller_image(), holder.ivBuyer);
+        }else {
+            CommonFunction.setImageViewSrc(myContext, notification.getBuyer_image(), holder.ivBuyer);
+        }
         String time = timeCount.countTimeAgo(notification.getModified_date().getTime());
         holder.tvTime.setText(time);
         holder.tvContent.setText(notification.getContent());

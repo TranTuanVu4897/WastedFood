@@ -129,30 +129,40 @@ public class FragmentEditInformationBuyer extends Fragment {
 
     private void setUpUpdate() {
         url = Variable.IP_ADDRESS + "information/changeInfoBuyer.php";
-        String name = etName.getText().toString();
+        final String name = etName.getText().toString();
         if (name.trim().isEmpty() || !Validation.checkName(name)) {
             Toast.makeText(getActivity(), "Vui lòng điền tên,tên quá không được quá 50 kí tự", Toast.LENGTH_LONG).show();
             return;
         }
-        String phone = etPhone.getText().toString();
+        final String phone = etPhone.getText().toString();
         if (!phone.trim().isEmpty()&&!Validation.checkPhone(phone)) {
             Toast.makeText(getActivity(), "Số điện thoại không hợp lệ", Toast.LENGTH_LONG).show();
             return;
         }
-        String urlImage = Variable.BUYER.getImage();
-        if (cameraStorageFunction.getImage_uri() != null)
-            urlImage = cameraStorageFunction.getImage_uri().toString();
+        final String[] urlImage = {Variable.BUYER.getImage()};
         String dob = etDob.getText().toString();
         //check information change
         if (!buyer.getDate_of_birth().toString().equals(etDob.getText().toString()))
             dob = etDob.getText().toString();
-        int  gender;
+        final int  gender;
         if (rbBoy.isChecked()) {
             gender = 0;
         } else {
             gender = 1;
         }
-        updateUserInformation(url, accountId, name, phone, urlImage, dob, gender);
+        if (cameraStorageFunction.getImage_uri() != null){
+            final String finalDob = dob;
+            cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
+                @Override
+                public void onSuccess(String url1) {
+                    urlImage[0] = url1;
+                    updateUserInformation(url, accountId, name, phone, urlImage[0], finalDob, gender);
+                }
+            });
+        }else{
+            updateUserInformation(url, accountId, name, phone, " ", dob, gender);
+        }
+
     }
 
     private void mapping(View view) {
@@ -217,7 +227,9 @@ public class FragmentEditInformationBuyer extends Fragment {
                         loadingDialog.dismissDialog();
                         Variable.BUYER.setDate_of_birth(Date.valueOf(dob));
                         Variable.BUYER.setGender(gender);
-                        Variable.BUYER.setImage(urlImage);
+                        if(cameraStorageFunction.getImage_uri() != null) {
+                            Variable.BUYER.setImage(urlImage);
+                        }
                         Variable.BUYER.setName(name);
                         Variable.BUYER.setPhone(phone);
 

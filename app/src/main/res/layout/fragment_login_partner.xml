@@ -59,6 +59,7 @@
                         android:drawableStart="@drawable/user"
                         android:hint="Tên đăng nhập"
                         android:paddingEnd="50dp"
+                        android:inputType="text"
                         android:textColorHint="#B6ADAD" />
 
                     <EditText

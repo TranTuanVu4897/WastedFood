@@ -196,7 +196,7 @@ public class SellerChangePassword extends Fragment {
             tilConfirmPass.setError(null);
         }
         if(!Validation.checkPassword(strPassword)){
-            tilPassword.setError("Mật khẩu phải gồm 1 chữ cái và có từ 8 đến 16 kí tự");
+            tilPassword.setError("Mật khẩu phải bao gồm ít nhất 1 số và 1 chữ cái trong khoảng từ 8 đến 16 kí tự, ví dụ: abc12345");
             flag = false;
         }else{
             tilPassword.setError(null);

@@ -76,6 +76,7 @@
                             android:text="Tên sản phẩm" />
 
                         <TextView
+                            android:id="@+id/tvCountProductName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
@@ -109,6 +110,7 @@
                             android:text="Mô tả sản phẩm" />
 
                         <TextView
+                            android:id="@+id/tvCountProductDescription"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"

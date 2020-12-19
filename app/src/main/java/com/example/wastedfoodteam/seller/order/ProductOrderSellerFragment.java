@@ -57,11 +57,17 @@ public class ProductOrderSellerFragment extends ListFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_order_detail_seller, container, false);
         lvOrderPayment = view.findViewById(android.R.id.list);
+        product = Variable.PRODUCT;
         lvOrderDone = view.findViewById(R.id.lv_list_product_3);
         lvOrderCancel = view.findViewById(R.id.lv_list_product_cancel);
         imageView = view.findViewById(R.id.iv_list_order_product_picture);
         editProduct = view.findViewById(R.id.btn_editProduct_edit);
         cancelProduct = view.findViewById(R.id.btn_editProduct_stop);
+        if(product.getStatus().equals(Product.ProductStatus.SELLING)){
+            cancelProduct.setText("NGỪNG BÁN");
+        }else{
+            cancelProduct.setText("MỞ LẠI BÁN");
+        }
         tvPaymentAlert = view.findViewById(R.id.tv_order_detail_seller_payment);
         tvDoneAlert = view.findViewById(R.id.tv_order_detail_seller_done);
         tvCancelAlert = view.findViewById(R.id.tv_order_detail_seller_cancel);
@@ -78,18 +84,17 @@ public class ProductOrderSellerFragment extends ListFragment {
         cancelProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (cancelProduct.getText().equals("NGỪNG BÁN")) {
-                    updateProductStatus(Variable.IP_ADDRESS + "seller/setActiveForProduct.php", "stop", product.getId());
-                    cancelProduct.setText("MỞ LẠI BÁN");
-                } else {
-                    updateProductStatus(Variable.IP_ADDRESS + "seller/setActiveForProduct.php", "selling", product.getId());
+                if (product.getStatus().equals(Product.ProductStatus.CANCEL) ) {
+                    updateProductStatus(Variable.IP_ADDRESS + "seller/setActiveForProduct.php", Product.ProductStatus.SELLING, product.getId());
                     cancelProduct.setText("NGỪNG BÁN");
+                } else {
+                    updateProductStatus(Variable.IP_ADDRESS + "seller/setActiveForProduct.php", Product.ProductStatus.CANCEL, product.getId());
+                    cancelProduct.setText("MỞ LẠI BÁN");
                 }
             }
         });
 
         cameraStorageFunction = new CameraStorageFunction(getActivity(), getContext(), null);
-        product = Variable.PRODUCT;
         CommonFunction.setImageViewSrc(getContext(), product.getImage(), imageView);
         arrOrderPayment = new ArrayList<>();
         arrOrderDone = new ArrayList<>();
@@ -107,13 +112,14 @@ public class ProductOrderSellerFragment extends ListFragment {
     }
 
     //update product status
-    public void updateProductStatus(String url, final String status, final int id) {
+    public void updateProductStatus(String url, final Product.ProductStatus status, final int id) {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         if (response.trim().equals("Succesfully update")) {
+                            product.setStatus(status);
                             Toast.makeText(getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                             //TODO move back to home
                         } else {
@@ -132,7 +138,7 @@ public class ProductOrderSellerFragment extends ListFragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("seller_id", String.valueOf(product.getSeller_id()));
-                params.put("status", status);
+                params.put("status",  String.valueOf(status));
                 params.put("id", String.valueOf(id));
                 return params;
             }

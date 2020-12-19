@@ -22,8 +22,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.buyer.BuyHomeActivity;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Seller;
+import com.example.wastedfoodteam.seller.home.SellerHomeActivity;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.LoadingDialog;
@@ -209,7 +211,7 @@ public class EditSellerFragment extends Fragment {
     private Boolean checkAndAlertEmptyEditText(EditText editText , TextInputLayout textInputLayout , String errorMessage){
 
             String string = editText.getText().toString().trim();
-            if (CommonFunction.checkEmptyEditText(editText) && string.length() < 100) {
+            if (CommonFunction.checkEmptyEditText(editText) && string.length() <= 100) {
                 textInputLayout.setError(null);
                 return true;
 
@@ -262,6 +264,7 @@ public class EditSellerFragment extends Fragment {
                             Variable.SELLER.setDescription(editText_editSeller_description.getText().toString().trim());
                             if (storage_location != null)
                                 Variable.SELLER.setImage(storage_location);
+                            startActivity(new Intent(getActivity(), SellerHomeActivity.class));
                         } else {
                             loadingDialog.dismissDialog();
                             Toast.makeText(getActivity(), "Lỗi cập nhật", Toast.LENGTH_SHORT).show();
