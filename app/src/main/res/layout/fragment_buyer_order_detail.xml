@@ -46,11 +46,11 @@
             tools:srcCompat="@drawable/no_image" />
 
         <TextView
-            android:layout_marginBottom="5dp"
             android:id="@+id/tvDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
             android:drawableStart="@drawable/ic_distance"
             android:gravity="center"
             android:text="2km"
@@ -62,11 +62,11 @@
             app:layout_constraintVertical_bias="1.0" />
 
         <TextView
-            android:layout_marginTop="5dp"
             android:id="@+id/tvSellerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             android:text="DINH TEA HOLA"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/ivProduct"
@@ -95,8 +95,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="20,000VND"
             android:layout_marginBottom="5dp"
+            android:text="20,000VND"
             android:textColor="#33C600"
             app:layout_constraintBottom_toBottomOf="@+id/ivProduct"
             app:layout_constraintEnd_toEndOf="parent"
