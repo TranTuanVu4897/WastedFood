@@ -100,12 +100,11 @@ public class OrderPaymentAdapter extends BaseAdapter {
             public void onClick(View v) {
                 //set status = done
                 //reload fragment
-                UpdateStatusForOrder.updateOrderStatus(Variable.IP_ADDRESS + "seller/updateStatusForOrderSeller.php",Order.Status.SUCCESS, order.getId(),myContext);
+                UpdateStatusForOrder.updateOrderStatus(Variable.IP_ADDRESS + "seller/updateStatusForOrderSeller.php",Order.Status.SUCCESS, order.getId(),myContext,myFragmentActivity);
                 String message = Variable.SELLER.getName() + " đã xác nhận thanh toán của bạn\r Cảm ơn bạn vì đã sử dụng dịch vụ của chúng tôi";
                 util.addNotification(myContext,Variable.SELLER.getId() , order.getBuyer_id(), message , order.getId());
                 sendNotif.notificationHandle(order.getFirebase_UID(), "Wasted food app" , message);
-                ProductOrderSellerFragment productOrderSellerFragment = new ProductOrderSellerFragment();
-                myFragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, productOrderSellerFragment, productOrderSellerFragment.getTag()).commit();
+
             }
         });
         holder.btnReject.setOnClickListener(new View.OnClickListener() {
@@ -113,13 +112,11 @@ public class OrderPaymentAdapter extends BaseAdapter {
             public void onClick(View v) {
                 //set status = rejected
                 //set btnReject text to Đã từ chối set clickable = false
-                UpdateStatusForOrder.updateOrderStatus(Variable.IP_ADDRESS + "seller/updateStatusForOrderSeller.php",Order.Status.CANCEL, order.getId(),myContext);
+                UpdateStatusForOrder.updateOrderStatus(Variable.IP_ADDRESS + "seller/updateStatusForOrderSeller.php",Order.Status.CANCEL, order.getId(),myContext,myFragmentActivity);
                 String message = Variable.SELLER.getName() + " đã hủy đơn hàng của bạn nếu có thắc mắc vui lòng thông báo với chúng tôi qua địa chỉ email hoặc chức năng báo cáo";
                 util.addNotification(myContext,Variable.SELLER.getId() , order.getBuyer_id(), message , order.getId());
                 updateRemainQuantity(product.getId());
                 sendNotif.notificationHandle(order.getFirebase_UID(), "Wasted food app" , message);
-                ProductOrderSellerFragment productOrderSellerFragment = new ProductOrderSellerFragment();
-                myFragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content_main, productOrderSellerFragment, productOrderSellerFragment.getTag()).commit();
             }
         });
         return convertView;
