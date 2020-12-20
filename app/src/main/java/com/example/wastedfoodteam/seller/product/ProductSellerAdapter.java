@@ -109,7 +109,7 @@ public class ProductSellerAdapter extends BaseAdapter {
         holder.tvName.setText(product.getName());
         holder.tvSoldProduct.setText(product.getOriginal_quantity() - product.getRemain_quantity() + " ĐÃ BÁN");
         CommonFunction.setImageViewSrc(convertView.getContext(),product.getImage(),holder.ivImage);
-        timeCount.countTimeRemain(product.getEnd_time().getTime());
+        holder.tvTimeProduct.setText(timeCount.countTimeRemain(product.getEnd_time().getTime()));
 //        long timeDifferent =  product.getEnd_time().getTime() - Calendar.getInstance().getTime().getTime();
 //        if(timeDifferent > 0){
 //            holder.tvTimeProduct.setText(" THỜI GIAN BÁN");

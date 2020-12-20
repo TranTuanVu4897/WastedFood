@@ -22,6 +22,8 @@
     <EditText
         android:id="@+id/etMessage"
         android:layout_width="400dp"
+        android:maxLines="5"
+        android:lines="5"
         android:layout_height="100dp"
         android:hint="Lời nhắn cho người bán" />
 
