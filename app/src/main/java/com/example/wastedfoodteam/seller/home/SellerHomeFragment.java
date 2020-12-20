@@ -24,12 +24,7 @@ import org.json.JSONObject;
 public class SellerHomeFragment extends Fragment {
 
     TextView tvTotalProductSelling,tvTotalProduct,tvOrderBuying,tvTotalOrderSuccess,tvTotalOrderCancel,tvTotalFollower;
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

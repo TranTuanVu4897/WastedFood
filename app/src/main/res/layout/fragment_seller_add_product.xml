@@ -74,7 +74,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Tên sản phẩm" />
+                            android:text="@string/product_name" />
 
                         <TextView
                             android:id="@+id/tvCountProductName"
@@ -113,7 +113,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Mô tả sản phẩm" />
+                            android:text="@string/product_description" />
 
                         <TextView
                             android:id="@+id/TvCountProductDescription"
@@ -148,7 +148,7 @@
                         android:layout_height="match_parent"
                         android:layout_margin="5dp"
                         android:gravity="center_vertical"
-                        android:text="Giá gốc" />
+                        android:text="@string/product_ori_price" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputOriginalPrice"
@@ -205,7 +205,7 @@
                         android:layout_height="match_parent"
                         android:layout_margin="5dp"
                         android:gravity="center_vertical"
-                        android:text="Số lượng" />
+                        android:text="@string/product_quantity" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputQuantity"
@@ -246,7 +246,7 @@
                             android:layout_height="match_parent"
                             android:layout_margin="5dp"
                             android:gravity="center_vertical"
-                            android:text="Bắt đầu" />
+                            android:text="@string/product_start_time" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/textInputOpenTime"
@@ -275,7 +275,7 @@
                             android:layout_height="match_parent"
                             android:layout_margin="5dp"
                             android:gravity="center_vertical"
-                            android:text="Kết thúc" />
+                            android:text="@string/product_end_time" />
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/textInputCloseTime"

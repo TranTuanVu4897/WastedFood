@@ -31,7 +31,15 @@
     <string name="login_address_hint">Địa chỉ <font fgcolor='#FF0000'>*</font></string>
     <string name="login_mobile_number_hint">Số điện thoại <font fgcolor='#FF0000'>*</font></string>
 
-
+    //product
+    <string name="product_name">Tên sản phẩm <font fgcolor='#FF0000'>*</font></string>
+    <string name="product_description">Mô tả sản phẩm <font fgcolor='#FF0000'>*</font></string>
+    <string name="product_ori_price">Giá gốc <font fgcolor='#FF0000'>*</font></string>
+    <string name="product_sell_price">Giá bán <font fgcolor='#FF0000'>*</font></string>
+    <string name="product_quantity">Số lượng <font fgcolor='#FF0000'>*</font></string>
+    <string name="product_start_time">Bắt đầu <font fgcolor='#FF0000'>*</font></string>
+    <string name="product_end_time">Kết thúc <font fgcolor='#FF0000'>*</font></string>
+    <string name="product_remain">Số lượng còn lại <font fgcolor='#FF0000'>*</font></string>
 
     <string name="login_name_hint">Tên người dùng</string>
     <string name="default_web_client_id">89673767638-adjcn6mgai4g7qe4kl4i83t6i7dg5rpt.apps.googleusercontent.com</string>
