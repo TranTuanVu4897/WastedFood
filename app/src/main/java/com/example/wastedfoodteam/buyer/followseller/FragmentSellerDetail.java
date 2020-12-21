@@ -50,7 +50,7 @@ public class FragmentSellerDetail extends ListFragment {
     FragmentDetailProduct detailProduct;
     Bundle bundleDetail;
     Seller seller;
-    TextView tvNameSeller, tvAddress, tvDescription, tvRatingFSD, tvFollowFSD, tvProductFSD,tvDistance;
+    TextView tvNameSeller, tvAddress, tvDescription, tvRatingFSD, tvFollowFSD, tvProductFSD, tvDistance;
     ImageView ivPhotoSeller;
     ListView lvProduction;
     ImageButton ibReport, ibFollow;
@@ -128,11 +128,11 @@ public class FragmentSellerDetail extends ListFragment {
     }
 
     private void setViewContent() {
-        tvRatingFSD.setText(seller.getRating() + "");
+        tvRatingFSD.setText("Điểm đánh giá:" + seller.getRating() + "");
         tvNameSeller.setText(seller.getName() != null ? seller.getName() : "Chưa được đặt tên");
         tvAddress.setText(seller.getAddress() != null ? seller.getAddress() : "Chưa có địa chỉ");
         tvDescription.setText(seller.getDescription() != null ? seller.getDescription() : "Chưa có thông tin");
-        tvDistance.setText(CommonFunction.getStringDistance(seller,Variable.gps));
+        tvDistance.setText(CommonFunction.getStringDistance(seller, Variable.gps));
         CommonFunction.setImageViewSrc(requireActivity().getApplicationContext(), seller.getImage(), ivPhotoSeller);
     }
 
