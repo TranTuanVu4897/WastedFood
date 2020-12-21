@@ -56,13 +56,6 @@ public class CommonFunction {
         }
     }
 
-    /**
-     * set quantity string
-     *
-     * @param remain_quantity
-     * @param original_quantity
-     * @return
-     */
     @NotNull
     @Contract(pure = true)
     public static String getQuantity(int remain_quantity, int original_quantity) {
@@ -71,13 +64,6 @@ public class CommonFunction {
         return "Hết hàng";
     }
 
-    /**
-     * set text view for out of stock
-     *
-     * @param tvQuantity
-     * @param remain_quantity
-     * @param original_quantity
-     */
     public static void setQuantityTextView(TextView tvQuantity, int remain_quantity, int original_quantity) {
         try {
             tvQuantity.setText(getQuantity(remain_quantity, original_quantity));
@@ -89,11 +75,6 @@ public class CommonFunction {
         }
     }
 
-    /**
-     * get current date by format "yyyy-MM-dd"
-     *
-     * @return
-     */
     @NotNull
     public static String getCurrentDate() {
         Date currentTime = Calendar.getInstance().getTime();
@@ -105,10 +86,6 @@ public class CommonFunction {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(currentTime);
     }
 
-    /**
-     * @param editText
-     * @return
-     */
     public static boolean checkEmptyEditText(EditText editText) {
         try {
             if (editText.getText().toString().trim().length() > 0)

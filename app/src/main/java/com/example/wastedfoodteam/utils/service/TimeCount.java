@@ -1,10 +1,12 @@
 package com.example.wastedfoodteam.utils.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class TimeCount {
     public String countTimeAgo(long time ){
-        long timeDifferent =   Calendar.getInstance().getTime().getTime() - time ;
+        long timeDifferent =   Calendar.getInstance().getTimeInMillis() - time ;
         if(timeDifferent > 0){
             long seconds = timeDifferent / 1000;
             long minutes = seconds / 60;
@@ -17,12 +19,13 @@ public class TimeCount {
                 return " " + hours + " giờ trước";
             }else if (minutes > 0){
                 return " " + minutes + " phút trước";
+            }else{
+                return " 1 phút trước";
             }
             //return days + " NGÀY " + + hours%24 +" GIỜ"  + minutes%60  + " PHÚT TRƯỚC";
         }else {
             return " 1 phút trước";
         }
-        return "";
     }
 
     public String countTimeRemain(long time ){
