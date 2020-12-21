@@ -77,7 +77,7 @@ public class MyFireBaseMessagingService extends FirebaseMessagingService {
             }
         }
         Notification notification = new NotificationCompat.Builder(MyFireBaseMessagingService.this,CHANNEL_ID)
-                .setSmallIcon(R.drawable.com_facebook_button_like_icon_selected)
+                .setSmallIcon(R.drawable.logo2)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(pendingIntent)

@@ -23,6 +23,7 @@ import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.utils.CommonFunction;
 import com.example.wastedfoodteam.utils.LoadingDialog;
+import com.example.wastedfoodteam.utils.service.TimeCount;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -37,6 +38,7 @@ public class ProductSellerAdapter extends BaseAdapter {
     final Activity myActivity;
     final Resources resources;
     LoadingDialog loadingDialog;
+    TimeCount timeCount;
 
     private static class ViewHolder {
         TextView tvName;
@@ -75,6 +77,7 @@ public class ProductSellerAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
         product = arrayProduct.get(position);
+        timeCount = new TimeCount();
         loadingDialog = new LoadingDialog(myActivity);
         if (convertView == null) {
             holder = new ViewHolder();
@@ -106,12 +109,13 @@ public class ProductSellerAdapter extends BaseAdapter {
         holder.tvName.setText(product.getName());
         holder.tvSoldProduct.setText(product.getOriginal_quantity() - product.getRemain_quantity() + " ĐÃ BÁN");
         CommonFunction.setImageViewSrc(convertView.getContext(),product.getImage(),holder.ivImage);
-        long timeDifferent =  product.getEnd_time().getTime() - Calendar.getInstance().getTime().getTime();
-        if(timeDifferent > 0){
-            holder.tvTimeProduct.setText(" THỜI GIAN BÁN");
-        }else {
-            holder.tvTimeProduct.setText(" ĐÃ KẾT THÚC");
-        }
+        holder.tvTimeProduct.setText(timeCount.countTimeRemain(product.getEnd_time().getTime()));
+//        long timeDifferent =  product.getEnd_time().getTime() - Calendar.getInstance().getTime().getTime();
+//        if(timeDifferent > 0){
+//            holder.tvTimeProduct.setText(" THỜI GIAN BÁN");
+//        }else {
+//            holder.tvTimeProduct.setText(" ĐÃ KẾT THÚC");
+//        }
         return convertView;
     }
 

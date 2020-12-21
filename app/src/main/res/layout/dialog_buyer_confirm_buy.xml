@@ -22,6 +22,8 @@
     <EditText
         android:id="@+id/etMessage"
         android:layout_width="400dp"
+        android:maxLines="5"
+        android:lines="5"
         android:layout_height="100dp"
         android:hint="Lời nhắn cho người bán" />
 
@@ -32,20 +34,20 @@
         style="?android:attr/buttonBarButtonStyle">
 
         <Button
-            android:id="@+id/btnConfirm"
-            style="@style/greenButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Mua" />
-
-        <Button
             android:id="@+id/btnCancel"
             style="@style/redButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:text="Hủy" />
+
+        <Button
+            android:id="@+id/btnConfirm"
+            style="@style/greenButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Mua" />
     </LinearLayout>
 
 </LinearLayout>

@@ -157,7 +157,7 @@ public class FragmentDetailProduct extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void btnDecreaseOnclick() {
-        if (orderQuantity > 0) {
+        if (orderQuantity > 1) {
             orderQuantity--;
             tvBuyQuantity.setText(orderQuantity + "");
         }

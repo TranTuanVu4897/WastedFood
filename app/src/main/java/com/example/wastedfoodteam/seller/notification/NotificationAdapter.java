@@ -82,5 +82,4 @@ public class NotificationAdapter extends BaseAdapter {
         holder.tvContent.setText(notification.getContent());
         return convertView;
     }
-
 }
