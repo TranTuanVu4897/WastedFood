@@ -54,7 +54,7 @@
             android:text="address"
             android:textColor="#009688"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/tvOpenTime"
+            app:layout_constraintBottom_toTopOf="@+id/tvDistance"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
