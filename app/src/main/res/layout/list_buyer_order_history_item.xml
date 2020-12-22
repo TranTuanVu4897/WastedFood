@@ -26,6 +26,7 @@
             android:background="@drawable/background_with_shadow">
 
             <ImageView
+                android:background="@color/cardColor"
                 android:id="@+id/ivProductLPI"
                 android:layout_width="100dp"
                 android:layout_height="131dp"
