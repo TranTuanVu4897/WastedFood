@@ -92,7 +92,7 @@ public class RatingDialog {
                 Map<String, String> params = new HashMap<>();
                 params.put("id", order.getId() + "");
                 params.put("rating", rbRating.getRating() + "");
-                params.put("buyer_comment", etRating.getText().toString());
+                params.put("buyer_comment", etRating.getText().toString() + "");
                 return params;
             }
         };
