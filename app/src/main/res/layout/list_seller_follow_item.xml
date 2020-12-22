@@ -78,21 +78,6 @@
 
 
         <TextView
-            android:id="@+id/tvOpenTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="16.00 - 20.00"
-            android:textSize="18sp"
-            app:drawableStartCompat="@drawable/ic_icons8_clock"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tvDistance"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNameSellerFSFI"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <TextView
             android:id="@+id/tvDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

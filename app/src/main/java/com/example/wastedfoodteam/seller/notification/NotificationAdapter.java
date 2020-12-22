@@ -73,9 +73,9 @@ public class NotificationAdapter extends BaseAdapter {
         notification = arrayNotification.get(position);
         timeCount = new TimeCount();
         if(Variable.CURRENT_USER.equals("SELLER")){
-            CommonFunction.setImageViewSrc(myContext, notification.getSeller_image(), holder.ivBuyer);
-        }else {
             CommonFunction.setImageViewSrc(myContext, notification.getBuyer_image(), holder.ivBuyer);
+        }else {
+            CommonFunction.setImageViewSrc(myContext, notification.getSeller_image(), holder.ivBuyer);
         }
         String time = timeCount.countTimeAgo(notification.getModified_date().getTime());
         holder.tvTime.setText(time);

@@ -43,6 +43,7 @@ public class EditProductSellerFragment extends Fragment {
     private EditText openTime,closeTime,quantity,remainQuantity;
     private String storageLocation;
     private Button btnCancel;
+    int ori_quantity;
     private TextView tvCountProductName,tvCountProductDescription;
     int id;
 
@@ -73,6 +74,7 @@ public class EditProductSellerFragment extends Fragment {
         id = Variable.PRODUCT.getId();
         CommonFunction.setImageViewSrc(getContext(),Variable.PRODUCT.getImage(), iv_detail_product_icon);
         name.setText(Variable.PRODUCT.getName());
+        description.setText(Variable.PRODUCT.getDescription());
         originalPrice.setText(String.valueOf(Variable.PRODUCT.getOriginal_price()));
         sellPrice.setText(String.valueOf(Variable.PRODUCT.getSell_price()));
         openTime.setText( new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Variable().PRODUCT.getStart_time()));
@@ -92,6 +94,15 @@ public class EditProductSellerFragment extends Fragment {
                         .replace(R.id.content_main, productOrderSellerFragment, "")
                         .addToBackStack(null)
                         .commit();
+            }
+        });
+
+        remainQuantity.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+
+                }
             }
         });
 
@@ -142,14 +153,16 @@ public class EditProductSellerFragment extends Fragment {
         btn_detail_product_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ori_quantity = Integer.parseInt(remainQuantity.getText().toString().trim()) - Variable.PRODUCT.getRemain_quantity()  + Variable.PRODUCT.getOriginal_quantity();
                 if(cameraStorageFunction.getImage_uri() != null)
                 {
+                    final int finalOri_quantity = ori_quantity;
                     cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
                         @Override
                         public void onSuccess(String url) {
                             storageLocation = url;
                             String urlGetData = Variable.IP_ADDRESS + "seller/updateProductByID.php";
-                            updateProduct(urlGetData);
+                            updateProduct(urlGetData, finalOri_quantity);
                         };
 
                         @Override
@@ -160,7 +173,7 @@ public class EditProductSellerFragment extends Fragment {
                 }else {
                     storageLocation = " ";
                     String urlGetData = Variable.IP_ADDRESS + "seller/updateProductByID.php";
-                    updateProduct(urlGetData);
+                    updateProduct(urlGetData,ori_quantity);
                 }
             }
         });
@@ -177,8 +190,10 @@ public class EditProductSellerFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+
+
     //update product data
-    private void updateProduct(String url) {
+    private void updateProduct(String url, final int ori_quantity) {
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -187,7 +202,9 @@ public class EditProductSellerFragment extends Fragment {
                         if (response.trim().equals("Successfully update")) {
                             Toast.makeText(getActivity(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                             Variable.PRODUCT.setName(name.getText().toString().trim());
+                            Variable.PRODUCT.setDescription(description.getText().toString().trim());
                             Variable.PRODUCT.setRemain_quantity( Integer.parseInt(remainQuantity.getText().toString().trim()));
+                            Variable.PRODUCT.setOriginal_quantity(ori_quantity);
                             ProductOrderSellerFragment productOrderSellerFragment = new ProductOrderSellerFragment();
                             requireActivity().getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.content_main, productOrderSellerFragment, "")
@@ -218,6 +235,7 @@ public class EditProductSellerFragment extends Fragment {
                 params.put("openTime", openTime.getText().toString().trim());
                 params.put("closeTime", closeTime.getText().toString().trim());
                 params.put("remainQuantity",remainQuantity.getText().toString().trim());
+                params.put("quantity", ori_quantity + "");
                 params.put("image",storageLocation);
                 return params;
             }
