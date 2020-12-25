@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.buyer.buy.BuyerProduct;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.utils.CommonFunction;
@@ -33,7 +34,7 @@ import java.util.Map;
 public class ProductSellerAdapter extends BaseAdapter {
     final Context myContext;
     final int myLayout;
-    final List<Product> arrayProduct;
+    List<Product> arrayProduct;
     Product product;
     final Activity myActivity;
     final Resources resources;
@@ -173,5 +174,13 @@ public class ProductSellerAdapter extends BaseAdapter {
             }
         };
         requestQueue.add(stringRequest);
+    }
+
+    public List<Product> getProductList() {
+        return arrayProduct;
+    }
+
+    public void setProductList(List<Product> productList) {
+        arrayProduct = productList;
     }
 }

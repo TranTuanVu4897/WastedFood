@@ -48,7 +48,7 @@ public class SellerFollowAdapter extends BaseAdapter {
 
     private static class ViewHolder {
         ImageView ivSeller;
-        TextView tvNameSeller, tvDirection, tvAddress;
+        TextView tvNameSeller, tvDirection, tvAddress,tvRating;
     }
 
     @Override
@@ -68,6 +68,7 @@ public class SellerFollowAdapter extends BaseAdapter {
         holder.tvNameSeller.setText(seller.getName());
         holder.tvAddress.setText(seller.getAddress());
         holder.tvDirection.setText(CommonFunction.getStringDistance(seller, Variable.gps) );
+        holder.tvRating.setText(seller.getRating() + "");
         CommonFunction.setImageViewSrc(context, seller.getImage(), holder.ivSeller);
         return convertView;
     }
@@ -77,6 +78,7 @@ public class SellerFollowAdapter extends BaseAdapter {
         holder.tvAddress = convertView.findViewById(R.id.tvAddress);
         holder.ivSeller = convertView.findViewById(R.id.ivSellerLSFI);
         holder.tvDirection = convertView.findViewById(R.id.tvDistance);
+        holder.tvRating = convertView.findViewById(R.id.tvRating);
         convertView.setTag(holder);
     }
 }

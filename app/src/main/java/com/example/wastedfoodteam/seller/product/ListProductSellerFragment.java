@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,10 +23,13 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wastedfoodteam.R;
+import com.example.wastedfoodteam.buyer.buy.BuyerProduct;
 import com.example.wastedfoodteam.global.Variable;
 import com.example.wastedfoodteam.model.Product;
 import com.example.wastedfoodteam.seller.order.ProductOrderSellerFragment;
 import com.example.wastedfoodteam.utils.LoadingDialog;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +50,8 @@ public class ListProductSellerFragment extends ListFragment {
     LoadingDialog loadingDialog;
     int seller_id;
     int totalProduct;
+    int page;
+    boolean isEnd;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -56,17 +62,35 @@ public class ListProductSellerFragment extends ListFragment {
         View view = inflater.inflate(R.layout.fragment_list_product_seller, container, false);
         //mapping view
         lvProduct = view.findViewById(android.R.id.list);
-        arrProduct = new ArrayList<>();
+        loadingDialog = new LoadingDialog(getActivity());
         seller_id = Variable.SELLER.getId();
         product = Variable.PRODUCT;
-        loadingDialog = new LoadingDialog(getActivity());
+        if(!isHasProduct(arrProduct)){
+            refreshListProduct();
+        }
+
         tv_total_product = view.findViewById(R.id.tv_total_product);
-        String urlGetData = Variable.IP_ADDRESS + "seller/getListProductSeller.php?seller_id=" + seller_id;
         adapter = new ProductSellerAdapter(getActivity().getApplicationContext(), R.layout.list_seller_product, arrProduct, getResources(),getActivity());
         lvProduct.setAdapter(adapter);
-        getListProductSeller(urlGetData);
+        page = 1;
+        lvProduct.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (firstVisibleItem + visibleItemCount == totalItemCount && totalItemCount != 0) {
+                    if (!isEnd) {
+                        page++;
+                        getListProductSeller();
+                    }
+                }
+            }
+        });
         getTotalProduct(Variable.IP_ADDRESS + "seller/getTotalProduct.php" + "?seller_id=" + Variable.SELLER.getId());
-        lvProduct.setOnTouchListener(new View.OnTouchListener() {
+        /*lvProduct.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
@@ -80,47 +104,50 @@ public class ListProductSellerFragment extends ListFragment {
                 v.onTouchEvent(event);
                 return true;
             }
-        });
+        });*/
         return view;
     }
 
+    private boolean isHasProduct(ArrayList<Product> arrProduct) {
+        return arrProduct != null && arrProduct.size() > 0;
+    }
 
-    public void getListProductSeller(String url) {
+
+    public void getListProductSeller() {
+        String url =  Variable.IP_ADDRESS + "seller/getListProductSellerPaging.php?seller_id=" + seller_id + "&page=" + page;
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONArray>() {
+        StringRequest jsonArrayRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONArray response) {
-                        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                JSONObject object = response.getJSONObject(i);
-                                arrProduct.add(new Product(object.getInt("Id"),
-                                        object.getInt("SellerId"),
-                                        object.getString("Name"),
-                                        object.getString("Image"),
-                                        dateFormat.parse(object.getString("StartTime")),
-                                        dateFormat.parse(object.getString("EndTime")),
-                                        object.getDouble("OriginalPrice"),
-                                        object.getDouble("SellPrice"),
-                                        object.getInt("OriginalQuantity"),
-                                        object.getInt("RemainQuantity"),
-                                        object.getString("Description"),
-                                        dateFormat.parse(object.getString("SellDate")),
-                                        Product.ProductStatus.valueOf(object.getString("Status")),
-                                        false));
-                            } catch (JSONException | ParseException e) {
-                                e.printStackTrace();
+                    public void onResponse(String response) {
+                        try {
+                            if (!"end".equalsIgnoreCase(response)) {
+                                isEnd = false;
+                                JSONArray jsonProducts = new JSONArray(response);
+                                Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+                                for (int i = 0; i < jsonProducts.length(); i++) {
+                                    arrProduct.add(gson.fromJson(jsonProducts.getString(i), Product.class));
+                                }
+                                adapter.setProductList(arrProduct);
+                                adapter.notifyDataSetChanged();
+                            } else {
+                                isEnd = true;
                             }
+                            loadingDialog.dismissDialog();
+                        } catch (Exception e) {
+                            Log.e("ListProduct", response);
+                            e.printStackTrace();
+                            loadingDialog.dismissDialog();
                         }
-                        adapter.notifyDataSetChanged();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        loadingDialog.dismissDialog();
                     }
                 });
+        loadingDialog.startLoadingDialog();
         requestQueue.add(jsonArrayRequest);
     }
 
@@ -145,6 +172,23 @@ public class ListProductSellerFragment extends ListFragment {
                     }
                 });
         requestQueue.add(getProductAround);
+    }
+
+
+    private void refreshListProduct() {
+        page = 1;
+        isEnd = false;
+        createNewArrayProduct();
+        getListProductSeller();
+    }
+
+    public void createNewArrayProduct() {
+        arrProduct = new ArrayList<>();
+        if (adapter != null) {
+            adapter.getProductList().clear();
+            adapter.setProductList(arrProduct);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

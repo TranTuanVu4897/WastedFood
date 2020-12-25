@@ -6,6 +6,20 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:cardElevation="6dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="10dp"
+        app:cardBackgroundColor="#C9DDDA"
+        app:layout_constraintVertical_bias="0.0">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +44,7 @@
                 android:id="@+id/ivProductLPI"
                 android:layout_width="100dp"
                 android:layout_height="130dp"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="2dp"
                 android:layout_marginBottom="5dp"
@@ -40,11 +54,12 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.533"
+                app:layout_constraintVertical_bias="0.0"
                 tools:srcCompat="@drawable/no_image" />
 
             <TextView
                 android:id="@+id/tvQuantity"
+                android:textColor="@color/colorBlack"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:background="#6BF271"
@@ -65,6 +80,7 @@
                 android:background="@drawable/triangle_text_view_background"
                 android:text="20%"
                 android:textAlignment="textStart"
+                android:textColor="@color/colorBlack"
                 app:layout_constraintBottom_toBottomOf="@+id/ivProductLPI"
                 app:layout_constraintEnd_toEndOf="@+id/ivProductLPI"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -78,10 +94,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
-            android:background="#FFFFFF"
+            android:background="#C9DDDA"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -113,6 +129,7 @@
                 android:maxHeight="50dp"
                 android:text="Bánh Mỳ Tôm"
                 android:textSize="18sp"
+                android:textColor="@color/colorBlack"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tvRating"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -145,6 +162,7 @@
                 android:text="5.0"
                 android:textAlignment="center"
                 android:textSize="20sp"
+                android:textColor="@color/colorBlack"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -159,8 +177,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:gravity="center"
+                android:textColor="@color/colorBlack"
                 android:text="16.00 - 20.00"
-                android:textSize="18sp"
+                android:textSize="14sp"
 
                 app:drawableStartCompat="@drawable/ic_icons8_clock"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -175,9 +194,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:textColor="@color/colorBlack"
                 android:gravity="center"
                 android:text="2 km"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 app:drawableStartCompat="@drawable/location"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -189,5 +209,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
-
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
