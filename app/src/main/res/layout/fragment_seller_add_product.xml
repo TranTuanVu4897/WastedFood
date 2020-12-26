@@ -176,7 +176,7 @@
                         android:layout_height="match_parent"
                         android:layout_margin="5dp"
                         android:gravity="center_vertical"
-                        android:text="Giá bán" />
+                        android:text="@string/product_ori_price" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputSellPrice"

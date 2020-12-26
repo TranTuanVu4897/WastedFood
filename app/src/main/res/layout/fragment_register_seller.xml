@@ -93,19 +93,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputName"
-                    style="@style/parent"
-                    android:layout_marginTop="20dp">
-
-                    <EditText
-                        android:id="@+id/et_seller_register_name"
-                        style="@style/modifiedEditText"
-                        android:hint="@string/login_restaurant_hint"
-                        android:inputType="textPersonName|text"
-                        android:maxLines="1" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputEmail"
                     style="@style/parent"
                     android:layout_marginTop="20dp">
@@ -115,6 +102,19 @@
                         style="@style/modifiedEditText"
                         android:hint="@string/login_email_hint"
                         android:inputType="textEmailAddress"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputName"
+                    style="@style/parent"
+                    android:layout_marginTop="20dp">
+
+                    <EditText
+                        android:id="@+id/et_seller_register_name"
+                        style="@style/modifiedEditText"
+                        android:hint="@string/login_restaurant_hint"
+                        android:inputType="textPersonName|text"
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
 

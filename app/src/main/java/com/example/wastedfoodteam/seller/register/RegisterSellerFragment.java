@@ -188,6 +188,7 @@ public class RegisterSellerFragment extends Fragment {
         etEmail.requestFocus();
         etName.requestFocus();
         etPassword.requestFocus();
+        etUsername.requestFocus();
         etPassword.clearFocus();
     }
 

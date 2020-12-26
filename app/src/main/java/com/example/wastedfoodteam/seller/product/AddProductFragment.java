@@ -238,15 +238,24 @@ public class AddProductFragment extends Fragment {
                             @SuppressLint("DefaultLocale")
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                countEtOpenTime[0] = 60*hourOfDay + minute;
-                                if(!etCloseTime.getText().toString().equals("")){
-                                    if(countEtOpenTime[0] > countEtCloseTime[0]){
-                                        etOpenTime.setText(etCloseTime.getText().toString());
-                                    }else {
+                                Calendar datetime = Calendar.getInstance();
+                                Calendar c = Calendar.getInstance();
+                                datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                datetime.set(Calendar.MINUTE, minute);
+                                if(datetime.getTimeInMillis() > c.getTimeInMillis()){
+                                    countEtOpenTime[0] = 60*hourOfDay + minute;
+                                    if(!etCloseTime.getText().toString().equals("")){
+                                        if(countEtOpenTime[0] > countEtCloseTime[0]){
+                                            etOpenTime.setText(etCloseTime.getText().toString());
+                                        }else {
+                                            etOpenTime.setText(String.format("%02d:%02d", hourOfDay, minute));
+                                        }
+                                    }else
                                         etOpenTime.setText(String.format("%02d:%02d", hourOfDay, minute));
-                                    }
-                                }else
-                                etOpenTime.setText(String.format("%02d:%02d", hourOfDay, minute));
+                                }else {
+                                    etOpenTime.setText(String.format("%02d:%02d", Calendar.getInstance().get(Calendar.HOUR_OF_DAY) , Calendar.getInstance().get(Calendar.MINUTE)));
+                                }
+
                             }
                         }, mHour, mMinute, false);
                 timePickerDialog.show();
@@ -273,14 +282,24 @@ public class AddProductFragment extends Fragment {
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
                         countEtCloseTime[0] = 60*hourOfDay + minute;
-                        if(!etOpenTime.getText().toString().equals("")){
-                            if(countEtOpenTime[0] < countEtCloseTime[0]){
+                        Calendar datetime = Calendar.getInstance();
+                        Calendar c = Calendar.getInstance();
+                        datetime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        datetime.set(Calendar.MINUTE, minute);
+                        if(datetime.getTimeInMillis() > c.getTimeInMillis()){
+                            if(!etOpenTime.getText().toString().equals("")){
+                                if(countEtOpenTime[0] < countEtCloseTime[0]){
+                                    etCloseTime.setText(String.format("%02d:%02d", hourOfDay, minute));
+                                }else {
+                                    etCloseTime.setText(etOpenTime.getText().toString());
+                                }
+                            }else
                                 etCloseTime.setText(String.format("%02d:%02d", hourOfDay, minute));
-                            }else {
-                                etCloseTime.setText(etOpenTime.getText().toString());
-                            }
-                        }else
-                        etCloseTime.setText(String.format("%02d:%02d", hourOfDay, minute));
+                        }else{
+                            etCloseTime.setText(String.format("%02d:%02d", Calendar.getInstance().get(Calendar.HOUR_OF_DAY) , Calendar.getInstance().get(Calendar.MINUTE) ));
+                        }
+
+
                     }
                 }, mHour, mMinute, false);
                 timePickerDialog.show();
