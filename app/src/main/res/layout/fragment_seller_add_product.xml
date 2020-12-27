@@ -93,6 +93,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Nhập tên sản phẩm"
+                            android:maxLength="100"
                             android:inputType="textPersonName"
                             android:padding="5dp" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -120,7 +121,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="end"
-                            android:text="0/3000" />
+                            android:text="0/300" />
                     </FrameLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -131,6 +132,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Nhập tên mô tả sản phẩm"
+                        android:maxLength="300"
                         android:inputType="textPersonName"
                         android:padding="5dp" />
                     </com.google.android.material.textfield.TextInputLayout>

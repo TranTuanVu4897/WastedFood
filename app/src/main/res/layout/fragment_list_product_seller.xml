@@ -23,12 +23,6 @@
             android:layout_weight="1"
             android:layout_height="wrap_content">
         </TextView>
-        <ImageView
-            android:contentDescription="Search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_baseline_search_24">
-        </ImageView>
     </LinearLayout>
 
     <TextView

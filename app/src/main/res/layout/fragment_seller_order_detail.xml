@@ -106,20 +106,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/parent"
-                android:layout_marginTop="20dp">
 
-                <EditText
-                    android:id="@+id/et_order_description"
-                    style="@style/modifiedEditText"
-                    android:focusable="false"
-                    android:clickable="false"
-                    android:longClickable="false"
-                    android:hint="Ghi chú của khách hàng:"
-                    android:maxLines="1"
-                    tools:ignore="Deprecated" />
-            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/btn_order_back"

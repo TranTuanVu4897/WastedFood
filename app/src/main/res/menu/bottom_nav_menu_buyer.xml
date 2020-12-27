@@ -17,7 +17,7 @@
         android:id="@+id/item_bottom_nav_menu_buyer_history"
         android:title="Lịch sử"
         android:iconTint="@color/colorWhite"
-        android:icon="@drawable/button_order_history"
+        android:icon="@drawable/ic_baseline_history_24"
         />
 
     <item

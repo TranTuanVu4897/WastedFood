@@ -83,13 +83,18 @@
                             android:text="0/100" />
                     </FrameLayout>
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputDetailName"
+                        style="@style/parent">
                     <EditText
                         android:id="@+id/editText_detail_product_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Nhập tên sản phẩm"
                         android:inputType="textPersonName"
-                        android:padding="5dp" />
+                        android:padding="5dp"
+                        android:maxLength="100"/>
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -123,7 +128,8 @@
                         android:layout_height="wrap_content"
                         android:hint="Nhập tên mô tả sản phẩm"
                         android:inputType="textPersonName"
-                        android:padding="5dp" />
+                        android:padding="5dp"
+                        android:maxLength="300"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -148,7 +154,8 @@
                         android:layout_weight="1"
                         android:gravity="end"
                         android:hint="Thiết lập giá"
-                        android:inputType="numberDecimal" />
+                        android:inputType="numberDecimal"
+                        />
                 </LinearLayout>
 
                 <LinearLayout
@@ -214,15 +221,19 @@
                         android:gravity="center_vertical"
                         android:text="@string/product_remain" />
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputRemainQuantity"
+                        style="@style/parent">
                     <EditText
                         android:id="@+id/etRemainQuantity"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:layout_weight="1"
                         android:gravity="end"
                         android:hint="Nhập số lượng"
                         android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
                 <LinearLayout

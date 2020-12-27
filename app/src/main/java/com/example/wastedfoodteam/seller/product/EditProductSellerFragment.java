@@ -31,6 +31,8 @@ import com.example.wastedfoodteam.seller.order.ProductOrderSellerFragment;
 import com.example.wastedfoodteam.seller.order.SellerOrder;
 import com.example.wastedfoodteam.utils.CameraStorageFunction;
 import com.example.wastedfoodteam.utils.CommonFunction;
+import com.example.wastedfoodteam.utils.validation.Validation;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -43,6 +45,7 @@ public class EditProductSellerFragment extends Fragment {
     private EditText openTime,closeTime,quantity,remainQuantity;
     private String storageLocation;
     private Button btnCancel;
+    TextInputLayout tilProductName,tilRemainQuantity;
     int ori_quantity;
     private TextView tvCountProductName,tvCountProductDescription;
     int id;
@@ -64,6 +67,8 @@ public class EditProductSellerFragment extends Fragment {
         sellPrice = view.findViewById(R.id.editText_detail_product_sellPrice);
         openTime = view.findViewById(R.id.editText_detail_product_openTime);
         closeTime = view.findViewById(R.id.editText_detail_product_closeTime);
+        tilProductName = view.findViewById(R.id.textInputDetailName);
+        tilRemainQuantity = view.findViewById(R.id.textInputRemainQuantity);
         description = view.findViewById(R.id.etDescription);
         tvCountProductName = view.findViewById(R.id.tvCountProductName);
         tvCountProductDescription = view.findViewById(R.id.tvCountProductDescription);
@@ -94,15 +99,6 @@ public class EditProductSellerFragment extends Fragment {
                         .replace(R.id.content_main, productOrderSellerFragment, "")
                         .addToBackStack(null)
                         .commit();
-            }
-        });
-
-        remainQuantity.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
-
-                }
             }
         });
 
@@ -153,27 +149,34 @@ public class EditProductSellerFragment extends Fragment {
         btn_detail_product_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ori_quantity = Integer.parseInt(remainQuantity.getText().toString().trim()) - Variable.PRODUCT.getRemain_quantity()  + Variable.PRODUCT.getOriginal_quantity();
-                if(cameraStorageFunction.getImage_uri() != null)
-                {
-                    final int finalOri_quantity = ori_quantity;
-                    cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
-                        @Override
-                        public void onSuccess(String url) {
-                            storageLocation = url;
-                            String urlGetData = Variable.IP_ADDRESS + "seller/updateProductByID.php";
-                            updateProduct(urlGetData, finalOri_quantity);
-                        };
+                if(CommonFunction.checkEmptyEditText(name) && CommonFunction.checkEmptyEditText(remainQuantity)) {
+                    ori_quantity = Integer.parseInt(remainQuantity.getText().toString().trim()) - Variable.PRODUCT.getRemain_quantity() + Variable.PRODUCT.getOriginal_quantity();
+                    if (cameraStorageFunction.getImage_uri() != null) {
+                        final int finalOri_quantity = ori_quantity;
+                        cameraStorageFunction.uploadImage(new CameraStorageFunction.HandleUploadImage() {
+                            @Override
+                            public void onSuccess(String url) {
+                                storageLocation = url;
+                                String urlGetData = Variable.IP_ADDRESS + "seller/updateProductByID.php";
+                                updateProduct(urlGetData, finalOri_quantity);
+                            }
 
-                        @Override
-                        public void onError() {
+                            ;
 
-                        }
-                    });
-                }else {
-                    storageLocation = " ";
-                    String urlGetData = Variable.IP_ADDRESS + "seller/updateProductByID.php";
-                    updateProduct(urlGetData,ori_quantity);
+                            @Override
+                            public void onError() {
+
+                            }
+                        });
+                    } else {
+                        storageLocation = " ";
+                        String urlGetData = Variable.IP_ADDRESS + "seller/updateProductByID.php";
+                        updateProduct(urlGetData, ori_quantity);
+                    }
+                }else if(!CommonFunction.checkEmptyEditText(name)){
+                    tilProductName.setError("Tên sản phẩm phải có ít nhất 1 ký tự");
+                }else if(!CommonFunction.checkEmptyEditText(remainQuantity)){
+                    tilRemainQuantity.setError("Số lượng còn lại phải có ít nhất 1 ký tự");
                 }
             }
         });

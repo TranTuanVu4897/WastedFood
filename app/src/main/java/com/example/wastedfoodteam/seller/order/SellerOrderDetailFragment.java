@@ -15,7 +15,7 @@ import com.example.wastedfoodteam.R;
 import com.example.wastedfoodteam.utils.CommonFunction;
 
 public class SellerOrderDetailFragment extends Fragment {
-    EditText etProductName,etQuantity,etTotalCost,etBuyerName,etDescription;
+    EditText etProductName,etQuantity,etTotalCost,etBuyerName;
     ImageView ivBuyer;
     Button btnBack;
 
@@ -30,12 +30,10 @@ public class SellerOrderDetailFragment extends Fragment {
         etQuantity = view.findViewById(R.id.et_order_quantity);
         etTotalCost = view.findViewById(R.id.et_order_total_cost);
         etBuyerName = view.findViewById(R.id.et_order_buyer_name);
-        etDescription = view.findViewById(R.id.et_order_description);
         btnBack = view.findViewById(R.id.btn_order_back);
         etProductName.setText(order.getProduct_name());
         etQuantity.setText(String.valueOf(order.getQuantity()));
         etTotalCost.setText(CommonFunction.getCurrency(order.getTotal_cost()));
-        etDescription.setText(order.getBuyer_comment());
         etBuyerName.setText(order.getBuyer_name());
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
