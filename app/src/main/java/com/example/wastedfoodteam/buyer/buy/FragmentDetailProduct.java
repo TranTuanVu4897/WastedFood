@@ -205,22 +205,28 @@ public class FragmentDetailProduct extends Fragment {
             @SuppressLint("ShowToast")
             @Override
             public void onResponse(String response) {
-                if (response.equalsIgnoreCase("SUCCESS")) {
+                if (response.equalsIgnoreCase("ERROR")) {
+                    Toast.makeText(requireActivity().getApplicationContext(), "Có lỗi bất thường xảy ra", Toast.LENGTH_LONG);
+                } else if (response.equalsIgnoreCase("NOT ENOUGH QUANTITY")) {
+                    Toast.makeText(requireActivity().getApplicationContext(), "Số lượng còn lại không đủ", Toast.LENGTH_LONG);
+                } else {
+                    int order_id = 0;
+                    try{
+                        order_id = Integer.parseInt(response);
+                    }catch (Exception e){
+
+                    }
                     Toast.makeText(requireActivity().getApplicationContext(), "Thành công", Toast.LENGTH_LONG);
                     util = new NotificationUtil();
                     sendNotif = new SendNotif();
 
                     String sendMessage = setUpMessageForSend(product, message);
 
-                    util.addNotification(getContext(), Variable.BUYER.getId(), product.getSeller_id(), sendMessage, product.getId());
+                    util.addNotification(getContext(), Variable.BUYER.getId(), product.getSeller_id(), sendMessage, order_id);
                     sendNotif.notificationHandle(product.getSeller().getFirebase_UID(), "Wasted food app", sendMessage);
 
                     moveToFragmentOrderDetail();
                     Log.i("Firebase_UID", product.getSeller().getFirebase_UID());
-                } else if (response.equalsIgnoreCase("NOT ENOUGH QUANTITY")) {
-                    Toast.makeText(requireActivity().getApplicationContext(), "Số lượng còn lại không đủ", Toast.LENGTH_LONG);
-                } else {
-                    Toast.makeText(requireActivity().getApplicationContext(), "Có lỗi bất thường xảy ra", Toast.LENGTH_LONG);
                 }
             }
         }, new Response.ErrorListener() {
