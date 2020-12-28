@@ -183,12 +183,24 @@ public class RegisterSellerFragment extends Fragment {
     }
 
     private void activeCheck() {
-        etDescription.requestFocus();
-        etConfirmPassword.requestFocus();
-        etEmail.requestFocus();
-        etName.requestFocus();
-        etPassword.requestFocus();
-        etUsername.requestFocus();
+        if(bolDescription == false) {
+            etDescription.requestFocus();
+        }
+        if(bolConfirmPassword == false) {
+            etConfirmPassword.requestFocus();
+        }
+        if (bolEmail == false) {
+            etEmail.requestFocus();
+        }
+        if(bolName == false) {
+            etName.requestFocus();
+        }
+        if(bolPassword == false) {
+            etPassword.requestFocus();
+        }
+        if(bolUserName == false) {
+            etUsername.requestFocus();
+        }
         etPassword.clearFocus();
     }
 
