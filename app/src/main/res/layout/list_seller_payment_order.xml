@@ -45,26 +45,29 @@
 
                 <Button
                     android:id="@+id/btn_list_seller_payment_confirm"
-                    android:layout_height="30dp"
-                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="50dp"
                     android:background="@drawable/custom_button"
                     android:textStyle="bold"
+                    android:paddingHorizontal="10dp"
                     android:backgroundTint="#1DCC01"
                     android:text="ĐÃ THANH TOÁN"
                     android:textColor="@color/colorWhite"/>
+
                 <Button
                     android:id="@+id/btn_list_seller_payment_reject"
-                    android:layout_width="120dp"
+                    android:layout_width="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:backgroundTint="@color/colorRed"
                     android:background="@drawable/custom_button"
                     android:layout_centerInParent="true"
                     android:textStyle="bold"
+                    android:paddingHorizontal="10dp"
                     android:textColor="@color/colorWhite"
                     android:text="HỦY GIAO DỊCH"
-                    android:layout_height="30dp">
+                    android:layout_height="wrap_content">
                 </Button>
             </RelativeLayout>
         </LinearLayout>
@@ -79,7 +82,6 @@
                 android:textStyle="bold"
                 android:textColor="@color/colorBlack"
                 style="@style/AppTheme"
-                android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             </TextView>
@@ -90,7 +92,7 @@
                 style="@style/AppTheme"
                 android:layout_alignParentEnd="true"
                 android:textStyle="bold"
-                android:textSize="21sp"
+
                 android:textColor="@color/colorBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">

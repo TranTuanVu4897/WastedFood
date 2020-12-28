@@ -178,7 +178,7 @@
                         android:layout_height="match_parent"
                         android:layout_margin="5dp"
                         android:gravity="center_vertical"
-                        android:text="@string/product_ori_price" />
+                        android:text="@string/product_sell_price" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputSellPrice"
@@ -293,15 +293,6 @@
                             android:textAppearance="?android:attr/textAppearanceMediumInverse"
                             android:textColor="?attr/editTextColor" />
                         </com.google.android.material.textfield.TextInputLayout>
-                        <!--<EditText
-                            android:id="@+id/etCloseTime"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:gravity="end"
-                            android:inputType="none"
-                            android:hint="23:59"
-                            />-->
                     </LinearLayout>
 
                     <Button
@@ -317,8 +308,6 @@
                         android:textAllCaps="false"
                         android:textSize="18sp" />
                 </LinearLayout>
-
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
