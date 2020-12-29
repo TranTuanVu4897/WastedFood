@@ -138,6 +138,7 @@ public class FragmentDetailProduct extends Fragment {
         CommonFunction.setImageViewSrc(requireActivity().getApplicationContext(), product.getSeller().getImage(), civSeller);
         CommonFunction.setImageViewSrc(requireActivity().getApplicationContext(), product.getImage(), ivProduct);
         tvQuantity.setText("Còn: " + product.getRemain_quantity() + "/" + product.getOriginal_quantity());
+        tvDirect.setText(product.getSeller().getAddress());
         tvPriceDiscount.setText(CommonFunction.getCurrency(product.getSell_price()));
         tvPriceOriginal.setText(CommonFunction.getCurrency(product.getOriginal_price()));
         tvOpenTime.setText("Mở cửa từ: " + CommonFunction.getOpenClose(product.getStart_time(), product.getEnd_time()));
