@@ -74,6 +74,7 @@ public class MyFireBaseMessagingService extends FirebaseMessagingService {
                 resultIntent = new Intent(this, BuyHomeActivity.class);
                 resultIntent.putExtra("From", "notifyFrag");
                 pendingIntent = PendingIntent.getActivity(this, 1, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                notificationUtil.getTotalNotification(getApplicationContext(), Variable.BUYER.getId(), Variable.bottomNavigationViewSeller);
             }
         }
         Notification notification = new NotificationCompat.Builder(MyFireBaseMessagingService.this,CHANNEL_ID)

@@ -152,7 +152,7 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
         gps = new GPSTracker(getActivity(), new GPSTracker.HandleGetLastKnowLocation() {
             @Override
             public void onSuccess(Location location) {
-
+                setMarker(location.getLatitude(),location.getLongitude());
             }
 
             @Override
@@ -161,7 +161,7 @@ public class RegisterSellerLocationFragment extends Fragment implements OnMapRea
             }
         });
         if (gps.canGetLocation()) {
-            refreshTextEditText(gps.getLatitude(), gps.getLongitude());
+            setMarker(gps.getLatitude(),gps.getLongitude());
         } else {
             gps.showSettingAlert();
         }
